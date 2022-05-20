@@ -21,7 +21,7 @@ const network: Networks.NetworkManifest = {
 	featureFlags,
 	hosts: [
 		{
-			host: "https://btc-live.arkvault.com/api",
+			host: "https://btc-live.arkvault.io/api",
 			type: "full",
 		},
 		{
@@ -29,7 +29,7 @@ const network: Networks.NetworkManifest = {
 			type: "explorer",
 		},
 		{
-			host: "https://btc-live-musig.arkvault.com",
+			host: "https://btc-live-musig.arkvault.io",
 			type: "musig",
 		},
 	],

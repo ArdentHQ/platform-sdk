@@ -21,11 +21,11 @@ const network: Networks.NetworkManifest = {
 	},
 	hosts: [
 		{
-			host: "https://ark-live.arkvault.com/api",
+			host: "https://ark-live.arkvault.io/api",
 			type: "full",
 		},
 		{
-			host: "https://ark-live-musig.arkvault.com",
+			host: "https://ark-live-musig.arkvault.io",
 			type: "musig",
 		},
 		{
