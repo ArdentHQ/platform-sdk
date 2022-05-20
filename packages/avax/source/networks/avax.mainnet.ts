@@ -27,7 +27,7 @@ const network: Networks.NetworkManifest = {
 			type: "full",
 		},
 		{
-			host: "https://avax-live.ardenthq.com",
+			host: "https://avax-live.arkvault.com",
 			type: "archival",
 		},
 		{

@@ -16,7 +16,7 @@ const network: Networks.NetworkManifest = {
 	featureFlags,
 	hosts: [
 		{
-			host: "https://eth-test.ardenthq.com",
+			host: "https://eth-test.arkvault.com",
 			type: "full",
 		},
 		{

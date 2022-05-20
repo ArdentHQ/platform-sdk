@@ -55,7 +55,7 @@ export const governance: any = {
 	votesPerWallet: 10,
 };
 
-// https://lsk-test.ardenthq.com/api/v2/transactions/schemas
+// https://lsk-test.arkvault.com/api/v2/transactions/schemas
 export const assets = {
 	"dpos:registerDelegate": {
 		assetID: 0,

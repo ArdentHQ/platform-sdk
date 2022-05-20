@@ -17,11 +17,11 @@ const network: Networks.NetworkManifest = {
 	governance,
 	hosts: [
 		{
-			host: "https://lsk-live.ardenthq.com/api/v2",
+			host: "https://lsk-live.arkvault.com/api/v2",
 			type: "full",
 		},
 		{
-			host: "https://lsk-live-musig.ardenthq.com",
+			host: "https://lsk-live-musig.arkvault.com",
 			type: "musig",
 		},
 		{

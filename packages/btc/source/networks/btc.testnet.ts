@@ -25,7 +25,7 @@ const network: Networks.NetworkManifest = {
 	featureFlags,
 	hosts: [
 		{
-			host: "https://btc-test.ardenthq.com/api",
+			host: "https://btc-test.arkvault.com/api",
 			type: "full",
 		},
 		{
@@ -33,7 +33,7 @@ const network: Networks.NetworkManifest = {
 			type: "explorer",
 		},
 		{
-			host: "https://btc-test-musig.ardenthq.com",
+			host: "https://btc-test-musig.arkvault.com",
 			type: "musig",
 		},
 	],
