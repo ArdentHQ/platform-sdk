@@ -9,7 +9,7 @@ describe("FeedService", async ({ assert, beforeEach, it, nock }) => {
 	});
 
 	it("should retrieve the feed and findByCoin it", async (context) => {
-		nock.fake("https://news.ardenthq.com")
+		nock.fake("https://news.arkvault.io")
 			.get("/api")
 			.query(true)
 			.reply(200, {

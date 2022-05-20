@@ -14,7 +14,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	});
 
 	beforeEach(async () => {
-		nock.fake("https://ark-test.ardenthq.com")
+		nock.fake("https://ark-test.arkvault.io")
 			.get("/api/node/configuration")
 			.reply(200, loader.json("test/fixtures/client/configuration.json"))
 			.get("/api/peers")

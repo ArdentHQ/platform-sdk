@@ -25,7 +25,7 @@ describe("ClientService", async ({ beforeAll, afterEach, it, assert, loader, noc
 	afterEach(() => nock.cleanAll());
 
 	it("#transaction should succeed", async (context) => {
-		nock.fake("https://btc-test.ardenthq.com")
+		nock.fake("https://btc-test.arkvault.io")
 			.get("/api/transactions/68ad0264053ab94fa7749e78d2f728911d166ca9af8dbb68e6ee264958ca7f32")
 			.reply(200, loader.json(`test/fixtures/client/transaction.json`));
 

@@ -37,11 +37,11 @@ const network: Networks.NetworkManifest = {
 	hosts: [
 		{
 			type: "full",
-			host: "https://ark-live.ardenthq.com/api",
+			host: "https://ark-live.arkvault.io/api",
 		},
 		{
 			type: "musig",
-			host: "https://ark-live-musig.ardenthq.com",
+			host: "https://ark-live-musig.arkvault.io",
 		},
 		{
 			type: "explorer",

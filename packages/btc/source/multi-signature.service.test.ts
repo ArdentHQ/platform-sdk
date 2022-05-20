@@ -56,7 +56,7 @@ describe("multi signature registration", ({ assert, beforeEach, each, it, nock }
 	});
 
 	it("#allWithPendingState", async (context) => {
-		nock.fake("https://btc-test-musig.ardenthq.com").post("/").reply(200, context.fixtures);
+		nock.fake("https://btc-test-musig.arkvault.io").post("/").reply(200, context.fixtures);
 
 		assert.length(
 			await context.subject.allWithPendingState(
