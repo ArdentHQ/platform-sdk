@@ -1,0 +1,44 @@
+{
+    "name": "@ardenthq/sdk-sol",
+    "version": "4.6.6",
+    "description": "Cross-Platform Utilities for Ardent Applications",
+    "license": "MIT",
+    "contributors": [],
+    "type": "module",
+    "exports": {
+        "browser": "./distribution/browser/index.js",
+        "default": "./distribution/esm/index.js"
+    },
+    "types": "./distribution/esm/index.d.ts",
+    "files": [
+        "/distribution"
+    ],
+    "scripts": {
+        "build": "pnpm run clean && tsc",
+        "build:analyze": "webpack --config ../../webpack.analyze.cjs",
+        "build:release": "webpack --config ../../webpack.config.cjs",
+        "build:watch": "pnpm run clean && tsc -w",
+        "clean": "rimraf .coverage distribution tmp",
+        "clean:browser": "rimraf distribution/browser",
+        "test": "uvu -r tsm source .test.ts",
+        "test:coverage": "c8 pnpm run test",
+        "test:watch": "watchlist source -- pnpm run test"
+    },
+    "dependencies": {
+        "@ardenthq/sdk": "workspace:*",
+        "@ardenthq/sdk-cryptography": "workspace:*",
+        "@ardenthq/sdk-helpers": "workspace:*",
+        "@ardenthq/sdk-intl": "workspace:*",
+        "@solana/web3.js": "^1.31.0",
+        "ed25519-hd-key": "^1.2.0"
+    },
+    "devDependencies": {
+        "@ardenthq/sdk-fetch": "workspace:*",
+        "@ardenthq/sdk-test": "workspace:*",
+        "@types/node": "^17.0.8"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "engineStrict": true
+}
