@@ -1,0 +1,45 @@
+{
+	"name": "@ardenthq/sdk-test",
+	"version": "1.0.0",
+	"description": "Cross-Platform Utilities for Ardent Applications",
+	"license": "MIT",
+	"contributors": [],
+	"type": "module",
+	"exports": {
+		"browser": "./distribution/browser/index.js",
+		"default": "./distribution/esm/index.js"
+	},
+	"types": "./distribution/esm/index.d.ts",
+	"files": [
+		"/distribution"
+	],
+	"scripts": {
+		"build": "pnpm run clean && tsc",
+		"build:analyze": "webpack --config ../../webpack.analyze.cjs",
+		"build:release": "webpack --config ../../webpack.config.cjs",
+		"build:watch": "pnpm run clean && tsc -w",
+		"clean": "rimraf .coverage distribution tmp",
+		"clean:browser": "rimraf distribution/browser",
+		"test": "uvu -r tsm source .test.ts",
+		"test:coverage": "c8 pnpm run test",
+		"test:watch": "watchlist source -- pnpm run test"
+	},
+	"dependencies": {
+		"concordance": "~5.0.4",
+		"kleur": "~4.1.4",
+		"nock": "^13.2.2",
+		"sinon": "^12.0.1",
+		"string-kit": "~0.16.0",
+		"uvu": "^0.5.3",
+		"zod": "~3.11.6"
+	},
+	"devDependencies": {
+		"@ardenthq/sdk-helpers": "workspace:*",
+		"@types/node": "^17.0.8",
+		"@types/sinon": "^10.0.6"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	},
+	"engineStrict": true
+}

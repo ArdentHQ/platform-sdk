@@ -1,0 +1,11 @@
+.ultra.cache.json
+/*.js
+/build/
+/config/
+packages/**/distribution
+/docs/
+/node_modules/**
+/prisma/
+/snapshots/
+env.json
+packages/**/coverage
