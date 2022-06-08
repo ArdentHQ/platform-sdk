@@ -29,7 +29,7 @@ const network: Networks.NetworkManifest = {
 			type: "musig",
 		},
 		{
-			host: "https://explorer.ark.io",
+			host: "https://live.arkscan.io",
 			type: "explorer",
 		},
 	],

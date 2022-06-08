@@ -11,7 +11,7 @@ describeWithContext(
 		explorer: {
 			host: {
 				enabled: true,
-				host: "https://explorer.ark.io",
+				host: "https://live.arkscan.io",
 				type: "explorer",
 			},
 			name: "John's Explorer",

@@ -5,7 +5,7 @@ export const network = {
 		public: 46_090_600,
 	},
 	client: {
-		explorer: "https://explorer.ark.io",
+		explorer: "https://live.arkscan.io",
 		symbol: "Ѧ",
 		token: "ARK",
 	},

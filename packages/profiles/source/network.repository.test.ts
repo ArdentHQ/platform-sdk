@@ -64,7 +64,7 @@ describeWithContext(
 		hosts: [
 			{ host: "https://ark-live.arkvault.io/api", type: "full" },
 			{ host: "https://ark-live-musig.arkvault.io", type: "musig" },
-			{ host: "https://explorer.ark.io", type: "explorer" },
+			{ host: "https://live.arkscan.io", type: "explorer" },
 		],
 		id: "ark.mainnet",
 		importMethods: {

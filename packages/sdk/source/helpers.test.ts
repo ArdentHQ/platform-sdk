@@ -14,7 +14,7 @@ describe("Helpers", ({ assert, it, nock, loader }) => {
 				type: "musig",
 			},
 			{
-				host: "https://explorer.ark.io",
+				host: "https://live.arkscan.io",
 				type: "explorer",
 			},
 		],
@@ -23,7 +23,7 @@ describe("Helpers", ({ assert, it, nock, loader }) => {
 	it("should filter hosts by their their type", () => {
 		assert.equal(filterHostsFromConfig(configMock, "explorer"), [
 			{
-				host: "https://explorer.ark.io",
+				host: "https://live.arkscan.io",
 				type: "explorer",
 			},
 		]);
@@ -38,7 +38,7 @@ describe("Helpers", ({ assert, it, nock, loader }) => {
 
 	it("should pick a random network host by type", () => {
 		assert.equal(randomNetworkHostFromConfig(configMock, "explorer"), {
-			host: "https://explorer.ark.io",
+			host: "https://live.arkscan.io",
 			type: "explorer",
 		});
 	});

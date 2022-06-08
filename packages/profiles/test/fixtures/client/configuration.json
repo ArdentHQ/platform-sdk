@@ -37,7 +37,7 @@
 			"vendorFieldLength": 255
 		},
 		"core": { "version": "2.6.12-next.15" },
-		"explorer": "https://dexplorer.ark.io",
+		"explorer": "https://test.arkscan.io",
 		"nethash": "2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867",
 		"ports": { "@arkecosystem/core-api": 4003, "@arkecosystem/core-p2p": null },
 		"slip44": 1,
