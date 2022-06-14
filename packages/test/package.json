@@ -25,6 +25,7 @@
 		"test:watch": "watchlist source -- pnpm run test"
 	},
 	"dependencies": {
+		"@ardenthq/sdk-helpers": "workspace:*",
 		"concordance": "~5.0.4",
 		"kleur": "~4.1.4",
 		"nock": "^13.2.2",
@@ -34,7 +35,6 @@
 		"zod": "~3.11.6"
 	},
 	"devDependencies": {
-		"@ardenthq/sdk-helpers": "workspace:*",
 		"@types/node": "^17.0.8",
 		"@types/sinon": "^10.0.6"
 	},
