@@ -91,11 +91,11 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 	});
 
 	it("should have an explorer link", (context) => {
-		assert.is(context.subject.explorerLink(), "https://dexplorer.ark.io/transactions/transactionId");
+		assert.is(context.subject.explorerLink(), "https://test.arkscan.io/transactions/transactionId");
 	});
 
 	it("should have an explorer block link", (context) => {
-		assert.is(context.subject.explorerLinkForBlock(), "https://dexplorer.ark.io/blocks/transactionBlockId");
+		assert.is(context.subject.explorerLinkForBlock(), "https://test.arkscan.io/blocks/transactionBlockId");
 	});
 
 	it("should have an explorer block link for undefined block", (context) => {

@@ -16,7 +16,7 @@
 	"type": "test",
 	"name": "Devnet",
 	"coin": "ARK",
-	"explorer": "https://dexplorer.ark.io/",
+	"explorer": "https://test.arkscan.io/",
 	"currency": {
 		"ticker": "DARK",
 		"symbol": "DѦ"
@@ -150,7 +150,7 @@
 		"type": "test",
 		"name": "Devnet",
 		"coin": "ARK",
-		"explorer": "https://dexplorer.ark.io/",
+		"explorer": "https://test.arkscan.io/",
 		"currency": {
 			"ticker": "DARK",
 			"symbol": "DѦ"

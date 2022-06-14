@@ -30,7 +30,7 @@ describe("Network", ({ assert, beforeEach, it, stub }) => {
 	});
 
 	it("should have an explorer", (context) => {
-		assert.is(context.subject.explorer(), "https://explorer.ark.io");
+		assert.is(context.subject.explorer(), "https://live.arkscan.io");
 	});
 
 	it("should have a ticker", (context) => {

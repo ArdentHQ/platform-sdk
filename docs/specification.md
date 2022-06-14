@@ -45,7 +45,7 @@ const network: Networks.NetworkManifest = {
 		},
 		{
 			type: "explorer",
-			host: "https://explorer.ark.io",
+			host: "https://live.arkscan.io",
 		},
 	],
 	governance: {
