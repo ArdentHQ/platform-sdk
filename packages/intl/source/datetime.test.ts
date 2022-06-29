@@ -349,7 +349,7 @@ describe("DateTime", ({ assert, beforeEach, it, stub }) => {
 	});
 
 	it("should return the end of the year", (context) => {
-		assert.is(context.subject.endOf("year").toISOString(), "2020-12-31T22:59:59.999Z");
+		assert.is(context.subject.endOf("year").toISOString(), "2020-12-31T23:59:59.999Z");
 	});
 
 	it("should determine a human-readable difference between years", (context) => {
