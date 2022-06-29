@@ -346,6 +346,16 @@ export class Network {
 	}
 
 	/**
+	 * Returns the epoch timestamp.
+	 *
+	 * @return {*}  {string}
+	 * @memberof Network
+	 */
+	public epoch(): string {
+		return get(this.#network, "constants.epoch");
+	}
+
+	/**
 	 * Returns the number of words for newly generated BIP39 phrases.
 	 *
 	 * @return {*}  {number}

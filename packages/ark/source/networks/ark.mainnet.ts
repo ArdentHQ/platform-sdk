@@ -5,6 +5,7 @@ import { explorer, featureFlags, importMethods, transactions } from "./shared.js
 const network: Networks.NetworkManifest = {
 	coin: "ARK",
 	constants: {
+		epoch: "2017-03-21T13:00:00.000Z",
 		slip44: 111,
 	},
 	currency: {
