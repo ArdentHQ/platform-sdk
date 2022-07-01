@@ -299,7 +299,7 @@ export class ClientService extends Services.AbstractClientService {
 				}
 
 				return normalized;
-			}
+			};
 
 			const normalized = normalizeTimestamps(body.timestamp);
 
