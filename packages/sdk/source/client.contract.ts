@@ -53,6 +53,11 @@ export interface ClientPagination {
 	orderBy?: string;
 }
 
+export interface RangeCriteria {
+	from?: number;
+	to?: number;
+}
+
 export interface ClientTransactionsInput extends ClientPagination {
 	// Addresses
 	identifiers?: WalletIdentifier[];
@@ -64,6 +69,7 @@ export interface ClientTransactionsInput extends ClientPagination {
 	// Meta
 	asset?: Record<string, any>;
 	memo?: string;
+	timestamp?: RangeCriteria;
 	// Transaction Types
 	type?: TransactionType;
 }

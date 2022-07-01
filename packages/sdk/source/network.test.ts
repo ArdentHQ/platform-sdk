@@ -210,10 +210,6 @@ describe("Network", ({ assert, beforeEach, it, stub }) => {
 		assert.string(context.subject.multiSignatureType());
 	});
 
-	it("should get the epoch timestamp", (context) => {
-		assert.is(context.subject.epoch(), "2017-03-21T13:00:00.000Z");
-	});
-
 	it("should get the word count for mnemonics", (context) => {
 		assert.is(context.subject.wordCount(), 24);
 	});
