@@ -75,6 +75,7 @@ describe("ConfigRepository", ({ assert, beforeEach, it, nock, loader }) => {
 			Bech32: "network.constants.bech32",
 			CurrencyDecimals: "network.currency.decimals",
 			CurrencyTicker: "network.currency.ticker",
+			Epoch: "network.constants.epoch",
 			HttpClient: "httpClient",
 			KnownWallets: "network.knownWallets",
 			Network: "network",
