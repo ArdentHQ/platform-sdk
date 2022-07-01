@@ -126,8 +126,8 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 			.get("/api/transactions")
 			.query({
 				address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8",
-				"timestamp.from": 119401200,
-				"timestamp.to": 150937200,
+				"timestamp.from": 119354400,
+				"timestamp.to": 150890400,
 				type: 0,
 				typeGroup: 1,
 			})
