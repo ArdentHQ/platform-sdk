@@ -1,4 +1,5 @@
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
+import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
 
 import { Enums } from "./crypto/index.js";
@@ -282,6 +283,32 @@ export class ClientService extends Services.AbstractClientService {
 			if (!this.#isLegacy()) {
 				// @ts-ignore
 				delete body.type;
+			}
+		}
+
+		if (body.timestamp) {
+			const normalizeTimestamps = (timestamp: Services.RangeCriteria) => {
+				const epoch: string = this.configRepository.get<string>("network.constants.epoch");
+
+				const normalized = { ...timestamp };
+
+				if (epoch) {
+					for (const [key, value] of Object.entries(normalized)) {
+						normalized[key] = value - DateTime.make(epoch).startOf("day").toUNIX();
+					}
+				}
+
+				return normalized;
+			};
+
+			const normalized = normalizeTimestamps(body.timestamp);
+
+			if (this.#isLegacy()) {
+				result.body!.timestamp = normalized;
+			} else {
+				result.searchParams.timestamp = normalized;
+
+				delete body.timestamp;
 			}
 		}
 
