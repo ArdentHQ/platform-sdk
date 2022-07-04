@@ -294,7 +294,7 @@ export class ClientService extends Services.AbstractClientService {
 
 				if (epoch) {
 					for (const [key, value] of Object.entries(normalized)) {
-						normalized[key] = value - DateTime.make(epoch).startOf("day").toUNIX();
+						normalized[key] = value - DateTime.make(epoch).toUNIX();
 					}
 				}
 
