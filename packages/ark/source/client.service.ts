@@ -294,7 +294,7 @@ export class ClientService extends Services.AbstractClientService {
 
 				if (epoch) {
 					for (const [key, value] of Object.entries(normalized)) {
-						normalized[key] = value - DateTime.make(epoch).toUNIX();
+						normalized[key] = Math.max(value - DateTime.make(epoch).toUNIX(), 0);
 					}
 				}
 
