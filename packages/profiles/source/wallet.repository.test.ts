@@ -133,6 +133,10 @@ describe("WalletRepository", ({ beforeAll, beforeEach, loader, nock, assert, stu
 		assert.length(context.subject.findByCoinWithNetwork("ARK", "ark.devnet"), 1);
 	});
 
+	it("#findByCoinWithNethash", (context) => {
+		assert.length(context.subject.findByCoinWithNethash("ARK", "2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867"), 1);
+	});
+
 	it("#has", async (context) => {
 		const wallet = context.subject.first();
 

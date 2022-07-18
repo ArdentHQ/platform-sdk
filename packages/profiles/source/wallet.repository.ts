@@ -115,6 +115,13 @@ export class WalletRepository implements IWalletRepository {
 		);
 	}
 
+	/** {@inheritDoc IWalletRepository.findByCoinWithNethash} */
+	public findByCoinWithNethash(coin: string, nethash: string): IReadWriteWallet[] {
+		return this.values().filter(
+			(wallet: IReadWriteWallet) => wallet.coinId() === coin && wallet.network().meta().nethash === nethash,
+		);
+	}
+
 	/** {@inheritDoc IWalletRepository.findByAlias} */
 	public findByAlias(alias: string): IReadWriteWallet | undefined {
 		return this.values().find(

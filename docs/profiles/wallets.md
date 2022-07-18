@@ -76,6 +76,12 @@ profile.wallets().findByCoin("DARK");
 profile.wallets().findByCoinWithNetwork("DARK", "ark.devnet");
 ```
 
+### Find all wallets that use the given coin and nethash
+
+```typescript
+profile.wallets().findByCoinWithNethash("DARK", "2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867");
+```
+
 ### Find all wallets that use the given alias
 
 ```typescript
