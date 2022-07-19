@@ -137,6 +137,16 @@ export interface IWalletRepository {
 	findByCoinWithNetwork(coin: string, network: string): IReadWriteWallet[];
 
 	/**
+	 * Find many wallets by their coin and network's nethash.
+	 *
+	 * @param {string} coin
+	 * @param {string} nethash
+	 * @returns {IReadWriteWallet[]}
+	 * @memberof IWalletRepository
+	 */
+	findByCoinWithNethash(coin: string, nethash: string): IReadWriteWallet[];
+
+	/**
 	 * Find a wallet by its alias.
 	 *
 	 * @param {string} alias
