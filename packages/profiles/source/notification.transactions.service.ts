@@ -1,7 +1,7 @@
 import { Services } from "@ardenthq/sdk";
 import { sortByDesc } from "@ardenthq/sdk-helpers";
 
-import { INotificationTypes, IProfile, IProfileTransactionNotificationService, ProfileSetting } from "./contracts.js";
+import { INotificationTypes, IProfile, IProfileTransactionNotificationService } from "./contracts.js";
 import { INotification, INotificationRepository } from "./notification.repository.contract.js";
 import { AggregateQuery } from "./transaction.aggregate.contract.js";
 import { ExtendedConfirmedTransactionDataCollection } from "./transaction.collection.js";
@@ -164,12 +164,12 @@ export class ProfileTransactionNotificationService implements IProfileTransactio
 	}
 
 	#getIdentifiers(): Services.WalletIdentifier[] {
-		const usesTestNetworks = this.#profile.settings().get(ProfileSetting.UseTestNetworks);
+		const availableNetworks = this.#profile.availableNetworks();
 
 		const availableWallets = this.#profile
 			.wallets()
 			.values()
-			.filter((wallet) => wallet.network().isLive() || usesTestNetworks);
+			.filter((wallet) => availableNetworks.some((network) => wallet.networkId() === network.id()));
 
 		return availableWallets.map((wallet) => ({
 			type: "address",
