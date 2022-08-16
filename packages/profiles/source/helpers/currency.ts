@@ -28,7 +28,10 @@ export class Currency {
 				.trim();
 		}
 
-		let money = Money.make(BigNumber.make(Math.abs(value)).times(100).decimalPlaces(0).toNumber(), ticker);
+		let money =
+			decimals === 2
+				? Money.make(Math.round(BigNumber.make(Math.abs(value)).times(100).toNumber()), ticker)
+				: Money.make(BigNumber.make(Math.abs(value)).times(100).decimalPlaces(0).toNumber(), ticker);
 
 		if (options.locale) {
 			money = money.setLocale(options.locale);
