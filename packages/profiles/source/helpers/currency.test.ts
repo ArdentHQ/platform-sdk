@@ -7,6 +7,10 @@ describe("Helpers.Currency", ({ assert, each, it }) => {
 		assert.is(Currency.format(10, "USD"), "$10.00");
 	});
 
+	it("should round and format fiat", () => {
+		assert.is(Currency.format(0.116, "USD"), "$0.12");
+	});
+
 	it("should format fiat without decimals", () => {
 		assert.is(Currency.format(10, "KRW"), "₩10.00");
 	});
