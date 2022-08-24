@@ -5,6 +5,7 @@ import { explorer, featureFlags, importMethods, transactions } from "./shared.js
 const network: Networks.NetworkManifest = {
 	coin: "ARK",
 	constants: {
+		epoch: "2017-03-21T13:00:00.000Z",
 		slip44: 111,
 	},
 	currency: {
@@ -38,6 +39,7 @@ const network: Networks.NetworkManifest = {
 	knownWallets: "https://raw.githubusercontent.com/ArkEcosystem/common/master/mainnet/known-wallets-extended.json",
 	meta: {
 		fastDelegateSync: true,
+		nethash: "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988",
 	},
 	name: "Mainnet",
 	transactions,

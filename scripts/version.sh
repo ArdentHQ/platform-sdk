@@ -12,5 +12,5 @@ done
 # git checkout -b $1
 git add -A
 git commit -m "release: $1"
-git push
+# git push
 # gh pr create --base master --fill --title="release: $1"

@@ -848,6 +848,17 @@ export class DateTime {
 	}
 
 	/**
+	 * Returns a cloned instance and sets it to the end of a unit of time.
+	 *
+	 * @param {QUnitType} unit
+	 * @returns {DateTime}
+	 * @memberof DateTime
+	 */
+	public endOf(unit: QUnitType): DateTime {
+		return DateTime.make(this.#instance.endOf(unit), this.#locale);
+	}
+
+	/**
 	 * Returns the string of relative time from X.
 	 *
 	 * @param {ConfigType} compared

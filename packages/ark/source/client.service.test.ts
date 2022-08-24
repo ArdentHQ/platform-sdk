@@ -7,7 +7,7 @@ import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
 import { WalletData } from "./wallet.dto.js";
 
-describe("AddressService", async ({ assert, nock, beforeAll, it, loader }) => {
+describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 	beforeAll(async (context) => {
 		context.subject = await createService(ClientService, undefined, (container) => {
 			container.constant(IoC.BindingType.Container, container);
@@ -114,6 +114,28 @@ describe("AddressService", async ({ assert, nock, beforeAll, it, loader }) => {
 		const result = await context.subject.transactions({
 			identifiers: [{ type: "address", value: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8" }],
 			asset: { type: 4, action: 0 },
+			type: "transfer",
+		});
+
+		assert.object(result);
+		assert.instance(result.items()[0], ConfirmedTransactionData);
+	});
+
+	it("should retrieve a list of transactions for an advanced search including timestamp via Core 3.0", async (context) => {
+		nock.fake(/.+/)
+			.get("/api/transactions")
+			.query({
+				address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8",
+				"timestamp.from": 119354400,
+				"timestamp.to": 150890400,
+				type: 0,
+				typeGroup: 1,
+			})
+			.reply(200, loader.json(`test/fixtures/client/transactions.json`));
+
+		const result = await context.subject.transactions({
+			identifiers: [{ type: "address", value: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8" }],
+			timestamp: { from: 1609455600, to: 1640991600 },
 			type: "transfer",
 		});
 
