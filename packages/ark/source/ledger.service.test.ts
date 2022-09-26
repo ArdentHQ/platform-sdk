@@ -103,10 +103,16 @@ describe("LedgerService - scan", ({ assert, nock, beforeAll, it, loader, stub })
 				statusCode: 404,
 			})
 			.get("/api/wallets")
-			.query({ address: "D9xJncW4ECUSJQWeLP7wncxhDTvNeg2HNK,DFgggtreMXQNQKnxHddvkaPHcQbRdK3jyJ,DFr1CR81idSmfgQ19KXe4M6keqUEAuU8kF,DTYiNbvTKveMtJC8KPPdBrgRWxfPxGp1WV,DJyGFrZv4MYKrTMcjzEyhZzdTAJju2Rcjr" })
+			.query({
+				address:
+					"D9xJncW4ECUSJQWeLP7wncxhDTvNeg2HNK,DFgggtreMXQNQKnxHddvkaPHcQbRdK3jyJ,DFr1CR81idSmfgQ19KXe4M6keqUEAuU8kF,DTYiNbvTKveMtJC8KPPdBrgRWxfPxGp1WV,DJyGFrZv4MYKrTMcjzEyhZzdTAJju2Rcjr",
+			})
 			.reply(200, loader.json(`test/fixtures/client/wallets-page-0.json`))
 			.get("/api/wallets")
-			.query({ address: "DHnV81YdhYDkwCLD8pkxiXh53pGFw435GS,DGhLzafzQpBYjDAWP41U4cx5CKZ5BdSnS3,DLVXZyKFxLLdyuEtJRUvFoKcorSrnBnq48,DFZAfJ1i1LsvhkUk76Piw4v7oTgq12pX9Z,DGfNF9bGPss6YKLEqK5gwr4C1M7vgfenzn" })
+			.query({
+				address:
+					"DHnV81YdhYDkwCLD8pkxiXh53pGFw435GS,DGhLzafzQpBYjDAWP41U4cx5CKZ5BdSnS3,DLVXZyKFxLLdyuEtJRUvFoKcorSrnBnq48,DFZAfJ1i1LsvhkUk76Piw4v7oTgq12pX9Z,DGfNF9bGPss6YKLEqK5gwr4C1M7vgfenzn",
+			})
 			.reply(200, loader.json(`test/fixtures/client/wallets-page-1.json`));
 
 		const ark = await createMockService(ledger.wallets.record);

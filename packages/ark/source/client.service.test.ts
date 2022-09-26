@@ -53,7 +53,9 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 		nock.fake(/.+/)
 			.post("/api/wallets/search", { limit: 1 })
 			.reply(200, {})
-			.post("/api/transactions/search", { addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8", "DRwgqrfuuaPCy3AE8Sz1AjdrncKfHjePn5"] })
+			.post("/api/transactions/search", {
+				addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8", "DRwgqrfuuaPCy3AE8Sz1AjdrncKfHjePn5"],
+			})
 			.query({ page: "0" })
 			.reply(200, loader.json(`test/fixtures/client/transactions.json`));
 
