@@ -20,6 +20,13 @@ describe("TransactionIndex", ({ beforeAll, beforeEach, nock, assert, it, loader 
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
 
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(404, {
+				error: "RequestException",
+				message: "HTTP request returned status code 404",
+				statusCode: 404,
+			})
+
 			// default wallet
 			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
 			.reply(200, loader.json("test/fixtures/client/wallet-non-resigned.json"))
