@@ -96,7 +96,8 @@ describe("LedgerService - scan", ({ assert, nock, beforeAll, it, loader, stub })
 
 	it("should scan for legacy wallets", async () => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(404, {
 				error: "RequestException",
 				message: "HTTP request returned status code 404",
@@ -134,7 +135,8 @@ describe("LedgerService - scan", ({ assert, nock, beforeAll, it, loader, stub })
 
 	it("should scan for new wallets", async () => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(404, {
 				error: "RequestException",
 				message: "HTTP request returned status code 404",

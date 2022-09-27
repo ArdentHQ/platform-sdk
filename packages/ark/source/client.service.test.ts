@@ -34,7 +34,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 	it("should retrieve a list of transactions for a single address via Core 2.0", async (context) => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(200, {})
 			.post("/api/transactions/search", { addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8"] })
 			.query({ page: "0" })
@@ -51,7 +52,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 	it("should retrieve a list of transactions for multiple addresses via Core 2.0", async (context) => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(200, {})
 			.post("/api/transactions/search", {
 				addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8", "DRwgqrfuuaPCy3AE8Sz1AjdrncKfHjePn5"],
@@ -73,7 +75,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 	it("should retrieve a list of transactions for a single address via Core 3.0", async (context) => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(404, {
 				error: "RequestException",
 				message: "HTTP request returned status code 404",
@@ -93,7 +96,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 	it("should retrieve a list of transactions for multiple addresses via Core 3.0", async (context) => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(404, {
 				error: "RequestException",
 				message: "HTTP request returned status code 404",
@@ -116,7 +120,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 	it("should retrieve a list of transactions for an advanced search via Core 3.0", async (context) => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(404, {
 				error: "RequestException",
 				message: "HTTP request returned status code 404",
@@ -144,7 +149,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 	it("should retrieve a list of transactions for an advanced search including timestamp via Core 3.0", async (context) => {
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(404, {
 				error: "RequestException",
 				message: "HTTP request returned status code 404",
@@ -195,7 +201,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 		});
 
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(200, {})
 			.post("/api/wallets/search", { addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8"] })
 			.reply(200, loader.json(`test/fixtures/client/wallets.json`));
@@ -220,7 +227,8 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 		});
 
 		nock.fake(/.+/)
-			.post("/api/wallets/search", { limit: 1 })
+			.post("/api/wallets/search", {})
+			.query({ limit: 1 })
 			.reply(404, {
 				error: "RequestException",
 				message: "HTTP request returned status code 404",

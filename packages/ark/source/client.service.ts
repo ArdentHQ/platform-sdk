@@ -332,7 +332,8 @@ export class ClientService extends Services.AbstractClientService {
 		if (this.#isLegacy === undefined) {
 			try {
 				await this.#request.post("wallets/search", {
-					body: {
+					body: {},
+					searchParams: {
 						limit: 1,
 					},
 				});
