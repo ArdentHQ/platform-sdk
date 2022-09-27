@@ -7,8 +7,8 @@ import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
 import { WalletData } from "./wallet.dto.js";
 
-describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
-	beforeAll(async (context) => {
+describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
+	beforeEach(async (context) => {
 		context.subject = await createService(ClientService, undefined, (container) => {
 			container.constant(IoC.BindingType.Container, container);
 			container.constant(IoC.BindingType.DataTransferObjects, {
@@ -34,8 +34,10 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 
 	it("should retrieve a list of transactions for a single address via Core 2.0", async (context) => {
 		nock.fake(/.+/)
-			.get("/api/transactions")
-			.query({ address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8", page: "0" })
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(200, {})
+			.post("/api/transactions/search", { addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8"] })
+			.query({ page: "0" })
 			.reply(200, loader.json(`test/fixtures/client/transactions.json`));
 
 		const result = await context.subject.transactions({
@@ -49,11 +51,12 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 
 	it("should retrieve a list of transactions for multiple addresses via Core 2.0", async (context) => {
 		nock.fake(/.+/)
-			.get("/api/transactions")
-			.query({
-				page: "0",
-				address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8,DRwgqrfuuaPCy3AE8Sz1AjdrncKfHjePn5",
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(200, {})
+			.post("/api/transactions/search", {
+				addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8", "DRwgqrfuuaPCy3AE8Sz1AjdrncKfHjePn5"],
 			})
+			.query({ page: "0" })
 			.reply(200, loader.json(`test/fixtures/client/transactions.json`));
 
 		const result = await context.subject.transactions({
@@ -70,6 +73,12 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 
 	it("should retrieve a list of transactions for a single address via Core 3.0", async (context) => {
 		nock.fake(/.+/)
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(404, {
+				error: "RequestException",
+				message: "HTTP request returned status code 404",
+				statusCode: 404,
+			})
 			.get("/api/transactions")
 			.query({ address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8" })
 			.reply(200, loader.json(`test/fixtures/client/transactions.json`));
@@ -84,6 +93,12 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 
 	it("should retrieve a list of transactions for multiple addresses via Core 3.0", async (context) => {
 		nock.fake(/.+/)
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(404, {
+				error: "RequestException",
+				message: "HTTP request returned status code 404",
+				statusCode: 404,
+			})
 			.get("/api/transactions")
 			.query({ address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8,DRwgqrfuuaPCy3AE8Sz1AjdrncKfHjePn5" })
 			.reply(200, loader.json(`test/fixtures/client/transactions.json`));
@@ -101,6 +116,12 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 
 	it("should retrieve a list of transactions for an advanced search via Core 3.0", async (context) => {
 		nock.fake(/.+/)
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(404, {
+				error: "RequestException",
+				message: "HTTP request returned status code 404",
+				statusCode: 404,
+			})
 			.get("/api/transactions")
 			.query({
 				address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8",
@@ -123,6 +144,12 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 
 	it("should retrieve a list of transactions for an advanced search including timestamp via Core 3.0", async (context) => {
 		nock.fake(/.+/)
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(404, {
+				error: "RequestException",
+				message: "HTTP request returned status code 404",
+				statusCode: 404,
+			})
 			.get("/api/transactions")
 			.query({
 				address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8",
@@ -168,8 +195,9 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 		});
 
 		nock.fake(/.+/)
-			.get("/api/wallets")
-			.query({ address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8" })
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(200, {})
+			.post("/api/wallets/search", { addresses: ["DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8"] })
 			.reply(200, loader.json(`test/fixtures/client/wallets.json`));
 
 		const result = await context.subject.wallets({
@@ -192,6 +220,12 @@ describe("ClientService", async ({ assert, nock, beforeAll, it, loader }) => {
 		});
 
 		nock.fake(/.+/)
+			.post("/api/wallets/search", { limit: 1 })
+			.reply(404, {
+				error: "RequestException",
+				message: "HTTP request returned status code 404",
+				statusCode: 404,
+			})
 			.get("/api/wallets")
 			.query({ address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8" })
 			.reply(200, loader.json(`test/fixtures/client/wallets.json`));

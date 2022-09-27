@@ -8,6 +8,8 @@ import { Request } from "./request.js";
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
 
+	#isLegacy: boolean | undefined = undefined;
+
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
@@ -30,7 +32,9 @@ export class ClientService extends Services.AbstractClientService {
 	public override async transactions(
 		query: Services.ClientTransactionsInput,
 	): Promise<Collections.ConfirmedTransactionDataCollection> {
-		const response = this.#isLegacy()
+		await this.#checkIfLegacy();
+
+		const response = this.#isLegacy
 			? await this.#request.post("transactions/search", this.#createSearchParams(query))
 			: await this.#request.get("transactions", this.#createSearchParams(query));
 
@@ -44,7 +48,9 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async wallets(query: Services.ClientWalletsInput): Promise<Collections.WalletDataCollection> {
-		const response = this.#isLegacy()
+		await this.#checkIfLegacy();
+
+		const response = this.#isLegacy
 			? await this.#request.post("wallets/search", this.#createSearchParams(query))
 			: await this.#request.get("wallets", this.#createSearchParams(query));
 
@@ -61,6 +67,8 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async delegates(query?: Contracts.KeyValuePair): Promise<Collections.WalletDataCollection> {
+		await this.#checkIfLegacy();
+
 		const body = await this.#request.get("delegates", this.#createSearchParams(query || {}));
 
 		return new Collections.WalletDataCollection(
@@ -181,7 +189,7 @@ export class ClientService extends Services.AbstractClientService {
 			orderBy: "orderBy",
 		};
 
-		if (!this.#isLegacy()) {
+		if (!this.#isLegacy) {
 			Object.assign(mappings, {
 				address: "address",
 				recipientId: "recipientId",
@@ -201,7 +209,7 @@ export class ClientService extends Services.AbstractClientService {
 		if (body.identifiers) {
 			const identifiers: Services.WalletIdentifier[] = body.identifiers;
 
-			if (this.#isLegacy()) {
+			if (this.#isLegacy) {
 				result.body.addresses = identifiers.map(({ value }) => value);
 			} else {
 				result.searchParams.address = identifiers.map(({ value }) => value).join(",");
@@ -265,7 +273,7 @@ export class ClientService extends Services.AbstractClientService {
 			}[body.type];
 
 			if (type !== undefined) {
-				if (this.#isLegacy()) {
+				if (this.#isLegacy) {
 					result.body!.type = type;
 				} else {
 					result.searchParams.type = type;
@@ -273,14 +281,14 @@ export class ClientService extends Services.AbstractClientService {
 			}
 
 			if (typeGroup !== undefined) {
-				if (this.#isLegacy()) {
+				if (this.#isLegacy) {
 					result.body!.typeGroup = typeGroup;
 				} else {
 					result.searchParams.typeGroup = typeGroup;
 				}
 			}
 
-			if (!this.#isLegacy()) {
+			if (!this.#isLegacy) {
 				// @ts-ignore
 				delete body.type;
 			}
@@ -303,7 +311,7 @@ export class ClientService extends Services.AbstractClientService {
 
 			const normalized = normalizeTimestamps(body.timestamp);
 
-			if (this.#isLegacy()) {
+			if (this.#isLegacy) {
 				result.body!.timestamp = normalized;
 			} else {
 				result.searchParams.timestamp = normalized;
@@ -312,7 +320,7 @@ export class ClientService extends Services.AbstractClientService {
 			}
 		}
 
-		if (!this.#isLegacy()) {
+		if (!this.#isLegacy) {
 			result.searchParams = dotify({ ...result.searchParams, ...result.body });
 			result.body = null;
 		}
@@ -320,9 +328,19 @@ export class ClientService extends Services.AbstractClientService {
 		return result;
 	}
 
-	#isLegacy(): boolean {
-		return ["bind", "bpl", "xqr"].some((coin: string) =>
-			this.configRepository.get<string>("network.id").startsWith(coin),
-		);
+	async #checkIfLegacy(): Promise<void> {
+		if (this.#isLegacy === undefined) {
+			try {
+				await this.#request.post("wallets/search", {
+					body: {
+						limit: 1,
+					},
+				});
+
+				this.#isLegacy = true;
+			} catch (error) {
+				this.#isLegacy = !error.message.includes("404");
+			}
+		}
 	}
 }
