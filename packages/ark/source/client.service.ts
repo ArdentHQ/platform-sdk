@@ -344,16 +344,18 @@ export class ClientService extends Services.AbstractClientService {
 		}
 
 		try {
-			await this.#request.post("wallets/search", {
-				body: {},
+			await this.#request.get("wallets", {
 				searchParams: {
 					limit: 1,
+					nonce: 0,
 				},
 			});
 
-			this.#isLegacyMap.set(network, true);
+			this.#isLegacyMap.set(network, false);
 		} catch (error) {
-			this.#isLegacyMap.set(network, !error.message.includes("404"));
+			if (error.message.includes(422)) {
+				this.#isLegacyMap.set(network, true);
+			}
 		}
 	}
 }
