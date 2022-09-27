@@ -8,7 +8,7 @@ import { Request } from "./request.js";
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
 
-	#isLegacy: boolean | undefined = undefined;
+	#isLegacyMap: Map<string, boolean> = new Map();
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -32,9 +32,9 @@ export class ClientService extends Services.AbstractClientService {
 	public override async transactions(
 		query: Services.ClientTransactionsInput,
 	): Promise<Collections.ConfirmedTransactionDataCollection> {
-		await this.#checkIfLegacy();
+		await this.#setLegacy();
 
-		const response = this.#isLegacy
+		const response = this.#isLegacy(this.configRepository.get<string>("network.id"))
 			? await this.#request.post("transactions/search", this.#createSearchParams(query))
 			: await this.#request.get("transactions", this.#createSearchParams(query));
 
@@ -48,9 +48,9 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async wallets(query: Services.ClientWalletsInput): Promise<Collections.WalletDataCollection> {
-		await this.#checkIfLegacy();
+		await this.#setLegacy();
 
-		const response = this.#isLegacy
+		const response = this.#isLegacy(this.configRepository.get<string>("network.id"))
 			? await this.#request.post("wallets/search", this.#createSearchParams(query))
 			: await this.#request.get("wallets", this.#createSearchParams(query));
 
@@ -67,7 +67,7 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async delegates(query?: Contracts.KeyValuePair): Promise<Collections.WalletDataCollection> {
-		await this.#checkIfLegacy();
+		await this.#setLegacy();
 
 		const body = await this.#request.get("delegates", this.#createSearchParams(query || {}));
 
@@ -177,6 +177,8 @@ export class ClientService extends Services.AbstractClientService {
 			return { body: null, searchParams: null };
 		}
 
+		const isLegacy = this.#isLegacy(this.configRepository.get<string>("network.id"));
+
 		const result: any = {
 			body,
 			searchParams: {},
@@ -189,7 +191,7 @@ export class ClientService extends Services.AbstractClientService {
 			orderBy: "orderBy",
 		};
 
-		if (!this.#isLegacy) {
+		if (!isLegacy) {
 			Object.assign(mappings, {
 				address: "address",
 				recipientId: "recipientId",
@@ -209,7 +211,7 @@ export class ClientService extends Services.AbstractClientService {
 		if (body.identifiers) {
 			const identifiers: Services.WalletIdentifier[] = body.identifiers;
 
-			if (this.#isLegacy) {
+			if (isLegacy) {
 				result.body.addresses = identifiers.map(({ value }) => value);
 			} else {
 				result.searchParams.address = identifiers.map(({ value }) => value).join(",");
@@ -273,7 +275,7 @@ export class ClientService extends Services.AbstractClientService {
 			}[body.type];
 
 			if (type !== undefined) {
-				if (this.#isLegacy) {
+				if (isLegacy) {
 					result.body!.type = type;
 				} else {
 					result.searchParams.type = type;
@@ -281,14 +283,14 @@ export class ClientService extends Services.AbstractClientService {
 			}
 
 			if (typeGroup !== undefined) {
-				if (this.#isLegacy) {
+				if (isLegacy) {
 					result.body!.typeGroup = typeGroup;
 				} else {
 					result.searchParams.typeGroup = typeGroup;
 				}
 			}
 
-			if (!this.#isLegacy) {
+			if (!isLegacy) {
 				// @ts-ignore
 				delete body.type;
 			}
@@ -311,7 +313,7 @@ export class ClientService extends Services.AbstractClientService {
 
 			const normalized = normalizeTimestamps(body.timestamp);
 
-			if (this.#isLegacy) {
+			if (isLegacy) {
 				result.body!.timestamp = normalized;
 			} else {
 				result.searchParams.timestamp = normalized;
@@ -320,7 +322,7 @@ export class ClientService extends Services.AbstractClientService {
 			}
 		}
 
-		if (!this.#isLegacy) {
+		if (!isLegacy) {
 			result.searchParams = dotify({ ...result.searchParams, ...result.body });
 			result.body = null;
 		}
@@ -328,20 +330,28 @@ export class ClientService extends Services.AbstractClientService {
 		return result;
 	}
 
-	async #checkIfLegacy(): Promise<void> {
-		if (this.#isLegacy === undefined) {
-			try {
-				await this.#request.post("wallets/search", {
-					body: {},
-					searchParams: {
-						limit: 1,
-					},
-				});
+	#isLegacy(network: string): boolean | undefined {
+		return this.#isLegacyMap.get(network);
+	}
 
-				this.#isLegacy = true;
-			} catch (error) {
-				this.#isLegacy = !error.message.includes("404");
-			}
+	async #setLegacy(): Promise<void> {
+		const network = this.configRepository.get<string>("network.id");
+
+		if (this.#isLegacyMap.get(network) !== undefined) {
+			return;
+		}
+
+		try {
+			await this.#request.post("wallets/search", {
+				body: {},
+				searchParams: {
+					limit: 1,
+				},
+			});
+
+			this.#isLegacyMap.set(network, true);
+		} catch (error) {
+			this.#isLegacyMap.set(network, !error.message.includes("404"));
 		}
 	}
 }
