@@ -32,9 +32,11 @@ export class ClientService extends Services.AbstractClientService {
 	public override async transactions(
 		query: Services.ClientTransactionsInput,
 	): Promise<Collections.ConfirmedTransactionDataCollection> {
-		await this.#setLegacy();
+		const network = this.configRepository.get<string>("network.id");
 
-		const response = this.#isLegacy(this.configRepository.get<string>("network.id"))
+		await this.#setLegacy(network);
+
+		const response = this.#isLegacy(network)
 			? await this.#request.post("transactions/search", this.#createSearchParams(query))
 			: await this.#request.get("transactions", this.#createSearchParams(query));
 
@@ -48,9 +50,11 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async wallets(query: Services.ClientWalletsInput): Promise<Collections.WalletDataCollection> {
-		await this.#setLegacy();
+		const network = this.configRepository.get<string>("network.id");
 
-		const response = this.#isLegacy(this.configRepository.get<string>("network.id"))
+		await this.#setLegacy(network);
+
+		const response = this.#isLegacy(network)
 			? await this.#request.post("wallets/search", this.#createSearchParams(query))
 			: await this.#request.get("wallets", this.#createSearchParams(query));
 
@@ -67,7 +71,7 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async delegates(query?: Contracts.KeyValuePair): Promise<Collections.WalletDataCollection> {
-		await this.#setLegacy();
+		await this.#setLegacy(this.configRepository.get<string>("network.id"));
 
 		const body = await this.#request.get("delegates", this.#createSearchParams(query || {}));
 
@@ -334,9 +338,7 @@ export class ClientService extends Services.AbstractClientService {
 		return this.#isLegacyMap.get(network);
 	}
 
-	async #setLegacy(): Promise<void> {
-		const network = this.configRepository.get<string>("network.id");
-
+	async #setLegacy(network: string): Promise<void> {
 		if (this.#isLegacyMap.get(network) !== undefined) {
 			return;
 		}
