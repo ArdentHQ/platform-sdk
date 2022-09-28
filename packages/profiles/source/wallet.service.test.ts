@@ -7,7 +7,7 @@ import { Identifiers } from "./container.models";
 import { ProfileRepository } from "./profile.repository";
 import { WalletService } from "./wallet.service.js";
 
-describe("WalletService", ({ afterEach, beforeAll, beforeEach, loader, nock, assert, stub, it }) => {
+describe("WalletService", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) => {
 	beforeAll(() => bootContainer());
 
 	beforeEach(async (context) => {
@@ -72,7 +72,11 @@ describe("WalletService", ({ afterEach, beforeAll, beforeEach, loader, nock, ass
 
 		context.profile = await profileRepository.create("John Doe");
 
+		context.profile.coins().set("ARK", "ark.devnet");
+
 		context.wallet = await importByMnemonic(context.profile, identity.mnemonic, "ARK", "ark.devnet");
+
+		context.networkSpy = stub(context.profile, "availableNetworks").returnValue([context.wallet.network()]);
 
 		context.liveSpy = stub(context.wallet.network(), "isLive").returnValue(true);
 		context.testSpy = stub(context.wallet.network(), "isTest").returnValue(false);
@@ -87,7 +91,7 @@ describe("WalletService", ({ afterEach, beforeAll, beforeEach, loader, nock, ass
 
 		assert.not.throws(() => context.wallet.voting().current(), /has not been synced/);
 
-		stub(context.profile.wallets(), "values").returnValue([undefined]);
+		stub(context.profile.wallets(), "values").returnValue([]);
 		await context.subject.syncByProfile(context.profile);
 	});
 });
