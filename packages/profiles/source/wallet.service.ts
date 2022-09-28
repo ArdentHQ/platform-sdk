@@ -6,7 +6,9 @@ export class WalletService implements IWalletService {
 	public async syncByProfile(profile: IProfile): Promise<void> {
 		const availableNetworkIds = profile.availableNetworks().map((network) => network.id());
 
-		const wallets = profile.wallets().values()
+		const wallets = profile
+			.wallets()
+			.values()
 			.filter((wallet) => availableNetworkIds.includes(wallet.networkId()));
 
 		const promises: (() => Promise<void>)[] = [];
