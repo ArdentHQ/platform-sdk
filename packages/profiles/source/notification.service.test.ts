@@ -28,7 +28,8 @@ describeWithContext(
 				.reply(200, loader.json("test/fixtures/client/syncing.json"))
 				.get("/api/peers")
 				.reply(200, loader.json("test/fixtures/client/peers.json"))
-				.post("/api/wallets/search", { limit: 1 })
+				.post("/api/wallets/search", {})
+				.query({ limit: 1 })
 				.reply(404, {
 					error: "RequestException",
 					message: "HTTP request returned status code 404",
