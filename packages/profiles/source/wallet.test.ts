@@ -29,13 +29,9 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
 
-			.post("/api/wallets/search", {})
-			.query({ limit: 1 })
-			.reply(404, {
-				error: "RequestException",
-				message: "HTTP request returned status code 404",
-				statusCode: 404,
-			})
+			.get("/api/wallets", {})
+			.query({ limit: 1, nonce: 0 })
+			.reply(200, {})
 
 			// default wallet
 			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
