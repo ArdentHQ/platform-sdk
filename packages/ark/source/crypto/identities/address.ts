@@ -41,7 +41,7 @@ export class Address {
 		return Base58Check.encode(buffer);
 	}
 
-	public static toBuffer(address: string, network?: Network): Buffer {
+	public static toBuffer(address: string, network?: Pick<Network, "pubKeyHash">): Buffer {
 		const result: Buffer = Base58Check.decode(address);
 
 		if (result[0] !== getPubKeyHash(network)) {
