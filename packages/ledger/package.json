@@ -1,6 +1,6 @@
 {
 	"name": "@ardenthq/sdk-ledger",
-	"version": "1.2.5",
+	"version": "1.2.6",
 	"description": "Ledger for @ardenthq/sdk",
 	"license": "MIT",
 	"contributors": [],
