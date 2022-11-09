@@ -98,31 +98,37 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		transaction: Contracts.SignedTransactionData,
 		excludeFinal?: boolean,
 	): boolean {
+		applyCryptoConfiguration(this.#configCrypto);
 		return new PendingMultiSignatureTransaction(transaction.data()).isMultiSignatureReady({ excludeFinal });
 	}
 
 	/** @inheritdoc */
 	public override needsSignatures(transaction: Contracts.SignedTransactionData): boolean {
+		applyCryptoConfiguration(this.#configCrypto);
 		return new PendingMultiSignatureTransaction(transaction.data()).needsSignatures();
 	}
 
 	/** @inheritdoc */
 	public override needsAllSignatures(transaction: Contracts.SignedTransactionData): boolean {
+		applyCryptoConfiguration(this.#configCrypto);
 		return new PendingMultiSignatureTransaction(transaction.data()).needsAllSignatures();
 	}
 
 	/** @inheritdoc */
 	public override needsWalletSignature(transaction: Contracts.SignedTransactionData, publicKey: string): boolean {
+		applyCryptoConfiguration(this.#configCrypto);
 		return new PendingMultiSignatureTransaction(transaction.data()).needsWalletSignature(publicKey);
 	}
 
 	/** @inheritdoc */
 	public override needsFinalSignature(transaction: Contracts.SignedTransactionData): boolean {
+		applyCryptoConfiguration(this.#configCrypto);
 		return new PendingMultiSignatureTransaction(transaction.data()).needsFinalSignature();
 	}
 
 	/** @inheritdoc */
 	public override remainingSignatureCount(transaction: Contracts.SignedTransactionData): number {
+		applyCryptoConfiguration(this.#configCrypto);
 		return new PendingMultiSignatureTransaction(transaction.data()).remainingSignatureCount();
 	}
 

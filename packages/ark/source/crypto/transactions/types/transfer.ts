@@ -2,7 +2,7 @@ import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { Address } from "../../identities/address.js";
-import { ISerializeOptions, Network } from "../../interfaces/index.js";
+import { ISerializeOptions } from "../../interfaces/index.js";
 import * as schemas from "./schemas.js";
 import { Transaction } from "./transaction.js";
 
@@ -28,9 +28,7 @@ export abstract class TransferTransaction extends Transaction {
 		buff.writeUInt32LE(data.expiration || 0);
 
 		if (data.recipientId) {
-			buff.writeBuffer(
-				Address.toBuffer(data.recipientId, data.network ? { pubKeyHash: data.network } : undefined),
-			);
+			buff.writeBuffer(Address.toBuffer(data.recipientId));
 		}
 
 		return buff;
