@@ -1,6 +1,6 @@
 {
 	"name": "@ardenthq/sdk-cryptography",
-	"version": "1.2.6",
+	"version": "1.2.7",
 	"description": "Cross-Platform Utilities for Ardent Applications",
 	"license": "MIT",
 	"contributors": [],
