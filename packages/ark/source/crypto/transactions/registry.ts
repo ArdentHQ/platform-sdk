@@ -1,11 +1,4 @@
 import {
-	TransactionAlreadyRegisteredError,
-	TransactionKeyAlreadyRegisteredError,
-	TransactionVersionAlreadyRegisteredError,
-	UnkownTransactionError,
-} from "../errors.js";
-import { validator } from "../validation/index.js";
-import {
 	DelegateRegistrationTransaction,
 	DelegateResignationTransaction,
 	IpfsTransaction,
@@ -17,6 +10,13 @@ import {
 	TransferTransaction,
 	VoteTransaction,
 } from "./types/index.js";
+import {
+	TransactionAlreadyRegisteredError,
+	TransactionKeyAlreadyRegisteredError,
+	TransactionVersionAlreadyRegisteredError,
+	UnkownTransactionError,
+} from "../errors.js";
+
 import { InternalTransactionType } from "./types/internal-transaction-type.js";
 
 export type TransactionConstructor = typeof Transaction;
@@ -70,7 +70,6 @@ class TransactionRegistry {
 		}
 
 		this.transactionTypes.get(internalType)!.set(constructor.version, constructor);
-		this.updateSchemas(constructor);
 	}
 
 	public deregisterTransactionType(constructor: TransactionConstructor): void {
@@ -85,8 +84,6 @@ class TransactionRegistry {
 			throw new UnkownTransactionError(internalType.toString());
 		}
 
-		this.updateSchemas(constructor, true);
-
 		const constructors = this.transactionTypes.get(internalType)!;
 		if (!constructors.has(version)) {
 			throw new UnkownTransactionError(internalType.toString());
@@ -97,10 +94,6 @@ class TransactionRegistry {
 		if (constructors.size === 0) {
 			this.transactionTypes.delete(internalType);
 		}
-	}
-
-	private updateSchemas(transaction: TransactionConstructor, remove?: boolean): void {
-		validator.extendTransaction(transaction.getSchema(), remove);
 	}
 }
 
