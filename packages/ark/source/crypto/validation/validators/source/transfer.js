@@ -1,9 +1,9 @@
-'use strict';
 import ucs2length from 'ajv/lib/compile/ucs2length';
 import equal from 'ajv/lib/compile/equal';
 
 import Formats from 'ajv/lib/compile/formats'
 const formats = Formats()
+console.log({ formats })
 
 var validate = (function() {
   var pattern0 = new RegExp('^[a-zA-Z0-9]+$');

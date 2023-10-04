@@ -30,8 +30,9 @@ export const transactionBaseSchema: Record<string, any> = {
 		signature: { $ref: "alphanumeric" },
 		version: { enum: [1, 2] },
 		signatures: {
-			additionalItems: false,
-			items: { allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }] },
+			items: {
+				allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }],
+			},
 			maxItems: 16,
 			minItems: 1,
 			type: "array",

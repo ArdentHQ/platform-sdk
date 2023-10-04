@@ -6,6 +6,7 @@ import { signedSchema, strictSchema, TransactionSchema } from "../transactions/t
 import { formats } from "./formats.js";
 import { keywords } from "./keywords.js";
 import { schemas } from "./schemas.js";
+import validateTransfer from "./validators/source/transfer.js"
 
 export class Validator {
 	private ajv: Ajv.Ajv;
@@ -70,7 +71,12 @@ export class Validator {
 		data: T,
 	): ISchemaValidationResult<T> {
 		try {
-			ajv.validate(schemaKeyReference, data);
+			// ajv.validate(schemaKeyReference, data);
+			let isValid = false;
+
+			if (schemaKeyReference === "transfer") {
+				isValid = validateTransfer(data);
+			}
 
 			const error = ajv.errors ? ajv.errorsText() : undefined;
 
@@ -95,6 +101,7 @@ export class Validator {
 		}
 
 		for (const addFormat of formats) {
+			console.log("adding formats", addFormat);
 			addFormat(ajv);
 		}
 

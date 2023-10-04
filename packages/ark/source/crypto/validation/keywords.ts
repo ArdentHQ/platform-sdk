@@ -1,5 +1,5 @@
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Ajv } from "ajv";
+import Ajv from "ajv";
 import ajvKeywords from "ajv-keywords";
 
 import { TransactionType } from "../enums.js";
@@ -7,7 +7,8 @@ import { ITransactionData } from "../interfaces/index.js";
 import { configManager } from "../managers/index.js";
 
 const maxBytes = (ajv: Ajv) => {
-	ajv.addKeyword("maxBytes", {
+	ajv.addKeyword({
+		keyword: "maxBytes",
 		compile(schema, parentSchema) {
 			return (data) => {
 				if ((parentSchema as any).type !== "string") {
@@ -27,8 +28,8 @@ const maxBytes = (ajv: Ajv) => {
 };
 
 const transactionType = (ajv: Ajv) => {
-	ajv.addKeyword("transactionType", {
-		// @ts-ignore
+	ajv.addKeyword({
+		keyword: "transactionType",
 		compile(schema) {
 			return (data, dataPath, parentObject: ITransactionData) => {
 				// Impose dynamic multipayment limit based on milestone
@@ -55,9 +56,13 @@ const transactionType = (ajv: Ajv) => {
 };
 
 const network = (ajv: Ajv) => {
-	ajv.addKeyword("network", {
+	ajv.addKeyword({
+		keyword: "network",
 		compile(schema) {
 			return (data) => schema && data === configManager.get("network.pubKeyHash");
+		},
+		code: () => {
+
 		},
 		errors: false,
 		metaSchema: {
@@ -67,12 +72,13 @@ const network = (ajv: Ajv) => {
 };
 
 const bignumber = (ajv: Ajv) => {
-	const instanceOf = ajvKeywords.get("instanceof").definition;
-	instanceOf.CONSTRUCTORS.BigNumber = BigNumber;
+	// const instanceOf = ajvKeywords.get("instanceof").definition;
+	// instanceOf.CONSTRUCTORS.BigNumber = BigNumber;
 
-	ajv.addKeyword("bignumber", {
-		compile(schema) {
-			return (data, dataPath, parentObject: any, property) => {
+	ajv.addKeyword({
+		keyword: "bignumber",
+		compile(schema, parentSchema) {
+			return (data) => {
 				const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;
 				const maximum = typeof schema.maximum !== "undefined" ? schema.maximum : "9223372036854775807"; // 8 byte maximum
 
@@ -87,9 +93,9 @@ const bignumber = (ajv: Ajv) => {
 					return false;
 				}
 
-				if (parentObject && property) {
-					parentObject[property] = bignum;
-				}
+				// if (parentObject && property) {
+				// 	parentObject[property] = bignum;
+				// }
 
 				if (bignum.isLessThan(minimum) && !bignum.isZero()) {
 					return false;
@@ -103,14 +109,14 @@ const bignumber = (ajv: Ajv) => {
 			};
 		},
 		errors: false,
-		metaSchema: {
-			additionalItems: false,
-			properties: {
-				maximum: { type: "integer" },
-				minimum: { type: "integer" },
-			},
-			type: "object",
-		},
+		// metaSchema: {
+		// 	additionalItems: false,
+		// 	properties: {
+		// 		maximum: { type: "integer" },
+		// 		minimum: { type: "integer" },
+		// 	},
+		// 	type: "object",
+		// },
 		modifying: true,
 	});
 };
