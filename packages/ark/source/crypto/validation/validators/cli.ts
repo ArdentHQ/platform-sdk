@@ -1,10 +1,9 @@
 import fs from "fs";
-import { Validator } from "../index.js";
-import Ajv, { Code, KeywordCxt, nil, _ } from "ajv";
+import Ajv, { _ } from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import ajvKeywords from "ajv-keywords";
 
-import { formats } from "../formats.js";
+import { vendorField } from "../formats.js";
 import { keywords } from "../keywords.js";
 import { schemas, schemasArray } from "../schemas.js";
 import addFormats from "ajv-formats";
@@ -19,14 +18,16 @@ import {
 	multiPayment,
 	multiSignature,
 	multiSignatureLegacy,
+	strictSchema,
+	signedSchema,
 } from "../../transactions/types/schemas.js";
 
 const ajv = new Ajv({
-	schemas: [schemasArray, transfer],
+	schemas: [schemasArray, transfer, strictSchema(transfer), signedSchema(transfer)],
 	code: {
 		source: true,
 		esm: true,
-		formats: _`require("../formats")`,
+		formats: _`require("../../formats")`,
 	},
 	$data: true,
 	allErrors: true,
@@ -34,17 +35,15 @@ const ajv = new Ajv({
 });
 
 addFormats(ajv);
+ajv.addFormat("vendorField", vendorField);
 ajvKeywords(ajv);
 
 for (const addKeyword of keywords) {
 	addKeyword(ajv);
 }
 
-for (const addFormat of formats) {
-	addFormat(ajv);
-}
-
-let moduleCode = standaloneCode(ajv);
+const moduleCode = standaloneCode(ajv);
+fs.writeFileSync(`./source/transfer.js`, moduleCode);
 
 // const ajv = Validator.make({
 // 	sourceCode: true,
