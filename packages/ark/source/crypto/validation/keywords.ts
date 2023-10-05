@@ -9,13 +9,13 @@ import { configManager } from "../managers/index.js";
 const maxBytes = (ajv: Ajv) => {
 	ajv.addKeyword({
 		keyword: "maxBytes",
-		compile(schema, parentSchema) {
+		code(schema, parentSchema) {
 			return (data) => {
 				if ((parentSchema as any).type !== "string") {
 					return false;
 				}
 
-				return Buffer.from(data, "utf8").byteLength <= schema;
+				return Buffer.from(data, "utf8").byteLength <= data;
 			};
 		},
 		errors: false,
@@ -30,7 +30,7 @@ const maxBytes = (ajv: Ajv) => {
 const transactionType = (ajv: Ajv) => {
 	ajv.addKeyword({
 		keyword: "transactionType",
-		compile(schema) {
+		code(schema) {
 			return (data, dataPath, parentObject: ITransactionData) => {
 				// Impose dynamic multipayment limit based on milestone
 				if (
@@ -58,11 +58,8 @@ const transactionType = (ajv: Ajv) => {
 const network = (ajv: Ajv) => {
 	ajv.addKeyword({
 		keyword: "network",
-		compile(schema) {
+		code(schema) {
 			return (data) => schema && data === configManager.get("network.pubKeyHash");
-		},
-		code: () => {
-
 		},
 		errors: false,
 		metaSchema: {
