@@ -27,7 +27,6 @@ const ajv = new Ajv({
 	code: {
 		source: true,
 		esm: true,
-		formats: _`require("../../formats")`,
 	},
 	$data: true,
 	allErrors: true,
