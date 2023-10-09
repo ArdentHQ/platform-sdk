@@ -27,6 +27,7 @@ const ajv = new Ajv({
 	code: {
 		source: true,
 		esm: true,
+		formats: _`require("@ardenthq/sdk-ark/crypto/validation/formats")`,
 	},
 	$data: true,
 	allErrors: true,
