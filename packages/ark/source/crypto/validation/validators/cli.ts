@@ -24,10 +24,11 @@ import {
 
 const ajv = new Ajv({
 	schemas: [schemasArray, transfer, strictSchema(transfer), signedSchema(transfer)],
+	formats: { vendorField },
 	code: {
 		source: true,
 		esm: true,
-		formats: _`require("@ardenthq/sdk-ark")`,
+		formats: _`require("../../formats.js")`,
 	},
 	$data: true,
 	allErrors: true,
