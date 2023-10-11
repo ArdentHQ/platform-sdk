@@ -1,10 +1,13 @@
 import { TransactionSchema } from "../transactions/types/schemas.js";
 import { BigNumber, isNil } from "@ardenthq/sdk-helpers";
 
-import { ISchemaValidationResult } from "../interfaces/index.js";
+import { ISchemaValidationResult, ITransaction } from "../interfaces/index.js";
 
 import { maxVendorFieldLength } from "../utils.js";
 import { transfer } from "./validators/source/transfer.js";
+import { TransactionType } from "../enums.js";
+import { ITransactionData } from "../interfaces/index.js";
+import { configManager } from "../managers/config.js";
 
 export class Validator {
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
@@ -57,6 +60,27 @@ export class Validator {
 		return true;
 	}
 
+	private validateTransactionType(data?: ITransactionData): boolean {
+		// Impose dynamic multipayment limit based on milestone
+		if (
+			data?.type === TransactionType.MultiPayment &&
+			(!data.typeGroup || data.typeGroup === 1) &&
+			data.asset &&
+			data.asset.payments
+		) {
+			const limit: number = configManager.getMilestone().multiPaymentLimit || 256;
+			return data.asset.payments.length <= limit;
+		}
+
+		// TODO: default check.
+		// return data === schema;
+		return true;
+	}
+
+	private validateNetwork(data?: ITransactionData): boolean {
+		return data === configManager.get("network.pubKeyHash");
+	}
+
 	public validate<T = any>(
 		schemaKeyReference: string | boolean | object,
 		data: T,
@@ -80,7 +104,8 @@ export class Validator {
 					this.validateVendorField(data.vendorField) &&
 					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
 					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce) &&
+					this.validateNetwork(data.network);
 			}
 
 			console.log({ schemaKeyReference, isValid });

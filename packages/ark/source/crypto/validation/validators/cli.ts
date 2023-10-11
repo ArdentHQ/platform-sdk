@@ -3,7 +3,6 @@ import Ajv, { _ } from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import ajvKeywords from "ajv-keywords";
 
-import { keywords } from "../keywords.js";
 import { schemas } from "../schemas.js";
 import addFormats from "ajv-formats";
 
@@ -35,9 +34,35 @@ const ajv = new Ajv({
 addFormats(ajv);
 ajvKeywords(ajv);
 
-for (const addKeyword of keywords) {
-	addKeyword(ajv);
-}
+ajv.addKeyword({
+	keyword: "transactionType",
+	errors: false,
+	metaSchema: {
+		minimum: 0,
+		type: "integer",
+	},
+});
+
+ajv.addKeyword({
+	keyword: "network",
+	errors: false,
+	metaSchema: {
+		type: "boolean",
+	},
+});
+
+ajv.addKeyword({
+	keyword: "bignumber",
+	errors: false,
+	metaSchema: {
+		properties: {
+			maximum: { type: "integer" },
+			minimum: { type: "integer" },
+		},
+		type: "object",
+	},
+	modifying: true,
+});
 
 const moduleCode = standaloneCode(ajv);
 fs.writeFileSync(`./source/transfer.js`, moduleCode);
