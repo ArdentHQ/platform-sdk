@@ -69,51 +69,16 @@ const network = (ajv: Ajv) => {
 };
 
 const bignumber = (ajv: Ajv) => {
-	// const instanceOf = ajvKeywords.get("instanceof").definition;
-	// instanceOf.CONSTRUCTORS.BigNumber = BigNumber;
-
 	ajv.addKeyword({
 		keyword: "bignumber",
-		// code(schema, parentSchema) {
-		// 	return (data) => {
-		// 		// const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;
-		// 		// const maximum = typeof schema.maximum !== "undefined" ? schema.maximum : "9223372036854775807"; // 8 byte maximum
-		// 		//
-		// 		// if (data !== 0 && !data) {
-		// 		// 	return false;
-		// 		// }
-		// 		//
-		// 		// let bignum: BigNumber;
-		// 		// try {
-		// 		// 	bignum = BigNumber.make(data);
-		// 		// } catch {
-		// 		// 	return false;
-		// 		// }
-		// 		//
-		// 		// // if (parentObject && property) {
-		// 		// // 	parentObject[property] = bignum;
-		// 		// // }
-		// 		//
-		// 		// if (bignum.isLessThan(minimum) && !bignum.isZero()) {
-		// 		// 	return false;
-		// 		// }
-		// 		//
-		// 		// if (bignum.isGreaterThan(maximum)) {
-		// 		// 	return false;
-		// 		// }
-		// 		//
-		// 		return true;
-		// 	};
-		// },
 		errors: false,
-		// metaSchema: {
-		// 	additionalItems: false,
-		// 	properties: {
-		// 		maximum: { type: "integer" },
-		// 		minimum: { type: "integer" },
-		// 	},
-		// 	type: "object",
-		// },
+		metaSchema: {
+			properties: {
+				maximum: { type: "integer" },
+				minimum: { type: "integer" },
+			},
+			type: "object",
+		},
 		modifying: true,
 	});
 };

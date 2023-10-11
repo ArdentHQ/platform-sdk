@@ -1,5 +1,5 @@
 import { TransactionSchema } from "../transactions/types/schemas.js";
-import { isNil } from "@ardenthq/sdk-helpers";
+import { BigNumber, isNil } from "@ardenthq/sdk-helpers";
 
 import { ISchemaValidationResult } from "../interfaces/index.js";
 
@@ -26,6 +26,36 @@ export class Validator {
 		}
 	}
 
+	private validateBignumber(schema: { minimum?: number; maximum?: number }, data?: BigNumber | number): boolean {
+		const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;
+		const maximum = typeof schema.maximum !== "undefined" ? schema.maximum : "9223372036854775807"; // 8 byte maximum
+
+		if (data !== 0 && !data) {
+			return false;
+		}
+
+		let bignum: BigNumber;
+		try {
+			bignum = BigNumber.make(data);
+		} catch {
+			return false;
+		}
+
+		// if (parentObject && property) {
+		// 	parentObject[property] = bignum;
+		// }
+
+		if (bignum.isLessThan(minimum) && !bignum.isZero()) {
+			return false;
+		}
+
+		if (bignum.isGreaterThan(maximum)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public validate<T = any>(
 		schemaKeyReference: string | boolean | object,
 		data: T,
@@ -44,7 +74,12 @@ export class Validator {
 			console.log({ data, schemaKeyReference, schema });
 
 			if (schemaKeyReference === "transfer" || schemaKeyReference === "transferStrict") {
-				isValid = transfer(data) && this.validateVendorField(data.vendorField);
+				isValid =
+					transfer(data) &&
+					this.validateVendorField(data.vendorField) &&
+					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			console.log({ schemaKeyReference, isValid });
@@ -81,7 +116,7 @@ export class Validator {
 			// 	isValid = validateSecondSignature(data);
 			// }
 
-			const error = !isValid ? "Validation failed." : undefined;
+			const error = !isValid ? `Validation failed for ${schemaKeyReference}.` : undefined;
 
 			return { error, value: data };
 		} catch (error) {
