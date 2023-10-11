@@ -3,6 +3,7 @@ import { BigNumber, isNil } from "@ardenthq/sdk-helpers";
 
 import { ISchemaValidationResult } from "../interfaces/index.js";
 
+import { maxVendorFieldLength } from "../utils.js";
 import { transfer } from "./validators/source/transfer.js";
 
 export class Validator {
@@ -20,7 +21,7 @@ export class Validator {
 		}
 
 		try {
-			return Buffer.from(data, "utf8").length <= 60;
+			return Buffer.from(data, "utf8").length <= maxVendorFieldLength();
 		} catch {
 			return false;
 		}
