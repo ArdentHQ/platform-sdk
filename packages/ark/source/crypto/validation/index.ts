@@ -1,4 +1,5 @@
 import { TransactionSchema } from "../transactions/types/schemas.js";
+import { isNil } from "@ardenthq/sdk-helpers";
 
 import { ISchemaValidationResult } from "../interfaces/index.js";
 
@@ -13,20 +14,39 @@ export class Validator {
 		return new Validator(options);
 	}
 
-	public validate<T = any>(schemaKeyReference: string | boolean | object, data: T): ISchemaValidationResult<T> {
-		return this.validateSchema(schemaKeyReference, data);
+	private validateVendorField(data?: string): boolean {
+		if (isNil(data)) {
+			return true;
+		}
+
+		try {
+			return Buffer.from(data, "utf8").length <= 60;
+		} catch {
+			return false;
+		}
+	}
+
+	public validate<T = any>(
+		schemaKeyReference: string | boolean | object,
+		data: T,
+		schema: TransactionSchema,
+	): ISchemaValidationResult<T> {
+		return this.validateSchema(schemaKeyReference, data, schema);
 	}
 
 	private validateSchema<T = any>(
 		schemaKeyReference: string | boolean | object,
 		data: T,
+		schema: TransactionSchema,
 	): ISchemaValidationResult<T> {
 		try {
 			let isValid = false;
+			console.log({ data, schemaKeyReference, schema });
 
 			if (schemaKeyReference === "transfer" || schemaKeyReference === "transferStrict") {
-				isValid = transfer(data);
+				isValid = transfer(data) && this.validateVendorField(data.vendorField);
 			}
+
 			console.log({ schemaKeyReference, isValid });
 
 			// if (schemaKeyReference === "vote") {

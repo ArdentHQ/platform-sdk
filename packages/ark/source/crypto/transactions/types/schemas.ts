@@ -67,7 +67,7 @@ export const transfer = extend(transactionBaseSchema, {
 		fee: { bignumber: { minimum: 1 } },
 		recipientId: { $ref: "address" },
 		type: { transactionType: TransactionType.Transfer },
-		vendorField: { anyOf: [{ type: "null" }, { format: "vendorField", type: "string" }] },
+		vendorField: { anyOf: [{ type: "null" }, { type: "string" }] },
 	},
 	required: ["recipientId"],
 });
@@ -286,7 +286,7 @@ export const multiPayment = extend(transactionBaseSchema, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		type: { transactionType: TransactionType.MultiPayment },
-		vendorField: { anyOf: [{ type: "null" }, { format: "vendorField", type: "string" }] },
+		vendorField: { anyOf: [{ type: "null" }, { type: "string" }] },
 	},
 });
 
