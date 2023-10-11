@@ -3,9 +3,8 @@ import Ajv, { _ } from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import ajvKeywords from "ajv-keywords";
 
-import { vendorField } from "../formats.js";
 import { keywords } from "../keywords.js";
-import { schemas, schemasArray } from "../schemas.js";
+import { schemas } from "../schemas.js";
 import addFormats from "ajv-formats";
 
 import {
@@ -23,12 +22,10 @@ import {
 } from "../../transactions/types/schemas.js";
 
 const ajv = new Ajv({
-	schemas: [schemasArray, transfer, strictSchema(transfer), signedSchema(transfer)],
-	formats: { vendorField },
+	schemas: [schemas, transfer, strictSchema(transfer), signedSchema(transfer)],
 	code: {
 		source: true,
 		esm: true,
-		formats: _`require("../../formats.js")`,
 	},
 	$data: true,
 	allErrors: true,
@@ -36,7 +33,6 @@ const ajv = new Ajv({
 });
 
 addFormats(ajv);
-ajv.addFormat("vendorField", vendorField);
 ajvKeywords(ajv);
 
 for (const addKeyword of keywords) {
