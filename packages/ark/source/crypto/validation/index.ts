@@ -72,13 +72,25 @@ export class Validator {
 			return data.asset.payments.length <= limit;
 		}
 
-		// TODO: default check.
-		// return data === schema;
-		return true;
+		return [
+			TransactionType.DelegateRegistration,
+			TransactionType.DelegateResignation,
+			TransactionType.HtlcClaim,
+			TransactionType.HtlcLock,
+			TransactionType.HtlcRefund,
+			TransactionType.Ipfs,
+			TransactionType.MultiPayment,
+			TransactionType.MultiSignature,
+			TransactionType.SecondSignature,
+			TransactionType.Transfer,
+			TransactionType.Vote,
+		].includes(data.type);
+
+		// TODO: AND typeGroup check?
 	}
 
-	private validateNetwork(data?: ITransactionData): boolean {
-		return data === configManager.get("network.pubKeyHash");
+	private validateNetwork(network?: number): boolean {
+		return network === configManager.get("network.pubKeyHash");
 	}
 
 	public validate<T = any>(
@@ -105,7 +117,7 @@ export class Validator {
 					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
 					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
 					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce) &&
-					this.validateNetwork(data.network);
+					this.validateTransactionType(data);
 			}
 
 			console.log({ schemaKeyReference, isValid });
