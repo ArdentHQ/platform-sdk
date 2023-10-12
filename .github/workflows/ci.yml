@@ -18,10 +18,10 @@ jobs:
             - uses: actions/checkout@v2
             - uses: pnpm/action-setup@v2
               with:
-                  version: 8.x
+                  version: 6.20.4
             - uses: actions/setup-node@v2
               with:
-                  node-version: "18"
+                  node-version: "16"
                   cache: "pnpm"
             - name: Build
               run: |
