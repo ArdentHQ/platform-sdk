@@ -109,10 +109,7 @@ export class Verifier {
 			throw new Error();
 		}
 
-		const schema = transactionType.getSchema();
-		console.log({ schema });
-
-		return Validator.make().validate(strict ? `${schema.$id}Strict` : `${schema.$id}`, data, schema);
+		return Validator.make().validate(transactionType.getSchema(), data);
 	}
 
 	private static internalVerifySignature(hash: Buffer, signature: string, publicKey: string): boolean {

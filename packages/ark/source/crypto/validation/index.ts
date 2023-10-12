@@ -1,13 +1,14 @@
 import { TransactionSchema } from "../transactions/types/schemas.js";
-import { BigNumber, isNil } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "@ardenthq/sdk-helpers";
 
 import { ISchemaValidationResult, ITransaction } from "../interfaces/index.js";
 
 import { maxVendorFieldLength } from "../utils.js";
-import { transfer } from "./validators/source/transfer.js";
 import { TransactionType } from "../enums.js";
 import { ITransactionData } from "../interfaces/index.js";
 import { configManager } from "../managers/config.js";
+
+import { transfer as validateTransferSchema } from "./validators/source/transfer.js";
 
 export class Validator {
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
@@ -19,7 +20,7 @@ export class Validator {
 	}
 
 	private validateVendorField(data?: string): boolean {
-		if (isNil(data)) {
+		if (data === undefined || data === null) {
 			return true;
 		}
 
@@ -39,15 +40,12 @@ export class Validator {
 		}
 
 		let bignum: BigNumber;
+
 		try {
 			bignum = BigNumber.make(data);
 		} catch {
 			return false;
 		}
-
-		// if (parentObject && property) {
-		// 	parentObject[property] = bignum;
-		// }
 
 		if (bignum.isLessThan(minimum) && !bignum.isZero()) {
 			return false;
@@ -60,7 +58,7 @@ export class Validator {
 		return true;
 	}
 
-	private validateTransactionType(data?: ITransactionData): boolean {
+	private validateTransactionType(data: ITransactionData): boolean {
 		// Impose dynamic multipayment limit based on milestone
 		if (
 			data?.type === TransactionType.MultiPayment &&
@@ -94,25 +92,22 @@ export class Validator {
 	}
 
 	public validate<T = any>(
-		schemaKeyReference: string | boolean | object,
-		data: T,
 		schema: TransactionSchema,
-	): ISchemaValidationResult<T> {
-		return this.validateSchema(schemaKeyReference, data, schema);
+		data: ITransactionData,
+	): ISchemaValidationResult<ITransactionData> {
+		return this.validateSchema(data, schema);
 	}
 
 	private validateSchema<T = any>(
-		schemaKeyReference: string | boolean | object,
-		data: T,
+		data: ITransactionData,
 		schema: TransactionSchema,
-	): ISchemaValidationResult<T> {
+	): ISchemaValidationResult<ITransactionData> {
 		try {
 			let isValid = false;
-			console.log({ data, schemaKeyReference, schema });
 
-			if (schemaKeyReference === "transfer" || schemaKeyReference === "transferStrict") {
+			if (schema.$id === "transfer" && !!data) {
 				isValid =
-					transfer(data) &&
+					validateTransferSchema(data) &&
 					this.validateVendorField(data.vendorField) &&
 					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
 					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
@@ -120,7 +115,7 @@ export class Validator {
 					this.validateTransactionType(data);
 			}
 
-			console.log({ schemaKeyReference, isValid });
+			console.log({ schema, data, isValid });
 
 			// if (schemaKeyReference === "vote") {
 			// 	isValid = validateVote(data);
@@ -154,7 +149,7 @@ export class Validator {
 			// 	isValid = validateSecondSignature(data);
 			// }
 
-			const error = !isValid ? `Validation failed for ${schemaKeyReference}.` : undefined;
+			const error = !isValid ? `Validation failed for ${schema.$id}.` : undefined;
 
 			return { error, value: data };
 		} catch (error) {

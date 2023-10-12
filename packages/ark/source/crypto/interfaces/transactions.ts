@@ -1,5 +1,4 @@
 import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
-import { ErrorObject } from "ajv";
 
 export interface ITransaction {
 	readonly id: string | undefined;
@@ -107,7 +106,7 @@ export interface ITransactionJson {
 export interface ISchemaValidationResult<T = any> {
 	value: T | undefined;
 	error: any;
-	errors?: ErrorObject[] | undefined;
+	errors?: Record<string, any>[] | undefined;
 }
 
 export interface IMultiPaymentItem {
