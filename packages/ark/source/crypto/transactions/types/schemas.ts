@@ -128,7 +128,6 @@ export const vote = extend(transactionBaseSchema, {
 		asset: {
 			properties: {
 				votes: {
-					additionalItems: false,
 					items: { $ref: "walletVote" },
 					minItems: 1,
 					maxItems: 2,
@@ -159,7 +158,6 @@ export const multiSignature = extend(transactionBaseSchema, {
 							type: "integer",
 						},
 						publicKeys: {
-							additionalItems: false,
 							minItems: 1,
 							items: { $ref: "publicKey" },
 							type: "array",
@@ -176,7 +174,6 @@ export const multiSignature = extend(transactionBaseSchema, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		signatures: {
-			additionalItems: false,
 			items: { allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }] },
 			maxItems: { $data: "1/asset/multiSignature/publicKeys/length" },
 			minItems: { $data: "1/asset/multiSignature/min" },
@@ -208,7 +205,6 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 						keysgroup: {
 							minItems: 1,
 							type: "array",
-							additionalItems: false,
 							maxItems: 16,
 							items: {
 								allOf: [{ minimum: 67, type: "string", maximum: 67, transform: ["toLowerCase"] }],
@@ -229,7 +225,6 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		signatures: {
-			additionalItems: false,
 			items: { $ref: "alphanumeric" },
 			maxItems: 1,
 			minItems: 1,
@@ -267,7 +262,6 @@ export const multiPayment = extend(transactionBaseSchema, {
 		asset: {
 			properties: {
 				payments: {
-					additionalItems: false,
 					items: {
 						required: ["amount", "recipientId"],
 						properties: {
