@@ -8,15 +8,17 @@ import { TransactionType } from "../enums.js";
 import { ITransactionData } from "../interfaces/index.js";
 import { configManager } from "../managers/config.js";
 
-import { transfer as validateTransferSchema } from "./validators/source/transfer.js";
-import { delegateRegistration as validateDelegateRegistration } from "./validators/source/delegateRegistration.js";
-import { delegateResignation as validateDelegateResignation } from "./validators/source/delegateResignation.js";
-import { secondSignature as validateSecondSignature } from "./validators/source/secondSignature.js";
-import { vote as validateVote } from "./validators/source/vote.js";
-import { ipfs as validateIpfs } from "./validators/source/ipfs.js";
-import { multiPayment as validateMultiPayment } from "./validators/source/multiPayment.js";
-import { multiSignature as validateMultisignature } from "./validators/source/multiSignature.js";
-import { multiSignatureLegacy as validateMultisignatureLegacy } from "./validators/source/multiSignatureLegacy.js";
+import {
+	transfer as validateTransferSchema,
+	delegateRegistration as validateDelegateRegistration,
+	delegateResignation as validateDelegateResignation,
+	secondSignature as validateSecondSignature,
+	vote as validateVote,
+	ipfs as validateIpfs,
+	multiPayment as validateMultiPayment,
+	multiSignature as validateMultisignature,
+	multiSignatureLegacy as validateMultisignatureLegacy,
+} from "./validators/source/index.js";
 
 export class Validator {
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
