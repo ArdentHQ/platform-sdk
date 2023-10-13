@@ -11,7 +11,7 @@ import { configManager } from "../managers/config.js";
 import { transfer as validateTransferSchema } from "./validators/source/transfer.js";
 import { delegateRegistration as validateDelegateRegistration } from "./validators/source/delegateRegistration.js";
 import { delegateResignation as validateDelegateResignation } from "./validators/source/delegateResignation.js";
-import { secondSignature as validateSecondSignature } from "./validators/source/delegateResignation.js";
+import { secondSignature as validateSecondSignature } from "./validators/source/secondSignature.js";
 import { vote as validateVote } from "./validators/source/vote.js";
 import { ipfs as validateIpfs } from "./validators/source/ipfs.js";
 import { multiPayment as validateMultiPayment } from "./validators/source/multiPayment.js";

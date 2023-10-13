@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { BigNumber, isArray } from "@ardenthq/sdk-helpers";
 
 import {
 	DuplicateParticipantInMultiSignatureError,
@@ -29,6 +29,12 @@ export class TransactionFactory {
 
 		if (data.nonce) {
 			data.nonce = BigNumber.make(data.nonce);
+		}
+
+		if (data.asset?.payments && isArray(data.asset?.payments)) {
+			for (const payment of data.asset?.payments) {
+				payment.amount = BigNumber.make(payment.amount);
+			}
 		}
 
 		return this.fromData(data);
