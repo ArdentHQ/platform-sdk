@@ -14,7 +14,7 @@
 		"/distribution"
 	],
 	"scripts": {
-		"build": "pnpm run clean && tsc",
+		"build": "pnpm run clean && tsc; pnpm copy:validators",
 		"build:analyze": "webpack --config ../../webpack.analyze.cjs",
 		"build:release": "webpack --config ../../webpack.config.cjs; pnpm copy:validators",
 		"build:watch": "pnpm run clean && tsc -w",
