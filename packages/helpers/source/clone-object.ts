@@ -10,5 +10,3 @@ export const cloneObject = <T extends object>(input: T): T => {
 
 	return cloned as T;
 };
-
-

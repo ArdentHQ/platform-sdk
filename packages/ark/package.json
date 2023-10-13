@@ -20,10 +20,10 @@
 		"build:watch": "pnpm run clean && tsc -w",
 		"clean": "rimraf .coverage distribution tmp",
 		"clean:browser": "rimraf distribution/browser",
+		"copy:validators": "npx cpx './source/crypto/validation/validators/source/*.js'   ./distribution/esm/crypto/validation/validators/source/",
 		"test": "uvu -r tsm source .test.ts",
 		"test:coverage": "c8 pnpm run test",
-		"test:watch": "watchlist source -- pnpm run test",
-		"copy:validators": "npx cpx './source/crypto/validation/validators/source/*.js'   ./distribution/esm/crypto/validation/validators/source/"
+		"test:watch": "watchlist source -- pnpm run test"
 	},
 	"dependencies": {
 		"@ardenthq/sdk": "workspace:*",
