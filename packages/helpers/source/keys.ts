@@ -1,1 +1,1 @@
-export const keys = <T>(value: T): string[] => Object.keys(value as object);
+export const keys = <T extends object>(value: T): string[] => Object.keys(value);

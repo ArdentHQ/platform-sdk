@@ -1,6 +1,5 @@
 import { FunctionReturning } from "./types.js";
-
-export const mapObject = <T, R>(iterable: T, iteratee: FunctionReturning): R[] => {
+export const mapObject = <T extends object, R extends object>(iterable: T, iteratee: FunctionReturning): R[] => {
 	const keys: string[] = Object.keys(iterable as object);
 	const result: R[] = new Array(keys.length);
 

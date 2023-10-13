@@ -1,5 +1,5 @@
-export const cloneObject = <T>(input: T): T => {
-	const keys: string[] = Object.keys(input as object);
+export const cloneObject = <T extends object>(input: T): T => {
+	const keys: string[] = Object.keys(input);
 	const cloned = {};
 
 	for (let i = 0; i < keys.length; i++) {
@@ -10,3 +10,5 @@ export const cloneObject = <T>(input: T): T => {
 
 	return cloned as T;
 };
+
+
