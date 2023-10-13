@@ -16,6 +16,7 @@ import { vote as validateVote } from "./validators/source/vote.js";
 import { ipfs as validateIpfs } from "./validators/source/ipfs.js";
 import { multiPayment as validateMultiPayment } from "./validators/source/multiPayment.js";
 import { multiSignature as validateMultisignature } from "./validators/source/multiSignature.js";
+import { multiSignatureLegacy as validateMultisignatureLegacy } from "./validators/source/multiSignatureLegacy.js";
 
 export class Validator {
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
@@ -146,9 +147,9 @@ export class Validator {
 				isValid = validateMultisignature(data);
 			}
 
-			// if (schema.$id === "multiSignatureLegacy") {
-			// 	isValid = validateMultisignatureLegacy(data);
-			// }
+			if (schema.$id === "multiSignatureLegacy") {
+				isValid = validateMultisignatureLegacy(data);
+			}
 
 			if (schema.$id === "secondSignature") {
 				isValid = validateSecondSignature(data);
