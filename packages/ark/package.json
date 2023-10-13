@@ -16,13 +16,14 @@
 	"scripts": {
 		"build": "pnpm run clean && tsc",
 		"build:analyze": "webpack --config ../../webpack.analyze.cjs",
-		"build:release": "webpack --config ../../webpack.config.cjs",
+		"build:release": "webpack --config ../../webpack.config.cjs; pnpm copy:validators",
 		"build:watch": "pnpm run clean && tsc -w",
 		"clean": "rimraf .coverage distribution tmp",
 		"clean:browser": "rimraf distribution/browser",
 		"test": "uvu -r tsm source .test.ts",
 		"test:coverage": "c8 pnpm run test",
-		"test:watch": "watchlist source -- pnpm run test"
+		"test:watch": "watchlist source -- pnpm run test",
+		"copy:validators": "npx cpx './source/crypto/validation/validators/source/*.js'   ./distribution/esm/crypto/validation/validators/source/"
 	},
 	"dependencies": {
 		"@ardenthq/sdk": "workspace:*",
