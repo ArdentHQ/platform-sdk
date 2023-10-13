@@ -116,8 +116,6 @@ const addKeywords = (ajv: Ajv) => {
 const compileStandaloneCode = (schemaKey: string) => {
 	const schema = transactionSchemas[schemaKey];
 
-	console.log({ transactionSchemas });
-
 	const ajv = new Ajv({
 		schemas: [schemas, schema, transactionSchemas.strictSchema(schema), transactionSchemas.signedSchema(schema)],
 		code: {
