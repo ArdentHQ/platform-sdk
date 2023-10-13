@@ -2,8 +2,9 @@ import fs from "fs";
 import Ajv, { _ } from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import ajvKeywords from "ajv-keywords";
-
 import addFormats from "ajv-formats";
+
+import * as transactionSchemas from "../../transactions/types/schemas.js";
 
 export const schemas = [
 	{
@@ -78,94 +79,75 @@ export const schemas = [
 	},
 ];
 
-import {
-	transfer,
-	secondSignature,
-	delegateResignation,
-	delegateRegistration,
-	vote,
-	ipfs,
-	multiPayment,
-	multiSignature,
-	multiSignatureLegacy,
-	strictSchema,
-	signedSchema,
-} from "../../transactions/types/schemas.js";
+const addKeywords = (ajv: Ajv) => {
+	ajvKeywords(ajv);
 
-const ajv = new Ajv({
-	schemas: [schemas, transfer, strictSchema(transfer), signedSchema(transfer)],
-	code: {
-		source: true,
-		esm: true,
-	},
-	$data: true,
-	allErrors: true,
-	verbose: true,
-});
-
-addFormats(ajv);
-ajvKeywords(ajv);
-
-ajv.addKeyword({
-	keyword: "transactionType",
-	errors: false,
-	metaSchema: {
-		minimum: 0,
-		type: "integer",
-	},
-});
-
-ajv.addKeyword({
-	keyword: "network",
-	errors: false,
-	metaSchema: {
-		type: "boolean",
-	},
-});
-
-ajv.addKeyword({
-	keyword: "bignumber",
-	errors: false,
-	metaSchema: {
-		properties: {
-			maximum: { type: "integer" },
-			minimum: { type: "integer" },
+	ajv.addKeyword({
+		keyword: "transactionType",
+		errors: false,
+		metaSchema: {
+			minimum: 0,
+			type: "integer",
 		},
-		type: "object",
-	},
-	modifying: true,
-});
+	});
 
-const moduleCode = standaloneCode(ajv);
-fs.writeFileSync(`./source/transfer.js`, moduleCode);
+	ajv.addKeyword({
+		keyword: "network",
+		errors: false,
+		metaSchema: {
+			type: "boolean",
+		},
+	});
 
-// const ajv = Validator.make({
-// 	sourceCode: true,
-// }).getInstance();
-//
-// const compileTransfer = ajv.compile(transfer);
-// fs.writeFileSync(`./source/transfer.js`, pack(ajv, compileTransfer));
-//
-// const compileSecondSignature = ajv.compile(secondSignature);
-// fs.writeFileSync(`./source/secondSignature.js`, pack(ajv, compileSecondSignature));
-//
-// const compileDelegateRegistration = ajv.compile(delegateRegistration);
-// fs.writeFileSync(`./source/delegateRegistration.js`, pack(ajv, compileDelegateRegistration));
-//
-// const compileDelegateResignation = ajv.compile(delegateResignation);
-// fs.writeFileSync(`./source/delegateResignation.js`, pack(ajv, compileDelegateResignation));
-//
-// const compileVote = ajv.compile(vote);
-// fs.writeFileSync(`./source/vote.js`, pack(ajv, compileVote));
-//
-// const compileIpfs = ajv.compile(ipfs);
-// fs.writeFileSync(`./source/ipfs.js`, pack(ajv, compileIpfs));
-//
-// const compileMultipayment = ajv.compile(multiPayment);
-// fs.writeFileSync(`./source/multiPayment.js`, pack(ajv, compileMultipayment));
-//
-// const compileMultisignature = ajv.compile(multiSignature);
-// fs.writeFileSync(`./source/multiSignature.js`, pack(ajv, compileMultisignature));
-//
-// const compileMultiSignatureLegacy = ajv.compile(multiSignatureLegacy);
-// fs.writeFileSync(`./source/multiSignatureLegacy.js`, pack(ajv, compileMultiSignatureLegacy));
+	ajv.addKeyword({
+		keyword: "bignumber",
+		errors: false,
+		metaSchema: {
+			properties: {
+				maximum: { type: "integer" },
+				minimum: { type: "integer" },
+			},
+			type: "object",
+		},
+		modifying: true,
+	});
+};
+
+const compileStandaloneCode = (schemaKey: string) => {
+	const schema = transactionSchemas[schemaKey];
+
+	console.log({ transactionSchemas });
+
+	const ajv = new Ajv({
+		schemas: [schemas, schema, transactionSchemas.strictSchema(schema), transactionSchemas.signedSchema(schema)],
+		code: {
+			source: true,
+			esm: true,
+		},
+		$data: true,
+		allErrors: true,
+		verbose: true,
+	});
+
+	addFormats(ajv);
+	addKeywords(ajv);
+
+	const moduleCode = standaloneCode(ajv);
+	fs.writeFileSync(`./source/${schemaKey}.js`, moduleCode);
+};
+
+const availableSchemas = [
+	"transfer",
+	"secondSignature",
+	"delegateResignation",
+	"delegateRegistration",
+	"vote",
+	"ipfs",
+	"multiPayment",
+	"multiSignature",
+	"multiSignatureLegacy",
+];
+
+for (const transactionSchema of availableSchemas) {
+	compileStandaloneCode(transactionSchema);
+}
