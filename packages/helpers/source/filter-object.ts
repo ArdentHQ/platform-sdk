@@ -1,7 +1,7 @@
 import { FunctionReturning } from "./types.js";
 
 export const filterObject = <T>(iterable: T, iteratee: FunctionReturning): T => {
-	const keys = Object.keys(iterable);
+	const keys = Object.keys(iterable as object);
 	const length: number = keys.length;
 	const result = {};
 
