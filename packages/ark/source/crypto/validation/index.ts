@@ -9,6 +9,13 @@ import { ITransactionData } from "../interfaces/index.js";
 import { configManager } from "../managers/config.js";
 
 import { transfer as validateTransferSchema } from "./validators/source/transfer.js";
+import { delegateRegistration as validateDelegateRegistration } from "./validators/source/delegateRegistration.js";
+import { delegateResignation as validateDelegateResignation } from "./validators/source/delegateResignation.js";
+import { secondSignature as validateSecondSignature } from "./validators/source/delegateResignation.js";
+import { vote as validateVote } from "./validators/source/vote.js";
+import { ipfs as validateIpfs } from "./validators/source/ipfs.js";
+import { multiPayment as validateMultiPayment } from "./validators/source/multiPayment.js";
+import { multiSignature as validateMultisignature } from "./validators/source/multiSignature.js";
 
 export class Validator {
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
@@ -115,39 +122,37 @@ export class Validator {
 					this.validateTransactionType(data);
 			}
 
-			console.log({ schema, data, isValid });
+			if (schema.$id === "vote") {
+				isValid = validateVote(data);
+			}
 
-			// if (schemaKeyReference === "vote") {
-			// 	isValid = validateVote(data);
-			// }
-			//
-			// if (schemaKeyReference === "ipfs") {
-			// 	isValid = validateIpfs(data);
-			// }
-			//
-			// if (schemaKeyReference === "delegateResignation") {
-			// 	isValid = validateDelegateResignation(data);
-			// }
-			//
-			// if (schemaKeyReference === "delegateRegistration") {
-			// 	isValid = validateDelegateRegistration(data);
-			// }
-			//
-			// if (schemaKeyReference === "multiPayment") {
-			// 	isValid = validateMultiPayment(data);
-			// }
-			//
-			// if (schemaKeyReference === "multiSignature") {
-			// 	isValid = validateMultisignature(data);
-			// }
-			//
-			// if (schemaKeyReference === "multiSignatureLegacy") {
+			if (schema.$id === "ipfs") {
+				isValid = validateIpfs(data);
+			}
+
+			if (schema.$id === "delegateResignation") {
+				isValid = validateDelegateResignation(data);
+			}
+
+			if (schema.$id === "delegateRegistration") {
+				isValid = validateDelegateRegistration(data);
+			}
+
+			if (schema.$id === "multiPayment") {
+				isValid = validateMultiPayment(data);
+			}
+
+			if (schema.$id === "multiSignature") {
+				isValid = validateMultisignature(data);
+			}
+
+			// if (schema.$id === "multiSignatureLegacy") {
 			// 	isValid = validateMultisignatureLegacy(data);
 			// }
-			//
-			// if (schemaKeyReference === "secondSignature") {
-			// 	isValid = validateSecondSignature(data);
-			// }
+
+			if (schema.$id === "secondSignature") {
+				isValid = validateSecondSignature(data);
+			}
 
 			const error = !isValid ? `Validation failed for ${schema.$id}.` : undefined;
 
