@@ -4,7 +4,7 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { ISchemaValidationResult, ITransaction } from "../interfaces/index.js";
 
 import { maxVendorFieldLength } from "../utils.js";
-import { TransactionType } from "../enums.js";
+import { TransactionType, TransactionTypeGroup } from "../enums.js";
 import { ITransactionData } from "../interfaces/index.js";
 import { configManager } from "../managers/config.js";
 
@@ -27,78 +27,6 @@ export class Validator {
 
 	public static make(options: Record<string, any> = {}): Validator {
 		return new Validator(options);
-	}
-
-	private validateVendorField(data?: string): boolean {
-		if (data === undefined || data === null) {
-			return true;
-		}
-
-		try {
-			return Buffer.from(data, "utf8").length <= maxVendorFieldLength();
-		} catch {
-			return false;
-		}
-	}
-
-	private validateBignumber(schema: { minimum?: number; maximum?: number }, data?: BigNumber | number): boolean {
-		const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;
-		const maximum = typeof schema.maximum !== "undefined" ? schema.maximum : "9223372036854775807"; // 8 byte maximum
-
-		if (data !== 0 && !data) {
-			return false;
-		}
-
-		let bignum: BigNumber;
-
-		try {
-			bignum = BigNumber.make(data);
-		} catch {
-			return false;
-		}
-
-		if (bignum.isLessThan(minimum) && !bignum.isZero()) {
-			return false;
-		}
-
-		if (bignum.isGreaterThan(maximum)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private validateTransactionType(data: ITransactionData): boolean {
-		// Impose dynamic multipayment limit based on milestone
-		if (
-			data?.type === TransactionType.MultiPayment &&
-			(!data.typeGroup || data.typeGroup === 1) &&
-			data.asset &&
-			data.asset.payments
-		) {
-			const limit: number = configManager.getMilestone().multiPaymentLimit || 256;
-			return data.asset.payments.length <= limit;
-		}
-
-		return [
-			TransactionType.DelegateRegistration,
-			TransactionType.DelegateResignation,
-			TransactionType.HtlcClaim,
-			TransactionType.HtlcLock,
-			TransactionType.HtlcRefund,
-			TransactionType.Ipfs,
-			TransactionType.MultiPayment,
-			TransactionType.MultiSignature,
-			TransactionType.SecondSignature,
-			TransactionType.Transfer,
-			TransactionType.Vote,
-		].includes(data.type);
-
-		// TODO: AND typeGroup check?
-	}
-
-	private validateNetwork(network?: number): boolean {
-		return network === configManager.get("network.pubKeyHash");
 	}
 
 	public validate<T = any>(
@@ -163,5 +91,87 @@ export class Validator {
 		} catch (error) {
 			return { error: error.stack, errors: [], value: undefined };
 		}
+	}
+
+	private validateVendorField(data?: string): boolean {
+		if (data === undefined || data === null) {
+			return true;
+		}
+
+		try {
+			return Buffer.from(data, "utf8").length <= maxVendorFieldLength();
+		} catch {
+			return false;
+		}
+	}
+
+	private validateBignumber(schema: { minimum?: number; maximum?: number }, data?: BigNumber | number): boolean {
+		const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;
+		const maximum = typeof schema.maximum !== "undefined" ? schema.maximum : "9223372036854775807"; // 8 byte maximum
+
+		if (data !== 0 && !data) {
+			return false;
+		}
+
+		let bignum: BigNumber;
+
+		try {
+			bignum = BigNumber.make(data);
+		} catch {
+			return false;
+		}
+
+		if (bignum.isLessThan(minimum) && !bignum.isZero()) {
+			return false;
+		}
+
+		if (bignum.isGreaterThan(maximum)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private validateTransactionType(data: ITransactionData): boolean {
+		// Impose dynamic multipayment limit based on milestone
+		if (
+			data?.type === TransactionType.MultiPayment &&
+			(!data.typeGroup || data.typeGroup === 1) &&
+			data.asset &&
+			data.asset.payments
+		) {
+			const limit: number = configManager.getMilestone().multiPaymentLimit || 256;
+			return data.asset.payments.length <= limit;
+		}
+
+		const types = [
+			TransactionType.DelegateRegistration,
+			TransactionType.DelegateResignation,
+			TransactionType.HtlcClaim,
+			TransactionType.HtlcLock,
+			TransactionType.HtlcRefund,
+			TransactionType.Ipfs,
+			TransactionType.MultiPayment,
+			TransactionType.MultiSignature,
+			TransactionType.SecondSignature,
+			TransactionType.Transfer,
+			TransactionType.Vote,
+		];
+
+		const typeGroups = [TransactionTypeGroup.Core, TransactionTypeGroup.Test];
+
+		if (data.typeGroup && !typeGroups.includes(data.typeGroup)) {
+			return false;
+		}
+
+		return types.includes(data.type);
+	}
+
+	private validateNetwork(network?: number): boolean {
+		if (!network) {
+			return true;
+		}
+
+		return network === configManager.get("network.pubKeyHash");
 	}
 }
