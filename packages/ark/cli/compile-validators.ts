@@ -131,7 +131,20 @@ const compileStandaloneCode = (schemaKey: string) => {
 	addKeywords(ajv);
 
 	const moduleCode = standaloneCode(ajv);
-	fs.writeFileSync(`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.js`, moduleCode);
+	const notice = `/**
+ * IMPORTANT: This file is CLI generated and any manual changes should be avoided, they will be overriden when generating standalone validators.
+ *
+ * For any changes in schemas or custom validators, see the referenced schemas in packages/ark/compile/compile-validators.ts and adjust them accordingly.
+ * After schema update, run "pnpm build:validators" to gererate new standalone validator code.
+ *
+ * Custom validation functions are defined in /packages/ark/source/crypto/validation/index.ts
+ *
+ */`;
+
+	fs.writeFileSync(
+		`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.js`,
+		`${notice}\n${moduleCode}`,
+	);
 };
 
 const availableSchemas = [
