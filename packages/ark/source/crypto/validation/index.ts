@@ -10,14 +10,14 @@ import { configManager } from "../managers/config.js";
 
 import {
 	transfer as validateTransferSchema,
-	delegateRegistration as validateDelegateRegistration,
-	delegateResignation as validateDelegateResignation,
-	secondSignature as validateSecondSignature,
-	vote as validateVote,
-	ipfs as validateIpfs,
-	multiPayment as validateMultiPayment,
-	multiSignature as validateMultisignature,
-	multiSignatureLegacy as validateMultisignatureLegacy,
+	delegateRegistration as validateDelegateRegistrationSchema,
+	delegateResignation as validateDelegateResignationSchema,
+	secondSignature as validateSecondSignatureSchema,
+	vote as validateVoteSchema,
+	ipfs as validateIpfsSchema,
+	multiPayment as validateMultiPaymentSchema,
+	multiSignature as validateMultisignatureSchema,
+	multiSignatureLegacy as validateMultisignatureLegacySchema,
 } from "./validators/source/index.js";
 
 export class Validator {
@@ -54,35 +54,59 @@ export class Validator {
 			}
 
 			if (schema.$id === "vote") {
-				isValid = validateVote(data);
+				isValid =
+					validateVoteSchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			if (schema.$id === "ipfs") {
-				isValid = validateIpfs(data);
+				isValid =
+					validateIpfsSchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			if (schema.$id === "delegateResignation") {
-				isValid = validateDelegateResignation(data);
+				isValid =
+					validateDelegateResignationSchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			if (schema.$id === "delegateRegistration") {
-				isValid = validateDelegateRegistration(data);
+				isValid =
+					validateDelegateRegistrationSchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			if (schema.$id === "multiPayment") {
-				isValid = validateMultiPayment(data);
+				isValid =
+					validateMultiPaymentSchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			if (schema.$id === "multiSignature") {
-				isValid = validateMultisignature(data);
+				isValid =
+					validateMultisignatureSchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			if (schema.$id === "multiSignatureLegacy") {
-				isValid = validateMultisignatureLegacy(data);
+				isValid =
+					validateMultisignatureLegacySchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			if (schema.$id === "secondSignature") {
-				isValid = validateSecondSignature(data);
+				isValid =
+					validateSecondSignatureSchema(data) &&
+					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
 			}
 
 			const error = !isValid ? `Validation failed for ${schema.$id}.` : undefined;
