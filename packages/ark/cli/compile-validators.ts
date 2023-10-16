@@ -131,7 +131,7 @@ const compileStandaloneCode = (schemaKey: string) => {
 	addKeywords(ajv);
 
 	const moduleCode = standaloneCode(ajv);
-	fs.writeFileSync(`../source/crypto/validation/validators/source/${schemaKey}.js`, moduleCode);
+	fs.writeFileSync(`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.js`, moduleCode);
 };
 
 const availableSchemas = [
