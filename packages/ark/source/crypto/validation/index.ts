@@ -43,70 +43,44 @@ export class Validator {
 		try {
 			let isValid = false;
 
-			if (schema.$id === "transfer" && !!data) {
+			if (schema.$id === "transfer") {
 				isValid =
 					validateTransferSchema(data) &&
 					this.validateVendorField(data.vendorField) &&
 					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce) &&
-					this.validateTransactionType(data);
+					this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "vote") {
-				isValid =
-					validateVoteSchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateVoteSchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "ipfs") {
-				isValid =
-					validateIpfsSchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateIpfsSchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "delegateResignation") {
-				isValid =
-					validateDelegateResignationSchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateDelegateResignationSchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "delegateRegistration") {
-				isValid =
-					validateDelegateRegistrationSchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateDelegateRegistrationSchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "multiPayment") {
-				isValid =
-					validateMultiPaymentSchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateMultiPaymentSchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "multiSignature") {
-				isValid =
-					validateMultisignatureSchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateMultisignatureSchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "multiSignatureLegacy") {
-				isValid =
-					validateMultisignatureLegacySchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateMultisignatureLegacySchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "secondSignature") {
-				isValid =
-					validateSecondSignatureSchema(data) &&
-					this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-					this.validateBignumber(schema.properties.nonce.bignumber, data.nonce);
+				isValid = validateSecondSignatureSchema(data) && this.validateTransactionFields(data, schema);
 			}
 
 			const error = !isValid ? `Validation failed for ${schema.$id}.` : undefined;
@@ -115,6 +89,15 @@ export class Validator {
 		} catch (error) {
 			return { error: error.stack, errors: [], value: undefined };
 		}
+	}
+
+	private validateTransactionFields(data: ITransactionData, schema: TransactionSchema): boolean {
+		return (
+			this.validateTransactionType(data) &&
+			this.validateNetwork(data.network) &&
+			this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+			this.validateBignumber(schema.properties.nonce.bignumber, data.nonce)
+		);
 	}
 
 	private validateVendorField(data?: string): boolean {
