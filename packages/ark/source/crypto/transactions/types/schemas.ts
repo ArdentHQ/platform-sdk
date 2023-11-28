@@ -19,6 +19,11 @@ export const transactionBaseSchema: Record<string, any> = {
 	else: { required: ["type", "senderPublicKey", "fee", "amount", "nonce"] },
 	if: { properties: { version: { anyOf: [{ type: "null" }, { const: 1 }] } } },
 	properties: {
+		fee: { bignumber: { minimum: 0 } },
+		id: { anyOf: [{ $ref: "transactionId" }, { type: "null" }] },
+		network: { $ref: "networkByte" },
+		nonce: { bignumber: { minimum: 0 } },
+		secondSignature: { $ref: "alphanumeric" },
 		senderPublicKey: { $ref: "publicKey" },
 		signSignature: { $ref: "alphanumeric" },
 		signature: { $ref: "alphanumeric" },
