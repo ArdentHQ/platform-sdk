@@ -10,9 +10,6 @@ on:
 jobs:
     compile:
         runs-on: ubuntu-latest
-        concurrency:
-            group: ${{ github.head_ref }}-test
-            cancel-in-progress: true
         steps:
             - uses: actions/checkout@v2
             - uses: pnpm/action-setup@v2
