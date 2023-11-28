@@ -2,6 +2,9 @@ name: Validators
 
 on:
     push:
+        branches:
+            - "main"
+            - "develop"
         paths:
             - "packages/ark/source/crypto/transactions/types/schemas.ts"
 
