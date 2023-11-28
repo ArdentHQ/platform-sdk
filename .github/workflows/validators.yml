@@ -1,8 +1,6 @@
 name: Validators
 
 on:
-    pull_request:
-        types: [ready_for_review, synchronize, opened]
     push:
         paths:
             - "$GITHUB_WORKSPACE/packages/ark/source/crypto/transactions/types/schemas.ts"
