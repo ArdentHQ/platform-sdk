@@ -6,7 +6,7 @@ on:
             - "main"
             - "develop"
         paths:
-            - "packages/ark/source/crypto/transactions/types/*.ts"
+            - "**/ark/source/crypto/transactions/types/schemas.ts"
 
 jobs:
     compile:
