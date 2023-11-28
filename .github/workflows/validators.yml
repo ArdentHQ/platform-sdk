@@ -3,7 +3,7 @@ name: Validators
 on:
     push:
         paths:
-            - "**/ark/source/crypto/transactions/types/schemas.ts"
+            - "**/schemas.ts"
 
 jobs:
     compile:
