@@ -7,7 +7,7 @@ import {
 	IVerifyOptions,
 } from "../interfaces/index.js";
 import { configManager } from "../managers/index.js";
-import { validator } from "../validation/index.js";
+import { Validator } from "../validation/index.js";
 import { TransactionTypeFactory } from "./types/factory.js";
 import { Utils } from "./utils.js";
 
@@ -109,9 +109,7 @@ export class Verifier {
 			throw new Error();
 		}
 
-		const { $id } = transactionType.getSchema();
-
-		return validator.validate(strict ? `${$id}Strict` : `${$id}`, data);
+		return Validator.make().validate(transactionType.getSchema(), data);
 	}
 
 	private static internalVerifySignature(hash: Buffer, signature: string, publicKey: string): boolean {

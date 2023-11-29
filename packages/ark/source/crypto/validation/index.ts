@@ -1,137 +1,184 @@
-import Ajv from "ajv";
-import ajvKeywords from "ajv-keywords";
+import { TransactionSchema } from "../transactions/types/schemas.js";
+import { BigNumber } from "@ardenthq/sdk-helpers";
 
-import { ISchemaValidationResult } from "../interfaces/index.js";
-import { signedSchema, strictSchema, TransactionSchema } from "../transactions/types/schemas.js";
-import { formats } from "./formats.js";
-import { keywords } from "./keywords.js";
-import { schemas } from "./schemas.js";
+import { ISchemaValidationResult, ITransaction } from "../interfaces/index.js";
+
+import { maxVendorFieldLength } from "../utils.js";
+import { TransactionType, TransactionTypeGroup } from "../enums.js";
+import { ITransactionData } from "../interfaces/index.js";
+import { configManager } from "../managers/config.js";
+
+import {
+	transfer as validateTransferSchema,
+	delegateRegistration as validateDelegateRegistrationSchema,
+	delegateResignation as validateDelegateResignationSchema,
+	secondSignature as validateSecondSignatureSchema,
+	vote as validateVoteSchema,
+	ipfs as validateIpfsSchema,
+	multiPayment as validateMultiPaymentSchema,
+	multiSignature as validateMultisignatureSchema,
+	multiSignatureLegacy as validateMultisignatureLegacySchema,
+} from "./validators/source/index.js";
 
 export class Validator {
-	private ajv: Ajv.Ajv;
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
 
-	private constructor(options: Record<string, any>) {
-		this.ajv = this.instantiateAjv(options);
-	}
+	private constructor(options: Record<string, any>) {}
 
 	public static make(options: Record<string, any> = {}): Validator {
 		return new Validator(options);
 	}
 
-	public getInstance(): Ajv.Ajv {
-		return this.ajv;
-	}
-
-	public validate<T = any>(schemaKeyReference: string | boolean | object, data: T): ISchemaValidationResult<T> {
-		return this.validateSchema(this.ajv, schemaKeyReference, data);
-	}
-
-	public validateException<T = any>(
-		schemaKeyReference: string | boolean | object,
-		data: T,
-	): ISchemaValidationResult<T> {
-		const ajv = this.instantiateAjv({ allErrors: true, verbose: true });
-
-		for (const schema of this.transactionSchemas.values()) {
-			this.extendTransactionSchema(ajv, schema);
-		}
-
-		return this.validateSchema(ajv, schemaKeyReference, data);
-	}
-
-	public addFormat(name: string, format: Ajv.FormatDefinition): void {
-		this.ajv.addFormat(name, format);
-	}
-
-	public addKeyword(keyword: string, definition: Ajv.KeywordDefinition): void {
-		this.ajv.addKeyword(keyword, definition);
-	}
-
-	public addSchema(schema: object | object[], key?: string): void {
-		this.ajv.addSchema(schema, key);
-	}
-
-	public removeKeyword(keyword: string): void {
-		this.ajv.removeKeyword(keyword);
-	}
-
-	public removeSchema(schemaKeyReference: string | boolean | object | RegExp): void {
-		this.ajv.removeSchema(schemaKeyReference);
-	}
-
-	public extendTransaction(schema: TransactionSchema, remove?: boolean) {
-		this.extendTransactionSchema(this.ajv, schema, remove);
+	public validate<T = any>(
+		schema: TransactionSchema,
+		data: ITransactionData,
+	): ISchemaValidationResult<ITransactionData> {
+		return this.validateSchema(data, schema);
 	}
 
 	private validateSchema<T = any>(
-		ajv: Ajv.Ajv,
-		schemaKeyReference: string | boolean | object,
-		data: T,
-	): ISchemaValidationResult<T> {
+		data: ITransactionData,
+		schema: TransactionSchema,
+	): ISchemaValidationResult<ITransactionData> {
 		try {
-			ajv.validate(schemaKeyReference, data);
+			let isValid = false;
 
-			const error = ajv.errors ? ajv.errorsText() : undefined;
+			if (schema.$id === "transfer") {
+				isValid =
+					validateTransferSchema(data) &&
+					this.validateVendorField(data.vendorField) &&
+					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
+					this.validateTransactionFields(data, schema);
+			}
 
-			return { error, errors: ajv.errors || undefined, value: data };
+			if (schema.$id === "vote") {
+				isValid = validateVoteSchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			if (schema.$id === "ipfs") {
+				isValid = validateIpfsSchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			if (schema.$id === "delegateResignation") {
+				isValid = validateDelegateResignationSchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			if (schema.$id === "delegateRegistration") {
+				isValid = validateDelegateRegistrationSchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			if (schema.$id === "multiPayment") {
+				isValid = validateMultiPaymentSchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			if (schema.$id === "multiSignature") {
+				isValid = validateMultisignatureSchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			if (schema.$id === "multiSignatureLegacy") {
+				isValid = validateMultisignatureLegacySchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			if (schema.$id === "secondSignature") {
+				isValid = validateSecondSignatureSchema(data) && this.validateTransactionFields(data, schema);
+			}
+
+			const error = !isValid ? `Validation failed for ${schema.$id}.` : undefined;
+
+			return { error, value: data };
 		} catch (error) {
 			return { error: error.stack, errors: [], value: undefined };
 		}
 	}
 
-	private instantiateAjv(options: Record<string, any>) {
-		const ajv = new Ajv({
-			$data: true,
-			extendRefs: true,
-			removeAdditional: true,
-			schemas,
-			...options,
-		});
-		ajvKeywords(ajv);
-
-		for (const addKeyword of keywords) {
-			addKeyword(ajv);
-		}
-
-		for (const addFormat of formats) {
-			addFormat(ajv);
-		}
-
-		return ajv;
+	private validateTransactionFields(data: ITransactionData, schema: TransactionSchema): boolean {
+		return (
+			this.validateTransactionType(data) &&
+			this.validateNetwork(data.network) &&
+			this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+			this.validateBignumber(schema.properties.nonce.bignumber, data.nonce)
+		);
 	}
 
-	private extendTransactionSchema(ajv: Ajv.Ajv, schema: TransactionSchema, remove?: boolean) {
-		if (ajv.getSchema(schema.$id)) {
-			remove = true;
+	private validateVendorField(data?: string): boolean {
+		if (data === undefined || data === null) {
+			return true;
 		}
 
-		if (remove) {
-			this.transactionSchemas.delete(schema.$id);
-
-			ajv.removeSchema(schema.$id);
-			ajv.removeSchema(`${schema.$id}Signed`);
-			ajv.removeSchema(`${schema.$id}Strict`);
+		try {
+			return Buffer.from(data, "utf8").length <= maxVendorFieldLength();
+		} catch {
+			return false;
 		}
-
-		this.transactionSchemas.set(schema.$id, schema);
-
-		ajv.addSchema(schema);
-		ajv.addSchema(signedSchema(schema));
-		ajv.addSchema(strictSchema(schema));
-
-		this.updateTransactionArray(ajv);
 	}
 
-	private updateTransactionArray(ajv: Ajv.Ajv) {
-		ajv.removeSchema("transactions");
-		ajv.addSchema({
-			$id: "transactions",
-			additionalItems: false,
-			items: { anyOf: [...this.transactionSchemas.keys()].map((schema) => ({ $ref: `${schema}Signed` })) },
-			type: "array",
-		});
+	private validateBignumber(schema: { minimum?: number; maximum?: number }, data?: BigNumber | number): boolean {
+		const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;
+		const maximum = typeof schema.maximum !== "undefined" ? schema.maximum : "9223372036854775807"; // 8 byte maximum
+
+		if (data !== 0 && !data) {
+			return false;
+		}
+
+		let bignum: BigNumber;
+
+		try {
+			bignum = BigNumber.make(data);
+		} catch {
+			return false;
+		}
+
+		if (bignum.isLessThan(minimum) && !bignum.isZero()) {
+			return false;
+		}
+
+		if (bignum.isGreaterThan(maximum)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private validateTransactionType(data: ITransactionData): boolean {
+		// Impose dynamic multipayment limit based on milestone
+		if (
+			data?.type === TransactionType.MultiPayment &&
+			(!data.typeGroup || data.typeGroup === 1) &&
+			data.asset &&
+			data.asset.payments
+		) {
+			const limit: number = configManager.getMilestone().multiPaymentLimit || 256;
+			return data.asset.payments.length <= limit;
+		}
+
+		const types = [
+			TransactionType.DelegateRegistration,
+			TransactionType.DelegateResignation,
+			TransactionType.HtlcClaim,
+			TransactionType.HtlcLock,
+			TransactionType.HtlcRefund,
+			TransactionType.Ipfs,
+			TransactionType.MultiPayment,
+			TransactionType.MultiSignature,
+			TransactionType.SecondSignature,
+			TransactionType.Transfer,
+			TransactionType.Vote,
+		];
+
+		const typeGroups = [TransactionTypeGroup.Core, TransactionTypeGroup.Test];
+
+		if (data.typeGroup && !typeGroups.includes(data.typeGroup)) {
+			return false;
+		}
+
+		return types.includes(data.type);
+	}
+
+	private validateNetwork(network?: number): boolean {
+		if (!network) {
+			return true;
+		}
+
+		return network === configManager.get("network.pubKeyHash");
 	}
 }
-
-export const validator = Validator.make();

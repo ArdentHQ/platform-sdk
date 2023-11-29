@@ -1,4 +1,4 @@
-export const cloneObject = <T>(input: T): T => {
+export const cloneObject = <T extends object>(input: T): T => {
 	const keys: string[] = Object.keys(input);
 	const cloned = {};
 
