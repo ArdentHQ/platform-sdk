@@ -20,7 +20,7 @@
 		"noUnusedParameters": false,
 		"outDir": "distribution",
 		"pretty": true,
-		"resolveJsonModule": true, // @TODO: set this to false because ESM doesn't support JSON
+		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,

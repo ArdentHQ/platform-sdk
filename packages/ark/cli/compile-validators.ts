@@ -6,6 +6,7 @@ import addFormats from "ajv-formats";
 
 import ts from "typescript";
 import { cjsToEsm } from "cjstoesm";
+import tsConfig from "../../../tsconfig.json";
 
 import * as transactionSchemas from "../source/crypto/transactions/types/schemas.js";
 
@@ -140,6 +141,7 @@ const compileStandaloneCode = (schemaKey: string) => {
 			preserveModuleSpecifiers: "internal",
 		}),
 		compilerOptions: {
+			...tsConfig.compilerOptions,
 			module: ts.ModuleKind.ESNext,
 		},
 	});
@@ -152,10 +154,12 @@ const compileStandaloneCode = (schemaKey: string) => {
  *
  * Custom validation functions are defined in /packages/ark/source/crypto/validation/index.ts
  *
- */`;
+ */
+//@ts-nocheck
+	`;
 
 	fs.writeFileSync(
-		`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.js`,
+		`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.ts`,
 		`${notice}\n${result.outputText.replace(/\.\/node_modules\//g, "")}`,
 	);
 };
