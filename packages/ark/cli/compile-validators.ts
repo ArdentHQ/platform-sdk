@@ -4,6 +4,9 @@ import standaloneCode from "ajv/dist/standalone";
 import ajvKeywords from "ajv-keywords";
 import addFormats from "ajv-formats";
 
+import ts from "typescript";
+import { cjsToEsm } from "cjstoesm";
+
 import * as transactionSchemas from "../source/crypto/transactions/types/schemas.js";
 
 export const schemas = [
@@ -120,7 +123,7 @@ const compileStandaloneCode = (schemaKey: string) => {
 		schemas: [schemas, schema, transactionSchemas.strictSchema(schema), transactionSchemas.signedSchema(schema)],
 		code: {
 			source: true,
-			esm: true,
+			esm: false,
 		},
 		$data: true,
 		allErrors: true,
@@ -131,8 +134,18 @@ const compileStandaloneCode = (schemaKey: string) => {
 	addKeywords(ajv);
 
 	const moduleCode = standaloneCode(ajv);
+
+	const result = ts.transpileModule(moduleCode, {
+		transformers: cjsToEsm({
+			preserveModuleSpecifiers: "internal",
+		}),
+		compilerOptions: {
+			module: ts.ModuleKind.ESNext,
+		},
+	});
+
 	const notice = `/**
- * IMPORTANT: This file is CLI generated and any manual changes should be avoided, they will be overriden when generating standalone validators.
+ * IMPORTANT: This file is generated using "pnpm build:validators" CLI command and any manual changes should be avoided, they will be overriden when generating standalone validators.
  *
  * For any changes in schemas or custom validators, see the referenced schemas in packages/ark/cli/compile-validators.ts and adjust them accordingly.
  * After schema update, run "pnpm build:validators" to gererate new standalone validator code.
@@ -143,7 +156,7 @@ const compileStandaloneCode = (schemaKey: string) => {
 
 	fs.writeFileSync(
 		`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.js`,
-		`${notice}\n${moduleCode}`,
+		`${notice}\n${result.outputText.replace(/\.\/node_modules\//g, "")}`,
 	);
 };
 

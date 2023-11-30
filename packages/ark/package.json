@@ -48,7 +48,8 @@
 		"@ardenthq/sdk-fetch": "workspace:*",
 		"@ardenthq/sdk-test": "workspace:*",
 		"@ledgerhq/hw-transport-mocker": "^6.20.0",
-		"@types/node": "^17.0.8"
+		"@types/node": "^17.0.8",
+		"cjstoesm": "^2.1.2"
 	},
 	"engines": {
 		"node": ">=16.0.0"
