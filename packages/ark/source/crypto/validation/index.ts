@@ -99,7 +99,11 @@ export class Validator {
 			this.validateTransactionType(data) &&
 			this.validateNetwork(data.network) &&
 			this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-			this.validateBignumber(schema.properties.nonce.bignumber, data.nonce)
+			this.validateBignumber(schema.properties.nonce.bignumber, data.nonce) &&
+			this.validateSignature(data) &&
+			this.validateSecondSignature(data) &&
+			this.validateSignSignature(data) &&
+			this.validateSignatures(data)
 		);
 	}
 
@@ -115,7 +119,43 @@ export class Validator {
 		}
 	}
 
-	private validateVoteAddresses = (data: ITransactionData, schema: TransactionSchema): boolean => {
+	private validateSignature(data: ITransactionData): boolean {
+		if (!data.signature) {
+			return false;
+		}
+
+		return this.validateAlphanumeric(data.signature);
+	}
+
+	private validateSignatures(data: ITransactionData): boolean {
+		if (!data.signatures || data.signatures.length < 1) {
+			return false;
+		}
+
+		return data.signatures.every((signature) => this.validateAlphanumeric(signature));
+	}
+
+	private validateSignSignature(data: ITransactionData): boolean {
+		if (!data.signSignature) {
+			return true;
+		}
+
+		return this.validateAlphanumeric(data.signSignature);
+	}
+
+	private validateSecondSignature(data: ITransactionData): boolean {
+		if (!data.secondSignature) {
+			return true;
+		}
+
+		return this.validateAlphanumeric(data.secondSignature);
+	}
+
+	private validateAlphanumeric(string: string): boolean {
+		return new RegExp(/^[a-zA-Z0-9]+$/).test(string);
+	}
+
+	private validateVoteAddresses = (data: ITransactionData): boolean => {
 		if (!data.asset?.votes) {
 			return false;
 		}

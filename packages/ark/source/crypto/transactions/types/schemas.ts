@@ -24,14 +24,14 @@ export const transactionBaseSchema: Record<string, any> = {
 		id: { anyOf: [{ $ref: "transactionId" }, { type: "null" }] },
 		network: { $ref: "networkByte" },
 		nonce: { bignumber: { minimum: 0 } },
-		secondSignature: { $ref: "alphanumeric" },
+		secondSignature: { type: "string" },
 		senderPublicKey: { $ref: "publicKey" },
-		signSignature: { $ref: "alphanumeric" },
-		signature: { $ref: "alphanumeric" },
+		signSignature: { type: "string" },
+		signature: { type: "string" },
 		version: { enum: [1, 2] },
 		signatures: {
 			items: {
-				allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }],
+				allOf: [{ maxLength: 130, minLength: 130 }, { type: "string" }],
 			},
 			maxItems: 16,
 			minItems: 1,
@@ -173,7 +173,7 @@ export const multiSignature = extend(transactionBaseSchema, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		signatures: {
-			items: { allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }] },
+			items: { allOf: [{ maxLength: 130, minLength: 130 }, { type: "string" }] },
 			maxItems: { $data: "1/asset/multiSignature/publicKeys/length" },
 			minItems: { $data: "1/asset/multiSignature/min" },
 			type: "array",
@@ -206,7 +206,7 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 							type: "array",
 							maxItems: 16,
 							items: {
-								allOf: [{ minimum: 67, type: "string", maximum: 67, transform: ["toLowerCase"] }],
+								allOf: [{ minimum: 67, type: "string", maximum: 67 }],
 							},
 						},
 						min: {
@@ -224,7 +224,7 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		signatures: {
-			items: { $ref: "alphanumeric" },
+			items: { type: "string" },
 			maxItems: 1,
 			minItems: 1,
 			type: "array",

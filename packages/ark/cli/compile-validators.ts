@@ -24,12 +24,6 @@ export const schemas = [
 	},
 
 	{
-		$id: "alphanumeric",
-		type: "string",
-		pattern: "^[a-zA-Z0-9]+$",
-	},
-
-	{
 		$id: "transactionId",
 		type: "string",
 		allOf: [{ minLength: 64, maxLength: 64 }, { $ref: "hex" }],
