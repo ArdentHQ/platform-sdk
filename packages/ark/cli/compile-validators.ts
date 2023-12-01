@@ -4,10 +4,6 @@ import standaloneCode from "ajv/dist/standalone";
 import ajvKeywords from "ajv-keywords";
 import addFormats from "ajv-formats";
 
-import ts from "typescript";
-import { cjsToEsm } from "cjstoesm";
-import tsConfig from "../../../tsconfig.json";
-
 import * as transactionSchemas from "../source/crypto/transactions/types/schemas.js";
 
 export const schemas = [
@@ -58,7 +54,7 @@ const compileStandaloneCode = (schemaKey: string) => {
 		schemas: [schemas, schema, transactionSchemas.strictSchema(schema), transactionSchemas.signedSchema(schema)],
 		code: {
 			source: true,
-			esm: false,
+			esm: true,
 		},
 		$data: true,
 		allErrors: true,
@@ -70,15 +66,11 @@ const compileStandaloneCode = (schemaKey: string) => {
 
 	const moduleCode = standaloneCode(ajv);
 
-	const result = ts.transpileModule(moduleCode, {
-		transformers: cjsToEsm({
-			preserveModuleSpecifiers: "internal",
-		}),
-		compilerOptions: {
-			...tsConfig.compilerOptions,
-			module: ts.ModuleKind.ESNext,
-		},
-	});
+	if (new RegExp(/require\(/).test(moduleCode)) {
+		throw new Error(
+			`Standalone code for ${schemaKey} uses "require" in an esm code. \n       This is a known issue https://github.com/ajv-validator/ajv/issues/2209. \n       Remove any third-party dependencies and move the related validations in code.\n\n`,
+		);
+	}
 
 	const notice = `/**
  * IMPORTANT: This file is generated using "pnpm build:validators" CLI command and any manual changes should be avoided, they will be overriden when generating standalone validators.
@@ -94,7 +86,7 @@ const compileStandaloneCode = (schemaKey: string) => {
 
 	fs.writeFileSync(
 		`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.ts`,
-		`${notice}\n${result.outputText.replace(/\.\/node_modules\//g, "")}`,
+		`${notice}\n${moduleCode}`,
 	);
 };
 
