@@ -65,7 +65,7 @@ export const transfer = extend(transactionBaseSchema, {
 	properties: {
 		expiration: { minimum: 0, type: "integer" },
 		fee: { bignumber: { minimum: 1 } },
-		recipientId: { $ref: "address" },
+		recipientId: { type: "string" },
 		type: { transactionType: TransactionType.Transfer },
 		vendorField: { anyOf: [{ type: "null" }, { type: "string" }] },
 	},
@@ -137,7 +137,7 @@ export const vote = extend(transactionBaseSchema, {
 			type: "object",
 		},
 		fee: { bignumber: { minimum: 1 } },
-		recipientId: { $ref: "address" },
+		recipientId: { type: "string" },
 		type: { transactionType: TransactionType.Vote },
 	},
 	required: ["asset"],
@@ -242,7 +242,7 @@ export const ipfs = extend(transactionBaseSchema, {
 		asset: {
 			properties: {
 				ipfs: {
-					allOf: [{ maxLength: 90, minLength: 2 }, { $ref: "base58" }],
+					allOf: [{ maxLength: 90, minLength: 2 }, { type: "string" }],
 					// ipfs hash has varying length but we set max limit to twice the length of base58 ipfs sha-256 hash
 				},
 			},
@@ -265,7 +265,7 @@ export const multiPayment = extend(transactionBaseSchema, {
 						required: ["amount", "recipientId"],
 						properties: {
 							amount: { bignumber: { minimum: 1 } },
-							recipientId: { $ref: "address" },
+							recipientId: { type: "string" },
 						},
 						type: "object",
 					},

@@ -48,6 +48,7 @@ export class Validator {
 					validateTransferSchema(data) &&
 					this.validateVendorField(data.vendorField) &&
 					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
+					this.validateRecipientId(data) &&
 					this.validateTransactionFields(data, schema);
 			}
 
@@ -55,11 +56,13 @@ export class Validator {
 				isValid =
 					validateVoteSchema(data) &&
 					this.validateTransactionFields(data, schema) &&
+					this.validateRecipientId(data) &&
 					this.validateVoteAddresses(data);
 			}
 
 			if (schema.$id === "ipfs") {
-				isValid = validateIpfsSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateIpfsSchema(data) && this.validateTransactionFields(data, schema) && this.validateIpfs(data);
 			}
 
 			if (schema.$id === "delegateResignation") {
@@ -71,7 +74,10 @@ export class Validator {
 			}
 
 			if (schema.$id === "multiPayment") {
-				isValid = validateMultiPaymentSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateMultiPaymentSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateRecipientIds(data);
 			}
 
 			if (schema.$id === "multiSignature") {
@@ -136,6 +142,22 @@ export class Validator {
 		return this.validateAlphanumeric(data.signature);
 	}
 
+	private validateRecipientId(data: ITransactionData): boolean {
+		if (!data.recipientId) {
+			return false;
+		}
+
+		return this.validateBase58(data.recipientId);
+	}
+
+	private validateRecipientIds(data: ITransactionData): boolean {
+		if (!data.asset?.payments || data.asset.payments.length === 0) {
+			return false;
+		}
+
+		return data.asset.payments.every(({ recipientId }) => this.validateBase58(recipientId));
+	}
+
 	private validateSignatures(data: ITransactionData): boolean {
 		if (!data.signatures || data.signatures.length < 1) {
 			return false;
@@ -160,8 +182,20 @@ export class Validator {
 		return this.validateAlphanumeric(data.secondSignature);
 	}
 
+	private validateIpfs(data: ITransactionData): boolean {
+		if (!data.asset?.ipfs) {
+			return true;
+		}
+
+		return this.validateBase58(data.asset.ipfs);
+	}
+
 	private validateAlphanumeric(string: string): boolean {
 		return new RegExp(/^[a-zA-Z0-9]+$/).test(string);
+	}
+
+	private validateBase58(string: string): boolean {
+		return new RegExp(/^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/).test(string);
 	}
 
 	private validateHex(string: string): boolean {

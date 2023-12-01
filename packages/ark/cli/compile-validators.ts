@@ -18,20 +18,8 @@ export const schemas = [
 	},
 
 	{
-		$id: "base58",
-		type: "string",
-		pattern: "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$",
-	},
-
-	{
 		$id: "networkByte",
 		network: true,
-	},
-
-	{
-		$id: "address",
-		type: "string",
-		allOf: [{ minLength: 34, maxLength: 34 }, { $ref: "base58" }],
 	},
 
 	{
