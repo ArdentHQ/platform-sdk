@@ -12,44 +12,8 @@ import * as transactionSchemas from "../source/crypto/transactions/types/schemas
 
 export const schemas = [
 	{
-		$id: "hex",
-		type: "string",
-		pattern: "^[0123456789A-Fa-f]+$",
-	},
-
-	{
 		$id: "networkByte",
 		network: true,
-	},
-
-	{
-		$id: "publicKey",
-		type: "string",
-		allOf: [{ minLength: 66, maxLength: 66 }, { $ref: "hex" }],
-	},
-
-	{
-		$id: "delegateUsername",
-		type: "string",
-		allOf: [
-			{ type: "string", pattern: "^[a-z0-9!@$&_.]+$" },
-			{ minLength: 1, maxLength: 20 },
-		],
-	},
-
-	{
-		$id: "genericName",
-		type: "string",
-		allOf: [
-			{ type: "string", pattern: "^[a-zA-Z0-9]+(( - |[ ._-])[a-zA-Z0-9]+)*[.]?$" },
-			{ minLength: 1, maxLength: 40 },
-		],
-	},
-
-	{
-		$id: "uri",
-		type: "string",
-		allOf: [{ format: "uri" }, { minLength: 4, maxLength: 80 }],
 	},
 ];
 

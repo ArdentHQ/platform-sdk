@@ -25,7 +25,7 @@ export const transactionBaseSchema: Record<string, any> = {
 		network: { $ref: "networkByte" },
 		nonce: { bignumber: { minimum: 0 } },
 		secondSignature: { type: "string" },
-		senderPublicKey: { $ref: "publicKey" },
+		senderPublicKey: { type: "string" },
 		signSignature: { type: "string" },
 		signature: { type: "string" },
 		version: { enum: [1, 2] },
@@ -80,7 +80,7 @@ export const secondSignature = extend(transactionBaseSchema, {
 				signature: {
 					properties: {
 						publicKey: {
-							$ref: "publicKey",
+							type: "string",
 						},
 					},
 					required: ["publicKey"],
@@ -105,7 +105,7 @@ export const delegateRegistration = extend(transactionBaseSchema, {
 			properties: {
 				delegate: {
 					properties: {
-						username: { $ref: "delegateUsername" },
+						username: { type: "string" },
 					},
 					required: ["username"],
 					type: "object",
@@ -156,10 +156,8 @@ export const multiSignature = extend(transactionBaseSchema, {
 							type: "integer",
 						},
 						publicKeys: {
-							minItems: 1,
-							items: { $ref: "publicKey" },
+							items: { type: "string" },
 							type: "array",
-							maxItems: 16,
 						},
 					},
 					required: ["min", "publicKeys"],
