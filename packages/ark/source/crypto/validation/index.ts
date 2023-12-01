@@ -150,6 +150,10 @@ export class Validator {
 			return false;
 		}
 
+		if (data.id.length !== 64) {
+			return false;
+		}
+
 		return this.validateHex(data.id);
 	}
 
@@ -214,6 +218,10 @@ export class Validator {
 			return false;
 		}
 
+		if (!data.signatures.every((signature) => signature.length === 130)) {
+			return false;
+		}
+
 		return data.signatures.every((signature) => this.validateAlphanumeric(signature));
 	}
 
@@ -248,6 +256,11 @@ export class Validator {
 	private validateIpfs(data: ITransactionData): boolean {
 		if (!data.asset?.ipfs) {
 			return true;
+		}
+
+		// ipfs hash has varying length but we set max limit to twice the length of base58 ipfs sha-256 hash
+		if (data.asset.ipfs.length < 2 || data.asset.ipfs.length > 90) {
+			return false;
 		}
 
 		return this.validateBase58(data.asset.ipfs);

@@ -21,7 +21,7 @@ export const transactionBaseSchema: Record<string, any> = {
 	properties: {
 		amount: { bignumber: { minimum: 1 } },
 		fee: { bignumber: { minimum: 0 } },
-		id: { allOf: [{ minLength: 64, maxLength: 64 }, { type: "string" }] },
+		id: { type: "string" },
 		network: { $ref: "networkByte" },
 		nonce: { bignumber: { minimum: 0 } },
 		secondSignature: { type: "string" },
@@ -30,9 +30,7 @@ export const transactionBaseSchema: Record<string, any> = {
 		signature: { type: "string" },
 		version: { enum: [1, 2] },
 		signatures: {
-			items: {
-				allOf: [{ maxLength: 130, minLength: 130 }, { type: "string" }],
-			},
+			items: { type: "string" },
 			maxItems: 16,
 			minItems: 1,
 			type: "array",
@@ -169,7 +167,7 @@ export const multiSignature = extend(transactionBaseSchema, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		signatures: {
-			items: { allOf: [{ maxLength: 130, minLength: 130 }, { type: "string" }] },
+			items: { type: "string" },
 			maxItems: { $data: "1/asset/multiSignature/publicKeys/length" },
 			minItems: { $data: "1/asset/multiSignature/min" },
 			type: "array",
@@ -236,10 +234,7 @@ export const ipfs = extend(transactionBaseSchema, {
 		amount: { bignumber: { maximum: 0, minimum: 0 } },
 		asset: {
 			properties: {
-				ipfs: {
-					allOf: [{ maxLength: 90, minLength: 2 }, { type: "string" }],
-					// ipfs hash has varying length but we set max limit to twice the length of base58 ipfs sha-256 hash
-				},
+				ipfs: { type: "string" },
 			},
 			required: ["ipfs"],
 			type: "object",
