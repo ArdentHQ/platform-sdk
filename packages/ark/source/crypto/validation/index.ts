@@ -52,7 +52,10 @@ export class Validator {
 			}
 
 			if (schema.$id === "vote") {
-				isValid = validateVoteSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateVoteSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateVoteAddresses(data);
 			}
 
 			if (schema.$id === "ipfs") {
@@ -111,6 +114,14 @@ export class Validator {
 			return false;
 		}
 	}
+
+	private validateVoteAddresses = (data: ITransactionData, schema: TransactionSchema): boolean => {
+		if (!data.asset?.votes) {
+			return false;
+		}
+
+		return data.asset.votes.every((vote) => new RegExp(/^[+|-][a-zA-Z0-9]{66}$/).test(vote));
+	};
 
 	private validateBignumber(schema: { minimum?: number; maximum?: number }, data?: BigNumber | number): boolean {
 		const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;

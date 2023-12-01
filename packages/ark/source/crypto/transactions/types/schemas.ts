@@ -128,7 +128,6 @@ export const vote = extend(transactionBaseSchema, {
 		asset: {
 			properties: {
 				votes: {
-					items: { $ref: "walletVote" },
 					minItems: 1,
 					maxItems: 2,
 					type: "array",

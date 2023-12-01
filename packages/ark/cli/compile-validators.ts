@@ -49,12 +49,7 @@ export const schemas = [
 	{
 		$id: "publicKey",
 		type: "string",
-		allOf: [{ minLength: 66, maxLength: 66 }, { $ref: "hex" }, { transform: ["toLowerCase"] }],
-	},
-
-	{
-		$id: "walletVote",
-		allOf: [{ type: "string", pattern: "^[+|-][a-zA-Z0-9]{66}$" }, { transform: ["toLowerCase"] }],
+		allOf: [{ minLength: 66, maxLength: 66 }, { $ref: "hex" }],
 	},
 
 	{
@@ -63,7 +58,6 @@ export const schemas = [
 		allOf: [
 			{ type: "string", pattern: "^[a-z0-9!@$&_.]+$" },
 			{ minLength: 1, maxLength: 20 },
-			{ transform: ["toLowerCase"] },
 		],
 	},
 
