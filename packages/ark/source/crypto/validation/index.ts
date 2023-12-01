@@ -56,7 +56,6 @@ export class Validator {
 				isValid =
 					validateVoteSchema(data) &&
 					this.validateTransactionFields(data, schema) &&
-					this.validateRecipientId(data) &&
 					this.validateVoteAddresses(data);
 			}
 
@@ -112,16 +111,16 @@ export class Validator {
 
 	private validateTransactionFields(data: ITransactionData, schema: TransactionSchema): boolean {
 		return (
-			this.validateTransactionId(data) &&
-			this.validateTransactionType(data) &&
-			this.validateNetwork(data.network) &&
-			this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
-			this.validateBignumber(schema.properties.nonce.bignumber, data.nonce) &&
 			this.validateSignature(data) &&
 			this.validateSecondSignature(data) &&
 			this.validateSignSignature(data) &&
 			this.validateSignatures(data) &&
-			this.validateSenderPublicKey(data)
+			this.validateSenderPublicKey(data) &&
+			this.validateTransactionId(data) &&
+			this.validateTransactionType(data) &&
+			this.validateNetwork(data.network) &&
+			this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
+			this.validateBignumber(schema.properties.nonce.bignumber, data.nonce)
 		);
 	}
 
@@ -147,7 +146,7 @@ export class Validator {
 
 	private validateTransactionId(data: ITransactionData): boolean {
 		if (!data.id) {
-			return false;
+			return true;
 		}
 
 		if (data.id.length !== 64) {
@@ -175,10 +174,6 @@ export class Validator {
 
 	private validateRecipientIds(data: ITransactionData): boolean {
 		if (!data.asset?.payments || data.asset.payments.length === 0) {
-			return false;
-		}
-
-		if (!this.validateUniqueItems(data.asset.payments.map(({ recipientId }) => recipientId))) {
 			return false;
 		}
 
@@ -211,7 +206,7 @@ export class Validator {
 
 	private validateSignatures(data: ITransactionData): boolean {
 		if (!data.signatures || data.signatures.length < 1) {
-			return false;
+			return true;
 		}
 
 		if (!this.validateUniqueItems(data.signatures)) {
@@ -235,7 +230,7 @@ export class Validator {
 
 	private validateSecondSignature(data: ITransactionData): boolean {
 		if (!data.secondSignature) {
-			return false;
+			return true;
 		}
 
 		return this.validateAlphanumeric(data.secondSignature);
