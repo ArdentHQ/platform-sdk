@@ -24,12 +24,6 @@ export const schemas = [
 	},
 
 	{
-		$id: "transactionId",
-		type: "string",
-		allOf: [{ minLength: 64, maxLength: 64 }, { $ref: "hex" }],
-	},
-
-	{
 		$id: "networkByte",
 		network: true,
 	},

@@ -21,7 +21,7 @@ export const transactionBaseSchema: Record<string, any> = {
 	properties: {
 		amount: { bignumber: { minimum: 1 } },
 		fee: { bignumber: { minimum: 0 } },
-		id: { anyOf: [{ $ref: "transactionId" }, { type: "null" }] },
+		id: { allOf: [{ minLength: 64, maxLength: 64 }, { type: "string" }] },
 		network: { $ref: "networkByte" },
 		nonce: { bignumber: { minimum: 0 } },
 		secondSignature: { type: "string" },

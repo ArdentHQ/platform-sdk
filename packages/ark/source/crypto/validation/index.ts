@@ -96,6 +96,7 @@ export class Validator {
 
 	private validateTransactionFields(data: ITransactionData, schema: TransactionSchema): boolean {
 		return (
+			this.validateTransactionId(data) &&
 			this.validateTransactionType(data) &&
 			this.validateNetwork(data.network) &&
 			this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
@@ -117,6 +118,14 @@ export class Validator {
 		} catch {
 			return false;
 		}
+	}
+
+	private validateTransactionId(data: ITransactionData): boolean {
+		if (!data.id) {
+			return false;
+		}
+
+		return this.validateHex(data.id);
 	}
 
 	private validateSignature(data: ITransactionData): boolean {
@@ -153,6 +162,10 @@ export class Validator {
 
 	private validateAlphanumeric(string: string): boolean {
 		return new RegExp(/^[a-zA-Z0-9]+$/).test(string);
+	}
+
+	private validateHex(string: string): boolean {
+		return new RegExp(/^[0123456789A-Fa-f]+$/).test(string);
 	}
 
 	private validateVoteAddresses = (data: ITransactionData): boolean => {
