@@ -81,7 +81,10 @@ export class Validator {
 			}
 
 			if (schema.$id === "multiSignature") {
-				isValid = validateMultisignatureSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateMultisignatureSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateMusigSignatures(data);
 			}
 
 			if (schema.$id === "multiSignatureLegacy") {
@@ -155,11 +158,31 @@ export class Validator {
 			return false;
 		}
 
+		if (!this.validateUniqueItems(data.asset.payments.map(({ recipientId }) => recipientId))) {
+			return false;
+		}
+
 		return data.asset.payments.every(({ recipientId }) => this.validateBase58(recipientId));
+	}
+
+	private validateMusigSignatures(data: ITransactionData): boolean {
+		if (!data.asset?.multiSignature?.publicKeys) {
+			return false;
+		}
+
+		if (!this.validateUniqueItems(data.asset?.multiSignature?.publicKeys)) {
+			return false;
+		}
+
+		return data.asset?.multiSignature?.publicKeys.every((signature) => this.validateAlphanumeric(signature));
 	}
 
 	private validateSignatures(data: ITransactionData): boolean {
 		if (!data.signatures || data.signatures.length < 1) {
+			return false;
+		}
+
+		if (!this.validateUniqueItems(data.signatures)) {
 			return false;
 		}
 
@@ -278,5 +301,9 @@ export class Validator {
 		}
 
 		return network === configManager.get("network.pubKeyHash");
+	}
+
+	private validateUniqueItems(items: string[]): boolean {
+		return items.length === new Set(items).size;
 	}
 }
