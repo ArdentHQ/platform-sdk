@@ -8,74 +8,8 @@ import * as transactionSchemas from "../source/crypto/transactions/types/schemas
 
 export const schemas = [
 	{
-		$id: "hex",
-		type: "string",
-		pattern: "^[0123456789A-Fa-f]+$",
-	},
-
-	{
-		$id: "base58",
-		type: "string",
-		pattern: "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$",
-	},
-
-	{
-		$id: "alphanumeric",
-		type: "string",
-		pattern: "^[a-zA-Z0-9]+$",
-	},
-
-	{
-		$id: "transactionId",
-		type: "string",
-		allOf: [{ minLength: 64, maxLength: 64 }, { $ref: "hex" }],
-	},
-
-	{
 		$id: "networkByte",
 		network: true,
-	},
-
-	{
-		$id: "address",
-		type: "string",
-		allOf: [{ minLength: 34, maxLength: 34 }, { $ref: "base58" }],
-	},
-
-	{
-		$id: "publicKey",
-		type: "string",
-		allOf: [{ minLength: 66, maxLength: 66 }, { $ref: "hex" }, { transform: ["toLowerCase"] }],
-	},
-
-	{
-		$id: "walletVote",
-		allOf: [{ type: "string", pattern: "^[+|-][a-zA-Z0-9]{66}$" }, { transform: ["toLowerCase"] }],
-	},
-
-	{
-		$id: "delegateUsername",
-		type: "string",
-		allOf: [
-			{ type: "string", pattern: "^[a-z0-9!@$&_.]+$" },
-			{ minLength: 1, maxLength: 20 },
-			{ transform: ["toLowerCase"] },
-		],
-	},
-
-	{
-		$id: "genericName",
-		type: "string",
-		allOf: [
-			{ type: "string", pattern: "^[a-zA-Z0-9]+(( - |[ ._-])[a-zA-Z0-9]+)*[.]?$" },
-			{ minLength: 1, maxLength: 40 },
-		],
-	},
-
-	{
-		$id: "uri",
-		type: "string",
-		allOf: [{ format: "uri" }, { minLength: 4, maxLength: 80 }],
 	},
 ];
 
@@ -131,18 +65,27 @@ const compileStandaloneCode = (schemaKey: string) => {
 	addKeywords(ajv);
 
 	const moduleCode = standaloneCode(ajv);
+
+	if (new RegExp(/require\(/).test(moduleCode)) {
+		throw new Error(
+			`Standalone code for ${schemaKey} uses "require" in an esm code. \n       This is a known issue https://github.com/ajv-validator/ajv/issues/2209. \n       Remove any third-party dependencies and move the related validations in code.\n\n`,
+		);
+	}
+
 	const notice = `/**
- * IMPORTANT: This file is CLI generated and any manual changes should be avoided, they will be overriden when generating standalone validators.
+ * IMPORTANT: This file is generated using "pnpm build:validators" CLI command and any manual changes should be avoided, they will be overriden when generating standalone validators.
  *
  * For any changes in schemas or custom validators, see the referenced schemas in packages/ark/cli/compile-validators.ts and adjust them accordingly.
  * After schema update, run "pnpm build:validators" to gererate new standalone validator code.
  *
  * Custom validation functions are defined in /packages/ark/source/crypto/validation/index.ts
  *
- */`;
+ */
+//@ts-nocheck
+	`;
 
 	fs.writeFileSync(
-		`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.js`,
+		`${process.cwd()}/source/crypto/validation/validators/source/${schemaKey}.ts`,
 		`${notice}\n${moduleCode}`,
 	);
 };

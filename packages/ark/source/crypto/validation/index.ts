@@ -48,15 +48,20 @@ export class Validator {
 					validateTransferSchema(data) &&
 					this.validateVendorField(data.vendorField) &&
 					this.validateBignumber(schema.properties.amount.bignumber, data.amount) &&
+					this.validateRecipientId(data) &&
 					this.validateTransactionFields(data, schema);
 			}
 
 			if (schema.$id === "vote") {
-				isValid = validateVoteSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateVoteSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateVoteAddresses(data);
 			}
 
 			if (schema.$id === "ipfs") {
-				isValid = validateIpfsSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateIpfsSchema(data) && this.validateTransactionFields(data, schema) && this.validateIpfs(data);
 			}
 
 			if (schema.$id === "delegateResignation") {
@@ -64,15 +69,24 @@ export class Validator {
 			}
 
 			if (schema.$id === "delegateRegistration") {
-				isValid = validateDelegateRegistrationSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateDelegateRegistrationSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateDelegateUsername(data);
 			}
 
 			if (schema.$id === "multiPayment") {
-				isValid = validateMultiPaymentSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateMultiPaymentSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateRecipientIds(data);
 			}
 
 			if (schema.$id === "multiSignature") {
-				isValid = validateMultisignatureSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateMultisignatureSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateMusigPublicKeys(data);
 			}
 
 			if (schema.$id === "multiSignatureLegacy") {
@@ -80,7 +94,11 @@ export class Validator {
 			}
 
 			if (schema.$id === "secondSignature") {
-				isValid = validateSecondSignatureSchema(data) && this.validateTransactionFields(data, schema);
+				isValid =
+					validateSecondSignatureSchema(data) &&
+					this.validateTransactionFields(data, schema) &&
+					this.validateSecondSignature(data) &&
+					this.validateSecondSignaturePublicKey(data);
 			}
 
 			const error = !isValid ? `Validation failed for ${schema.$id}.` : undefined;
@@ -93,6 +111,12 @@ export class Validator {
 
 	private validateTransactionFields(data: ITransactionData, schema: TransactionSchema): boolean {
 		return (
+			this.validateSignature(data) &&
+			this.validateSecondSignature(data) &&
+			this.validateSignSignature(data) &&
+			this.validateSignatures(data) &&
+			this.validateSenderPublicKey(data) &&
+			this.validateTransactionId(data) &&
 			this.validateTransactionType(data) &&
 			this.validateNetwork(data.network) &&
 			this.validateBignumber(schema.properties.fee.bignumber, data.fee) &&
@@ -111,6 +135,151 @@ export class Validator {
 			return false;
 		}
 	}
+
+	private validateDelegateUsername(data: ITransactionData): boolean {
+		if (!data?.asset?.delegate?.username) {
+			return true;
+		}
+
+		return new RegExp(/^[a-z0-9!@$&_.]+$/).test(data.asset.delegate.username);
+	}
+
+	private validateTransactionId(data: ITransactionData): boolean {
+		if (!data.id) {
+			return true;
+		}
+
+		if (data.id.length !== 64) {
+			return false;
+		}
+
+		return this.validateHex(data.id);
+	}
+
+	private validateSignature(data: ITransactionData): boolean {
+		if (!data.signature) {
+			return false;
+		}
+
+		return this.validateAlphanumeric(data.signature);
+	}
+
+	private validateRecipientId(data: ITransactionData): boolean {
+		if (!data.recipientId) {
+			return false;
+		}
+
+		return this.validateBase58(data.recipientId);
+	}
+
+	private validateRecipientIds(data: ITransactionData): boolean {
+		if (!data.asset?.payments || data.asset.payments.length === 0) {
+			return false;
+		}
+
+		return data.asset.payments.every(({ recipientId }) => this.validateBase58(recipientId));
+	}
+
+	private validateMusigPublicKeys(data: ITransactionData): boolean {
+		if (!data.asset?.multiSignature?.publicKeys) {
+			return false;
+		}
+
+		if (data.asset.multiSignature.publicKeys.length < 1 || data.asset.multiSignature.publicKeys.length > 16) {
+			return false;
+		}
+
+		return data.asset.multiSignature.publicKeys.every((publicKey) => this.validateHex(publicKey));
+	}
+
+	private validateSenderPublicKey(data: ITransactionData): boolean {
+		if (!data.senderPublicKey) {
+			return false;
+		}
+
+		if (data.senderPublicKey.length > 66) {
+			return false;
+		}
+
+		return this.validateHex(data.senderPublicKey);
+	}
+
+	private validateSignatures(data: ITransactionData): boolean {
+		if (!data.signatures || data.signatures.length < 1) {
+			return true;
+		}
+
+		if (!this.validateUniqueItems(data.signatures)) {
+			return false;
+		}
+
+		if (!data.signatures.every((signature) => signature.length === 130)) {
+			return false;
+		}
+
+		return data.signatures.every((signature) => this.validateAlphanumeric(signature));
+	}
+
+	private validateSignSignature(data: ITransactionData): boolean {
+		if (!data.signSignature) {
+			return true;
+		}
+
+		return this.validateAlphanumeric(data.signSignature);
+	}
+
+	private validateSecondSignature(data: ITransactionData): boolean {
+		if (!data.secondSignature) {
+			return true;
+		}
+
+		return this.validateAlphanumeric(data.secondSignature);
+	}
+
+	private validateSecondSignaturePublicKey(data: ITransactionData): boolean {
+		if (!data.asset?.signature?.publicKey) {
+			return true;
+		}
+
+		if (data.asset.signature.publicKey.length > 66) {
+			return false;
+		}
+
+		return this.validateAlphanumeric(data.asset.signature.publicKey);
+	}
+
+	private validateIpfs(data: ITransactionData): boolean {
+		if (!data.asset?.ipfs) {
+			return true;
+		}
+
+		// ipfs hash has varying length but we set max limit to twice the length of base58 ipfs sha-256 hash
+		if (data.asset.ipfs.length < 2 || data.asset.ipfs.length > 90) {
+			return false;
+		}
+
+		return this.validateBase58(data.asset.ipfs);
+	}
+
+	private validateAlphanumeric(string: string): boolean {
+		return new RegExp(/^[a-zA-Z0-9]+$/).test(string);
+	}
+
+	private validateBase58(string: string): boolean {
+		return new RegExp(/^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/).test(string);
+	}
+
+	private validateHex(string: string): boolean {
+		return new RegExp(/^[0123456789A-Fa-f]+$/).test(string);
+	}
+
+	private validateVoteAddresses = (data: ITransactionData): boolean => {
+		if (!data.asset?.votes) {
+			return false;
+		}
+
+		return data.asset.votes.every((vote) => new RegExp(/^[+|-][a-zA-Z0-9]{66}$/).test(vote));
+	};
 
 	private validateBignumber(schema: { minimum?: number; maximum?: number }, data?: BigNumber | number): boolean {
 		const minimum = typeof schema.minimum !== "undefined" ? schema.minimum : 0;
@@ -180,5 +349,9 @@ export class Validator {
 		}
 
 		return network === configManager.get("network.pubKeyHash");
+	}
+
+	private validateUniqueItems(items: string[]): boolean {
+		return items.length === new Set(items).size;
 	}
 }
