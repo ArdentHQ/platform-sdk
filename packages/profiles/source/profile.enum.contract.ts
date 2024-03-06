@@ -27,7 +27,6 @@ export enum ProfileSetting {
 	UseExpandedTables = "USE_EXPANDED_TABLES",
 	UseNetworkWalletNames = "USE_NETWORK_WALLET_NAMES",
 	UseTestNetworks = "USE_TEST_NETWORKS",
-	PrimaryWalletId = "PRIMARY_WALLET_ID",
 	LastVisitedPage = "LAST_VISITED_PAGE",
 	HasOnboarded = "HAS_ONBOARDED",
 	Sessions = "SESSIONS",

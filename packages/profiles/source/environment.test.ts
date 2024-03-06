@@ -166,7 +166,8 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		profile.settings().set("ADVANCED_MODE", false);
 
 		// Create a Setting
-		profile.settings().set(ProfileSetting.PrimaryWalletId, "1");
+		profile.settings().set(ProfileSetting.HasOnboarded, true);
+		profile.settings().set(ProfileSetting.LastVisitedPage, { name: "test", data: { foo: "bar" } });
 
 		// Encode all data
 		await context.subject.profiles().persist(profile);
@@ -223,7 +224,8 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
-			PRIMARY_WALLET_ID: "1",
+			HAS_ONBOARDED: true,
+			LAST_VISITED_PAGE: { name: "test", data: { foo: "bar" } },
 		});
 	});
 

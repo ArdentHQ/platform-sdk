@@ -84,7 +84,6 @@ describe("ProfileValidator", ({ loader, it, assert, nock, beforeEach }) => {
 				[ProfileSetting.UseExpandedTables]: false,
 				[ProfileSetting.UseNetworkWalletNames]: false,
 				[ProfileSetting.UseTestNetworks]: false,
-				[ProfileSetting.PrimaryWalletId]: "3a7a9e03-c10b-4135-88e9-92e586d53e69",
 				[ProfileSetting.HasOnboarded]: true,
 				[ProfileSetting.LastVisitedPage]: { name: "test", data: { foo: "bar" } },
 				[ProfileSetting.Sessions]: { 1: { name: "test", data: { foo: "bar" } } },
