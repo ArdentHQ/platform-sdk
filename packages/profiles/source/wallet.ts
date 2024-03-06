@@ -633,6 +633,11 @@ export class Wallet implements IReadWriteWallet {
 		return this.data().get(WalletData.ImportMethod) === WalletImportMethod.SECRET_WITH_ENCRYPTION;
 	}
 
+	/** {@inheritDoc IReadWriteWallet.isPrimary} */
+	public isPrimary(): boolean {
+		return this.data().get(WalletData.IsPrimary) === true;
+	}
+
 	/** {@inheritDoc IReadWriteWallet.usesPassword} */
 	public usesPassword(): boolean {
 		return this.signingKey().exists();

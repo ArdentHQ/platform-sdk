@@ -618,6 +618,10 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 		assert.boolean(context.subject.isCold());
 	});
 
+	it("should determine if the wallet is marked as primary", (context) => {
+		assert.boolean(context.subject.isPrimary());
+	});
+
 	it("should unset cold wallet status if outgoing transaction is found", async (context) => {
 		context.subject = await context.profile.walletFactory().fromAddress({
 			address: "DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8",
