@@ -13,7 +13,7 @@ import { importByMnemonic } from "../test/mocking";
 import { StubStorage } from "../test/stubs/storage";
 import { container } from "./container";
 import { Identifiers } from "./container.models";
-import { ProfileData } from "./contracts";
+import { ProfileData, ProfileSetting } from "./contracts";
 import { DataRepository } from "./data.repository";
 import { Environment } from "./environment";
 import { ExchangeRateService } from "./exchange-rate.service.js";
@@ -165,6 +165,9 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		// Create a Setting
 		profile.settings().set("ADVANCED_MODE", false);
 
+		// Create a Setting
+		profile.settings().set(ProfileSetting.PrimaryWalletId, "1");
+
 		// Encode all data
 		await context.subject.profiles().persist(profile);
 
@@ -220,6 +223,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
+			PRIMARY_WALLET_ID: "1",
 		});
 	});
 

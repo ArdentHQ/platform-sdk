@@ -66,6 +66,12 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 		assert.is(context.subject.avatar(), "custom-avatar");
 	});
 
+	it("should have a primary wallet id", (context) => {
+		context.subject.settings().set(ProfileSetting.PrimaryWalletId, "1");
+
+		assert.is(context.subject.settings().get(ProfileSetting.PrimaryWalletId), "1");
+	});
+
 	it("should have a custom avatar in data", (context) => {
 		context.subject.getAttributes().set("data.avatar", "something");
 		context.subject.getAttributes().set("avatar", "custom-avatar");

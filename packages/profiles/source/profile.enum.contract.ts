@@ -27,6 +27,7 @@ export enum ProfileSetting {
 	UseExpandedTables = "USE_EXPANDED_TABLES",
 	UseNetworkWalletNames = "USE_NETWORK_WALLET_NAMES",
 	UseTestNetworks = "USE_TEST_NETWORKS",
+	PrimaryWalletId = "PRIMARY_WALLET_ID",
 }
 
 /**
@@ -39,4 +40,5 @@ export enum ProfileData {
 	LatestMigration = "LATEST_MIGRATION",
 	HasCompletedIntroductoryTutorial = "HAS_COMPLETED_INTRODUCTORY_TUTORIAL",
 	HasAcceptedManualInstallationDisclaimer = "HAS_ACCEPTED_MANUAL_INSTALLATION_DISCLAIMER",
+	LastScreen = "LAST_SCREEN",
 }
