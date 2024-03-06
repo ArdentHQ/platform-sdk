@@ -114,6 +114,9 @@ export class ProfileValidator implements IProfileValidator {
 				[ProfileSetting.UseNetworkWalletNames]: Joi.boolean().default(false),
 				[ProfileSetting.UseTestNetworks]: Joi.boolean().default(false),
 				[ProfileSetting.PrimaryWalletId]: Joi.string(),
+				[ProfileSetting.Sessions]: Joi.object(),
+				[ProfileSetting.LastVisitedPage]: Joi.object(),
+				[ProfileSetting.HasOnboarded]: Joi.boolean().default(false),
 			}).required(),
 			wallets: Joi.object().pattern(
 				Joi.string().uuid(),

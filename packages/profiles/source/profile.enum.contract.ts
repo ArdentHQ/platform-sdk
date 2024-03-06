@@ -28,6 +28,9 @@ export enum ProfileSetting {
 	UseNetworkWalletNames = "USE_NETWORK_WALLET_NAMES",
 	UseTestNetworks = "USE_TEST_NETWORKS",
 	PrimaryWalletId = "PRIMARY_WALLET_ID",
+	LastVisitedPage = "LAST_VISITED_PAGE",
+	HasOnboarded = "HAS_ONBOARDED",
+	Sessions = "SESSIONS",
 }
 
 /**
@@ -40,5 +43,4 @@ export enum ProfileData {
 	LatestMigration = "LATEST_MIGRATION",
 	HasCompletedIntroductoryTutorial = "HAS_COMPLETED_INTRODUCTORY_TUTORIAL",
 	HasAcceptedManualInstallationDisclaimer = "HAS_ACCEPTED_MANUAL_INSTALLATION_DISCLAIMER",
-	LastScreen = "LAST_SCREEN",
 }

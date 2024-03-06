@@ -66,10 +66,34 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 		assert.is(context.subject.avatar(), "custom-avatar");
 	});
 
-	it("should have a primary wallet id", (context) => {
-		context.subject.settings().set(ProfileSetting.PrimaryWalletId, "1");
+	it("should have a last visited page", (context) => {
+		context.subject.settings().set(ProfileSetting.LastVisitedPage, {
+			name: "test",
+			data: { foo: "bar" },
+		});
 
-		assert.is(context.subject.settings().get(ProfileSetting.PrimaryWalletId), "1");
+		assert.is(context.subject.settings().get(ProfileSetting.LastVisitedPage), {
+			name: "test",
+			data: { foo: "bar" },
+		});
+	});
+
+	it("should have onboarded setting", (context) => {
+		context.subject.settings().set(ProfileSetting.HasOnboarded, true);
+
+		assert.is(context.subject.settings().get(ProfileSetting.HasOnboarded), true);
+	});
+
+	it("should have sessions", (context) => {
+		const sessions = {
+			"1": {
+				name: "test",
+				data: { foo: "bar" },
+			},
+		};
+
+		context.subject.settings().set(ProfileSetting.Sessions, sessions);
+		assert.is(context.subject.settings().get(ProfileSetting.Sessions), sessions);
 	});
 
 	it("should have a custom avatar in data", (context) => {
