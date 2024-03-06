@@ -433,6 +433,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		await makeSubject(context);
 
 		const john = await context.subject.profiles().create("John");
+
 		await importByMnemonic(john, identity.mnemonic, "ARK", "ark.devnet");
 		await context.subject.profiles().persist(john);
 
@@ -443,6 +444,10 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		const jack = await context.subject.profiles().create("Jack");
 		jack.auth().setPassword("password");
 		await context.subject.profiles().persist(jack);
+
+		john.settings().set(ProfileSetting.HasOnboarded, false);
+		jack.settings().set(ProfileSetting.HasOnboarded, false);
+		jane.settings().set(ProfileSetting.HasOnboarded, false);
 
 		await context.subject.persist();
 
