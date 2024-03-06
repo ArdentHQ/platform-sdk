@@ -220,7 +220,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
-			HAS_ONBOARDED: false,
 		});
 	});
 
@@ -263,7 +262,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
-			HAS_ONBOARDED: false,
 		});
 
 		const restoredWallet = newProfile.wallets().first();
