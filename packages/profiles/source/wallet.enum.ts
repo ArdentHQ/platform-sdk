@@ -29,6 +29,7 @@ export enum WalletData {
 	PendingMultiSignatures = "PENDING_MULTISIGNATURE_TRANSACTIONS",
 	LedgerModel = "LEDGER_MODEL",
 	Status = "STATUS",
+	IsPrimary = "IS_PRIMARY",
 }
 
 /**
