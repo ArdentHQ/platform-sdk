@@ -67,15 +67,14 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 	});
 
 	it("should have a last visited page", (context) => {
-		context.subject.settings().set(ProfileSetting.LastVisitedPage, {
+		const lastVisitedPage = {
 			name: "test",
 			data: { foo: "bar" },
-		});
+		};
 
-		assert.is(context.subject.settings().get(ProfileSetting.LastVisitedPage), {
-			name: "test",
-			data: { foo: "bar" },
-		});
+		context.subject.settings().set(ProfileSetting.LastVisitedPage, lastVisitedPage);
+
+		assert.is(context.subject.settings().get(ProfileSetting.LastVisitedPage), lastVisitedPage);
 	});
 
 	it("should have onboarded setting", (context) => {
