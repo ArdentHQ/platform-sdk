@@ -66,6 +66,35 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 		assert.is(context.subject.avatar(), "custom-avatar");
 	});
 
+	it("should have a last visited page", (context) => {
+		const lastVisitedPage = {
+			name: "test",
+			data: { foo: "bar" },
+		};
+
+		context.subject.settings().set(ProfileSetting.LastVisitedPage, lastVisitedPage);
+
+		assert.is(context.subject.settings().get(ProfileSetting.LastVisitedPage), lastVisitedPage);
+	});
+
+	it("should have onboarded setting", (context) => {
+		context.subject.settings().set(ProfileSetting.HasOnboarded, true);
+
+		assert.is(context.subject.settings().get(ProfileSetting.HasOnboarded), true);
+	});
+
+	it("should have sessions", (context) => {
+		const sessions = {
+			"1": {
+				name: "test",
+				data: { foo: "bar" },
+			},
+		};
+
+		context.subject.settings().set(ProfileSetting.Sessions, sessions);
+		assert.is(context.subject.settings().get(ProfileSetting.Sessions), sessions);
+	});
+
 	it("should have a custom avatar in data", (context) => {
 		context.subject.getAttributes().set("data.avatar", "something");
 		context.subject.getAttributes().set("avatar", "custom-avatar");
