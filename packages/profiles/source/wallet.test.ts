@@ -453,6 +453,7 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			VOTES: [],
 			VOTES_AVAILABLE: 0,
 			VOTES_USED: 0,
+			IS_PRIMARY: false,
 		});
 		assert.object(actual.settings);
 		assert.string(actual.settings.AVATAR);
@@ -616,6 +617,10 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 
 	it("should determine if wallet is is a cold wallet", async (context) => {
 		assert.boolean(context.subject.isCold());
+	});
+
+	it("should determine if the wallet is marked as primary", (context) => {
+		assert.boolean(context.subject.isPrimary());
 	});
 
 	it("should unset cold wallet status if outgoing transaction is found", async (context) => {

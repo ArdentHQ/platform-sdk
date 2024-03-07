@@ -761,6 +761,14 @@ export interface IReadWriteWallet {
 	actsWithSecretWithEncryption(): boolean;
 
 	/**
+	 * Determines if the wallet has been marked as primary.
+	 *
+	 * @return {*}  {boolean}
+	 * @memberof IReadWriteWallet
+	 */
+	isPrimary(): boolean;
+
+	/**
 	 * Determines if the wallet has an encryption password.
 	 *
 	 * @return {*}  {boolean}
