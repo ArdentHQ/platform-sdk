@@ -238,7 +238,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		await environment.boot();
 
 		const newProfile = environment.profiles().findById("8101538b-b13a-4b8d-b3d8-e710ccffd385");
-		newProfile.settings().set(ProfileSetting.HasOnboarded, true);
 
 		await new ProfileImporter(newProfile).import();
 
@@ -268,7 +267,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
-			HAS_ONBOARDED: true,
 		});
 
 		const restoredWallet = newProfile.wallets().first();
@@ -444,10 +442,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		const jack = await context.subject.profiles().create("Jack");
 		jack.auth().setPassword("password");
 		await context.subject.profiles().persist(jack);
-
-		john.settings().set(ProfileSetting.HasOnboarded, false);
-		jack.settings().set(ProfileSetting.HasOnboarded, false);
-		jane.settings().set(ProfileSetting.HasOnboarded, false);
 
 		await context.subject.persist();
 
