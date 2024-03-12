@@ -68,7 +68,7 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 
 	it("should have a last visited page", (context) => {
 		const lastVisitedPage = {
-			name: "test",
+			path: "/test",
 			data: { foo: "bar" },
 		};
 

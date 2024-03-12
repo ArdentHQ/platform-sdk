@@ -84,7 +84,7 @@ describe("ProfileValidator", ({ loader, it, assert, nock, beforeEach }) => {
 				[ProfileSetting.UseExpandedTables]: false,
 				[ProfileSetting.UseNetworkWalletNames]: false,
 				[ProfileSetting.UseTestNetworks]: false,
-				[ProfileSetting.LastVisitedPage]: { name: "test", data: { foo: "bar" } },
+				[ProfileSetting.LastVisitedPage]: { path: "test", data: { foo: "bar" } },
 				[ProfileSetting.Sessions]: { 1: { name: "test", data: { foo: "bar" } } },
 			},
 			wallets: {},
