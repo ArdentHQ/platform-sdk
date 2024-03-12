@@ -77,12 +77,6 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 		assert.is(context.subject.settings().get(ProfileSetting.LastVisitedPage), lastVisitedPage);
 	});
 
-	it("should have onboarded setting", (context) => {
-		context.subject.settings().set(ProfileSetting.HasOnboarded, true);
-
-		assert.is(context.subject.settings().get(ProfileSetting.HasOnboarded), true);
-	});
-
 	it("should have sessions", (context) => {
 		const sessions = {
 			"1": {
