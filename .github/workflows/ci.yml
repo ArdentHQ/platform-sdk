@@ -42,8 +42,6 @@ jobs:
                   cd "$GITHUB_WORKSPACE/packages/btc/" && pnpm run test:integration
             - name: Test CRYPTOGRAPHY
               run: cd "$GITHUB_WORKSPACE/packages/cryptography/" && pnpm run test:coverage
-            - name: Test DOT
-              run: cd "$GITHUB_WORKSPACE/packages/dot/" && pnpm run test:coverage
             - name: Test EGLD
               run: cd "$GITHUB_WORKSPACE/packages/egld/" && pnpm run test:coverage
             - name: Test EOS
@@ -86,6 +84,8 @@ jobs:
               run: cd "$GITHUB_WORKSPACE/packages/xrp/" && pnpm run test:coverage
             - name: Test ZIL
               run: cd "$GITHUB_WORKSPACE/packages/zil/" && pnpm run test:coverage
+            - name: Test DOT
+              run: cd "$GITHUB_WORKSPACE/packages/dot/" && pnpm run test:coverage
             - name: Lint
               run: |
                   cd $GITHUB_WORKSPACE
