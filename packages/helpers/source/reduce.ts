@@ -3,5 +3,9 @@ import { isArray } from "./is-array.js";
 import { reduceArray } from "./reduce-array.js";
 import { reduceObject } from "./reduce-object.js";
 
-export const reduce = <T, V>(iterable: T | T[], iteratee: FunctionReturning, initialValue: V): V | V[] | undefined =>
+export const reduce = <T extends object, V>(
+	iterable: T | T[],
+	iteratee: FunctionReturning,
+	initialValue: V,
+): V | V[] | undefined =>
 	isArray(iterable) ? reduceArray(iterable, iteratee, initialValue) : reduceObject(iterable, iteratee, initialValue);
