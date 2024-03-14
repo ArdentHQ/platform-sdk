@@ -1,4 +1,4 @@
-import { Contracts, DTO } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
@@ -106,7 +106,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isIpfs(): boolean {
-		return TransactionTypeService.isIpfs(this.data);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isIpfs.name);
 	}
 
 	public override isMultiPayment(): boolean {
@@ -118,15 +118,15 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isHtlcLock(): boolean {
-		return TransactionTypeService.isHtlcLock(this.data);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcLock.name);
 	}
 
 	public override isHtlcClaim(): boolean {
-		return TransactionTypeService.isHtlcClaim(this.data);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcClaim.name);
 	}
 
 	public override isHtlcRefund(): boolean {
-		return TransactionTypeService.isHtlcRefund(this.data);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcRefund.name);
 	}
 
 	public override isMagistrate(): boolean {
@@ -180,26 +180,22 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	// IPFS
 	public override hash(): string {
-		return this.data.asset.ipfs;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.hash.name);
 	}
 
 	// HTLC Claim / Refund
 	public override lockTransactionId(): string {
-		if (this.isHtlcRefund()) {
-			return this.data.asset.refund.lockTransactionId;
-		}
-
-		return this.data.asset.lock.lockTransactionId;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.lockTransactionId.name);
 	}
 
 	// HTLC Claim
 	public override unlockSecret(): string {
-		return this.data.asset.lock.unlockSecret;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.unlockSecret.name);
 	}
 
 	// HTLC Lock
 	public override secretHash(): string {
-		return this.data.asset.lock.secretHash;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.secretHash.name);
 	}
 
 	public override expirationType(): number {

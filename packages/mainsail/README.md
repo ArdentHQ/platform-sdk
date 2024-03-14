@@ -4,8 +4,6 @@
     <img src="https://raw.githubusercontent.com/ArdentHQ/platform-sdk/master/packages/sdk-mainsail/banner.png" />
 </p>
 
-> Lead Maintainer: [Brian Faust](https://github.com/faustbrian)
-
 ## Installation
 
 ```bash

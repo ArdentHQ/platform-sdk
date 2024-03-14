@@ -1,4 +1,4 @@
-import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
+import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 
@@ -147,7 +147,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async ipfs(input: Services.IpfsInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("ipfs", input, ({ transaction, data }) => transaction.ipfsAsset(data.hash));
+		throw new Exceptions.NotImplemented(this.constructor.name, this.ipfs.name);
 	}
 
 	/**

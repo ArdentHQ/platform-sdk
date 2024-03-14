@@ -1,4 +1,4 @@
-import { Contracts, DTO } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
@@ -72,7 +72,7 @@ export class SignedTransactionData
 	}
 
 	public override isIpfs(): boolean {
-		return TransactionTypeService.isIpfs(this.signedData);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isIpfs.name);
 	}
 
 	public override isMultiPayment(): boolean {
@@ -84,15 +84,15 @@ export class SignedTransactionData
 	}
 
 	public override isHtlcLock(): boolean {
-		return TransactionTypeService.isHtlcLock(this.signedData);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcLock.name);
 	}
 
 	public override isHtlcClaim(): boolean {
-		return TransactionTypeService.isHtlcClaim(this.signedData);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcClaim.name);
 	}
 
 	public override isHtlcRefund(): boolean {
-		return TransactionTypeService.isHtlcRefund(this.signedData);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcRefund.name);
 	}
 
 	public override isMagistrate(): boolean {

@@ -1,3 +1,5 @@
+import { Exceptions } from "@ardenthq/sdk";
+
 type TransactionData = Record<string, any>;
 
 export class TransactionTypeService {
@@ -42,7 +44,7 @@ export class TransactionTypeService {
 	}
 
 	public static isIpfs(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 5;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isIpfs.name);
 	}
 
 	public static isMultiPayment(data: TransactionData): boolean {
@@ -54,15 +56,15 @@ export class TransactionTypeService {
 	}
 
 	public static isHtlcLock(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 8;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcLock.name);
 	}
 
 	public static isHtlcClaim(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 9;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcClaim.name);
 	}
 
 	public static isHtlcRefund(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 10;
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcRefund.name);
 	}
 
 	public static isMagistrate(data: TransactionData): boolean {
