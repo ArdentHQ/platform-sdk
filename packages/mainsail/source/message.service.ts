@@ -1,6 +1,6 @@
 import { Hash as ARK } from "./crypto/hash.js";
 import { Hash } from "@ardenthq/sdk-cryptography";
-import { IoC, Services } from "@ardenthq/sdk";
+import { Services } from "@ardenthq/sdk";
 
 export class MessageService extends Services.AbstractMessageService {
 	public override async sign(input: Services.MessageInput): Promise<Services.SignedMessage> {
