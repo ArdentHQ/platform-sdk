@@ -989,7 +989,7 @@ importers:
         version: link:../ada
       '@ardenthq/sdk-ark':
         specifier: workspace:*
-        version: link:../mainsail
+        version: link:../ark
       '@ardenthq/sdk-btc':
         specifier: workspace:*
         version: link:../btc
