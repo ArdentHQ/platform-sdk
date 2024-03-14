@@ -21,7 +21,9 @@ export class ClientService extends Services.AbstractClientService {
 		input?: Services.TransactionDetailInput,
 	): Promise<Contracts.ConfirmedTransactionData> {
 		const transaction = new Tx();
-		transaction.fromString(await this.#xchain.getTx(id));
+
+		const tx = await this.#xchain.getTx(id);
+		transaction.fromString(tx.toString());
 
 		const unsignedTransaction = transaction.getUnsignedTx();
 		const baseTransaction = unsignedTransaction.getTransaction();
