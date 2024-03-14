@@ -1,6 +1,6 @@
 import { FunctionReturning } from "./types.js";
 
-export const reduceObject = <T, V>(iterable: T, iteratee: FunctionReturning, initialValue: V): V => {
+export const reduceObject = <T extends object, V>(iterable: T, iteratee: FunctionReturning, initialValue: V): V => {
 	const keys: string[] = Object.keys(iterable);
 
 	let result: V = initialValue;
