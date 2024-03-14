@@ -554,6 +554,49 @@ importers:
       '@ardenthq/sdk-test': link:../test
       '@types/node': 17.0.8
 
+  packages/mainsail:
+    specifiers:
+      '@ardenthq/sdk': workspace:*
+      '@ardenthq/sdk-cryptography': workspace:*
+      '@ardenthq/sdk-fetch': workspace:*
+      '@ardenthq/sdk-helpers': workspace:*
+      '@ardenthq/sdk-intl': workspace:*
+      '@ardenthq/sdk-test': workspace:*
+      '@arkecosystem/ledger-transport': ^2.0.0
+      '@ledgerhq/hw-transport-mocker': ^6.20.0
+      '@types/node': ^17.0.8
+      ajv: 6.12.6
+      ajv-keywords: 3.4.1
+      bip39: 3.0.4
+      dayjs: 1.10.7
+      deepmerge: 4.2.2
+      get-random-values: ^1.2.2
+      is-url-superb: ^6.1.0
+      lodash.get: ^4.4.2
+      lodash.set: ^4.3.2
+      node-dotify: ^1.1.0
+    dependencies:
+      '@ardenthq/sdk': link:../sdk
+      '@ardenthq/sdk-cryptography': link:../cryptography
+      '@ardenthq/sdk-helpers': link:../helpers
+      '@ardenthq/sdk-intl': link:../intl
+      '@arkecosystem/ledger-transport': 2.0.0
+      ajv: 6.12.6
+      ajv-keywords: 3.4.1_ajv@6.12.6
+      bip39: 3.0.4
+      dayjs: 1.10.7
+      deepmerge: 4.2.2
+      get-random-values: 1.2.2
+      is-url-superb: 6.1.0
+      lodash.get: 4.4.2
+      lodash.set: 4.3.2
+      node-dotify: 1.1.0
+    devDependencies:
+      '@ardenthq/sdk-fetch': link:../fetch
+      '@ardenthq/sdk-test': link:../test
+      '@ledgerhq/hw-transport-mocker': 6.20.0
+      '@types/node': 17.0.8
+
   packages/markets:
     specifiers:
       '@ardenthq/sdk': workspace:*
@@ -8220,7 +8263,7 @@ packages:
     dev: false
 
   /lodash.set/4.3.2:
-    resolution: {integrity: sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=}
+    resolution: {integrity: sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==}
     dev: false
 
   /lodash.uniq/4.5.0:
