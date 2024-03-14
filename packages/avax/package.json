@@ -29,7 +29,7 @@
 		"@ardenthq/sdk-cryptography": "workspace:*",
 		"@ardenthq/sdk-helpers": "workspace:*",
 		"@ardenthq/sdk-intl": "workspace:*",
-		"avalanche": "3.10.2",
+		"avalanche": "^3.10.2",
 		"isomorphic-dompurify": "^0.17.0"
 	},
 	"devDependencies": {
