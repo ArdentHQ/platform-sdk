@@ -34,11 +34,9 @@ export class ClientService extends Services.AbstractClientService {
 	): Promise<Collections.ConfirmedTransactionDataCollection> {
 		const network = this.configRepository.get<string>("network.id");
 
-		await this.#setLegacy(network);
+		// await this.#setLegacy(network);
 
-		const response = this.#isLegacy(network)
-			? await this.#request.post("transactions/search", this.#createSearchParams(query))
-			: await this.#request.get("transactions", this.#createSearchParams(query));
+		const response = await this.#request.get("transactions", this.#createSearchParams(query));
 
 		return this.dataTransferObjectService.transactions(response.data, this.#createMetaPagination(response));
 	}
@@ -52,11 +50,9 @@ export class ClientService extends Services.AbstractClientService {
 	public override async wallets(query: Services.ClientWalletsInput): Promise<Collections.WalletDataCollection> {
 		const network = this.configRepository.get<string>("network.id");
 
-		await this.#setLegacy(network);
+		// await this.#setLegacy(network);
 
-		const response = this.#isLegacy(network)
-			? await this.#request.post("wallets/search", this.#createSearchParams(query))
-			: await this.#request.get("wallets", this.#createSearchParams(query));
+		const response = await this.#request.get("wallets", this.#createSearchParams(query));
 
 		return new Collections.WalletDataCollection(
 			response.data.map((wallet) => this.dataTransferObjectService.wallet(wallet)),
@@ -71,7 +67,7 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async delegates(query?: Contracts.KeyValuePair): Promise<Collections.WalletDataCollection> {
-		await this.#setLegacy(this.configRepository.get<string>("network.id"));
+		// await this.#setLegacy(this.configRepository.get<string>("network.id"));
 
 		const body = await this.#request.get("delegates", this.#createSearchParams(query || {}));
 
@@ -181,7 +177,7 @@ export class ClientService extends Services.AbstractClientService {
 			return { body: null, searchParams: null };
 		}
 
-		const isLegacy = this.#isLegacy(this.configRepository.get<string>("network.id"));
+		const isLegacy = false;
 
 		const result: any = {
 			body,
