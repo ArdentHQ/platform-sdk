@@ -35,6 +35,7 @@ else
 	bundle luna
 	bundle nano
 	bundle neo
+	bundle mainsail
 	bundle sol
 	bundle trx
 	bundle xlm

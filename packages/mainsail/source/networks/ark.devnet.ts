@@ -10,8 +10,8 @@ const network: Networks.NetworkManifest = {
 	},
 	currency: {
 		decimals: 8,
-		symbol: "DѦ",
-		ticker: "DARK",
+		symbol: "TѦ",
+		ticker: "ARK",
 	},
 	explorer,
 	featureFlags,
@@ -22,7 +22,7 @@ const network: Networks.NetworkManifest = {
 	},
 	hosts: [
 		{
-			host: "https://ark-test.arkvault.io/api",
+			host: "http://49.13.30.19:4003/api",
 			type: "full",
 		},
 		{
@@ -30,7 +30,7 @@ const network: Networks.NetworkManifest = {
 			type: "musig",
 		},
 		{
-			host: "https://test.arkscan.io",
+			host: "https://explorer-demo.mainsailhq.com",
 			type: "explorer",
 		},
 	],
@@ -38,14 +38,14 @@ const network: Networks.NetworkManifest = {
 	importMethods,
 	knownWallets: "https://raw.githubusercontent.com/ArkEcosystem/common/master/devnet/known-wallets-extended.json",
 	meta: {
-		fastDelegateSync: true,
-		nethash: "2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867",
+		// fastDelegateSync: true,
+		nethash: "7b9a7c6a14d3f8fb3f47c434b8c6ef0843d5622f6c209ffeec5411aabbf4bf1c",
 	},
 	name: "Devnet",
 	transactions: {
 		...transactions,
 		fees: {
-			ticker: "DARK",
+			ticker: "ARK",
 			type: "dynamic",
 		},
 		multiPaymentRecipients: 128,

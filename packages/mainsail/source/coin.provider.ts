@@ -26,6 +26,10 @@ export class ServiceProvider extends IoC.AbstractServiceProvider {
 		const dataCrypto = crypto.data;
 		const { height } = status.data;
 
+		console.log("testing mainsail");
+		console.log({ dataCrypto });
+		console.log({ configRepository: this.configRepository.get(Coins.ConfigKey.CurrencyTicker) });
+
 		if (dataCrypto.network.client.token !== this.configRepository.get(Coins.ConfigKey.CurrencyTicker)) {
 			throw new Error(`Failed to connect to ${request.latestHost()?.host} because it is on another network.`);
 		}
