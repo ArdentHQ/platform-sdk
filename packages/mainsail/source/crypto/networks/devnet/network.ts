@@ -1,18 +1,13 @@
 export const network = {
-	aip20: 1,
-	bip32: {
-		private: 46_089_520,
-		public: 46_090_600,
-	},
+	wif: 186,
+	name: "testnet",
 	client: {
-		explorer: "https://test.arkscan.io",
-		symbol: "DѦ",
-		token: "DARK",
+		token: "ARK",
+		symbol: "TѦ",
+		explorer: "",
 	},
-	messagePrefix: "DARK message:\n",
-	name: "devnet",
-	nethash: "2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867",
-	pubKeyHash: 30,
 	slip44: 1,
-	wif: 170,
+	nethash: "7b9a7c6a14d3f8fb3f47c434b8c6ef0843d5622f6c209ffeec5411aabbf4bf1c",
+	pubKeyHash: 30,
+	messagePrefix: "testnet message:\n",
 };
