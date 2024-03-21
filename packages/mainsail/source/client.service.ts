@@ -8,8 +8,6 @@ import { Request } from "./request.js";
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
 
-	#isLegacyMap: Map<string, boolean> = new Map();
-
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
@@ -20,10 +18,7 @@ export class ClientService extends Services.AbstractClientService {
 		);
 	}
 
-	public override async transaction(
-		id: string,
-		input?: Services.TransactionDetailInput,
-	): Promise<Contracts.ConfirmedTransactionData> {
+	public override async transaction(id: string): Promise<Contracts.ConfirmedTransactionData> {
 		const body = await this.#request.get(`transactions/${id}`);
 
 		return this.dataTransferObjectService.transaction(body.data);
@@ -32,13 +27,7 @@ export class ClientService extends Services.AbstractClientService {
 	public override async transactions(
 		query: Services.ClientTransactionsInput,
 	): Promise<Collections.ConfirmedTransactionDataCollection> {
-		const network = this.configRepository.get<string>("network.id");
-
-		await this.#setLegacy(network);
-
-		const response = this.#isLegacy(network)
-			? await this.#request.post("transactions/search", this.#createSearchParams(query))
-			: await this.#request.get("transactions", this.#createSearchParams(query));
+		const response = await this.#request.get("transactions", this.#createSearchParams(query));
 
 		return this.dataTransferObjectService.transactions(response.data, this.#createMetaPagination(response));
 	}
@@ -50,13 +39,7 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async wallets(query: Services.ClientWalletsInput): Promise<Collections.WalletDataCollection> {
-		const network = this.configRepository.get<string>("network.id");
-
-		await this.#setLegacy(network);
-
-		const response = this.#isLegacy(network)
-			? await this.#request.post("wallets/search", this.#createSearchParams(query))
-			: await this.#request.get("wallets", this.#createSearchParams(query));
+		const response = await this.#request.get("wallets", this.#createSearchParams(query));
 
 		return new Collections.WalletDataCollection(
 			response.data.map((wallet) => this.dataTransferObjectService.wallet(wallet)),
@@ -71,8 +54,6 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async delegates(query?: Contracts.KeyValuePair): Promise<Collections.WalletDataCollection> {
-		await this.#setLegacy(this.configRepository.get<string>("network.id"));
-
 		const body = await this.#request.get("delegates", this.#createSearchParams(query || {}));
 
 		return new Collections.WalletDataCollection(
@@ -181,8 +162,6 @@ export class ClientService extends Services.AbstractClientService {
 			return { body: null, searchParams: null };
 		}
 
-		const isLegacy = this.#isLegacy(this.configRepository.get<string>("network.id"));
-
 		const result: any = {
 			body,
 			searchParams: {},
@@ -193,16 +172,11 @@ export class ClientService extends Services.AbstractClientService {
 			limit: "limit",
 			memo: "vendorField",
 			orderBy: "orderBy",
+			address: "address",
+			recipientId: "recipientId",
+			senderId: "senderId",
+			senderPublicKey: "senderPublicKey",
 		};
-
-		if (!isLegacy) {
-			Object.assign(mappings, {
-				address: "address",
-				recipientId: "recipientId",
-				senderId: "senderId",
-				senderPublicKey: "senderPublicKey",
-			});
-		}
 
 		for (const [alias, original] of Object.entries(mappings)) {
 			if (body[alias]) {
@@ -215,11 +189,7 @@ export class ClientService extends Services.AbstractClientService {
 		if (body.identifiers) {
 			const identifiers: Services.WalletIdentifier[] = body.identifiers;
 
-			if (isLegacy) {
-				result.body.addresses = identifiers.map(({ value }) => value);
-			} else {
-				result.searchParams.address = identifiers.map(({ value }) => value).join(",");
-			}
+			result.searchParams.address = identifiers.map(({ value }) => value).join(",");
 
 			// @ts-ignore
 			delete body.identifiers;
@@ -279,25 +249,14 @@ export class ClientService extends Services.AbstractClientService {
 			}[body.type];
 
 			if (type !== undefined) {
-				if (isLegacy) {
-					result.body!.type = type;
-				} else {
-					result.searchParams.type = type;
-				}
+				result.searchParams.type = type;
 			}
 
 			if (typeGroup !== undefined) {
-				if (isLegacy) {
-					result.body!.typeGroup = typeGroup;
-				} else {
-					result.searchParams.typeGroup = typeGroup;
-				}
+				result.searchParams.typeGroup = typeGroup;
 			}
 
-			if (!isLegacy) {
-				// @ts-ignore
-				delete body.type;
-			}
+			delete body.type;
 		}
 
 		if (body.timestamp) {
@@ -317,45 +276,13 @@ export class ClientService extends Services.AbstractClientService {
 
 			const normalized = normalizeTimestamps(body.timestamp);
 
-			if (isLegacy) {
-				result.body!.timestamp = normalized;
-			} else {
-				result.searchParams.timestamp = normalized;
-
-				delete body.timestamp;
-			}
+			result.searchParams.timestamp = normalized;
+			delete body.timestamp;
 		}
 
-		if (!isLegacy) {
-			result.searchParams = dotify({ ...result.searchParams, ...result.body });
-			result.body = null;
-		}
+		result.searchParams = dotify({ ...result.searchParams, ...result.body });
+		result.body = null;
 
 		return result;
-	}
-
-	#isLegacy(network: string): boolean | undefined {
-		return this.#isLegacyMap.get(network);
-	}
-
-	async #setLegacy(network: string): Promise<void> {
-		if (this.#isLegacyMap.get(network) !== undefined) {
-			return;
-		}
-
-		try {
-			await this.#request.get("wallets", {
-				searchParams: {
-					limit: 1,
-					nonce: 0,
-				},
-			});
-
-			this.#isLegacyMap.set(network, false);
-		} catch (error) {
-			if (error.message.includes(422)) {
-				this.#isLegacyMap.set(network, true);
-			}
-		}
 	}
 }

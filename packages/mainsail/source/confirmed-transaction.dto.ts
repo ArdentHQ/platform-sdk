@@ -13,16 +13,22 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.data.blockId;
 	}
 
+	// @TODO: Revert when timestamp will be available from /api/transactions endpoint.
 	public override timestamp(): DateTime | undefined {
-		return DateTime.fromUnix(this.data.timestamp.unix);
+		// return DateTime.fromUnix(this.data.timestamp.unix);
+		return DateTime.make();
 	}
 
+	// @TODO: Revert when confirmations will be available from /api/transactions endpoint.
 	public override confirmations(): BigNumber {
-		return BigNumber.make(this.data.confirmations);
+		// return BigNumber.make(this.data.confirmations);
+		return BigNumber.make(10);
 	}
 
+	// @TODO: Revert when sender will be available from /api/transactions endpoint.
 	public override sender(): string {
-		return this.data.sender;
+		// return this.data.sender;
+		return this.data.recipient;
 	}
 
 	public override recipient(): string {
@@ -105,28 +111,12 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return TransactionTypeService.isMultiSignatureRegistration(this.data);
 	}
 
-	public override isIpfs(): boolean {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.isIpfs.name);
-	}
-
 	public override isMultiPayment(): boolean {
 		return TransactionTypeService.isMultiPayment(this.data);
 	}
 
 	public override isDelegateResignation(): boolean {
 		return TransactionTypeService.isDelegateResignation(this.data);
-	}
-
-	public override isHtlcLock(): boolean {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcLock.name);
-	}
-
-	public override isHtlcClaim(): boolean {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcClaim.name);
-	}
-
-	public override isHtlcRefund(): boolean {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.isHtlcRefund.name);
 	}
 
 	public override isMagistrate(): boolean {
