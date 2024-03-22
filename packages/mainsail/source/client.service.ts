@@ -5,8 +5,30 @@ import dotify from "node-dotify";
 import { Enums } from "./crypto/index.js";
 import { Request } from "./request.js";
 
+import { Application } from "@mainsail/kernel";
+import { Identifiers } from "@mainsail/contracts";
+import { ServiceProvider as CoreValidation } from "@mainsail/validation";
+import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
+import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
+import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
+import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreFees } from "@mainsail/fees";
+import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
+import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import {
+	ServiceProvider as CoreCryptoTransactionTransfer,
+	TransferBuilder,
+} from "@mainsail/crypto-transaction-transfer";
+import { Container } from "@mainsail/container";
+
+import { milestones } from "./crypto/networks/devnet/milestones.js";
+import { network } from "./crypto/networks/devnet/network.js";
+
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
+	#app: any;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -16,6 +38,22 @@ export class ClientService extends Services.AbstractClientService {
 			container.get(IoC.BindingType.HttpClient),
 			container.get(IoC.BindingType.NetworkHostSelector),
 		);
+
+		this.#app = new Application(new Container());
+	}
+
+	async #boot(): Promise<void> {
+		await this.#app.resolve(CoreValidation).register();
+		await this.#app.resolve(CoreCryptoConfig).register();
+		await this.#app.resolve(CoreCryptoValidation).register();
+		await this.#app.resolve(CoreCryptoKeyPairEcdsa).register();
+		await this.#app.resolve(CoreCryptoAddressBase58).register();
+		await this.#app.resolve(CoreCryptoSignatureSchnorr).register();
+		await this.#app.resolve(CoreCryptoHashBcrypto).register();
+		await this.#app.resolve(CoreFees).register();
+		await this.#app.resolve(CoreFeesStatic).register();
+		await this.#app.resolve(CoreCryptoTransaction).register();
+		await this.#app.resolve(CoreCryptoTransactionTransfer).register();
 	}
 
 	public override async transaction(id: string): Promise<Contracts.ConfirmedTransactionData> {
@@ -97,49 +135,90 @@ export class ClientService extends Services.AbstractClientService {
 	public override async broadcast(
 		transactions: Contracts.SignedTransactionData[],
 	): Promise<Services.BroadcastResponse> {
-		let response: Contracts.KeyValuePair;
+		// Example taken from https://hackmd.io/@LwuiVnzwR0Of7SPH5HkMvQ/HJ7ELcG6p#How-To
+		await this.#boot();
 
+		// @TODO: extract the mnemonic from signatory, after successfull broadcast.
+		const mnemonic =
+			"rally use tray draft level program also below today head wrist fabric damage vacuum fog hundred clinic next noodle clean boring universe endorse act";
+
+		const serializedTransactions: any = [];
+
+		for (const transaction of transactions) {
+			// Sign transaction.
+			const signedTransaction = await this.#app
+				.resolve(TransferBuilder)
+				.fee(transaction.fee())
+				.nonce("1")
+				.recipientId(transaction.recipient())
+				.amount(transaction.amount())
+				.sign(mnemonic);
+
+			const tx = await signedTransaction.build();
+			// Transactions needs to be serialized in mainsail compared to ark.
+			serializedTransactions.push(tx.serialized.toString("hex"));
+		}
+
+		// @TODO: Add url & port in manifest. Notice the endpoint is different than ark (transaction-pool instead of transactions in ark)
+		//
+		// Also make sure this.httpClient is sending the data in right format, otherwise use another one for the PoC.
+		// See example https://hackmd.io/@LwuiVnzwR0Of7SPH5HkMvQ/HJ7ELcG6p#How-To
 		try {
-			response = await this.#request.post("transactions", {
-				body: {
-					transactions: transactions.map((transaction: Contracts.SignedTransactionData) =>
-						transaction.toBroadcast(),
-					),
-				},
+			console.log("broadcasting", { serializedTransactions });
+			const response = await this.httpClient.post("http:/49.13.30.19:4007/api/transaction-pool", {
+				transactions: serializedTransactions,
 			});
+
+			console.log({ response });
 		} catch (error) {
-			response = (error as any).response.json();
+			console.log({ error });
 		}
 
-		const { data, errors } = response;
+		// @TODO: Adjust the following code with the respoonse data to return `Services.BroadcastResponse`
+		// in order not to break existing functionality for consumers (e.g arkvault)
 
-		const result: Services.BroadcastResponse = {
-			accepted: [],
-			errors: {},
-			rejected: [],
-		};
+		// let response: Contracts.KeyValuePair;
+		// try {
+		// 	response = await this.#request.post("transactions", {
+		// 		body: {
+		// 			transactions: transactions.map((transaction: Contracts.SignedTransactionData) =>
+		// 				transaction.toBroadcast(),
+		// 			),
+		// 		},
+		// 	});
+		// } catch (error) {
+		// 	response = (error as any).response.json();
+		// }
+		//
+		// const { data, errors } = response;
 
-		if (Array.isArray(data.accept)) {
-			result.accepted = data.accept;
-		}
-
-		if (Array.isArray(data.invalid)) {
-			result.rejected = data.invalid;
-		}
-
-		if (errors) {
-			const responseErrors: [string, { message: string }][] = Object.entries(errors);
-
-			for (const [key, value] of responseErrors) {
-				if (Array.isArray(value)) {
-					result.errors[key] = value[0].message;
-				} else {
-					result.errors[key] = value.message;
-				}
-			}
-		}
-
-		return result;
+		// const result: Services.BroadcastResponse = {
+		// 	accepted: [],
+		// 	errors: {},
+		// 	rejected: [],
+		// };
+		//
+		// if (Array.isArray(data.accept)) {
+		// 	result.accepted = data.accept;
+		// }
+		//
+		// if (Array.isArray(data.invalid)) {
+		// 	result.rejected = data.invalid;
+		// }
+		//
+		// if (errors) {
+		// 	const responseErrors: [string, { message: string }][] = Object.entries(errors);
+		//
+		// 	for (const [key, value] of responseErrors) {
+		// 		if (Array.isArray(value)) {
+		// 			result.errors[key] = value[0].message;
+		// 		} else {
+		// 			result.errors[key] = value.message;
+		// 		}
+		// 	}
+		// }
+		//
+		// return result;
 	}
 
 	#createMetaPagination(body): Services.MetaPagination {
