@@ -1,4 +1,4 @@
-import {DateTime} from "@ardenthq/sdk-intl";
+import { DateTime } from "@ardenthq/sdk-intl";
 import { DuplicateParticipantInMultiSignatureError, InvalidMultiSignatureAssetError } from "../errors.js";
 import { Hash } from "../hash.js";
 import {
