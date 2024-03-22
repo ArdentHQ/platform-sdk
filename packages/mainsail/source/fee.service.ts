@@ -52,7 +52,7 @@ export class FeeService extends Services.AbstractFeeService {
 
 	// @TODO: Replace with static fee api once available in mainsail.
 	#transformDynamicFeesToStatic(dynamicFees: object): Object {
-		// Defaults are taking from https://ark-test.arkvault.io/api/transactions/fees
+		// Defaults are taken from https://ark-test.arkvault.io/api/transactions/fees
 		const defaults = {
 			transfer: "10000000",
 			secondSignature: "500000000",
