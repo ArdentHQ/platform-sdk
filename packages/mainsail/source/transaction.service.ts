@@ -178,7 +178,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const { data: configuration } = await this.#request.get("node/configuration");
 
 		return BigNumber.make(blockchain.block.height)
-			.plus((value ? Number(value) : 5) * configuration.constants.activeDelegates)
+			.plus((value ? Number(value) : 5) * configuration.constants.activeValidators)
 			.toString();
 	}
 
