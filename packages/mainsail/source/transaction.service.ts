@@ -193,7 +193,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let senderPublicKey: string | undefined;
 
 		const transaction = Transactions.BuilderFactory[type]();
-		transaction.version(2);
+		transaction.version(1);
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;

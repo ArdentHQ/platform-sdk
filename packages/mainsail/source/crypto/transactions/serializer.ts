@@ -10,7 +10,7 @@ import { TransactionTypeFactory } from "./types/factory.js";
 // Reference: https://github.com/ArkEcosystem/AIPs/blob/master/AIPS/aip-11.md
 export class Serializer {
 	public static getBytes(transaction: ITransactionData, options: ISerializeOptions = {}): Buffer {
-		const version: number = transaction.version || 2;
+		const version: number = transaction.version || 1;
 
 		if (options.acceptLegacyVersion || options.disableVersionCheck || isSupportedTransactionVersion(version)) {
 			return this.serialize(TransactionTypeFactory.create(transaction), options);
