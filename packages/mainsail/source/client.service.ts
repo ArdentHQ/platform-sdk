@@ -138,7 +138,7 @@ export class ClientService extends Services.AbstractClientService {
 		// Example taken from https://hackmd.io/@LwuiVnzwR0Of7SPH5HkMvQ/HJ7ELcG6p#How-To
 		await this.#boot();
 
-		// @TODO: extract the mnemonic from signatory, after successfull broadcast.
+		// @TODO: extract the mnemonic from signatory, when PoC is ready.
 		const mnemonic =
 			"rally use tray draft level program also below today head wrist fabric damage vacuum fog hundred clinic next noodle clean boring universe endorse act";
 
@@ -161,7 +161,7 @@ export class ClientService extends Services.AbstractClientService {
 
 		// @TODO: Add url & port in manifest. Notice the endpoint is different than ark (transaction-pool instead of transactions in ark)
 		//
-		// Also make sure this.httpClient is sending the data in right format, otherwise use another one for the PoC.
+		// Also make sure this.httpClient is sending the data in right format, otherwise use another http client for the PoC.
 		// See example https://hackmd.io/@LwuiVnzwR0Of7SPH5HkMvQ/HJ7ELcG6p#How-To
 		try {
 			console.log("broadcasting", { serializedTransactions });
