@@ -1,6 +1,6 @@
 export const milestones = [
 	{
-		activeDelegates: 51,
+		activeValidators: 51,
 		block: {
 			acceptExpiredTransactionTimestamps: true,
 			maxPayload: 2_097_152,
