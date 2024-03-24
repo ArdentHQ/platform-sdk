@@ -1,3 +1,4 @@
+import { DateTime } from "@ardenthq/sdk-intl";
 import { DuplicateParticipantInMultiSignatureError, InvalidMultiSignatureAssetError } from "../errors.js";
 import { Hash } from "../hash.js";
 import {
@@ -103,6 +104,7 @@ export class Verifier {
 	}
 
 	public static verifySchema(data: ITransactionData, strict = true): ISchemaValidationResult {
+		data.timestamp = DateTime.make().toUNIX();
 		const transactionType = TransactionTypeFactory.get(data.type, data.typeGroup, data.version);
 
 		if (!transactionType) {
