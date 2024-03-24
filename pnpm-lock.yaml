@@ -45,6 +45,7 @@ importers:
       webpack: ^5.64.4
       webpack-bundle-analyzer: ^4.5.0
       webpack-cli: ^4.9.1
+      webpack-node-externals: ^3.0.0
     dependencies:
       '@babel/core': 7.16.5
       '@babel/plugin-proposal-class-properties': 7.16.5_@babel+core@7.16.5
@@ -87,6 +88,8 @@ importers:
       webpack: 5.64.4_webpack-cli@4.9.1
       webpack-bundle-analyzer: 4.5.0
       webpack-cli: 4.9.1_b7c29953fd43b32eba74d01a8a22a63a
+    devDependencies:
+      webpack-node-externals: 3.0.0
 
   packages/ada:
     specifiers:
@@ -567,6 +570,7 @@ importers:
       '@mainsail/container': ^0.0.1-alpha.13
       '@mainsail/contracts': ^0.0.1-alpha.13
       '@mainsail/crypto-address-base58': ^0.0.1-alpha.13
+      '@mainsail/crypto-config': ^0.0.1-alpha.13
       '@mainsail/crypto-hash-bcrypto': ^0.0.1-alpha.13
       '@mainsail/crypto-key-pair-ecdsa': ^0.0.1-alpha.13
       '@mainsail/crypto-signature-schnorr-secp256k1': ^0.0.1-alpha.13
@@ -588,6 +592,7 @@ importers:
       lodash.get: ^4.4.2
       lodash.set: ^4.3.2
       node-dotify: ^1.1.0
+      webpack-node-externals: ^3.0.0
     dependencies:
       '@ardenthq/sdk': link:../sdk
       '@ardenthq/sdk-cryptography': link:../cryptography
@@ -597,6 +602,7 @@ importers:
       '@mainsail/container': 0.0.1-alpha.13
       '@mainsail/contracts': 0.0.1-alpha.13
       '@mainsail/crypto-address-base58': 0.0.1-alpha.13
+      '@mainsail/crypto-config': 0.0.1-alpha.13
       '@mainsail/crypto-hash-bcrypto': 0.0.1-alpha.13
       '@mainsail/crypto-key-pair-ecdsa': 0.0.1-alpha.13
       '@mainsail/crypto-signature-schnorr-secp256k1': 0.0.1-alpha.13
@@ -617,6 +623,7 @@ importers:
       lodash.get: 4.4.2
       lodash.set: 4.3.2
       node-dotify: 1.1.0
+      webpack-node-externals: 3.0.0
     devDependencies:
       '@ardenthq/sdk-fetch': link:../fetch
       '@ardenthq/sdk-test': link:../test
@@ -3297,6 +3304,19 @@ packages:
       '@mainsail/utils': 0.0.1-alpha.13
       bcrypto: 5.5.2
       bstring: 0.3.9
+    dev: false
+
+  /@mainsail/crypto-config/0.0.1-alpha.13:
+    resolution: {integrity: sha512-ilJxa86Eda+iWUuXhgGKgfGturzoDwztramgVoMAOctVT9XQ3S7eUg4Sh0mK9JzBW2HoIlxi4YonjOHkQvo3Xg==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.13
+      '@mainsail/contracts': 0.0.1-alpha.13
+      '@mainsail/kernel': 0.0.1-alpha.13
+      deepmerge: 4.3.1
+      lodash.clone: 4.5.0
+      lodash.get: 4.4.2
+      lodash.set: 4.3.2
     dev: false
 
   /@mainsail/crypto-hash-bcrypto/0.0.1-alpha.13:
@@ -9175,6 +9195,10 @@ packages:
       p-locate: 5.0.0
     dev: false
 
+  /lodash.clone/4.5.0:
+    resolution: {integrity: sha512-GhrVeweiTD6uTmmn5hV/lzgCQhccwReIVRLHp7LT4SopOjqEZ5BbX8b5WWEtAKasjmy8hR7ZPwsYlxRCku5odg==}
+    dev: false
+
   /lodash.clonedeep/4.5.0:
     resolution: {integrity: sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=}
     dev: false
@@ -12270,6 +12294,10 @@ packages:
       clone-deep: 4.0.1
       wildcard: 2.0.0
     dev: false
+
+  /webpack-node-externals/3.0.0:
+    resolution: {integrity: sha512-LnL6Z3GGDPht/AigwRh2dvL9PQPFQ8skEpVrWZXLWBYmqcaojHNN0onvHzie6rq7EWKrrBfPYqNEzTJgiwEQDQ==}
+    engines: {node: '>=6'}
 
   /webpack-sources/3.2.2:
     resolution: {integrity: sha512-cp5qdmHnu5T8wRg2G3vZZHoJPN14aqQ89SyQ11NpGH5zEMDCclt49rzo+MaRazk7/UeILhAI+/sEtcM+7Fr0nw==}
