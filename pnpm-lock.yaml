@@ -589,7 +589,6 @@ importers:
       lodash.get: ^4.4.2
       lodash.set: ^4.3.2
       node-dotify: ^1.1.0
-      webpack-node-externals: ^3.0.0
     dependencies:
       '@ardenthq/sdk': link:../sdk
       '@ardenthq/sdk-cryptography': link:../cryptography
@@ -620,7 +619,6 @@ importers:
       lodash.get: 4.4.2
       lodash.set: 4.3.2
       node-dotify: 1.1.0
-      webpack-node-externals: 3.0.0
     devDependencies:
       '@ardenthq/sdk-fetch': link:../fetch
       '@ardenthq/sdk-test': link:../test
@@ -12290,11 +12288,6 @@ packages:
     dependencies:
       clone-deep: 4.0.1
       wildcard: 2.0.0
-    dev: false
-
-  /webpack-node-externals/3.0.0:
-    resolution: {integrity: sha512-LnL6Z3GGDPht/AigwRh2dvL9PQPFQ8skEpVrWZXLWBYmqcaojHNN0onvHzie6rq7EWKrrBfPYqNEzTJgiwEQDQ==}
-    engines: {node: '>=6'}
     dev: false
 
   /webpack-sources/3.2.2:
