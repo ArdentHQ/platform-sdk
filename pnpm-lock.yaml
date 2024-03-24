@@ -45,7 +45,6 @@ importers:
       webpack: ^5.64.4
       webpack-bundle-analyzer: ^4.5.0
       webpack-cli: ^4.9.1
-      webpack-node-externals: ^3.0.0
     dependencies:
       '@babel/core': 7.16.5
       '@babel/plugin-proposal-class-properties': 7.16.5_@babel+core@7.16.5
@@ -88,8 +87,6 @@ importers:
       webpack: 5.64.4_webpack-cli@4.9.1
       webpack-bundle-analyzer: 4.5.0
       webpack-cli: 4.9.1_b7c29953fd43b32eba74d01a8a22a63a
-    devDependencies:
-      webpack-node-externals: 3.0.0
 
   packages/ada:
     specifiers:
@@ -12298,6 +12295,7 @@ packages:
   /webpack-node-externals/3.0.0:
     resolution: {integrity: sha512-LnL6Z3GGDPht/AigwRh2dvL9PQPFQ8skEpVrWZXLWBYmqcaojHNN0onvHzie6rq7EWKrrBfPYqNEzTJgiwEQDQ==}
     engines: {node: '>=6'}
+    dev: false
 
   /webpack-sources/3.2.2:
     resolution: {integrity: sha512-cp5qdmHnu5T8wRg2G3vZZHoJPN14aqQ89SyQ11NpGH5zEMDCclt49rzo+MaRazk7/UeILhAI+/sEtcM+7Fr0nw==}
