@@ -72,7 +72,7 @@ export class SignedTransactionData
 	}
 
 	public override isIpfs(): boolean {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.isIpfs.name);
+		return false;
 	}
 
 	public override isMultiPayment(): boolean {

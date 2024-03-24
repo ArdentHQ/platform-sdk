@@ -29,6 +29,7 @@ import { network } from "./crypto/networks/devnet/network.js";
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
 	#app: any;
+	#isBooted: boolean;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -40,8 +41,10 @@ export class ClientService extends Services.AbstractClientService {
 		);
 
 		this.#app = new Application(new Container());
+		this.#isBooted = false;
 	}
 
+	// @TODO: Make it more centralized, so that the app can be share between coins services (transaction service etc.)
 	async #boot(): Promise<void> {
 		await this.#app.resolve(CoreValidation).register();
 		await this.#app.resolve(CoreCryptoConfig).register();
@@ -54,6 +57,9 @@ export class ClientService extends Services.AbstractClientService {
 		await this.#app.resolve(CoreFeesStatic).register();
 		await this.#app.resolve(CoreCryptoTransaction).register();
 		await this.#app.resolve(CoreCryptoTransactionTransfer).register();
+
+		this.#app.get(Identifiers.Cryptography.Configuration).setConfig({ milestones, network });
+		this.#isBooted = true;
 	}
 
 	public override async transaction(id: string): Promise<Contracts.ConfirmedTransactionData> {
@@ -135,90 +141,86 @@ export class ClientService extends Services.AbstractClientService {
 	public override async broadcast(
 		transactions: Contracts.SignedTransactionData[],
 	): Promise<Services.BroadcastResponse> {
-		// Example taken from https://hackmd.io/@LwuiVnzwR0Of7SPH5HkMvQ/HJ7ELcG6p#How-To
-		await this.#boot();
-
-		// @TODO: extract the mnemonic from signatory, when PoC is ready.
-		const mnemonic =
-			"rally use tray draft level program also below today head wrist fabric damage vacuum fog hundred clinic next noodle clean boring universe endorse act";
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 
 		const serializedTransactions: any = [];
 
+		// @TODO: After the PoC, the signing of the function
+		// should be moved in TransactionService#transfer ./packages/mainsail/source/transaction.service.ts
+		//
+		// Make sure the TransactionService#transfer output (SignedTransactionData) matches the one returned from mainsail tx sign.
 		for (const transaction of transactions) {
-			// Sign transaction.
-			const signedTransaction = await this.#app
-				.resolve(TransferBuilder)
-				.fee(transaction.fee())
-				.nonce("1")
-				.recipientId(transaction.recipient())
-				.amount(transaction.amount())
-				.sign(mnemonic);
+			try {
+				// @TODO remove
+				const signedTransaction = await this.#app
+					.resolve(TransferBuilder)
+					.fee(transaction.fee())
+					.nonce(transaction.toBroadcast().nonce)
+					.recipientId(transaction.recipient())
+					.amount(transaction.amount())
+					// Once the signing will be moved in TransactionService, this hardcoded value can be replaced with the actual mnemonic.
+					// Currently using hardcoded mnemonic for the PoC, because it's not available in this transaction data.
+					.sign(
+						"rally use tray draft level program also below today head wrist fabric damage vacuum fog hundred clinic next noodle clean boring universe endorse act",
+					);
 
-			const tx = await signedTransaction.build();
-			// Transactions needs to be serialized in mainsail compared to ark.
-			serializedTransactions.push(tx.serialized.toString("hex"));
+				console.log({ signedTransaction });
+
+				const tx = await signedTransaction.build();
+				console.log({ tx });
+
+				// Transactions need to be serialized in mainsail api compared to ark where it sends tx json objects.
+				// @TODO: After the PoC, this should also be provided by TransactionService
+				serializedTransactions.push(tx.serialized.toString("hex"));
+			} catch (error) {
+				console.log("error in signing", { error });
+			}
 		}
 
-		// @TODO: Add url & port in manifest. Notice the endpoint is different than ark (transaction-pool instead of transactions in ark)
-		//
-		// Also make sure this.httpClient is sending the data in right format, otherwise use another http client for the PoC.
-		// See example https://hackmd.io/@LwuiVnzwR0Of7SPH5HkMvQ/HJ7ELcG6p#How-To
-		try {
-			console.log("broadcasting", { serializedTransactions });
-			const response = await this.httpClient.post("http:/49.13.30.19:4007/api/transaction-pool", {
-				transactions: serializedTransactions,
-			});
+		// @TODO: Use this.httpClient instead, but it needs to be adjusted so that it could accept a different base path.
+		const response: Contracts.KeyValuePair = await fetch(
+			// @TODO: Move base url in manifest instead of hardcoded data here.
+			new URL("/api/transaction-pool", "http:/49.13.30.19:4007"),
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ transactions: serializedTransactions }), // Convert JavaScript object to JSON string
+			},
+		);
 
-			console.log({ response });
-		} catch (error) {
-			console.log({ error });
+		const { data, errors } = await response.json();
+
+		const result: Services.BroadcastResponse = {
+			accepted: [],
+			errors: {},
+			rejected: [],
+		};
+
+		if (Array.isArray(data.accept)) {
+			result.accepted = data.accept;
 		}
 
-		// @TODO: Adjust the following code with the respoonse data to return `Services.BroadcastResponse`
-		// in order not to break existing functionality for consumers (e.g arkvault)
+		if (Array.isArray(data.invalid)) {
+			result.rejected = data.invalid;
+		}
 
-		// let response: Contracts.KeyValuePair;
-		// try {
-		// 	response = await this.#request.post("transactions", {
-		// 		body: {
-		// 			transactions: transactions.map((transaction: Contracts.SignedTransactionData) =>
-		// 				transaction.toBroadcast(),
-		// 			),
-		// 		},
-		// 	});
-		// } catch (error) {
-		// 	response = (error as any).response.json();
-		// }
-		//
-		// const { data, errors } = response;
+		if (errors) {
+			const responseErrors: [string, { message: string }][] = Object.entries(errors);
 
-		// const result: Services.BroadcastResponse = {
-		// 	accepted: [],
-		// 	errors: {},
-		// 	rejected: [],
-		// };
-		//
-		// if (Array.isArray(data.accept)) {
-		// 	result.accepted = data.accept;
-		// }
-		//
-		// if (Array.isArray(data.invalid)) {
-		// 	result.rejected = data.invalid;
-		// }
-		//
-		// if (errors) {
-		// 	const responseErrors: [string, { message: string }][] = Object.entries(errors);
-		//
-		// 	for (const [key, value] of responseErrors) {
-		// 		if (Array.isArray(value)) {
-		// 			result.errors[key] = value[0].message;
-		// 		} else {
-		// 			result.errors[key] = value.message;
-		// 		}
-		// 	}
-		// }
-		//
-		// return result;
+			for (const [key, value] of responseErrors) {
+				if (Array.isArray(value)) {
+					result.errors[key] = value[0].message;
+				} else {
+					result.errors[key] = value.message;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	#createMetaPagination(body): Services.MetaPagination {
