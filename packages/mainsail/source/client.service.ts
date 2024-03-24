@@ -44,7 +44,7 @@ export class ClientService extends Services.AbstractClientService {
 		this.#isBooted = false;
 	}
 
-	// @TODO: Make it more centralized, so that the app can be share between coins services (transaction service etc.)
+	// @TODO: Make it more centralized so that the app can be shared between coin services (transaction service etc.)
 	async #boot(): Promise<void> {
 		await this.#app.resolve(CoreValidation).register();
 		await this.#app.resolve(CoreCryptoConfig).register();
@@ -147,13 +147,12 @@ export class ClientService extends Services.AbstractClientService {
 
 		const serializedTransactions: any = [];
 
-		// @TODO: After the PoC, the signing of the function
+		// @TODO: After the PoC, the signing of the transaction
 		// should be moved in TransactionService#transfer ./packages/mainsail/source/transaction.service.ts
 		//
 		// Make sure the TransactionService#transfer output (SignedTransactionData) matches the one returned from mainsail tx sign.
 		for (const transaction of transactions) {
 			try {
-				// @TODO remove
 				const signedTransaction = await this.#app
 					.resolve(TransferBuilder)
 					.fee(transaction.fee())
