@@ -185,7 +185,6 @@ export class ClientService extends Services.AbstractClientService {
 				// @TODO: Move base url in manifest instead of hardcoded data here.
 				new URL("https://dwallets.mainsailhq.com/tx/api/transaction-pool"),
 				{
-					mode: "no-cors",
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
@@ -197,6 +196,12 @@ export class ClientService extends Services.AbstractClientService {
 			if (!response.ok) {
 				const errorMessage = await response.text();
 				console.log({ errorMessage });
+
+				return {
+					accepted: [],
+					errors: { "bad-request": errorMessage },
+					rejected: [],
+				};
 			}
 
 			const { data, errors } = await response.json();
