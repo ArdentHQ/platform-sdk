@@ -179,48 +179,59 @@ export class ClientService extends Services.AbstractClientService {
 		}
 
 		// @TODO: Use this.httpClient instead, but it needs to be adjusted so that it could accept a different base path.
-		const response: Contracts.KeyValuePair = await fetch(
-			// @TODO: Move base url in manifest instead of hardcoded data here.
-			new URL("https://dwallets.mainsailhq.com/tx/api/transaction-pool"),
-			{
-				mode: "no-cors",
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
+
+		try {
+			const response: Contracts.KeyValuePair = await fetch(
+				// @TODO: Move base url in manifest instead of hardcoded data here.
+				new URL("https://dwallets.mainsailhq.com/tx/api/transaction-pool"),
+				{
+					mode: "no-cors",
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ transactions: serializedTransactions }),
 				},
-				body: JSON.stringify({ transactions: serializedTransactions }), // Convert JavaScript object to JSON string
-			},
-		);
+			);
 
-		const { data, errors } = await response.json();
+			if (!response.ok) {
+				const errorMessage = await response.text();
+				console.log({ errorMessage });
+			}
 
-		const result: Services.BroadcastResponse = {
-			accepted: [],
-			errors: {},
-			rejected: [],
-		};
+			const { data, errors } = await response.json();
+			console.log({ data, errors });
 
-		if (Array.isArray(data.accept)) {
-			result.accepted = data.accept;
-		}
+			const result: Services.BroadcastResponse = {
+				accepted: [],
+				errors: {},
+				rejected: [],
+			};
 
-		if (Array.isArray(data.invalid)) {
-			result.rejected = data.invalid;
-		}
+			if (Array.isArray(data.accept)) {
+				result.accepted = data.accept;
+			}
 
-		if (errors) {
-			const responseErrors: [string, { message: string }][] = Object.entries(errors);
+			if (Array.isArray(data.invalid)) {
+				result.rejected = data.invalid;
+			}
 
-			for (const [key, value] of responseErrors) {
-				if (Array.isArray(value)) {
-					result.errors[key] = value[0].message;
-				} else {
-					result.errors[key] = value.message;
+			if (errors) {
+				const responseErrors: [string, { message: string }][] = Object.entries(errors);
+
+				for (const [key, value] of responseErrors) {
+					if (Array.isArray(value)) {
+						result.errors[key] = value[0].message;
+					} else {
+						result.errors[key] = value.message;
+					}
 				}
 			}
-		}
 
-		return result;
+			return result;
+		} catch (error) {
+			console.log({ error });
+		}
 	}
 
 	#createMetaPagination(body): Services.MetaPagination {
