@@ -181,8 +181,9 @@ export class ClientService extends Services.AbstractClientService {
 		// @TODO: Use this.httpClient instead, but it needs to be adjusted so that it could accept a different base path.
 		const response: Contracts.KeyValuePair = await fetch(
 			// @TODO: Move base url in manifest instead of hardcoded data here.
-			new URL("/api/transaction-pool", "http:/49.13.30.19:4007"),
+			new URL("https://dwallets.mainsailhq.com/tx"),
 			{
+				mode: "no-cors",
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
