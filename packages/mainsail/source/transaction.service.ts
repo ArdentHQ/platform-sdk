@@ -96,7 +96,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerX
 	 * @ledgerS
 	 */
-	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
+	public override async transfer(input: Services.TransferInput): Promise<MainSailContracts.Crypto.Transaction> {
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
@@ -408,7 +408,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		transaction
 			// @TODO: do we need this?
 			.version(1)
-			.recipientId(input.data.to)
 			.amount(input.data.amount.toString());
 
 		if (input.fee) {
@@ -420,6 +419,9 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.nonce(input.nonce);
 		} else {
 			// currently does not apply but may be needed in the future, see the `#createFromData` method
+		}
+		if (callback) {
+			callback({ data: input.data, transaction });
 		}
 
 		const signedTransaction = await transaction.sign(input.mnemonic);
