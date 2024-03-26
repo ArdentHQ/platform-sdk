@@ -1,12 +1,32 @@
 import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
+
+import { Application } from "@mainsail/kernel";
+import { Identifiers, Contracts as MainSailContracts } from "@mainsail/contracts";
+import { ServiceProvider as CoreValidation } from "@mainsail/validation";
+import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
+import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
+import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
+import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreFees } from "@mainsail/fees";
+import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
+import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import {
+	ServiceProvider as CoreCryptoTransactionTransfer,
+	TransferBuilder,
+} from "@mainsail/crypto-transaction-transfer";
+import { Container } from "@mainsail/container";
+
+import { milestones } from "./crypto/networks/devnet/milestones.js";
+import { network } from "./crypto/networks/devnet/network.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -15,6 +35,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 	readonly #multiSignatureService!: Services.MultiSignatureService;
 	readonly #multiSignatureSigner!: IoC.Factory<MultiSignatureSigner>;
 	readonly #request: Request;
+	readonly #app: Application;
+	#isBooted: boolean;
 
 	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
 
@@ -37,6 +59,34 @@ export class TransactionService extends Services.AbstractTransactionService {
 			container.get(IoC.BindingType.HttpClient),
 			container.get(IoC.BindingType.NetworkHostSelector),
 		);
+
+		this.#app = new Application(new Container());
+
+		this.#isBooted = false;
+	}
+
+	async #boot(): Promise<void> {
+		await Promise.all([
+			this.#app.resolve(CoreValidation).register(),
+			this.#app.resolve(CoreCryptoConfig).register(),
+			this.#app.resolve(CoreCryptoValidation).register(),
+			this.#app.resolve(CoreCryptoKeyPairEcdsa).register(),
+			this.#app.resolve(CoreCryptoAddressBase58).register(),
+			this.#app.resolve(CoreCryptoSignatureSchnorr).register(),
+			this.#app.resolve(CoreCryptoHashBcrypto).register(),
+			this.#app.resolve(CoreFees).register(),
+			this.#app.resolve(CoreFeesStatic).register(),
+			this.#app.resolve(CoreCryptoTransaction).register(),
+			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+		]);
+
+		this.#app
+			.get<{
+				setConfig: Function;
+			}>(Identifiers.Cryptography.Configuration)
+			.setConfig({ milestones, network });
+
+		this.#isBooted = true;
 	}
 
 	/**
@@ -47,7 +97,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("transfer", input, ({ transaction, data }) => {
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
+
+		return this.#createTransferFromData(input, ({ transaction, data }) => {
 			transaction.recipientId(data.to);
 
 			if (data.memo) {
@@ -341,6 +395,36 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const signedTransaction = transaction.build().toJson();
 
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id, signedTransaction);
+	}
+
+	async #createTransferFromData(
+		input: Services.TransferInput,
+		callback?: Function,
+	): Promise<MainSailContracts.Crypto.Transaction> {
+		applyCryptoConfiguration(this.#configCrypto);
+
+		const transaction = this.#app.resolve(TransferBuilder);
+
+		transaction
+			// @TODO: do we need this?
+			.version(1)
+			.recipientId(input.data.to)
+			.amount(input.data.amount.toString());
+
+		if (input.fee) {
+			// @TODO: see if we need to use the `toSatoshi` method here
+			transaction.fee(this.toSatoshi(input.fee).toString());
+		}
+
+		if (input.nonce) {
+			transaction.nonce(input.nonce);
+		} else {
+			// currently does not apply but may be needed in the future, see the `#createFromData` method
+		}
+
+		const signedTransaction = await transaction.sign(input.mnemonic);
+
+		return await signedTransaction.build();
 	}
 
 	async #addSignature(
