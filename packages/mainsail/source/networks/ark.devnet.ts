@@ -26,6 +26,10 @@ const network: Networks.NetworkManifest = {
 			type: "full",
 		},
 		{
+			host: "https://dwallets.mainsailhq.com/tx/api",
+			type: "tx",
+		},
+		{
 			host: "https://ark-test-musig.arkvault.io",
 			type: "musig",
 		},
