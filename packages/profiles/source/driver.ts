@@ -18,7 +18,12 @@ export const defaultHostSelector =
 	(profile: IProfile) => (configRepository: Coins.ConfigRepository, type?: Networks.NetworkHostType) => {
 		type ??= "full";
 
+		console.log("defaultHostSelector2", profile, configRepository.all(), type);
+
 		const defaultHosts = Helpers.filterHostsFromConfig(configRepository, type);
+
+		console.log({ defaultHosts, test: Helpers.filterHostsFromConfig(configRepository, "tx") });
+
 		const customHosts = profile
 			.hosts()
 			.allByNetwork(configRepository.get("network.id"))
