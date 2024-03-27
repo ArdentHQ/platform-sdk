@@ -267,7 +267,7 @@ importers:
         specifier: workspace:*
         version: link:../intl
       avalanche:
-        specifier: ^3.16.0
+        specifier: ^3.10.2
         version: 3.16.0
       isomorphic-dompurify:
         specifier: ^0.17.0
@@ -13480,7 +13480,7 @@ packages:
     name: bip32-ed25519
     version: 0.0.4
     dependencies:
-      bn.js: 5.2.0
+      bn.js: 5.2.1
       elliptic: 6.5.4
       hash.js: 1.1.7
     dev: false
