@@ -1,3 +1,4 @@
+import { TransferInput } from "./../../sdk/source/transaction.contract";
 import { mnemonics } from "./../../profiles/test/fixtures/identity";
 import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
@@ -399,18 +400,20 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	async #createTransferFromData(
-		input: Services.TransferInput & {
-			// @TODO: update `TransferInput` definition globally once everything
-			// is in place
-			mnemonic: string;
-		},
+		input: Services.TransferInput,
 		callback?: Function,
 	): Promise<MainSailContracts.Crypto.Transaction> {
 		applyCryptoConfiguration(this.#configCrypto);
 
+		// @TODO: update `TransferInput` definition globally once everything
+		// is in place
+		const { mnemonic } = input as Services.TransferInput & {
+			mnemonic: string;
+		};
+
 		const { address, publicKey: senderPublicKey } = await Promise.all([
-			this.#addressService.fromMnemonic(input.mnemonic),
-			this.#publicKeyService.fromMnemonic(input.mnemonic),
+			this.#addressService.fromMnemonic(mnemonic),
+			this.#publicKeyService.fromMnemonic(mnemonic),
 		]);
 
 		const transaction = this.#app.resolve(TransferBuilder);
