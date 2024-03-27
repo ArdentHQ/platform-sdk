@@ -1,5 +1,3 @@
-import { TransferInput } from "./../../sdk/source/transaction.contract";
-import { mnemonics } from "./../../profiles/test/fixtures/identity";
 import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
@@ -402,7 +400,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	async #createTransferFromData(
 		input: Services.TransferInput,
 		callback?: Function,
-	): Promise<MainSailContracts.Crypto.Transaction> {
+	): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
 
 		// @TODO: update `TransferInput` definition globally once everything
@@ -436,9 +434,15 @@ export class TransactionService extends Services.AbstractTransactionService {
 			callback({ data: input.data, transaction });
 		}
 
-		const signedTransaction = await transaction.sign(mnemonic);
+		const signedTransactionBuilder = await transaction.sign(mnemonic);
 
-		return await signedTransaction.build();
+		const signedTransaction = await signedTransactionBuilder.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	async #addSignature(

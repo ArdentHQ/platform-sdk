@@ -104,8 +104,6 @@ export class SignedTransactionData
 	}
 
 	public override toBroadcast() {
-		const broadcastData = super.normalizeTransactionData<Contracts.RawTransactionData>(this.broadcastData);
-		delete broadcastData.timestamp;
-		return broadcastData;
+		return this.broadcastData;
 	}
 }

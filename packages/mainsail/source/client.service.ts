@@ -97,39 +97,20 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public override async broadcast(
-		transactions: Contracts.SignedTransactionData[] | MainSailContracts.Crypto.Transaction[],
+		transactions: Contracts.SignedTransactionData[],
 	): Promise<Services.BroadcastResponse> {
 		let response: Contracts.KeyValuePair;
 
-		// Means transactions are instances of SignedTransactionData
-		if (transactions.every((t) => typeof (t as Contracts.SignedTransactionData).toBroadcast === "function")) {
-			try {
-				response = await this.#request.post("transactions", {
-					body: {
-						transactions: (transactions as Contracts.SignedTransactionData[]).map(
-							(transaction: Contracts.SignedTransactionData) => transaction.toBroadcast(),
-						),
-					},
-				});
-			} catch (error) {
-				response = (error as any).response.json();
-			}
-		} else {
-			const serializedTransactions = transactions.map((transaction) => transaction.serialized.toString("hex"));
-
-			try {
-				response = await this.#request.post(
-					"transaction-pool",
-					{
-						body: {
-							transactions: serializedTransactions,
-						},
-					},
-					"tx",
-				);
-			} catch (error) {
-				response = (error as any).response.json();
-			}
+		try {
+			response = await this.#request.post("transactions", {
+				body: {
+					transactions: (transactions as Contracts.SignedTransactionData[]).map(
+						(transaction: Contracts.SignedTransactionData) => transaction.toBroadcast(),
+					),
+				},
+			});
+		} catch (error) {
+			response = (error as any).response.json();
 		}
 
 		const { data, errors } = response;
