@@ -399,7 +399,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	async #createTransferFromData(
-		input: Services.TransferInput,
+		input: Services.TransferInput & {
+			// @TODO: update `TransferInput` definition globally once everything
+			// is in place
+			mnemonic: string;
+		},
 		callback?: Function,
 	): Promise<MainSailContracts.Crypto.Transaction> {
 		applyCryptoConfiguration(this.#configCrypto);
