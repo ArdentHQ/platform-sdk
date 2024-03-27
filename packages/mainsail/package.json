@@ -16,7 +16,7 @@
 	"scripts": {
 		"build": "pnpm run clean && tsc",
 		"build:analyze": "webpack --config ../../webpack.analyze.cjs",
-		"build:release": "webpack --config ../../webpack.config.cjs",
+		"build:release": "webpack --config ./webpack.config.cjs",
 		"build:watch": "pnpm run clean && tsc -w",
 		"clean": "rimraf .coverage distribution tmp",
 		"clean:browser": "rimraf distribution/browser",
@@ -59,7 +59,8 @@
 		"@ardenthq/sdk-fetch": "workspace:*",
 		"@ardenthq/sdk-test": "workspace:*",
 		"@ledgerhq/hw-transport-mocker": "^6.20.0",
-		"@types/node": "^17.0.8"
+		"@types/node": "^17.0.8",
+		"typescript": "^5.3.3"
 	},
 	"engines": {
 		"node": ">=16.0.0"
