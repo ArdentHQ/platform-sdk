@@ -408,7 +408,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 	): Promise<MainSailContracts.Crypto.Transaction> {
 		applyCryptoConfiguration(this.#configCrypto);
 
-		const { address, senderPublicKey } = await this.#addressService.fromMnemonic(input.mnemonic);
+		const { address, publicKey: senderPublicKey } = await Promise.all([
+			this.#addressService.fromMnemonic(input.mnemonic),
+			this.#publicKeyService.fromMnemonic(input.mnemonic),
+		]);
 
 		const transaction = this.#app.resolve(TransferBuilder);
 
