@@ -1,3 +1,4 @@
+import { mnemonics } from "./../../profiles/test/fixtures/identity";
 import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
@@ -403,23 +404,24 @@ export class TransactionService extends Services.AbstractTransactionService {
 	): Promise<MainSailContracts.Crypto.Transaction> {
 		applyCryptoConfiguration(this.#configCrypto);
 
+		const { address, senderPublicKey } = await this.#addressService.fromMnemonic(input.mnemonic);
+
 		const transaction = this.#app.resolve(TransferBuilder);
 
-		transaction
-			// @TODO: do we need this?
-			.version(1)
-			.amount(input.data.amount.toString());
+		transaction.amount(input.data.amount.toString());
 
 		if (input.fee) {
 			// @TODO: see if we need to use the `toSatoshi` method here
 			transaction.fee(this.toSatoshi(input.fee).toString());
 		}
 
-		if (input.nonce) {
-			transaction.nonce(input.nonce);
-		} else {
-			// currently does not apply but may be needed in the future, see the `#createFromData` method
-		}
+		transaction.senderPublicKey(senderPublicKey);
+
+		const wallet = await this.clientService.wallet({ type: "address", value: address });
+
+		// Nonce may come from the input but currently does not apply, refer to the `#createFromData` method
+		transaction.nonce(wallet.nonce().plus(1).toFixed(0));
+
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}
