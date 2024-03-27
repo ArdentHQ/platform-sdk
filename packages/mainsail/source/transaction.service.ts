@@ -6,7 +6,6 @@ import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
-
 import { Application } from "@mainsail/kernel";
 import { Identifiers } from "@mainsail/contracts";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
