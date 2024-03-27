@@ -467,6 +467,9 @@ importers:
       '@zondax/ledger-substrate':
         specifier: ^0.24.0
         version: 0.24.0
+      bn.js:
+        specifier: 4.11.6
+        version: 4.11.6
     devDependencies:
       '@ardenthq/sdk-fetch':
         specifier: workspace:*
@@ -6042,7 +6045,7 @@ packages:
     dev: false
 
   /bn.js@4.11.6:
-    resolution: {integrity: sha1-UzRK2xRhehP26N0s4okF0cC6MhU=}
+    resolution: {integrity: sha512-XWwnNNFCuuSQ0m3r3C4LE3EiORltHd9M05pq6FOlVeiophzRbMo50Sbz1ehl8K3Z+jw9+vmgnXefY1hz8X+2wA==}
     dev: false
 
   /bn.js@4.11.8:
