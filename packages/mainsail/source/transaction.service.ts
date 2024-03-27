@@ -8,7 +8,7 @@ import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
 
 import { Application } from "@mainsail/kernel";
-import { Identifiers, Contracts as MainSailContracts } from "@mainsail/contracts";
+import { Identifiers } from "@mainsail/contracts";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
@@ -438,8 +438,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const signedTransaction = await signedTransactionBuilder.build();
 
+		console.log({ signedTransaction });
+
 		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id,
+			signedTransaction.id ?? signedTransaction.key,
 			signedTransaction.data,
 			signedTransaction.serialized.toString("hex"),
 		);
