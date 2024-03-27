@@ -1,10 +1,10 @@
-import ArkDevnet from "./networks/ark.devnet.js";
-import ArkMainnet from "./networks/ark.mainnet.js";
+import MainsailDevnet from "./networks/mainsail.devnet.js";
+import MainsailMainnet from "./networks/mainsail.mainnet.js";
 
 export const manifest = {
 	name: "ARK",
 	networks: {
-		"ark.devnet": ArkDevnet,
-		"ark.mainnet": ArkMainnet,
+		"mainsail.devnet": MainsailDevnet,
+		"mainsail.mainnet": MainsailMainnet,
 	},
 };
