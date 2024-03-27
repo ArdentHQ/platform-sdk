@@ -436,7 +436,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			callback({ data: input.data, transaction });
 		}
 
-		const signedTransaction = await transaction.sign(input.mnemonic);
+		const signedTransaction = await transaction.sign(mnemonic);
 
 		return await signedTransaction.build();
 	}
