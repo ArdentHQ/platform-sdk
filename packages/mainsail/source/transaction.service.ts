@@ -96,7 +96,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerX
 	 * @ledgerS
 	 */
-	public override async transfer(input: Services.TransferInput): Promise<MainSailContracts.Crypto.Transaction> {
+	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
