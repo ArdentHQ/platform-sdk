@@ -121,14 +121,13 @@ export class ClientService extends Services.AbstractClientService {
 				response = await this.#request.post(
 					"transaction-pool",
 					{
-						body: JSON.stringify({ transactions: serializedTransactions }),
+						body: {
+							transactions: serializedTransactions,
+						},
 					},
 					"tx",
 				);
-
-				console.log("success", { response });
 			} catch (error) {
-				console.log("error", error);
 				response = (error as any).response.json();
 			}
 		}
