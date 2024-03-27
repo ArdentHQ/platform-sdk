@@ -21,7 +21,7 @@ export class MessageService extends Services.AbstractMessageService {
 		const bintools = BinTools.getInstance();
 
 		const hrp = getPreferredHRP(Number.parseInt(this.configRepository.get("network.meta.networkId")));
-		const keypair = new KeyPair(hrp, "X") as typeof keypair & {
+		const keypair = new KeyPair(hrp, "X") as KeyPair & {
 			addressFromPublicKey: (pubKey: Buffer) => Buffer;
 		};
 		const signedBuff = callback58Decode(input.signature);
