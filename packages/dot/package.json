@@ -36,8 +36,7 @@
 		"@polkadot/util-crypto": "^8.3.1",
 		"@polkadot/wasm-crypto": "^4.5.1",
 		"@polkadot/x-randomvalues": "^8.3.1",
-		"@zondax/ledger-substrate": "^0.24.0",
-		"bn.js": "4.11.6"
+		"@zondax/ledger-substrate": "^0.24.0"
 	},
 	"devDependencies": {
 		"@ardenthq/sdk-fetch": "workspace:*",

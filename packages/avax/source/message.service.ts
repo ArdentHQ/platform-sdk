@@ -25,7 +25,7 @@ export class MessageService extends Services.AbstractMessageService {
 		const signedBuff = callback58Decode(input.signature);
 		const pubKey = keypair.recover(this.#digestMessage(input.message), signedBuff);
 
-		return bintools.addressToString(hrp, "X", KeyPair.addressFromPublicKey(pubKey)) === input.signatory;
+		return bintools.addressToString(hrp, "X", keypair.addressFromPublicKey(pubKey)) === input.signatory;
 	}
 
 	#digestMessage(messageString: string): Buffer {
