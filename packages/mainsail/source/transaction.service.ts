@@ -438,10 +438,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const signedTransaction = await signedTransactionBuilder.build();
 
-		console.log({ signedTransaction });
-
 		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id ?? signedTransaction.key,
+			signedTransaction.id!,
 			signedTransaction.data,
 			signedTransaction.serialized.toString("hex"),
 		);
