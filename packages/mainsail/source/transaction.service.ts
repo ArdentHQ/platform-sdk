@@ -411,7 +411,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			mnemonic: string;
 		};
 
-		const { address, publicKey: senderPublicKey } = await Promise.all([
+		const [{ address }, { publicKey: senderPublicKey }] = await Promise.all([
 			this.#addressService.fromMnemonic(mnemonic),
 			this.#publicKeyService.fromMnemonic(mnemonic),
 		]);
