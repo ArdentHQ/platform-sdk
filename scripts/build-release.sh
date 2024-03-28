@@ -23,23 +23,6 @@ then
 	bundle $1
 else
 	bundle ada
-	bundle ark
-	bundle atom
-	bundle avax
-	bundle btc
-	bundle dot
-	bundle egld
-	bundle eos
-	bundle eth
-	bundle lsk
-	bundle luna
-	bundle nano
-	bundle neo
-	bundle sol
-	bundle trx
-	bundle xlm
-	bundle xrp
-	bundle zil
 fi
 
 # 3. Integration
