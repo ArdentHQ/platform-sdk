@@ -209,7 +209,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
+		return this.#createTransferFromData(input, ({ transaction, data }) => {
 			for (const payment of data.payments) {
 				transaction.addPayment(payment.to, this.toSatoshi(payment.amount).toString());
 			}
