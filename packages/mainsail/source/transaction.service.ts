@@ -424,10 +424,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		transaction.senderPublicKey(senderPublicKey);
 
-		const wallet = await this.clientService.wallet({ type: "address", value: address });
+		const transactionWallet = await this.clientService.wallet({ type: "address", value: address });
 
 		// Nonce may come from the input but currently does not apply, refer to the `#createFromData` method
-		transaction.nonce(wallet.nonce().plus(1).toFixed(0));
+		transaction.nonce(transactionWallet.nonce().plus(1).toFixed(0));
 
 		if (callback) {
 			callback({ data: input.data, transaction });
