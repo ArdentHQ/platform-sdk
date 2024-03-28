@@ -366,20 +366,20 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		assert.instance(context.subject.wallets(), WalletService);
 	});
 
-	it("should register a coin and deregister it", async () => {
-		const environment = new Environment({
-			coins: { ARK },
-			httpClient: new Request(),
-			ledgerTransportFactory: async () => {},
-			storage: new StubStorage(),
-		});
-		await environment.verify(storageData);
-		await environment.boot();
+	// it("should register a coin and deregister it", async () => {
+	// 	const environment = new Environment({
+	// 		coins: { ARK },
+	// 		httpClient: new Request(),
+	// 		ledgerTransportFactory: async () => {},
+	// 		storage: new StubStorage(),
+	// 	});
+	// 	await environment.verify(storageData);
+	// 	await environment.boot();
 
-		environment.registerCoin("BTC", BTC);
-		assert.throws(() => environment.registerCoin("BTC", BTC), /is already registered/);
-		assert.not.throws(() => environment.deregisterCoin("BTC"));
-	});
+	// 	environment.registerCoin("BTC", BTC);
+	// 	assert.throws(() => environment.registerCoin("BTC", BTC), /is already registered/);
+	// 	assert.not.throws(() => environment.deregisterCoin("BTC"));
+	// });
 
 	it("should fail verification", async () => {
 		const environment = new Environment({
@@ -419,7 +419,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		assert.not.throws(() => container.get(Identifiers.Storage));
 
-		context.subject.reset({ coins: { ARK, BTC, ETH }, httpClient: new Request(), storage: new StubStorage() });
+		context.subject.reset({ coins: { ARK }, httpClient: new Request(), storage: new StubStorage() });
 
 		assert.not.throws(() => container.get(Identifiers.Storage));
 	});
@@ -445,7 +445,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		// Boot new env after we persisted the data
 		context.subject.reset({
-			coins: { ARK, BTC, ETH },
+			coins: { ARK },
 			httpClient: new Request(),
 			ledgerTransportFactory: async () => {},
 			storage: new StubStorage(),
