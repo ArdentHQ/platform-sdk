@@ -1,33 +1,31 @@
-import { Helpers } from "@ardenthq/sdk";
-import { ARK } from "@ardenthq/sdk-ark";
-import { BTC } from "@ardenthq/sdk-btc";
-import { ETH } from "@ardenthq/sdk-eth";
-import { Request } from "@ardenthq/sdk-fetch";
-import { describe } from "@ardenthq/sdk-test";
-import fs from "fs-extra";
-import { resolve } from "path";
-
-import storageData from "../test/fixtures/env-storage.json";
-import { identity } from "../test/fixtures/identity";
-import { importByMnemonic } from "../test/mocking";
-import { StubStorage } from "../test/stubs/storage";
-import { container } from "./container";
-import { Identifiers } from "./container.models";
 import { ProfileData, ProfileSetting } from "./contracts";
+
+import { ARK } from "@ardenthq/sdk-ark";
 import { DataRepository } from "./data.repository";
 import { Environment } from "./environment";
 import { ExchangeRateService } from "./exchange-rate.service.js";
+import { Helpers } from "@ardenthq/sdk";
+import { Identifiers } from "./container.models";
 import { MemoryStorage } from "./memory.storage";
 import { PluginRegistry } from "./plugin-registry.service.js";
 import { Profile } from "./profile";
 import { ProfileImporter } from "./profile.importer";
 import { ProfileRepository } from "./profile.repository";
 import { ProfileSerialiser } from "./profile.serialiser";
+import { Request } from "@ardenthq/sdk-fetch";
+import { StubStorage } from "../test/stubs/storage";
 import { WalletService } from "./wallet.service.js";
+import { container } from "./container";
+import { describe } from "@ardenthq/sdk-test";
+import fs from "fs-extra";
+import { identity } from "../test/fixtures/identity";
+import { importByMnemonic } from "../test/mocking";
+import { resolve } from "path";
+import storageData from "../test/fixtures/env-storage.json";
 
 const makeSubject = async (context) => {
 	context.subject = new Environment({
-		coins: { ARK, BTC, ETH },
+		coins: { ARK },
 		hostSelector: () => Helpers.randomNetworkHostFromConfig,
 		httpClient: new Request(),
 		ledgerTransportFactory: async () => {},
@@ -109,7 +107,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 	it("should have available networks", async (context) => {
 		await makeSubject(context);
 
-		assert.length(context.subject.availableNetworks(), 9);
+		assert.length(context.subject.availableNetworks(), 2);
 
 		for (const network of context.subject.availableNetworks()) {
 			assert.object(network.toObject());
@@ -368,20 +366,20 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		assert.instance(context.subject.wallets(), WalletService);
 	});
 
-	it("should register a coin and deregister it", async () => {
-		const environment = new Environment({
-			coins: { ARK },
-			httpClient: new Request(),
-			ledgerTransportFactory: async () => {},
-			storage: new StubStorage(),
-		});
-		await environment.verify(storageData);
-		await environment.boot();
+	// it("should register a coin and deregister it", async () => {
+	// 	const environment = new Environment({
+	// 		coins: { ARK },
+	// 		httpClient: new Request(),
+	// 		ledgerTransportFactory: async () => {},
+	// 		storage: new StubStorage(),
+	// 	});
+	// 	await environment.verify(storageData);
+	// 	await environment.boot();
 
-		environment.registerCoin("BTC", BTC);
-		assert.throws(() => environment.registerCoin("BTC", BTC), /is already registered/);
-		assert.not.throws(() => environment.deregisterCoin("BTC"));
-	});
+	// 	environment.registerCoin("BTC", BTC);
+	// 	assert.throws(() => environment.registerCoin("BTC", BTC), /is already registered/);
+	// 	assert.not.throws(() => environment.deregisterCoin("BTC"));
+	// });
 
 	it("should fail verification", async () => {
 		const environment = new Environment({
@@ -421,7 +419,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		assert.not.throws(() => container.get(Identifiers.Storage));
 
-		context.subject.reset({ coins: { ARK, BTC, ETH }, httpClient: new Request(), storage: new StubStorage() });
+		context.subject.reset({ coins: { ARK }, httpClient: new Request(), storage: new StubStorage() });
 
 		assert.not.throws(() => container.get(Identifiers.Storage));
 	});
@@ -447,7 +445,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		// Boot new env after we persisted the data
 		context.subject.reset({
-			coins: { ARK, BTC, ETH },
+			coins: { ARK },
 			httpClient: new Request(),
 			ledgerTransportFactory: async () => {},
 			storage: new StubStorage(),

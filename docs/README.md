@@ -4,24 +4,7 @@
 
 The **Coin** section will introduce you to Coins. Coins are the most important part of the Platform SDK because they provide all of the core functionality that makes it possible to build a standardized user experience across the board. All of them adhere to the contracts laid out in the [specification](/docs/specification.md).
 
-- [ADA](/docs/coins/ada.md)
 - [ARK](/docs/coins/ark.md)
-- [ATOM](/docs/coins/atom.md)
-- [AVAX](/docs/coins/avax.md)
-- [BTC](/docs/coins/btc.md)
-- [DOT](/docs/coins/dot.md)
-- [EGLD](/docs/coins/egld.md)
-- [EOS](/docs/coins/eos.md)
-- [ETH](/docs/coins/eth.md)
-- [LSK](/docs/coins/lsk.md)
-- [LUNA](/docs/coins/luna.md)
-- [NANO](/docs/coins/nano.md)
-- [NEO](/docs/coins/neo.md)
-- [SOL](/docs/coins/sol.md)
-- [TRX](/docs/coins/trx.md)
-- [XLM](/docs/coins/xlm.md)
-- [XRP](/docs/coins/xrp.md)
-- [ZIL](/docs/coins/zil.md)
 
 ## Cryptography
 

@@ -1,8 +1,7 @@
 import { BigNumber } from "@ardenthq/sdk-helpers";
-
-import { mnemonics as testMnemonics } from "../fixtures/identity";
-import { IReadWriteWallet } from "../../source/wallet.contract";
 import { IProfile } from "../../source/profile.contract";
+import { IReadWriteWallet } from "../../source/wallet.contract";
+import { mnemonics as testMnemonics } from "../fixtures/identity";
 
 interface Wallet {
 	wallet: IReadWriteWallet;
@@ -91,21 +90,6 @@ export const generateRegistrationTransactionData = async ({
 		};
 	}
 
-	if (wallet.wallet.network().id() === "lsk.testnet") {
-		transactionData = {
-			nonce: wallet.wallet.nonce().plus(1).toString(),
-			fee: 5,
-			signatory: await wallet.wallet.coin().signatory().mnemonic(wallet.mnemonic),
-			data: {
-				senderPublicKey: wallet.wallet.publicKey(),
-				numberOfSignatures: minSignatures,
-				mandatoryKeys,
-				optionalKeys,
-			},
-			timestamp,
-		};
-	}
-
 	const fee = BigNumber.make(transactionData.fee)
 		.times([...publicKeys, ...mandatoryKeys, ...optionalKeys].length)
 		.plus(transactionData.fee);
@@ -168,38 +152,6 @@ export const createMusigRegistrationFixture = ({
 			},
 			id: uuid,
 			timestampReceived: timestamp,
-		};
-	}
-
-	if (wallet.network().id() === "lsk.testnet") {
-		return {
-			data: {
-				id: uuid,
-				moduleID: 4,
-				assetID: 0,
-				asset: {
-					numberOfSignatures: min,
-					mandatoryKeys,
-					optionalKeys,
-				},
-				nonce: wallet.nonce().plus(1).toString(),
-				senderPublicKey: wallet.publicKey(),
-				// Make sure fee is enough to avoid side-effects in wallet statuses (isAwaitingOurSignature, isAwaitingOtherSignatures etc)
-				fee: fee || "1500000000",
-				signatures,
-				multiSignature: {
-					numberOfSignatures: min,
-					mandatoryKeys,
-					optionalKeys,
-				},
-				timestamp,
-			},
-			multiSignature: {
-				numberOfSignatures: min,
-				mandatoryKeys,
-				optionalKeys,
-			},
-			id: uuid,
 		};
 	}
 

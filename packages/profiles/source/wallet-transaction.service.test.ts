@@ -1,12 +1,12 @@
-import { Signatories } from "@ardenthq/sdk";
-import { describe } from "@ardenthq/sdk-test";
-
-import { identity } from "../test/fixtures/identity";
-import { bootContainer } from "../test/mocking";
 import { ProfileSetting, WalletData } from "./contracts";
-import { Profile } from "./profile";
+
 import { ExtendedSignedTransactionData } from "./signed-transaction.dto.js";
+import { Profile } from "./profile";
+import { Signatories } from "@ardenthq/sdk";
 import { TransactionService } from "./wallet-transaction.service.js";
+import { bootContainer } from "../test/mocking";
+import { describe } from "@ardenthq/sdk-test";
+import { identity } from "../test/fixtures/identity";
 
 const deriveIdentity = async (wallet, signingKey) => ({
 	address: (await wallet.addressService().fromMnemonic(signingKey)).address,
@@ -53,34 +53,6 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			.get("/transaction/bb9004fa874b534905f9eff201150f7f982622015f33e076c52f1e945ef184ed")
 			.query(true)
 			.reply(200, () => ({ data: loader.json("test/fixtures/client/transactions.json").data[1] }))
-			.persist();
-
-		nock.fake("https://lsk-test.arkvault.io:443")
-			.get("/api/v2/accounts")
-			.query({ address: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h" })
-			.reply(404, { error: true, message: "Data not found" })
-			.get("/api/v2/fees")
-			.reply(200, {
-				data: {
-					baseFeeById: {
-						"5:0": "1000000000",
-					},
-					baseFeeByName: {
-						"dpos:registerDelegate": "1000000000",
-					},
-					feeEstimatePerByte: {
-						high: 0,
-						low: 0,
-						medium: 0,
-					},
-					minFeePerByte: 1000,
-				},
-				meta: {
-					lastBlockHeight: 14_467_510,
-					lastBlockId: "0ccc6783e26b8fbf030d9d23c6df35c2db58395b2d7aab9b61a703798425be40",
-					lastUpdate: 1_630_294_530,
-				},
-			})
 			.persist();
 
 		context.profile = new Profile({ avatar: "avatar", data: "", id: "profile-id", name: "name" });
@@ -824,34 +796,6 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 			.reply(200, () => ({ data: loader.json("test/fixtures/client/transactions.json").data[1] }))
 			.persist();
 
-		nock.fake("https://lsk-test.arkvault.io:443")
-			.get("/api/v2/accounts")
-			.query({ address: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h" })
-			.reply(404, { error: true, message: "Data not found" })
-			.get("/api/v2/fees")
-			.reply(200, {
-				data: {
-					baseFeeById: {
-						"5:0": "1000000000",
-					},
-					baseFeeByName: {
-						"dpos:registerDelegate": "1000000000",
-					},
-					feeEstimatePerByte: {
-						high: 0,
-						low: 0,
-						medium: 0,
-					},
-					minFeePerByte: 1000,
-				},
-				meta: {
-					lastBlockHeight: 14_467_510,
-					lastBlockId: "0ccc6783e26b8fbf030d9d23c6df35c2db58395b2d7aab9b61a703798425be40",
-					lastUpdate: 1_630_294_530,
-				},
-			})
-			.persist();
-
 		context.profile = new Profile({ avatar: "avatar", data: "", id: "profile-id", name: "name" });
 		context.profile.settings().set(ProfileSetting.Name, "John Doe");
 
@@ -919,24 +863,6 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 				},
 				network: "ark.devnet",
 			},
-			{
-				coin: "LSK",
-				input: {
-					data: {
-						amount: 1,
-						to: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-					},
-					signatory: new Signatories.Signatory(
-						new Signatories.MnemonicSignatory({
-							address: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
-							publicKey: "39b49ead71b16c0b0330a6ba46c57183819936bfdf789dfd2452df4dc04f5a2a",
-							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
-						}),
-					),
-				},
-				network: "lsk.testnet",
-			},
 		],
 	);
 
@@ -991,23 +917,6 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 					),
 				},
 				network: "ark.devnet",
-			},
-			{
-				coin: "LSK",
-				input: {
-					data: {
-						username: "johndoe",
-					},
-					signatory: new Signatories.Signatory(
-						new Signatories.MnemonicSignatory({
-							address: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
-							publicKey: "39b49ead71b16c0b0330a6ba46c57183819936bfdf789dfd2452df4dc04f5a2a",
-							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
-						}),
-					),
-				},
-				network: "lsk.testnet",
 			},
 		],
 	);
@@ -1070,29 +979,6 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 				},
 				network: "ark.devnet",
 			},
-			{
-				coin: "LSK",
-				input: {
-					data: {
-						unvotes: [],
-						votes: [
-							{
-								amount: 10,
-								id: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							},
-						],
-					},
-					signatory: new Signatories.Signatory(
-						new Signatories.MnemonicSignatory({
-							address: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
-							publicKey: "39b49ead71b16c0b0330a6ba46c57183819936bfdf789dfd2452df4dc04f5a2a",
-							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
-						}),
-					),
-				},
-				network: "lsk.testnet",
-			},
 		],
 	);
 
@@ -1153,29 +1039,6 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 					),
 				},
 				network: "ark.devnet",
-			},
-			{
-				coin: "LSK",
-				input: {
-					data: {
-						unvotes: [
-							{
-								amount: 10,
-								id: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							},
-						],
-						votes: [],
-					},
-					signatory: new Signatories.Signatory(
-						new Signatories.MnemonicSignatory({
-							address: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
-							publicKey: "39b49ead71b16c0b0330a6ba46c57183819936bfdf789dfd2452df4dc04f5a2a",
-							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
-						}),
-					),
-				},
-				network: "lsk.testnet",
 			},
 		],
 	);
@@ -1242,34 +1105,6 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 					),
 				},
 				network: "ark.devnet",
-			},
-			{
-				coin: "LSK",
-				input: {
-					data: {
-						unvotes: [
-							{
-								amount: 10,
-								id: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							},
-						],
-						votes: [
-							{
-								amount: 10,
-								id: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							},
-						],
-					},
-					signatory: new Signatories.Signatory(
-						new Signatories.MnemonicSignatory({
-							address: "lskw6h7zzen4f7n8k4ntwd9qtv62gexzv2rh7cb6h",
-							privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
-							publicKey: "39b49ead71b16c0b0330a6ba46c57183819936bfdf789dfd2452df4dc04f5a2a",
-							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
-						}),
-					),
-				},
-				network: "lsk.testnet",
 			},
 		],
 	);
