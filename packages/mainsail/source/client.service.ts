@@ -1,4 +1,3 @@
-import { isTransfer } from "./../../lsk/source/helpers";
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
