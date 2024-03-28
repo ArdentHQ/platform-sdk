@@ -6,7 +6,7 @@ export type ExpirationType = "height" | "timestamp";
 
 export type SignatureMethod = "default" | "musig" | "ledgerS" | "ledgerX";
 
-export type NetworkHostType = "full" | "musig" | "archival" | "explorer";
+export type NetworkHostType = "full" | "tx" | "musig" | "archival" | "explorer";
 
 export type WalletPermission = "read" | "write";
 

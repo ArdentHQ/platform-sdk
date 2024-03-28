@@ -1,9 +1,12 @@
+import { isTransfer } from "./../../lsk/source/helpers";
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
 
 import { Enums } from "./crypto/index.js";
 import { Request } from "./request.js";
+
+import { Contracts as MainSailContracts } from "@mainsail/contracts";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -99,14 +102,25 @@ export class ClientService extends Services.AbstractClientService {
 	): Promise<Services.BroadcastResponse> {
 		let response: Contracts.KeyValuePair;
 
+		// @TODO: For the moment only transfer transactions are sent to the
+		// `transaction-pool` once rest of the transaction types are supported
+		// we are likely send all of them to the same endpoint.
+		const isTransfer = transactions.some((t) => t.isTransfer());
+		const endpointUrl = isTransfer ? "transaction-pool" : "transactions";
+		const networkHostyType = isTransfer ? "tx" : "full";
+
+		const body = {
+			transactions: transactions.map((transaction) => transaction.toBroadcast()),
+		};
+
 		try {
-			response = await this.#request.post("transactions", {
-				body: {
-					transactions: transactions.map((transaction: Contracts.SignedTransactionData) =>
-						transaction.toBroadcast(),
-					),
+			response = await this.#request.post(
+				endpointUrl,
+				{
+					body,
 				},
-			});
+				networkHostyType,
+			);
 		} catch (error) {
 			response = (error as any).response.json();
 		}

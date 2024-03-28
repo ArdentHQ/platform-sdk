@@ -72,7 +72,7 @@ export class SignedTransactionData
 	}
 
 	public override isIpfs(): boolean {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.isIpfs.name);
+		return false;
 	}
 
 	public override isMultiPayment(): boolean {
@@ -104,8 +104,6 @@ export class SignedTransactionData
 	}
 
 	public override toBroadcast() {
-		const broadcastData = super.normalizeTransactionData<Contracts.RawTransactionData>(this.broadcastData);
-		delete broadcastData.timestamp;
-		return broadcastData;
+		return this.broadcastData;
 	}
 }

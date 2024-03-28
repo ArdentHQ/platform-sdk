@@ -12,6 +12,7 @@ import { Serializer } from "./serializer.js";
 import { TransactionTypeFactory } from "./types/factory.js";
 import { Utils } from "./utils.js";
 import { Verifier } from "./verifier.js";
+import { DateTime } from "@ardenthq/sdk-intl";
 
 export class TransactionFactory {
 	public static fromHex(hex: string): ITransaction {
@@ -26,6 +27,7 @@ export class TransactionFactory {
 		const data: ITransactionData = { ...json } as unknown as ITransactionData;
 		data.amount = BigNumber.make(data.amount);
 		data.fee = BigNumber.make(data.fee);
+		data.timestamp = DateTime.make().toUNIX();
 
 		return this.fromData(data);
 	}
