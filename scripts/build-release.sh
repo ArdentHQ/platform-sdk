@@ -22,7 +22,7 @@ if [[ $1 != '' ]]
 then
 	bundle $1
 else
-	bundle ada
+	bundle ark
 fi
 
 # 3. Integration
