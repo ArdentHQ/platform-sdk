@@ -22,12 +22,10 @@ if [[ $1 != '' ]]
 then
 	bundle $1
 else
-	bundle ada
 	bundle ark
 	bundle atom
 	bundle avax
 	bundle btc
-	bundle dot
 	bundle egld
 	bundle eos
 	bundle eth
