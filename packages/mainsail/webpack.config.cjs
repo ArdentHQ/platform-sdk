@@ -31,5 +31,11 @@ module.exports = {
 	],
 	resolve: {
 		...baseConfig.resolve,
+		fallback: {
+			child_process: false,
+			fs: false,
+			perf_hooks: false,
+			module: false,
+		},
 	},
 };
