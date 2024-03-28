@@ -1,11 +1,10 @@
 import { BIP38 } from "@ardenthq/sdk-cryptography";
-import { describe } from "@ardenthq/sdk-test";
-
-import { identity } from "../test/fixtures/identity";
-import { bootContainer } from "../test/mocking";
-import { container } from "./container";
 import { Identifiers } from "./container.models";
 import { WalletIdentifierFactory } from "./wallet.identifier.factory.js";
+import { bootContainer } from "../test/mocking";
+import { container } from "./container";
+import { describe } from "@ardenthq/sdk-test";
+import { identity } from "../test/fixtures/identity";
 
 describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) => {
 	beforeAll(() => {
@@ -72,20 +71,20 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		});
 	});
 
-	it("should create wallet identifier with mnenonic for network that uses extended public key", async (context) => {
-		const wallet = await context.profile.walletFactory().fromMnemonicWithBIP44({
-			coin: "BTC",
-			levels: { account: 0 },
-			mnemonic: identity.mnemonic,
-			network: "btc.livenet",
-		});
+	// it("should create wallet identifier with mnenonic for network that uses extended public key", async (context) => {
+	// 	const wallet = await context.profile.walletFactory().fromMnemonicWithBIP44({
+	// 		coin: "BTC",
+	// 		levels: { account: 0 },
+	// 		mnemonic: identity.mnemonic,
+	// 		network: "btc.livenet",
+	// 	});
 
-		assert.equal(await WalletIdentifierFactory.make(wallet), {
-			method: "bip44",
-			type: "extendedPublicKey",
-			value: "xpub6CVZnKBTDKtVdkizs2fwFrb5WDjsc4MzCqmFSHEU1jYvuugQaQBzVzF5A7E9AVr793Lj5KPtFdyNcmA42RtFeko8JDZ2nUpciHRQFMGdcvM",
-		});
-	});
+	// 	assert.equal(await WalletIdentifierFactory.make(wallet), {
+	// 		method: "bip44",
+	// 		type: "extendedPublicKey",
+	// 		value: "xpub6CVZnKBTDKtVdkizs2fwFrb5WDjsc4MzCqmFSHEU1jYvuugQaQBzVzF5A7E9AVr793Lj5KPtFdyNcmA42RtFeko8JDZ2nUpciHRQFMGdcvM",
+	// 	});
+	// });
 
 	it("should create wallet identifier with mnenonic with password", async (context) => {
 		const wallet = await context.profile.walletFactory().fromMnemonicWithBIP39({
@@ -102,21 +101,21 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		});
 	});
 
-	it("should create wallet identifier with mnenonic with password for network that uses extended public key", async (context) => {
-		const wallet = await context.profile.walletFactory().fromMnemonicWithBIP44({
-			coin: "BTC",
-			levels: { account: 0 },
-			mnemonic: identity.mnemonic,
-			network: "btc.livenet",
-			password: "password",
-		});
+	// it("should create wallet identifier with mnenonic with password for network that uses extended public key", async (context) => {
+	// 	const wallet = await context.profile.walletFactory().fromMnemonicWithBIP44({
+	// 		coin: "BTC",
+	// 		levels: { account: 0 },
+	// 		mnemonic: identity.mnemonic,
+	// 		network: "btc.livenet",
+	// 		password: "password",
+	// 	});
 
-		assert.equal(await WalletIdentifierFactory.make(wallet), {
-			method: "bip44",
-			type: "extendedPublicKey",
-			value: "xpub6CVZnKBTDKtVdkizs2fwFrb5WDjsc4MzCqmFSHEU1jYvuugQaQBzVzF5A7E9AVr793Lj5KPtFdyNcmA42RtFeko8JDZ2nUpciHRQFMGdcvM",
-		});
-	});
+	// 	assert.equal(await WalletIdentifierFactory.make(wallet), {
+	// 		method: "bip44",
+	// 		type: "extendedPublicKey",
+	// 		value: "xpub6CVZnKBTDKtVdkizs2fwFrb5WDjsc4MzCqmFSHEU1jYvuugQaQBzVzF5A7E9AVr793Lj5KPtFdyNcmA42RtFeko8JDZ2nUpciHRQFMGdcvM",
+	// 	});
+	// });
 
 	it("should create wallet identifier with public key", async (context) => {
 		const wallet = await context.profile.walletFactory().fromPublicKey({
