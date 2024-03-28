@@ -1,33 +1,31 @@
-import { Helpers } from "@ardenthq/sdk";
-import { ARK } from "@ardenthq/sdk-ark";
-import { BTC } from "@ardenthq/sdk-btc";
-import { ETH } from "@ardenthq/sdk-eth";
-import { Request } from "@ardenthq/sdk-fetch";
-import { describe } from "@ardenthq/sdk-test";
-import fs from "fs-extra";
-import { resolve } from "path";
-
-import storageData from "../test/fixtures/env-storage.json";
-import { identity } from "../test/fixtures/identity";
-import { importByMnemonic } from "../test/mocking";
-import { StubStorage } from "../test/stubs/storage";
-import { container } from "./container";
-import { Identifiers } from "./container.models";
 import { ProfileData, ProfileSetting } from "./contracts";
+
+import { ARK } from "@ardenthq/sdk-ark";
 import { DataRepository } from "./data.repository";
 import { Environment } from "./environment";
 import { ExchangeRateService } from "./exchange-rate.service.js";
+import { Helpers } from "@ardenthq/sdk";
+import { Identifiers } from "./container.models";
 import { MemoryStorage } from "./memory.storage";
 import { PluginRegistry } from "./plugin-registry.service.js";
 import { Profile } from "./profile";
 import { ProfileImporter } from "./profile.importer";
 import { ProfileRepository } from "./profile.repository";
 import { ProfileSerialiser } from "./profile.serialiser";
+import { Request } from "@ardenthq/sdk-fetch";
+import { StubStorage } from "../test/stubs/storage";
 import { WalletService } from "./wallet.service.js";
+import { container } from "./container";
+import { describe } from "@ardenthq/sdk-test";
+import fs from "fs-extra";
+import { identity } from "../test/fixtures/identity";
+import { importByMnemonic } from "../test/mocking";
+import { resolve } from "path";
+import storageData from "../test/fixtures/env-storage.json";
 
 const makeSubject = async (context) => {
 	context.subject = new Environment({
-		coins: { ARK, BTC, ETH },
+		coins: { ARK },
 		hostSelector: () => Helpers.randomNetworkHostFromConfig,
 		httpClient: new Request(),
 		ledgerTransportFactory: async () => {},
