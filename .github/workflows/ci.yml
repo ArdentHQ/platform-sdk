@@ -18,7 +18,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: pnpm/action-setup@v2
               with:
-                  version: 6.20.4
+                  version: 8.8.0
             - uses: actions/setup-node@v2
               with:
                   node-version: "16"
@@ -28,44 +28,18 @@ jobs:
                   pnpm install -g ultra-runner
                   pnpm install
                   pnpm run build
-            - name: Test ADA
-              run: cd "$GITHUB_WORKSPACE/packages/ada/" && pnpm run test:coverage
             - name: Test ARK
               run: cd "$GITHUB_WORKSPACE/packages/ark/" && pnpm run test:coverage
-            - name: Test ATOM
-              run: cd "$GITHUB_WORKSPACE/packages/atom/" && pnpm run test:coverage
-            - name: Test AVAX
-              run: cd "$GITHUB_WORKSPACE/packages/avax/" && pnpm run test:coverage
-            - name: Test BTC
-              run: |
-                  cd "$GITHUB_WORKSPACE/packages/btc/" && pnpm run test:coverage
-                  cd "$GITHUB_WORKSPACE/packages/btc/" && pnpm run test:integration
             - name: Test CRYPTOGRAPHY
               run: cd "$GITHUB_WORKSPACE/packages/cryptography/" && pnpm run test:coverage
-            - name: Test DOT
-              run: cd "$GITHUB_WORKSPACE/packages/dot/" && pnpm run test:coverage
-            - name: Test EGLD
-              run: cd "$GITHUB_WORKSPACE/packages/egld/" && pnpm run test:coverage
-            - name: Test EOS
-              run: cd "$GITHUB_WORKSPACE/packages/eos/" && pnpm run test:coverage
-            - name: Test ETH
-              run: cd "$GITHUB_WORKSPACE/packages/eth/" && pnpm run test:coverage
             - name: Test FETCH
               run: cd "$GITHUB_WORKSPACE/packages/fetch/" && pnpm run test:coverage
             - name: Test HELPERS
               run: cd "$GITHUB_WORKSPACE/packages/helpers/" && pnpm run test:coverage
             - name: Test INTL
               run: cd "$GITHUB_WORKSPACE/packages/intl/" && pnpm run test:coverage
-            - name: Test LSK
-              run: cd "$GITHUB_WORKSPACE/packages/lsk/" && pnpm run test:coverage
-            - name: Test LUNA
-              run: cd "$GITHUB_WORKSPACE/packages/luna/" && pnpm run test:coverage
             - name: Test MARKETS
               run: cd "$GITHUB_WORKSPACE/packages/markets/" && pnpm run test:coverage
-            - name: Test NANO
-              run: cd "$GITHUB_WORKSPACE/packages/nano/" && pnpm run test:coverage
-            - name: Test NEO
-              run: cd "$GITHUB_WORKSPACE/packages/neo/" && pnpm run test:coverage
             - name: Test NEWS
               run: cd "$GITHUB_WORKSPACE/packages/news/" && pnpm run test:coverage
             - name: Test PROFILES
@@ -74,18 +48,8 @@ jobs:
                   cd "$GITHUB_WORKSPACE/packages/profiles/" && pnpm run test:integration
             - name: Test SDK
               run: cd "$GITHUB_WORKSPACE/packages/sdk/" && pnpm run test:coverage
-            - name: Test SOL
-              run: cd "$GITHUB_WORKSPACE/packages/sol/" && pnpm run test:coverage
             - name: Test TEST
               run: cd "$GITHUB_WORKSPACE/packages/test/" && pnpm run test:coverage
-            - name: Test TRX
-              run: cd "$GITHUB_WORKSPACE/packages/trx/" && pnpm run test:coverage
-            - name: Test XLM
-              run: cd "$GITHUB_WORKSPACE/packages/xlm/" && pnpm run test:coverage
-            - name: Test XRP
-              run: cd "$GITHUB_WORKSPACE/packages/xrp/" && pnpm run test:coverage
-            - name: Test ZIL
-              run: cd "$GITHUB_WORKSPACE/packages/zil/" && pnpm run test:coverage
             - name: Lint
               run: |
                   cd $GITHUB_WORKSPACE

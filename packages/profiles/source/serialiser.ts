@@ -48,6 +48,7 @@ export class WalletSerialiser {
 				[WalletFlag.Starred]: this.#wallet.isStarred(),
 				[WalletData.LedgerModel]: this.#wallet.data().get(WalletData.LedgerModel),
 				[WalletData.Status]: this.#wallet.data().get(WalletData.Status),
+				[WalletData.IsPrimary]: this.#wallet.data().get(WalletData.IsPrimary, false),
 			},
 			id: this.#wallet.id(),
 			settings: this.#wallet.settings().all(),

@@ -5,3 +5,4 @@ docs
 packages/**/coverage
 packages/**/distribution
 packages/**/prisma
+packages/**/validators/source
