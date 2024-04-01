@@ -19,7 +19,7 @@ export const milestones = [
 				ipfs: 500_000_000,
 				multiPayment: 10_000_000,
 				multiSignature: 500_000_000,
-				secondSignature: 500_000_000,
+				// secondSignature: 500_000_000,
 				transfer: 10_000_000,
 				vote: 100_000_000,
 			},

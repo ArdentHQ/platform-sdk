@@ -63,7 +63,7 @@ export interface ITransactionData {
 
 	id?: string;
 	signature?: string;
-	secondSignature?: string;
+	// secondSignature?: string;
 	signSignature?: string;
 	signatures?: string[];
 
@@ -94,7 +94,7 @@ export interface ITransactionJson {
 
 	id?: string;
 	signature?: string;
-	secondSignature?: string;
+	// secondSignature?: string;
 	signSignature?: string;
 	signatures?: string[];
 
@@ -139,6 +139,6 @@ export interface ISerializeOptions {
 	acceptLegacyVersion?: boolean;
 	disableVersionCheck?: boolean;
 	excludeSignature?: boolean;
-	excludeSecondSignature?: boolean;
+	// excludeSecondSignature?: boolean;
 	excludeMultiSignature?: boolean;
 }

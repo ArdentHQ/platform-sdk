@@ -138,7 +138,7 @@ export class PendingMultiSignatureTransaction {
 	#getHash(excludeMultiSignature = true): Buffer {
 		return Transactions.Utils.toHash(this.#transaction, {
 			excludeSignature: true,
-			excludeSecondSignature: true,
+			// excludeSecondSignature: true,
 			excludeMultiSignature,
 		});
 	}

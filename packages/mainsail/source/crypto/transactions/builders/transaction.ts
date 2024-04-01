@@ -143,7 +143,7 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 			id: Utils.getId(this.data).toString(),
 			network: this.data.network,
 			nonce: this.data.nonce,
-			secondSignature: this.data.secondSignature,
+			// secondSignature: this.data.secondSignature,
 			senderPublicKey: this.data.senderPublicKey,
 			signature: this.data.signature,
 			type: this.data.type,
@@ -173,7 +173,7 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 	}
 
 	private secondSignWithKeyPair(keys: IKeyPair): TBuilder {
-		this.data.secondSignature = Signer.secondSign(this.getSigningObject(), keys);
+		// this.data.secondSignature = Signer.secondSign(this.getSigningObject(), keys);
 		return this.instance();
 	}
 

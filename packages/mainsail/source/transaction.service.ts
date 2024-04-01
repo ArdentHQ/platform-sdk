@@ -109,13 +109,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 	}
 
-	public override async secondSignature(
-		input: Services.SecondSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("secondSignature", input, ({ transaction, data }) =>
-			transaction.signatureAsset(BIP39.normalize(data.mnemonic)),
-		);
-	}
+	// public override async secondSignature(
+	// 	input: Services.SecondSignatureInput,
+	// ): Promise<Contracts.SignedTransactionData> {
+	// 	return this.#createFromData("secondSignature", input, ({ transaction, data }) =>
+	// 		transaction.signatureAsset(BIP39.normalize(data.mnemonic)),
+	// 	);
+	// }
 
 	public override async delegateRegistration(
 		input: Services.DelegateRegistrationInput,
@@ -356,7 +356,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.data.signature = await this.#ledgerService.signTransaction(
 				input.signatory.signingKey(),
 				Transactions.Serializer.getBytes(transaction.data, {
-					excludeSecondSignature: true,
+					// excludeSecondSignature: true,
 					excludeSignature: true,
 				}),
 			);

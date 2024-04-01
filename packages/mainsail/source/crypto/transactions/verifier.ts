@@ -21,23 +21,23 @@ export class Verifier {
 		return Verifier.verifyHash(data, options?.disableVersionCheck);
 	}
 
-	public static verifySecondSignature(
-		transaction: ITransactionData,
-		publicKey: string,
-		options?: IVerifyOptions,
-	): boolean {
-		const secondSignature: string | undefined = transaction.secondSignature || transaction.signSignature;
-
-		if (!secondSignature) {
-			return false;
-		}
-
-		const hash: Buffer = Utils.toHash(transaction, {
-			disableVersionCheck: options?.disableVersionCheck,
-			excludeSecondSignature: true,
-		});
-		return this.internalVerifySignature(hash, secondSignature, publicKey);
-	}
+	// public static verifySecondSignature(
+	// 	transaction: ITransactionData,
+	// 	publicKey: string,
+	// 	options?: IVerifyOptions,
+	// ): boolean {
+	// 	const secondSignature: string | undefined = transaction.secondSignature || transaction.signSignature;
+	//
+	// 	if (!secondSignature) {
+	// 		return false;
+	// 	}
+	//
+	// 	const hash: Buffer = Utils.toHash(transaction, {
+	// 		disableVersionCheck: options?.disableVersionCheck,
+	// 		excludeSecondSignature: true,
+	// 	});
+	// 	return this.internalVerifySignature(hash, secondSignature, publicKey);
+	// }
 
 	public static verifySignatures(transaction: ITransactionData, multiSignature: IMultiSignatureAsset): boolean {
 		if (!multiSignature) {
@@ -49,7 +49,7 @@ export class Verifier {
 
 		const hash: Buffer = Utils.toHash(transaction, {
 			excludeMultiSignature: true,
-			excludeSecondSignature: true,
+			// excludeSecondSignature: true,
 			excludeSignature: true,
 		});
 
@@ -96,7 +96,7 @@ export class Verifier {
 
 		const hash: Buffer = Utils.toHash(data, {
 			disableVersionCheck,
-			excludeSecondSignature: true,
+			// excludeSecondSignature: true,
 			excludeSignature: true,
 		});
 

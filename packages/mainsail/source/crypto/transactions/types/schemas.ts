@@ -24,7 +24,7 @@ export const transactionBaseSchema: Record<string, any> = {
 		id: { anyOf: [{ $ref: "transactionId" }, { type: "null" }] },
 		network: { $ref: "networkByte" },
 		nonce: { bignumber: { minimum: 0 } },
-		secondSignature: { $ref: "alphanumeric" },
+		// secondSignature: { $ref: "alphanumeric" },
 		senderPublicKey: { $ref: "publicKey" },
 		signSignature: { $ref: "alphanumeric" },
 		signature: { $ref: "alphanumeric" },
@@ -71,31 +71,31 @@ export const transfer = extend(transactionBaseSchema, {
 	required: ["recipientId"],
 });
 
-export const secondSignature = extend(transactionBaseSchema, {
-	$id: "secondSignature",
-	properties: {
-		amount: { bignumber: { maximum: 0, minimum: 0 } },
-		asset: {
-			properties: {
-				signature: {
-					properties: {
-						publicKey: {
-							$ref: "publicKey",
-						},
-					},
-					required: ["publicKey"],
-					type: "object",
-				},
-			},
-			required: ["signature"],
-			type: "object",
-		},
-		fee: { bignumber: { minimum: 1 } },
-		secondSignature: { type: "null" },
-		type: { transactionType: TransactionType.SecondSignature },
-	},
-	required: ["asset"],
-});
+// export const secondSignature = extend(transactionBaseSchema, {
+// 	$id: "secondSignature",
+// 	properties: {
+// 		amount: { bignumber: { maximum: 0, minimum: 0 } },
+// 		asset: {
+// 			properties: {
+// 				signature: {
+// 					properties: {
+// 						publicKey: {
+// 							$ref: "publicKey",
+// 						},
+// 					},
+// 					required: ["publicKey"],
+// 					type: "object",
+// 				},
+// 			},
+// 			required: ["signature"],
+// 			type: "object",
+// 		},
+// 		fee: { bignumber: { minimum: 1 } },
+// 		secondSignature: { type: "null" },
+// 		type: { transactionType: TransactionType.SecondSignature },
+// 	},
+// 	required: ["asset"],
+// });
 
 export const delegateRegistration = extend(transactionBaseSchema, {
 	$id: "delegateRegistration",

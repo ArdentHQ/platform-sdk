@@ -3,7 +3,7 @@ import { DelegateResignationBuilder } from "./delegate-resignation.js";
 import { IPFSBuilder } from "./ipfs.js";
 import { MultiPaymentBuilder } from "./multi-payment.js";
 import { MultiSignatureBuilder } from "./multi-signature.js";
-import { SecondSignatureBuilder } from "./second-signature.js";
+// import { SecondSignatureBuilder } from "./second-signature.js";
 import { TransferBuilder } from "./transfer.js";
 import { VoteBuilder } from "./vote.js";
 
@@ -14,9 +14,9 @@ export class BuilderFactory {
 		return new TransferBuilder();
 	}
 
-	public static secondSignature(): SecondSignatureBuilder {
-		return new SecondSignatureBuilder();
-	}
+	// public static secondSignature(): SecondSignatureBuilder {
+	// 	return new SecondSignatureBuilder();
+	// }
 
 	public static delegateRegistration(): DelegateRegistrationBuilder {
 		return new DelegateRegistrationBuilder();

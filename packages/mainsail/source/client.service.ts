@@ -246,10 +246,10 @@ export class ClientService extends Services.AbstractClientService {
 					type: Enums.TransactionType.MultiSignature,
 					typeGroup: Enums.TransactionTypeGroup.Core,
 				},
-				secondSignature: {
-					type: Enums.TransactionType.SecondSignature,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
+				// secondSignature: {
+				// 	type: Enums.TransactionType.SecondSignature,
+				// 	typeGroup: Enums.TransactionTypeGroup.Core,
+				// },
 				transfer: {
 					type: Enums.TransactionType.Transfer,
 					typeGroup: Enums.TransactionTypeGroup.Core,

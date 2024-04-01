@@ -81,10 +81,10 @@ export class Deserializer {
 		};
 
 		// Second Signature
-		if (buf.getRemainderLength() && !beginningMultiSignature()) {
-			const secondSignatureLength: number = currentSignatureLength();
-			transaction.secondSignature = buf.readBuffer(secondSignatureLength).toString("hex");
-		}
+		// if (buf.getRemainderLength() && !beginningMultiSignature()) {
+		// 	const secondSignatureLength: number = currentSignatureLength();
+		// 	transaction.secondSignature = buf.readBuffer(secondSignatureLength).toString("hex");
+		// }
 
 		// Multi Signatures
 		if (buf.getRemainderLength() && beginningMultiSignature()) {
@@ -106,9 +106,9 @@ export class Deserializer {
 			transaction.signature = buf.readBuffer(64).toString("hex");
 		}
 
-		if (canReadNonMultiSignature()) {
-			transaction.secondSignature = buf.readBuffer(64).toString("hex");
-		}
+		// if (canReadNonMultiSignature()) {
+		// 	transaction.secondSignature = buf.readBuffer(64).toString("hex");
+		// }
 
 		if (buf.getRemainderLength()) {
 			if (buf.getRemainderLength() % 65 === 0) {

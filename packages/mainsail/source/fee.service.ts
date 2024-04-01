@@ -31,7 +31,7 @@ export class FeeService extends Services.AbstractFeeService {
 			ipfs: this.#transform("ipfs", 1, staticFees, dynamicFees),
 			multiPayment: this.#transform("multiPayment", 1, staticFees, dynamicFees),
 			multiSignature: this.#transform("multiSignature", 1, staticFees, dynamicFees),
-			secondSignature: this.#transform("secondSignature", 1, staticFees, dynamicFees),
+			// secondSignature: this.#transform("secondSignature", 1, staticFees, dynamicFees),
 			transfer: this.#transform("transfer", 1, staticFees, dynamicFees),
 			vote: this.#transform("vote", 1, staticFees, dynamicFees),
 		};
@@ -55,7 +55,7 @@ export class FeeService extends Services.AbstractFeeService {
 		return {
 			"1": {
 				transfer: "10000000",
-				secondSignature: "500000000",
+				// secondSignature: "500000000",
 				delegateRegistration: "2500000000",
 				vote: "100000000",
 				multiSignature: "500000000",

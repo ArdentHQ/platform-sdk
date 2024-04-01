@@ -90,11 +90,11 @@ export class Serializer {
 			buf.writeBuffer(Buffer.from(transaction.signature, "hex"));
 		}
 
-		const secondSignature: string | undefined = transaction.secondSignature || transaction.signSignature;
-
-		if (secondSignature && !options.excludeSecondSignature) {
-			buf.writeBuffer(Buffer.from(secondSignature, "hex"));
-		}
+		// const secondSignature: string | undefined = transaction.secondSignature || transaction.signSignature;
+		//
+		// if (secondSignature && !options.excludeSecondSignature) {
+		// 	buf.writeBuffer(Buffer.from(secondSignature, "hex"));
+		// }
 
 		if (transaction.signatures && !options.excludeMultiSignature) {
 			buf.writeBuffer(Buffer.from(transaction.signatures.join(""), "hex"));

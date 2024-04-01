@@ -7,9 +7,9 @@ export class TransactionTypeService {
 		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 0;
 	}
 
-	public static isSecondSignature(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 1;
-	}
+	// public static isSecondSignature(data: TransactionData): boolean {
+	// 	return TransactionTypeService.#typeGroup(data) === 1 && data.type === 1;
+	// }
 
 	public static isDelegateRegistration(data: TransactionData): boolean {
 		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 2;

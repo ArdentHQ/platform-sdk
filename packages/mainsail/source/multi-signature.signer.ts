@@ -165,7 +165,7 @@ export class MultiSignatureSigner {
 			// @ts-ignore
 			Transactions.Serializer.getBytes(transaction, {
 				excludeMultiSignature,
-				excludeSecondSignature: true,
+				// excludeSecondSignature: true,
 				excludeSignature: true,
 			}),
 		);

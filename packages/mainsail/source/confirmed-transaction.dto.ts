@@ -87,9 +87,9 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return TransactionTypeService.isTransfer(this.data);
 	}
 
-	public override isSecondSignature(): boolean {
-		return TransactionTypeService.isSecondSignature(this.data);
-	}
+	// public override isSecondSignature(): boolean {
+	// 	return TransactionTypeService.isSecondSignature(this.data);
+	// }
 
 	public override isDelegateRegistration(): boolean {
 		return TransactionTypeService.isDelegateRegistration(this.data);
