@@ -389,7 +389,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransferInput,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log({ input });
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
@@ -397,7 +396,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		applyCryptoConfiguration(this.#configCrypto);
 
 		const mnemonic = input.signatory.signingKey();
-		console.log({ mnemonic });
 
 		const transactionWallet = await this.clientService.wallet({
 			type: "address",
@@ -410,28 +408,17 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.fee(input.data.fee)
 			.nonce(transactionWallet.nonce().plus(1).toFixed(0));
 
-		console.log({ builder });
-
 		if (input.data.memo) {
 			builder.vendorField(input.data.memo);
 		}
 
 		for (const { amount, to } of input.data.payments) {
-			console.log("adding payment", { amount, to });
 			builder = builder.addPayment(to, amount);
-		}
-
-		try {
-			const signed = await builder.sign(mnemonic);
-			console.log({ signed });
-		} catch (error) {
-			console.log({ error });
 		}
 
 		const signedTransactionBuilder = await builder.sign(mnemonic);
 
 		const signedTransaction = await signedTransactionBuilder.build();
-		console.log({ signedTransaction });
 
 		return this.dataTransferObjectService.signedTransaction(
 			signedTransaction.id!,
@@ -444,7 +431,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransferInput,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("#createTransferFromData", { input });
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
