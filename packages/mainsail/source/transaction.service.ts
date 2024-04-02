@@ -393,16 +393,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#boot();
 		}
 
-		applyCryptoConfiguration(this.#configCrypto);
-
-		const mnemonic = input.signatory.signingKey();
-
 		const transactionWallet = await this.clientService.wallet({
 			type: "address",
 			value: input.signatory.address(),
 		});
 
-		// const transactionWallet = await this.clientService.wallet({ type: "address", value: address });
 		let builder = this.#app
 			.resolve(MultiPaymentBuilder)
 			.fee(input.data.fee)
@@ -416,7 +411,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			builder = builder.addPayment(to, amount);
 		}
 
-		const signedTransactionBuilder = await builder.sign(mnemonic);
+		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
 
 		const signedTransaction = await signedTransactionBuilder.build();
 
