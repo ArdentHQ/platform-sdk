@@ -437,6 +437,9 @@ importers:
       '@mainsail/crypto-transaction':
         specifier: 0.0.1-alpha.13
         version: 0.0.1-alpha.13
+      '@mainsail/crypto-transaction-multi-payment':
+        specifier: 0.0.1-alpha.13
+        version: 0.0.1-alpha.13
       '@mainsail/crypto-transaction-transfer':
         specifier: 0.0.1-alpha.13
         version: 0.0.1-alpha.13
@@ -2406,6 +2409,21 @@ packages:
       '@mainsail/kernel': 0.0.1-alpha.13
       '@mainsail/utils': 0.0.1-alpha.13
       bcrypto: 5.5.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-transaction-multi-payment@0.0.1-alpha.13:
+    resolution: {integrity: sha512-hL/d8ulfdQwFQic9ifsifiP2PE3nrVuIOEz5J1YlvKx3NOAm5Q8RE7Gaw9mrYL3nHiDTa4A2ewR8phLHRN+FYg==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.13
+      '@mainsail/contracts': 0.0.1-alpha.13
+      '@mainsail/crypto-transaction': 0.0.1-alpha.13
+      '@mainsail/kernel': 0.0.1-alpha.13
+      '@mainsail/transactions': 0.0.1-alpha.13
+      '@mainsail/utils': 0.0.1-alpha.13
+      ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
     dev: false

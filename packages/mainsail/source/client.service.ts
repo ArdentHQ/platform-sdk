@@ -104,22 +104,38 @@ export class ClientService extends Services.AbstractClientService {
 		// @TODO: For the moment only transfer transactions are sent to the
 		// `transaction-pool` once rest of the transaction types are supported
 		// we are likely send all of them to the same endpoint.
-		const isTransfer = transactions.some((t) => t.isTransfer());
-		const endpointUrl = isTransfer ? "transaction-pool" : "transactions";
-		const networkHostyType = isTransfer ? "tx" : "full";
+		// const isTransfer = transactions.some((t) => t.isTransfer());
+		// const endpointUrl = isTransfer ? "transaction-pool" : "transactions";
+		// const networkHostyType = isTransfer ? "tx" : "full";
 
-		const body = {
-			transactions: transactions.map((transaction) => transaction.toBroadcast()),
-		};
+		// const body = {
+		// 	transactions: transactions.map((transaction) => transaction.toBroadcast()),
+		// };
 
 		try {
-			response = await this.#request.post(
-				endpointUrl,
+			const result = await fetch(
+				// @TODO: Move base url in manifest instead of hardcoded data here.
+				new URL("https://dwallets.mainsailhq.com/tx/api/transaction-pool"),
 				{
-					body,
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						transactions: transactions.map((transaction) => transaction.toBroadcast()),
+					}),
 				},
-				networkHostyType,
 			);
+
+			response = await result.json();
+
+			// response = await this.#request.post(
+			// 	endpointUrl,
+			// 	{
+			// 		body,
+			// 	},
+			// 	networkHostyType,
+			// );
 		} catch (error) {
 			response = (error as any).response.json();
 		}

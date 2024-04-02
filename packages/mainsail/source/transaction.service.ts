@@ -22,6 +22,7 @@ import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
+import { MultiPaymentBuilder } from "@mainsail/crypto-transaction-multi-payment";
 import { Container } from "@mainsail/container";
 
 import { milestones } from "./crypto/networks/devnet/milestones.js";
@@ -96,10 +97,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
 		return this.#createTransferFromData(input, ({ transaction, data }) => {
 			transaction.recipientId(data.to);
 
@@ -209,15 +206,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
-			for (const payment of data.payments) {
-				transaction.addPayment(payment.to, this.toSatoshi(payment.amount).toString());
-			}
-
-			if (data.memo) {
-				transaction.vendorField(data.memo);
-			}
-		});
+		return this.#createMultipaymentFromData(input);
 	}
 
 	public override async delegateResignation(
@@ -396,10 +385,69 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id, signedTransaction);
 	}
 
+	async #createMultipaymentFromData(
+		input: Services.TransferInput,
+		callback?: Function,
+	): Promise<Contracts.SignedTransactionData> {
+		console.log({ input });
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
+
+		applyCryptoConfiguration(this.#configCrypto);
+
+		const mnemonic = input.signatory.signingKey();
+		console.log({ mnemonic });
+
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
+		});
+
+		// const transactionWallet = await this.clientService.wallet({ type: "address", value: address });
+		let builder = this.#app
+			.resolve(MultiPaymentBuilder)
+			.fee(input.data.fee)
+			.nonce(transactionWallet.nonce().plus(1).toFixed(0));
+
+		console.log({ builder });
+
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		for (const { amount, to } of input.data.payments) {
+			console.log("adding payment", { amount, to });
+			builder = builder.addPayment(to, amount);
+		}
+
+		try {
+			const signed = await builder.sign(mnemonic);
+			console.log({ signed });
+		} catch (error) {
+			console.log({ error });
+		}
+
+		const signedTransactionBuilder = await builder.sign(mnemonic);
+
+		const signedTransaction = await signedTransactionBuilder.build();
+		console.log({ signedTransaction });
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
+	}
+
 	async #createTransferFromData(
 		input: Services.TransferInput,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
+		console.log("#createTransferFromData", { input });
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 		applyCryptoConfiguration(this.#configCrypto);
 
 		// @TODO: update `TransferInput` definition globally once everything
