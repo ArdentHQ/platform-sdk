@@ -220,17 +220,18 @@ export class TransactionService extends Services.AbstractTransactionService {
 			value: input.signatory.address(),
 		});
 
-		let builder = this.#app
-			.resolve(MultiPaymentBuilder)
-			.fee(this.toSatoshi(input.fee).toString())
-			.nonce(transactionWallet.nonce().plus(1).toFixed(0));
+		let builder = this.#app.resolve(MultiPaymentBuilder).nonce(transactionWallet.nonce().plus(1).toFixed(0));
+
+		if (input.fee) {
+			builder = builder.fee(this.toSatoshi(input.fee).toString());
+		}
 
 		if (input.data.memo) {
 			builder.vendorField(input.data.memo);
 		}
 
 		for (const { amount, to } of input.data.payments) {
-			builder = builder.addPayment(to, amount);
+			builder = builder.addPayment(to, BigNumber(amount).toString());
 		}
 
 		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
