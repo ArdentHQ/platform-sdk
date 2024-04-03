@@ -3,7 +3,6 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { TransactionTypeService } from "./transaction-type.service.js";
-import { Identities } from "./crypto/index.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	public override id(): string {
@@ -22,8 +21,10 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return BigNumber.make(this.data.confirmations);
 	}
 
+	// @TODO: Revert when sender will be available from /api/transactions endpoint.
 	public override sender(): string {
-		return Identities.Address.fromPublicKey(this.data.senderPublicKey); // @TODO: handle network
+		// return this.data.sender;
+		return this.data.recipient;
 	}
 
 	public override recipient(): string {
