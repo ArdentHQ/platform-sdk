@@ -131,7 +131,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	async #createVoteFromData(
-		input: Services.TransferInput,
+		input: Services.VoteInput,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
 		console.log('create transfer from data called')
