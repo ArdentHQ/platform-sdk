@@ -1,9 +1,9 @@
-import { Networks } from "@ardenthq/sdk";
-
 import { explorer, featureFlags, importMethods, transactions } from "./shared.js";
 
+import { Networks } from "@ardenthq/sdk";
+
 const network: Networks.NetworkManifest = {
-	coin: "ARK",
+	coin: "Mainsail",
 	constants: {
 		epoch: "2023-12-21T00:00:00.000Z",
 		slip44: 1,
