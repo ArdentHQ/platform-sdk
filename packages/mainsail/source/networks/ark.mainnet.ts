@@ -16,7 +16,7 @@ const network: Networks.NetworkManifest = {
 	explorer,
 	featureFlags,
 	governance: {
-		delegateCount: 53,
+		delegateCount: 51,
 		votesPerTransaction: 1,
 		votesPerWallet: 1,
 	},
@@ -34,7 +34,7 @@ const network: Networks.NetworkManifest = {
 			type: "explorer",
 		},
 	],
-	id: "mainsail.mainnet",
+	id: "ark.mainnet",
 	importMethods,
 	knownWallets: "https://raw.githubusercontent.com/ArkEcosystem/common/master/mainnet/known-wallets-extended.json",
 	meta: {

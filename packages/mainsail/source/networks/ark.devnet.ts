@@ -5,7 +5,7 @@ import { explorer, featureFlags, importMethods, transactions } from "./shared.js
 const network: Networks.NetworkManifest = {
 	coin: "ARK",
 	constants: {
-		epoch: "2023-12-21T00:00:00.000Z",
+		epoch: "2017-03-21T13:00:00.000Z",
 		slip44: 1,
 	},
 	currency: {
@@ -16,7 +16,7 @@ const network: Networks.NetworkManifest = {
 	explorer,
 	featureFlags,
 	governance: {
-		delegateCount: 53,
+		delegateCount: 51,
 		votesPerTransaction: 1,
 		votesPerWallet: 1,
 	},
@@ -38,7 +38,7 @@ const network: Networks.NetworkManifest = {
 			type: "explorer",
 		},
 	],
-	id: "mainsail.devnet",
+	id: "ark.devnet",
 	importMethods,
 	knownWallets: "https://raw.githubusercontent.com/ArkEcosystem/common/master/devnet/known-wallets-extended.json",
 	meta: {
