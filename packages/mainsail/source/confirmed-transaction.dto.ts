@@ -13,16 +13,12 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.data.blockId;
 	}
 
-	// @TODO: Revert when timestamp will be available from /api/transactions endpoint.
 	public override timestamp(): DateTime | undefined {
-		// return DateTime.fromUnix(this.data.timestamp.unix);
-		return DateTime.make();
+		return DateTime.fromUnix(this.data.timestamp / 1000);
 	}
 
-	// @TODO: Revert when confirmations will be available from /api/transactions endpoint.
 	public override confirmations(): BigNumber {
-		// return BigNumber.make(this.data.confirmations);
-		return BigNumber.make(10);
+		return BigNumber.make(this.data.confirmations);
 	}
 
 	// @TODO: Revert when sender will be available from /api/transactions endpoint.
