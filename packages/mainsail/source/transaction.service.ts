@@ -22,6 +22,10 @@ import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
+import {
+	ServiceProvider as CoreCryptoVoteTransfer,
+	VoteBuilder
+} from "@mainsail/crypto-transaction-vote";
 import { Container } from "@mainsail/container";
 
 import { milestones } from "./crypto/networks/devnet/milestones.js";
@@ -77,6 +81,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreFeesStatic).register(),
 			this.#app.resolve(CoreCryptoTransaction).register(),
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			this.#app.resolve(CoreCryptoVoteTransfer).register(),
 		]);
 
 		this.#app
@@ -125,6 +130,56 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
+	async #createVoteFromData(
+		input: Services.TransferInput,
+		callback?: Function,
+	): Promise<Contracts.SignedTransactionData> {
+		console.log('create transfer from data called')
+		applyCryptoConfiguration(this.#configCrypto);
+
+		let address = '';
+		let senderPublicKey = '';
+
+		const mnemonic = input.signatory.signingKey();
+
+		// @TODO handle WIF and secret key later
+		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
+			address = (await this.#addressService.fromMnemonic(mnemonic)).address;
+			senderPublicKey = (await this.#publicKeyService.fromMnemonic(mnemonic)).publicKey;
+		}
+
+		const voteTransaction = this.#app.resolve(VoteBuilder);
+
+		voteTransaction.amount('0');
+
+		if (input.fee) {
+			// @TODO: see if we need to use the `toSatoshi` method here
+			voteTransaction.fee(this.toSatoshi(input.fee).toString());
+		}
+
+		voteTransaction.senderPublicKey(senderPublicKey);
+
+		const transactionWallet = await this.clientService.wallet({ type: "address", value: address });
+
+		// Nonce may come from the input but currently does not apply, refer to the `#createFromData` method
+		voteTransaction.nonce(transactionWallet.nonce().plus(1).toFixed(0));
+
+		if (callback) {
+			callback({ data: input.data, transaction: voteTransaction });
+		}
+
+		// @TODO handle WIF and secret key later
+		const signedTransactionBuilder = await voteTransaction.sign(mnemonic);
+
+		const signedTransaction = await signedTransactionBuilder.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
+	}
+
 	/**
 	 * @inheritDoc
 	 *
@@ -133,42 +188,43 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData(
-			"vote",
-			input,
-			({
-				transaction,
-				data,
-			}: {
-				transaction: any;
-				data: {
-					votes: {
-						id: string;
-						amount: BigNumber;
-					}[];
-					unvotes: {
-						id: string;
-						amount: BigNumber;
-					}[];
-				};
-			}) => {
-				const votes: string[] = [];
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 
-				if (Array.isArray(data.unvotes)) {
-					for (const unvote of data.unvotes) {
-						votes.push(`-${unvote.id}`);
-					}
+		return this.#createVoteFromData(input, ({ transaction, data }: {
+			transaction: any;
+			data: {
+				votes: {
+					id: string;
+					amount: BigNumber;
+				}[];
+				unvotes: {
+					id: string;
+					amount: BigNumber;
+				}[];
+			};
+		}) => {
+			if (Array.isArray(data.unvotes)) {
+				const unvotes: string[] = [];
+
+				for (const unvote of data.unvotes) {
+					unvotes.push(unvote.id);
 				}
 
-				if (Array.isArray(data.votes)) {
-					for (const vote of data.votes) {
-						votes.push(`+${vote.id}`);
-					}
+				transaction.unvotesAsset(unvotes);
+			}
+
+			if (Array.isArray(data.votes)) {
+				const votes: string[] = [];
+
+				for (const vote of data.votes) {
+					votes.push(vote.id);
 				}
 
 				transaction.votesAsset(votes);
-			},
-		);
+			}
+		});
 	}
 
 	/**

@@ -105,8 +105,13 @@ export class ClientService extends Services.AbstractClientService {
 		// `transaction-pool` once rest of the transaction types are supported
 		// we are likely send all of them to the same endpoint.
 		const isTransfer = transactions.some((t) => t.isTransfer());
-		const endpointUrl = isTransfer ? "transaction-pool" : "transactions";
-		const networkHostyType = isTransfer ? "tx" : "full";
+
+		const isVoteTx = transactions.some((t) => {
+			return t.isVote() || t.isUnvote() || t.isVoteCombination()
+		});
+
+		const endpointUrl = isTransfer || isVoteTx ? "transaction-pool" : "transactions";
+		const networkHostType = isTransfer || isVoteTx ? "tx" : "full";
 
 		const body = {
 			transactions: transactions.map((transaction) => transaction.toBroadcast()),
@@ -118,9 +123,10 @@ export class ClientService extends Services.AbstractClientService {
 				{
 					body,
 				},
-				networkHostyType,
+				networkHostType,
 			);
 		} catch (error) {
+			console.log(error);
 			response = (error as any).response.json();
 		}
 
