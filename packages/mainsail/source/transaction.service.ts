@@ -134,7 +134,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.VoteInput,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log('create transfer from data called')
 		applyCryptoConfiguration(this.#configCrypto);
 
 		let address = '';
