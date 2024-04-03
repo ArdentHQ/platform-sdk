@@ -1,5 +1,5 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BigNumber, get } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "@ardenthq/sdk-helpers";
 
 import { Request } from "./request.js";
 
@@ -18,12 +18,10 @@ export class FeeService extends Services.AbstractFeeService {
 
 	public override async all(): Promise<Services.TransactionFees> {
 		const node = await this.#request.get("node/fees");
-		// @TODO: Uncomment when endpoint will be available in mainsail.
-		// const type = await this.#request.get("transactions/fees");
+		const type = await this.#request.get("transactions/fees");
 
+		const staticFees: object = type.data;
 		const dynamicFees: object = node.data;
-		// @TODO: Remove and use /transactions/fees when available in mainsail.
-		const staticFees: object = this.#transformDynamicFeesToStatic(dynamicFees);
 
 		return {
 			delegateRegistration: this.#transform("delegateRegistration", 1, staticFees, dynamicFees),
@@ -48,27 +46,6 @@ export class FeeService extends Services.AbstractFeeService {
 		}
 
 		return BigNumber.ZERO;
-	}
-
-	// @TODO: Replace with static fee api once available in mainsail.
-	#transformDynamicFeesToStatic(dynamicFees: object): Object {
-		return {
-			"1": {
-				transfer: "10000000",
-				secondSignature: "500000000",
-				delegateRegistration: "2500000000",
-				vote: "100000000",
-				multiSignature: "500000000",
-				ipfs: "500000000",
-				multiPayment: "10000000",
-				delegateResignation: "2500000000",
-			},
-			"2": {
-				entityRegistration: "5000000000",
-				entityResignation: "500000000",
-				entityUpdate: "500000000",
-			},
-		};
 	}
 
 	#transform(type: string, typeGroup: number, staticFees: object, dynamicFees: object): Services.TransactionFee {
