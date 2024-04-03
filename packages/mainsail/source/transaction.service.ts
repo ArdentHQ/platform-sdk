@@ -1,28 +1,53 @@
 import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Container } from "@mainsail/container";
-import { Identifiers } from "@mainsail/contracts";
-import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
-import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
-import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
-import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
-import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
-import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
-import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
-import { ServiceProvider as CoreFees } from "@mainsail/fees";
-import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
-import { Application } from "@mainsail/kernel";
-import { ServiceProvider as CoreValidation } from "@mainsail/validation";
+import { Container, Container } from "@mainsail/container";
+import { Identifiers, Identifiers } from "@mainsail/contracts";
+import {
+	ServiceProvider as CoreCryptoAddressBase58,
+	ServiceProvider as CoreCryptoAddressBase58,
+} from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoConfig, ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
+import {
+	ServiceProvider as CoreCryptoHashBcrypto,
+	ServiceProvider as CoreCryptoHashBcrypto,
+} from "@mainsail/crypto-hash-bcrypto";
+import {
+	ServiceProvider as CoreCryptoKeyPairEcdsa,
+	ServiceProvider as CoreCryptoKeyPairEcdsa,
+} from "@mainsail/crypto-key-pair-ecdsa";
+import {
+	ServiceProvider as CoreCryptoSignatureSchnorr,
+	ServiceProvider as CoreCryptoSignatureSchnorr,
+} from "@mainsail/crypto-signature-schnorr-secp256k1";
+import {
+	ServiceProvider as CoreCryptoTransaction,
+	ServiceProvider as CoreCryptoTransaction,
+} from "@mainsail/crypto-transaction";
+import {
+	MultiPaymentBuilder,
+	ServiceProvider as CoreCryptoMultipaymentTransfer,
+} from "@mainsail/crypto-transaction-multi-payment";
+import {
+	ServiceProvider as CoreCryptoTransactionTransfer,
+	ServiceProvider as CoreCryptoTransactionTransfer,
+} from "@mainsail/crypto-transaction-transfer";
+import {
+	ServiceProvider as CoreCryptoValidation,
+	ServiceProvider as CoreCryptoValidation,
+} from "@mainsail/crypto-validation";
+import { ServiceProvider as CoreFees, ServiceProvider as CoreFees } from "@mainsail/fees";
+import { ServiceProvider as CoreFeesStatic, ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
+import { Application, Application } from "@mainsail/kernel";
+import { ServiceProvider as CoreValidation, ServiceProvider as CoreValidation } from "@mainsail/validation";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
 import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
-import { MultiSignatureSigner } from "./multi-signature.signer.js";
-import { Request } from "./request.js";
+import { MultiSignatureSigner, MultiSignatureSigner } from "./multi-signature.signer.js";
+import { Request, Request } from "./request.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -74,6 +99,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreFeesStatic).register(),
 			this.#app.resolve(CoreCryptoTransaction).register(),
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 		]);
 
 		this.#app
@@ -202,15 +228,38 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
-			for (const payment of data.payments) {
-				transaction.addPayment(payment.to, this.toSatoshi(payment.amount).toString());
-			}
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 
-			if (data.memo) {
-				transaction.vendorField(data.memo);
-			}
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
 		});
+
+		let builder = this.#app.resolve(MultiPaymentBuilder).nonce(transactionWallet.nonce().plus(1).toFixed(0));
+
+		if (input.fee) {
+			builder = builder.fee(this.toSatoshi(input.fee).toString());
+		}
+
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		for (const { amount, to } of input.data.payments) {
+			builder = builder.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
+		}
+
+		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
+
+		const signedTransaction = await signedTransactionBuilder.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	public override async delegateResignation(
