@@ -126,7 +126,6 @@ export class ClientService extends Services.AbstractClientService {
 				networkHostType,
 			);
 		} catch (error) {
-			console.log(error);
 			response = (error as any).response.json();
 		}
 
