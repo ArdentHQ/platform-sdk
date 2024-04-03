@@ -22,10 +22,7 @@ import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
-import {
-	ServiceProvider as CoreCryptoVoteTransfer,
-	VoteBuilder
-} from "@mainsail/crypto-transaction-vote";
+import { ServiceProvider as CoreCryptoVoteTransfer, VoteBuilder } from "@mainsail/crypto-transaction-vote";
 import { Container } from "@mainsail/container";
 
 import { milestones } from "./crypto/networks/devnet/milestones.js";
@@ -134,10 +131,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.VoteInput,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
+		console.log("create transfer from data called");
 		applyCryptoConfiguration(this.#configCrypto);
 
-		let address = '';
-		let senderPublicKey = '';
+		let address = "";
+		let senderPublicKey = "";
 
 		const mnemonic = input.signatory.signingKey();
 
@@ -149,7 +147,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const voteTransaction = this.#app.resolve(VoteBuilder);
 
-		voteTransaction.amount('0');
+		voteTransaction.amount("0");
 
 		if (input.fee) {
 			// @TODO: see if we need to use the `toSatoshi` method here
@@ -191,39 +189,45 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#boot();
 		}
 
-		return this.#createVoteFromData(input, ({ transaction, data }: {
-			transaction: any;
-			data: {
-				votes: {
-					id: string;
-					amount: BigNumber;
-				}[];
-				unvotes: {
-					id: string;
-					amount: BigNumber;
-				}[];
-			};
-		}) => {
-			if (Array.isArray(data.unvotes)) {
-				const unvotes: string[] = [];
+		return this.#createVoteFromData(
+			input,
+			({
+				transaction,
+				data,
+			}: {
+				transaction: any;
+				data: {
+					votes: {
+						id: string;
+						amount: BigNumber;
+					}[];
+					unvotes: {
+						id: string;
+						amount: BigNumber;
+					}[];
+				};
+			}) => {
+				if (Array.isArray(data.unvotes)) {
+					const unvotes: string[] = [];
 
-				for (const unvote of data.unvotes) {
-					unvotes.push(unvote.id);
+					for (const unvote of data.unvotes) {
+						unvotes.push(unvote.id);
+					}
+
+					transaction.unvotesAsset(unvotes);
 				}
 
-				transaction.unvotesAsset(unvotes);
-			}
+				if (Array.isArray(data.votes)) {
+					const votes: string[] = [];
 
-			if (Array.isArray(data.votes)) {
-				const votes: string[] = [];
+					for (const vote of data.votes) {
+						votes.push(vote.id);
+					}
 
-				for (const vote of data.votes) {
-					votes.push(vote.id);
+					transaction.votesAsset(votes);
 				}
-
-				transaction.votesAsset(votes);
-			}
-		});
+			},
+		);
 	}
 
 	/**
