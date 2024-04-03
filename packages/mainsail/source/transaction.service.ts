@@ -9,12 +9,15 @@ import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import { MultiPaymentBuilder } from "@mainsail/crypto-transaction-multi-payment";
+import {
+	MultiPaymentBuilder,
+	ServiceProvider as CoreCryptoMultipaymentTransfer,
+} from "@mainsail/crypto-transaction-multi-payment";
 import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
 import { ServiceProvider as CoreFees } from "@mainsail/fees";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
-import { Application, Application } from "@mainsail/kernel";
+import { Application } from "@mainsail/kernel";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
 import { BindingType } from "./coin.contract.js";
