@@ -22,7 +22,11 @@ import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
-import { MultiPaymentBuilder } from "@mainsail/crypto-transaction-multi-payment";
+
+import {
+	ServiceProvider as CoreCryptoMultipaymentTransfer,
+	MultiPaymentBuilder,
+} from "@mainsail/crypto-transaction-multi-payment";
 import { Container } from "@mainsail/container";
 
 import { milestones } from "./crypto/networks/devnet/milestones.js";
@@ -78,13 +82,14 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreFeesStatic).register(),
 			this.#app.resolve(CoreCryptoTransaction).register(),
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 		]);
 
 		this.#app
 			.get<{
 				setConfig: Function;
 			}>(Identifiers.Cryptography.Configuration)
-			.setConfig({ milestones, network });
+			.setConfig({ network, milestones });
 
 		this.#isBooted = true;
 	}
@@ -206,7 +211,37 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createMultipaymentFromData(input);
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
+
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
+		});
+
+		let builder = this.#app
+			.resolve(MultiPaymentBuilder)
+			.fee(input.data.fee)
+			.nonce(transactionWallet.nonce().plus(1).toFixed(0));
+
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		for (const { amount, to } of input.data.payments) {
+			builder = builder.addPayment(to, amount);
+		}
+
+		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
+
+		const signedTransaction = await signedTransactionBuilder.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	public override async delegateResignation(
@@ -383,43 +418,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const signedTransaction = transaction.build().toJson();
 
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id, signedTransaction);
-	}
-
-	async #createMultipaymentFromData(
-		input: Services.TransferInput,
-		callback?: Function,
-	): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
-		const transactionWallet = await this.clientService.wallet({
-			type: "address",
-			value: input.signatory.address(),
-		});
-
-		let builder = this.#app
-			.resolve(MultiPaymentBuilder)
-			.fee(input.data.fee)
-			.nonce(transactionWallet.nonce().plus(1).toFixed(0));
-
-		if (input.data.memo) {
-			builder.vendorField(input.data.memo);
-		}
-
-		for (const { amount, to } of input.data.payments) {
-			builder = builder.addPayment(to, amount);
-		}
-
-		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
-
-		const signedTransaction = await signedTransactionBuilder.build();
-
-		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id!,
-			signedTransaction.data,
-			signedTransaction.serialized.toString("hex"),
-		);
 	}
 
 	async #createTransferFromData(
