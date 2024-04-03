@@ -231,7 +231,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		for (const { amount, to } of input.data.payments) {
-			builder = builder.addPayment(to, BigNumber.make(amount).toString());
+			builder = builder.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
 		}
 
 		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
