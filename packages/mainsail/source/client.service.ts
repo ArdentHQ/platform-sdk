@@ -107,7 +107,7 @@ export class ClientService extends Services.AbstractClientService {
 		const isTransfer = transactions.some((t) => t.isTransfer());
 
 		const isVoteTx = transactions.some((t) => {
-			return t.isVote() || t.isUnvote() || t.isVoteCombination()
+			return t.isVote() || t.isUnvote() || t.isVoteCombination();
 		});
 
 		const endpointUrl = isTransfer || isVoteTx ? "transaction-pool" : "transactions";
