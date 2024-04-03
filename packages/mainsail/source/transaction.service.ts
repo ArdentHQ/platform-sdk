@@ -222,7 +222,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		let builder = this.#app
 			.resolve(MultiPaymentBuilder)
-			.fee(input.data.fee)
+			.fee(this.toSatoshi(input.fee).toString())
 			.nonce(transactionWallet.nonce().plus(1).toFixed(0));
 
 		if (input.data.memo) {
