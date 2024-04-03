@@ -22,6 +22,11 @@ import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
+
+import {
+	ServiceProvider as CoreCryptoMultipaymentTransfer,
+	MultiPaymentBuilder,
+} from "@mainsail/crypto-transaction-multi-payment";
 import { Container } from "@mainsail/container";
 
 import { milestones } from "./crypto/networks/devnet/milestones.js";
@@ -77,13 +82,14 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreFeesStatic).register(),
 			this.#app.resolve(CoreCryptoTransaction).register(),
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 		]);
 
 		this.#app
 			.get<{
 				setConfig: Function;
 			}>(Identifiers.Cryptography.Configuration)
-			.setConfig({ milestones, network });
+			.setConfig({ network, milestones });
 
 		this.#isBooted = true;
 	}
@@ -96,10 +102,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
 		return this.#createTransferFromData(input, ({ transaction, data }) => {
 			transaction.recipientId(data.to);
 
@@ -209,15 +211,38 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
-			for (const payment of data.payments) {
-				transaction.addPayment(payment.to, this.toSatoshi(payment.amount).toString());
-			}
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 
-			if (data.memo) {
-				transaction.vendorField(data.memo);
-			}
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
 		});
+
+		let builder = this.#app.resolve(MultiPaymentBuilder).nonce(transactionWallet.nonce().plus(1).toFixed(0));
+
+		if (input.fee) {
+			builder = builder.fee(this.toSatoshi(input.fee).toString());
+		}
+
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		for (const { amount, to } of input.data.payments) {
+			builder = builder.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
+		}
+
+		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
+
+		const signedTransaction = await signedTransactionBuilder.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	public override async delegateResignation(
@@ -400,6 +425,9 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransferInput,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 		applyCryptoConfiguration(this.#configCrypto);
 
 		// @TODO: update `TransferInput` definition globally once everything
