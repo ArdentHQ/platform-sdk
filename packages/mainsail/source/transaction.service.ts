@@ -1,53 +1,29 @@
 import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Container, Container } from "@mainsail/container";
-import { Identifiers, Identifiers } from "@mainsail/contracts";
-import {
-	ServiceProvider as CoreCryptoAddressBase58,
-	ServiceProvider as CoreCryptoAddressBase58,
-} from "@mainsail/crypto-address-base58";
-import { ServiceProvider as CoreCryptoConfig, ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
-import {
-	ServiceProvider as CoreCryptoHashBcrypto,
-	ServiceProvider as CoreCryptoHashBcrypto,
-} from "@mainsail/crypto-hash-bcrypto";
-import {
-	ServiceProvider as CoreCryptoKeyPairEcdsa,
-	ServiceProvider as CoreCryptoKeyPairEcdsa,
-} from "@mainsail/crypto-key-pair-ecdsa";
-import {
-	ServiceProvider as CoreCryptoSignatureSchnorr,
-	ServiceProvider as CoreCryptoSignatureSchnorr,
-} from "@mainsail/crypto-signature-schnorr-secp256k1";
-import {
-	ServiceProvider as CoreCryptoTransaction,
-	ServiceProvider as CoreCryptoTransaction,
-} from "@mainsail/crypto-transaction";
-import {
-	MultiPaymentBuilder,
-	ServiceProvider as CoreCryptoMultipaymentTransfer,
-} from "@mainsail/crypto-transaction-multi-payment";
-import {
-	ServiceProvider as CoreCryptoTransactionTransfer,
-	ServiceProvider as CoreCryptoTransactionTransfer,
-} from "@mainsail/crypto-transaction-transfer";
-import {
-	ServiceProvider as CoreCryptoValidation,
-	ServiceProvider as CoreCryptoValidation,
-} from "@mainsail/crypto-validation";
-import { ServiceProvider as CoreFees, ServiceProvider as CoreFees } from "@mainsail/fees";
-import { ServiceProvider as CoreFeesStatic, ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
+import { Container } from "@mainsail/container";
+import { Identifiers } from "@mainsail/contracts";
+import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
+import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
+import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import { MultiPaymentBuilder } from "@mainsail/crypto-transaction-multi-payment";
+import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
+import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
+import { ServiceProvider as CoreFees } from "@mainsail/fees";
+import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { Application, Application } from "@mainsail/kernel";
-import { ServiceProvider as CoreValidation, ServiceProvider as CoreValidation } from "@mainsail/validation";
+import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
 import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
-import { MultiSignatureSigner, MultiSignatureSigner } from "./multi-signature.signer.js";
-import { Request, Request } from "./request.js";
+import { MultiSignatureSigner } from "./multi-signature.signer.js";
+import { Request } from "./request.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
