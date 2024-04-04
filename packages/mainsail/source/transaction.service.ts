@@ -113,15 +113,30 @@ export class TransactionService extends Services.AbstractTransactionService {
 			value: input.signatory.address(),
 		});
 
-		const signedData = await this.#app
+		if (!input.data.amount) {
+			throw new Error(
+				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
+			);
+		}
+
+		if (!input.fee) {
+			throw new Error(
+				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
+			);
+		}
+
+		const builder = this.#app
 			.resolve(TransferBuilder)
 			.fee(this.toSatoshi(input.fee).toString())
 			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
 			.recipientId(input.signatory.address())
-			.amount(this.toSatoshi(input.data.amount))
-			.vendorField(input.data.memo)
-			.sign(input.signatory.signingKey());
+			.amount(this.toSatoshi(input.data.amount));
 
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		const signedData = await builder.sign(input.signatory.signingKey());
 		const signedTransaction = await signedData.build();
 
 		return this.dataTransferObjectService.signedTransaction(
@@ -473,4 +488,5 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		return this.#multiSignatureService.addSignature(struct, signatory);
 	}
+	validateTransactionData();
 }
