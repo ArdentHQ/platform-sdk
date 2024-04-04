@@ -280,12 +280,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let address: string | undefined;
 		let senderPublicKey: string | undefined;
 
-		let transaction: VoteBuilder| TransferBuilder;
-		if (type === "vote1") {
-			transaction = this.#app.resolve(VoteBuilder);
-		} else {
-			transaction = Transactions.BuilderFactory[type]();
-		}
+		const transaction = await Transactions.BuilderFactory[type]();
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
