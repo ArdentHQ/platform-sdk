@@ -104,6 +104,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
+		if (!input.data.amount) {
+			throw new Error(
+				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
+			);
+		}
+
 		if (!input.fee) {
 			throw new Error(
 				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
@@ -121,10 +127,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const builder = this.#app
 			.resolve(TransferBuilder)
-			.fee(BigNumber.make(input.fee).toSatoshi().toString())
+			.fee(BigNumber.make(this.toSatoshi(input.fee)).toString())
 			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
 			.recipientId(input.signatory.address())
-			.amount(BigNumber.make(input.data.amount).toSatoshi().toString());
+			.amount(BigNumber.make(this.toSatoshi(input.data.amount)).toString());
 
 		if (input.data.memo) {
 			builder.vendorField(input.data.memo);
