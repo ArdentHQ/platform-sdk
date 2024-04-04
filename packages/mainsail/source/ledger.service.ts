@@ -3,7 +3,7 @@ import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { ARKTransport } from "@arkecosystem/ledger-transport";
 import { Buffer } from "buffer";
 
-import { createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
+import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
@@ -130,9 +130,9 @@ export class LedgerService extends Services.AbstractLedgerService {
 				}
 
 				const collections = await Promise.all(
-					addresses.map((address: string[]) =>
+					chunk(addresses, 50).map((addressesChunk: string[]) =>
 						this.#clientService.wallets({
-							identifiers: [{ type: "address", value: address }],
+							identifiers: [{ type: "address", value: addressesChunk }],
 						}),
 					),
 				);
