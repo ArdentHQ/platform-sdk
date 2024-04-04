@@ -1,10 +1,19 @@
-import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { Identities } from "./crypto/index.js";
+import { BindingType } from "./coin.contract.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
+	readonly #config!: any;
+
+	public constructor(container: IoC.IContainer) {
+		super(container);
+		this.#config = container.get(BindingType.Crypto);
+	}
+
 	public override id(): string {
 		return this.data.id;
 	}
@@ -21,10 +30,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return BigNumber.make(this.data.confirmations);
 	}
 
-	// @TODO: Revert when sender will be available from /api/transactions endpoint.
 	public override sender(): string {
-		// return this.data.sender;
-		return this.data.recipient;
+		return Identities.Address.fromPublicKey(this.data.senderPublicKey, this.#config.network);
 	}
 
 	public override recipient(): string {
