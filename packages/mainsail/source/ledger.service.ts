@@ -3,7 +3,7 @@ import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { ARKTransport } from "@arkecosystem/ledger-transport";
 import { Buffer } from "buffer";
 
-import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
+import { createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
@@ -58,7 +58,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 		startPath?: string;
 		onProgress?: (wallet: Contracts.WalletData) => void;
 	}): Promise<Services.LedgerWalletList> {
-		const pageSize = 1;
+		const pageSize = 5;
 		let page = 0;
 		const slip44 = this.configRepository.get<number>("network.constants.slip44");
 
@@ -130,9 +130,9 @@ export class LedgerService extends Services.AbstractLedgerService {
 				}
 
 				const collections = await Promise.all(
-					chunk(addresses, 50).map((addressesChunk: string[]) =>
+					addresses.map((address: string) =>
 						this.#clientService.wallets({
-							identifiers: [{ type: "address", value: addressesChunk }],
+							identifiers: [{ type: "address", value: address }],
 						}),
 					),
 				);
