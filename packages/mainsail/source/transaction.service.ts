@@ -104,13 +104,31 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("transfer", input, ({ transaction, data }) => {
-			transaction.recipientId(data.to);
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 
-			if (data.memo) {
-				transaction.vendorField(data.memo);
-			}
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
 		});
+
+		const signedData = await this.#app
+			.resolve(TransferBuilder)
+			.fee(this.toSatoshi(input.fee).toString())
+			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
+			.recipientId(input.signatory.address())
+			.amount(this.toSatoshi(input.data.amount))
+			.vendorField(input.data.memo)
+			.sign(input.signatory.signingKey());
+
+		const signedTransaction = await signedData.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	public override async secondSignature(
