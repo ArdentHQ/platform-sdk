@@ -254,7 +254,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async usernameRegistration(
 		input: Services.UsernameRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log('usernameRegistration', input)
+		console.log("usernameRegistration", input);
 		return this.#createFromData("usernameRegistration", input);
 	}
 
@@ -278,7 +278,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log('createFromData', type)
+		console.log("createFromData", type);
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
