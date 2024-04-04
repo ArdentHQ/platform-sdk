@@ -111,7 +111,7 @@ export class ClientService extends Services.AbstractClientService {
 				{
 					body,
 				},
-				"tx"
+				"tx",
 			);
 		} catch (error) {
 			response = (error as any).response.json();
