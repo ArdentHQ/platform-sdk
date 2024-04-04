@@ -4,14 +4,19 @@ import { IPFSBuilder } from "./ipfs.js";
 import { MultiPaymentBuilder } from "./multi-payment.js";
 import { MultiSignatureBuilder } from "./multi-signature.js";
 import { SecondSignatureBuilder } from "./second-signature.js";
-import { TransferBuilder } from "./transfer.js";
-import { VoteBuilder } from "./vote.js";
+import {Application} from "@mainsail/kernel";
+import {Container} from "@mainsail/container";
+import {TransferBuilder} from "@mainsail/crypto-transaction-transfer";
+import {VoteBuilder} from "@mainsail/crypto-transaction-vote";
 
 export * from "./transaction.js";
 
 export class BuilderFactory {
+	private static app() {
+		return new Application(new Container());
+	}
 	public static transfer(): TransferBuilder {
-		return new TransferBuilder();
+		return this.app().resolve(TransferBuilder);
 	}
 
 	public static secondSignature(): SecondSignatureBuilder {
@@ -23,7 +28,7 @@ export class BuilderFactory {
 	}
 
 	public static vote(): VoteBuilder {
-		return new VoteBuilder();
+		return this.app().resolve(VoteBuilder);
 	}
 
 	public static multiSignature(): MultiSignatureBuilder {
