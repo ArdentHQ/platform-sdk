@@ -3,7 +3,7 @@ import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { ARKTransport } from "@arkecosystem/ledger-transport";
 import { Buffer } from "buffer";
 
-import { createRange } from "./ledger.service.helpers.js";
+import { createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
@@ -54,10 +54,11 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async scan(options?: {
+		useLegacy: boolean;
 		startPath?: string;
 		onProgress?: (wallet: Contracts.WalletData) => void;
 	}): Promise<Services.LedgerWalletList> {
-		const pageSize = 5;
+		const pageSize = 1;
 		let page = 0;
 		const slip44 = this.configRepository.get<number>("network.constants.slip44");
 
@@ -70,38 +71,71 @@ export class LedgerService extends Services.AbstractLedgerService {
 		do {
 			const addresses: string[] = [];
 
-			const path = `m/44'/${slip44}'/0'`;
-			let initialAddressIndex = 0;
-
-			if (options?.startPath) {
-				// Get the address index from expected format `m/purpose'/coinType'/account'/change/addressIndex`
-				initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
-			}
-
 			/**
 			 * @remarks
-			 * This is the new BIP44 compliant derivation which will be used by default.
+			 * This needs to be used to support the borked BIP44 implementation from the v2 desktop wallet.
 			 */
-			const compressedPublicKey = await this.getExtendedPublicKey(path);
+			if (options?.useLegacy) {
+				for (const accountIndex of createRange(page, pageSize)) {
+					const path: string = formatLedgerDerivationPath({ account: accountIndex, coinType: slip44 });
+					const publicKey: string = await this.getPublicKey(path);
+					const { address } = await this.#addressService.fromPublicKey(publicKey);
 
-			for (const addressIndexIterator of createRange(page, pageSize)) {
-				const addressIndex = initialAddressIndex + addressIndexIterator;
-				const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
-					.derive(`m/0/${addressIndex}`)
-					.publicKey.toString("hex");
+					addresses.push(address);
 
-				const { address } = await this.#addressService.fromPublicKey(publicKey);
+					addressCache[path] = { address, publicKey };
+				}
 
-				addresses.push(address);
+				const collection = await this.#clientService.wallets({
+					identifiers: [...addresses].map((address: string) => ({ type: "address", value: address })),
+				});
 
-				addressCache[`${path}/0/${addressIndex}`] = { address, publicKey };
+				const batchWalletsCollection = collection.items();
 
-				const promises = addresses.map((address: string[]) =>
-					this.#clientService.wallets({
-						identifiers: [{ type: "address", value: address }],
-					}),
+				if (options?.onProgress !== undefined) {
+					for (const item of batchWalletsCollection) {
+						options.onProgress(item);
+					}
+				}
+
+				walletsCollection.push(...batchWalletsCollection);
+
+				hasMore = collection.isNotEmpty();
+			} else {
+				const path = `m/44'/${slip44}'/0'`;
+				let initialAddressIndex = 0;
+
+				if (options?.startPath) {
+					// Get the address index from expected format `m/purpose'/coinType'/account'/change/addressIndex`
+					initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
+				}
+
+				/**
+				 * @remarks
+				 * This is the new BIP44 compliant derivation which will be used by default.
+				 */
+				const compressedPublicKey = await this.getExtendedPublicKey(path);
+
+				for (const addressIndexIterator of createRange(page, pageSize)) {
+					const addressIndex = initialAddressIndex + addressIndexIterator;
+					const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
+						.derive(`m/0/${addressIndex}`)
+						.publicKey.toString("hex");
+
+					const { address } = await this.#addressService.fromPublicKey(publicKey);
+
+					addresses.push(address);
+
+					addressCache[`${path}/0/${addressIndex}`] = { address, publicKey };
+				}
+
+				const collections = await Promise.all(
+					addresses.map((address: string[]) =>
+						this.#clientService.wallets({
+							identifiers: [{ type: "address", value: address }],
+						}),
+					),
 				);
-				const collections = await Promise.all(promises);
 
 				const batchWalletsCollection = collections.flatMap((collection) => collection.items());
 
