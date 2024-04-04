@@ -1,4 +1,4 @@
-import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
+import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { ARKTransport } from "@arkecosystem/ledger-transport";
 import { Buffer } from "buffer";
