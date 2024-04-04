@@ -13,6 +13,7 @@ import { HttpClient } from "./http.js";
 import { NetworkHostSelector } from "./network.models.js";
 import { BindingType } from "./service-provider.contract.js";
 import {
+	UsernameRegistrationInput,
 	DelegateRegistrationInput,
 	DelegateResignationInput,
 	IpfsInput,
@@ -48,6 +49,10 @@ export class AbstractTransactionService implements Contract {
 
 	public async secondSignature(input: SecondSignatureInput): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.secondSignature.name);
+	}
+
+	public async usernameRegistration(input: UsernameRegistrationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.usernameRegistration.name);
 	}
 
 	public async delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData> {

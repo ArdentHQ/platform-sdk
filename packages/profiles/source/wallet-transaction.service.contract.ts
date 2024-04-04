@@ -72,6 +72,15 @@ export interface ITransactionService {
 	signDelegateRegistration(input: Services.DelegateRegistrationInput): Promise<string>;
 
 	/**
+	 * Sign a Username Registration transaction.
+	 *
+	 * @param {Services.UsernameRegistrationInput} input
+	 * @return {Promise<string>}
+	 * @memberof ITransactionService
+	 */
+	signUsernameRegistration(input: Services.UsernameRegistrationInput): Promise<string>;
+
+	/**
 	 * Sign a Vote transaction.
 	 *
 	 * @param {Services.VoteInput} input

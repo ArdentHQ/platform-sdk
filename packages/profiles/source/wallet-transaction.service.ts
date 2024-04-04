@@ -105,6 +105,12 @@ export class TransactionService implements ITransactionService {
 		return this.#signTransaction("vote", input);
 	}
 
+	/** {@inheritDoc ITransactionService.signUsernameRegistration} */
+	public async signUsernameRegistration(input: Services.UsernameRegistrationInput): Promise<string> {
+		console.log('wallet-transaction -> signUsernameRegistration')
+		return this.#signTransaction("usernameRegistration", input);
+	}
+
 	/** {@inheritDoc ITransactionService.signMultiSignature} */
 	public async signMultiSignature(input: Services.MultiSignatureInput): Promise<string> {
 		return this.#signTransaction("multiSignature", input);
@@ -391,6 +397,7 @@ export class TransactionService implements ITransactionService {
 	 * @memberof TransactionService
 	 */
 	async #signTransaction(type: string, input: any): Promise<string> {
+		console.log('wallet-transaction -> signUsernameRegistration -> signTransaction')
 		const transaction: ExtendedSignedTransactionData = this.#createExtendedSignedTransactionData(
 			await this.#wallet.coin().transaction()[type](input),
 		);

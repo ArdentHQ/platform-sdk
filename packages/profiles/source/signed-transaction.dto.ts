@@ -82,6 +82,10 @@ export class ExtendedSignedTransactionData {
 		return this.#data.isDelegateRegistration();
 	}
 
+	public isUsernameRegistration(): boolean {
+		return this.#data.isUsernameRegistration();
+	}
+
 	public isVoteCombination(): boolean {
 		return this.#data.isVoteCombination();
 	}
