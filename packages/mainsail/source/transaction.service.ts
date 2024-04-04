@@ -113,24 +113,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 			value: input.signatory.address(),
 		});
 
-		if (!input.data.amount) {
-			throw new Error(
-				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
-			);
-		}
-
-		if (!input.fee) {
-			throw new Error(
-				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
-			);
-		}
-
 		const builder = this.#app
 			.resolve(TransferBuilder)
-			.fee(this.toSatoshi(input.fee).toString())
+			.fee(BigNumber.make(input.fee).toSatoshi().toString())
 			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
 			.recipientId(input.signatory.address())
-			.amount(this.toSatoshi(input.data.amount));
+			.amount(BigNumber.make(input.data.amount).toSatoshi().toString());
 
 		if (input.data.memo) {
 			builder.vendorField(input.data.memo);
@@ -488,5 +476,4 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		return this.#multiSignatureService.addSignature(struct, signatory);
 	}
-	validateTransactionData();
 }
