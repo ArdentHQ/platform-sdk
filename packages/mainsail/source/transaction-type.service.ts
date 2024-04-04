@@ -26,7 +26,7 @@ export class TransactionTypeService {
 			return false;
 		}
 
-		return (data.asset?.votes || []).some((vote: string) => vote.startsWith("+"));
+		return (data.asset?.votes || []).length > 0;
 	}
 
 	public static isUnvote(data: TransactionData): boolean {
@@ -36,7 +36,7 @@ export class TransactionTypeService {
 			return false;
 		}
 
-		return (data.asset?.votes || []).some((vote: string) => vote.startsWith("-"));
+		return (data.asset?.unvotes || []).length > 0;
 	}
 
 	public static isMultiSignatureRegistration(data: TransactionData): boolean {

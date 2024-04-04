@@ -443,6 +443,9 @@ importers:
       '@mainsail/crypto-transaction-transfer':
         specifier: 0.0.1-alpha.13
         version: 0.0.1-alpha.13
+      '@mainsail/crypto-transaction-vote':
+        specifier: 0.0.1-alpha.13
+        version: 0.0.1-alpha.13
       '@mainsail/crypto-validation':
         specifier: 0.0.1-alpha.13
         version: 0.0.1-alpha.13
@@ -2438,6 +2441,36 @@ packages:
       '@mainsail/kernel': 0.0.1-alpha.13
       '@mainsail/transactions': 0.0.1-alpha.13
       '@mainsail/utils': 0.0.1-alpha.13
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-transaction-validator-registration@0.0.1-alpha.13:
+    resolution: {integrity: sha512-95IS9YIxi/K5EcKHoZhjGjABk70Rn0FPqLmS02NAgxCapbWsnO/Y5U5OzCh933zIBkitaOJZrwfjskQjPSLvIQ==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.13
+      '@mainsail/contracts': 0.0.1-alpha.13
+      '@mainsail/crypto-transaction': 0.0.1-alpha.13
+      '@mainsail/kernel': 0.0.1-alpha.13
+      '@mainsail/transactions': 0.0.1-alpha.13
+      '@mainsail/utils': 0.0.1-alpha.13
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-transaction-vote@0.0.1-alpha.13:
+    resolution: {integrity: sha512-pJmYltv456u1EeCtozvQbNnpUw+N8oeE7KgPLqu/4CCdA6qULZm7lEJxH3JcmIcUIY83CXj/l2oGEO4IbcMAfA==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.13
+      '@mainsail/contracts': 0.0.1-alpha.13
+      '@mainsail/crypto-transaction': 0.0.1-alpha.13
+      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.13
+      '@mainsail/kernel': 0.0.1-alpha.13
+      '@mainsail/transactions': 0.0.1-alpha.13
+      '@mainsail/utils': 0.0.1-alpha.13
+      ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
     dev: false

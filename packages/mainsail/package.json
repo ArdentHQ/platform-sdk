@@ -40,6 +40,7 @@
 		"@mainsail/crypto-transaction": "0.0.1-alpha.13",
 		"@mainsail/crypto-transaction-multi-payment": "0.0.1-alpha.13",
 		"@mainsail/crypto-transaction-transfer": "0.0.1-alpha.13",
+		"@mainsail/crypto-transaction-vote": "0.0.1-alpha.13",
 		"@mainsail/crypto-validation": "0.0.1-alpha.13",
 		"@mainsail/fees": "0.0.1-alpha.13",
 		"@mainsail/fees-static": "0.0.1-alpha.13",

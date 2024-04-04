@@ -1,32 +1,37 @@
 import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Container } from "@mainsail/container";
+import { BindingType } from "./coin.contract.js";
+import { applyCryptoConfiguration } from "./config.js";
+import { Identities, Interfaces, Transactions } from "./crypto/index.js";
+import { MultiSignatureSigner } from "./multi-signature.signer.js";
+import { Request } from "./request.js";
+import { Application } from "@mainsail/kernel";
 import { Identifiers } from "@mainsail/contracts";
-import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
-import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
+import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreFees } from "@mainsail/fees";
+import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import {
+	ServiceProvider as CoreCryptoTransactionTransfer,
+	TransferBuilder,
+} from "@mainsail/crypto-transaction-transfer";
+import { Container } from "@mainsail/container";
+
 import {
 	MultiPaymentBuilder,
 	ServiceProvider as CoreCryptoMultipaymentTransfer,
 } from "@mainsail/crypto-transaction-multi-payment";
-import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
-import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
-import { ServiceProvider as CoreFees } from "@mainsail/fees";
-import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
-import { Application } from "@mainsail/kernel";
-import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
-import { BindingType } from "./coin.contract.js";
-import { applyCryptoConfiguration } from "./config.js";
-import { Identities, Interfaces, Transactions } from "./crypto/index.js";
 import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
-import { MultiSignatureSigner } from "./multi-signature.signer.js";
-import { Request } from "./request.js";
+import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -78,6 +83,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreFeesStatic).register(),
 			this.#app.resolve(CoreCryptoTransaction).register(),
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			this.#app.resolve(CoreCryptoTransactionVote).register(),
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 		]);
 
@@ -138,7 +144,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 				transaction,
 				data,
 			}: {
-				transaction: any;
+				transaction: VoteBuilder;
 				data: {
 					votes: {
 						id: string;
@@ -150,21 +156,25 @@ export class TransactionService extends Services.AbstractTransactionService {
 					}[];
 				};
 			}) => {
-				const votes: string[] = [];
-
 				if (Array.isArray(data.unvotes)) {
+					const unvotes: string[] = [];
+
 					for (const unvote of data.unvotes) {
-						votes.push(`-${unvote.id}`);
+						unvotes.push(unvote.id);
 					}
+
+					transaction.unvotesAsset(unvotes);
 				}
 
 				if (Array.isArray(data.votes)) {
-					for (const vote of data.votes) {
-						votes.push(`+${vote.id}`);
-					}
-				}
+					const votes: string[] = [];
 
-				transaction.votesAsset(votes);
+					for (const vote of data.votes) {
+						votes.push(vote.id);
+					}
+
+					transaction.votesAsset(votes);
+				}
 			},
 		);
 	}
@@ -270,8 +280,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let address: string | undefined;
 		let senderPublicKey: string | undefined;
 
-		const transaction = Transactions.BuilderFactory[type]();
-		transaction.version(1);
+		const transaction = await Transactions.BuilderFactory[type]();
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -389,34 +398,36 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#ledgerService.disconnect();
 		}
 
+		let signedTransactionBuilder;
+
 		if (input.signatory.actsWithMnemonic()) {
-			transaction.sign(input.signatory.signingKey());
+			signedTransactionBuilder = await transaction.sign(input.signatory.signingKey());
 		}
 
 		if (input.signatory.actsWithConfirmationMnemonic()) {
-			transaction.sign(input.signatory.signingKey());
-			transaction.secondSign(input.signatory.confirmKey());
+			signedTransactionBuilder = await transaction.sign(input.signatory.signingKey());
+			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
 		if (input.signatory.actsWithWIF()) {
-			transaction.signWithWif(input.signatory.signingKey());
+			signedTransactionBuilder = await transaction.signWithWif(input.signatory.signingKey());
 		}
 
 		if (input.signatory.actsWithConfirmationWIF()) {
-			transaction.signWithWif(input.signatory.signingKey());
-			transaction.secondSignWithWif(input.signatory.confirmKey());
+			signedTransactionBuilder = await transaction.signWithWif(input.signatory.signingKey());
+			// transaction.secondSignWithWif(input.signatory.confirmKey());
 		}
 
 		if (input.signatory.actsWithSecret()) {
-			transaction.sign(input.signatory.signingKey());
+			signedTransactionBuilder = await transaction.sign(input.signatory.signingKey());
 		}
 
 		if (input.signatory.actsWithConfirmationSecret()) {
-			transaction.sign(input.signatory.signingKey());
-			transaction.secondSign(input.signatory.confirmKey());
+			signedTransactionBuilder = await transaction.sign(input.signatory.signingKey());
+			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		const signedTransaction = await transaction.build();
+		const signedTransaction = await signedTransactionBuilder?.build();
 
 		return this.dataTransferObjectService.signedTransaction(
 			signedTransaction.id!,
