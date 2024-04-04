@@ -31,7 +31,7 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 	}
 
 	public override username(): string | undefined {
-		return this.#getProperty(["username", "attributes.username"])
+		return this.#getProperty(["username", "attributes.username"]);
 	}
 
 	public override rank(): number | undefined {
