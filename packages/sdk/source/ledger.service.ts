@@ -52,7 +52,7 @@ export class AbstractLedgerService implements LedgerService {
 		throw new NotImplemented(this.constructor.name, this.signMessage.name);
 	}
 
-	public async scan(options?: { useLegacy: boolean }): Promise<LedgerWalletList> {
+	public async scan(options?: { useLegacy?: boolean }): Promise<LedgerWalletList> {
 		throw new NotImplemented(this.constructor.name, this.scan.name);
 	}
 

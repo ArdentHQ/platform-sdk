@@ -1,6 +1,6 @@
-import { ARKTransport } from "@arkecosystem/ledger-transport";
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
+import { ARKTransport } from "@arkecosystem/ledger-transport";
 import { Buffer } from "buffer";
 
 import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
@@ -54,7 +54,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async scan(options?: {
-		useLegacy: boolean;
+		useLegacy?: boolean;
 		startPath?: string;
 		onProgress?: (wallet: Contracts.WalletData) => void;
 	}): Promise<Services.LedgerWalletList> {
