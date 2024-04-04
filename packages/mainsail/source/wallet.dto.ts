@@ -31,15 +31,15 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 	}
 
 	public override username(): string | undefined {
-		return this.#getProperty(["username", "attributes.delegate.username"]);
+		return this.#getProperty(["username", "attributes.username"])
 	}
 
 	public override rank(): number | undefined {
-		return this.#getProperty(["rank", "attributes.delegate.rank"]);
+		return this.#getProperty(["rank", "attributes.validatorRank"]);
 	}
 
 	public override votes(): BigNumber | undefined {
-		const balance: string | undefined = this.#getProperty(["votes", "attributes.delegate.voteBalance"]);
+		const balance: string | undefined = this.#getProperty(["votes", "attributes.validatorVoteBalance"]);
 
 		if (balance === undefined) {
 			return undefined;
@@ -61,11 +61,11 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 			return false;
 		}
 
-		return !!this.#getProperty(["username", "attributes.delegate.username"]);
+		return !!this.#getProperty(["validatorPublicKey"]);
 	}
 
 	public override isResignedDelegate(): boolean {
-		return !!this.#getProperty(["isResigned", "attributes.delegate.resigned"]);
+		return !!this.#getProperty(["attributes.validatorResigned"]);
 	}
 
 	public override isMultiSignature(): boolean {
