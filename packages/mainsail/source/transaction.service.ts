@@ -137,7 +137,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
-		console.log("vote called", input);
 		return this.#createFromData(
 			"vote",
 			input,
