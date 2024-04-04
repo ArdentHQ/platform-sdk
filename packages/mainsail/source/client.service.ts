@@ -104,7 +104,7 @@ export class ClientService extends Services.AbstractClientService {
 		// @TODO: For the moment only transfer transactions are sent to the
 		// `transaction-pool` once rest of the transaction types are supported
 		// we are likely send all of them to the same endpoint.
-		const isTransfer = transactions.some((t) => t.isTransfer());
+		const isTransfer = transactions.some((t) => t.isTransfer() || t.isMultiPayment());
 
 		const isVoteTx = transactions.some((t) => {
 			return t.isVote() || t.isUnvote() || t.isVoteCombination();

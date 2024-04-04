@@ -22,7 +22,6 @@ import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
-import { ServiceProvider as CoreCryptoVoteTransfer, VoteBuilder } from "@mainsail/crypto-transaction-vote";
 import { Container } from "@mainsail/container";
 
 import { milestones } from "./crypto/networks/devnet/milestones.js";
@@ -78,6 +77,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreFeesStatic).register(),
 			this.#app.resolve(CoreCryptoTransaction).register(),
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 			this.#app.resolve(CoreCryptoVoteTransfer).register(),
 		]);
 
@@ -98,11 +98,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
-		return this.#createTransferFromData(input, ({ transaction, data }) => {
+		return this.#createFromData("transfer", input, ({ transaction, data }) => {
 			transaction.recipientId(data.to);
 
 			if (data.memo) {
@@ -127,55 +123,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	async #createVoteFromData(
-		input: Services.VoteInput,
-		callback?: Function,
-	): Promise<Contracts.SignedTransactionData> {
-		applyCryptoConfiguration(this.#configCrypto);
-
-		let address = "";
-		let senderPublicKey = "";
-
-		const mnemonic = input.signatory.signingKey();
-
-		// @TODO handle WIF and secret key later
-		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
-			address = (await this.#addressService.fromMnemonic(mnemonic)).address;
-			senderPublicKey = (await this.#publicKeyService.fromMnemonic(mnemonic)).publicKey;
-		}
-
-		const voteTransaction = this.#app.resolve(VoteBuilder);
-
-		voteTransaction.amount("0");
-
-		if (input.fee) {
-			// @TODO: see if we need to use the `toSatoshi` method here
-			voteTransaction.fee(this.toSatoshi(input.fee).toString());
-		}
-
-		voteTransaction.senderPublicKey(senderPublicKey);
-
-		const transactionWallet = await this.clientService.wallet({ type: "address", value: address });
-
-		// Nonce may come from the input but currently does not apply, refer to the `#createFromData` method
-		voteTransaction.nonce(transactionWallet.nonce().plus(1).toFixed(0));
-
-		if (callback) {
-			callback({ data: input.data, transaction: voteTransaction });
-		}
-
-		// @TODO handle WIF and secret key later
-		const signedTransactionBuilder = await voteTransaction.sign(mnemonic);
-
-		const signedTransaction = await signedTransactionBuilder.build();
-
-		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id!,
-			signedTransaction.data,
-			signedTransaction.serialized.toString("hex"),
-		);
-	}
-
 	/**
 	 * @inheritDoc
 	 *
@@ -184,11 +131,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
-		return this.#createVoteFromData(
+		return this.#createFromData(
+			"vote",
 			input,
 			({
 				transaction,
@@ -267,15 +211,38 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
-			for (const payment of data.payments) {
-				transaction.addPayment(payment.to, this.toSatoshi(payment.amount).toString());
-			}
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
 
-			if (data.memo) {
-				transaction.vendorField(data.memo);
-			}
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
 		});
+
+		let builder = this.#app.resolve(MultiPaymentBuilder).nonce(transactionWallet.nonce().plus(1).toFixed(0));
+
+		if (input.fee) {
+			builder = builder.fee(this.toSatoshi(input.fee).toString());
+		}
+
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		for (const { amount, to } of input.data.payments) {
+			builder = builder.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
+		}
+
+		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
+
+		const signedTransaction = await signedTransactionBuilder.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	public override async delegateResignation(
@@ -298,6 +265,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
+
 		applyCryptoConfiguration(this.#configCrypto);
 
 		let address: string | undefined;
@@ -449,51 +420,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		const signedTransaction = transaction.build().toJson();
-
-		return this.dataTransferObjectService.signedTransaction(signedTransaction.id, signedTransaction);
-	}
-
-	async #createTransferFromData(
-		input: Services.TransferInput,
-		callback?: Function,
-	): Promise<Contracts.SignedTransactionData> {
-		applyCryptoConfiguration(this.#configCrypto);
-
-		// @TODO: update `TransferInput` definition globally once everything
-		// is in place
-		const { mnemonic } = input as Services.TransferInput & {
-			mnemonic: string;
-		};
-
-		const [{ address }, { publicKey: senderPublicKey }] = await Promise.all([
-			this.#addressService.fromMnemonic(mnemonic),
-			this.#publicKeyService.fromMnemonic(mnemonic),
-		]);
-
-		const transaction = this.#app.resolve(TransferBuilder);
-
-		transaction.amount(input.data.amount.toString());
-
-		if (input.fee) {
-			// @TODO: see if we need to use the `toSatoshi` method here
-			transaction.fee(this.toSatoshi(input.fee).toString());
-		}
-
-		transaction.senderPublicKey(senderPublicKey);
-
-		const transactionWallet = await this.clientService.wallet({ type: "address", value: address });
-
-		// Nonce may come from the input but currently does not apply, refer to the `#createFromData` method
-		transaction.nonce(transactionWallet.nonce().plus(1).toFixed(0));
-
-		if (callback) {
-			callback({ data: input.data, transaction });
-		}
-
-		const signedTransactionBuilder = await transaction.sign(mnemonic);
-
-		const signedTransaction = await signedTransactionBuilder.build();
+		const signedTransaction = await transaction.build();
 
 		return this.dataTransferObjectService.signedTransaction(
 			signedTransaction.id!,

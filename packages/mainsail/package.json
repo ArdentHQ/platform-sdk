@@ -38,6 +38,7 @@
 		"@mainsail/crypto-key-pair-ecdsa": "0.0.1-alpha.13",
 		"@mainsail/crypto-signature-schnorr-secp256k1": "0.0.1-alpha.13",
 		"@mainsail/crypto-transaction": "0.0.1-alpha.13",
+		"@mainsail/crypto-transaction-multi-payment": "0.0.1-alpha.13",
 		"@mainsail/crypto-transaction-transfer": "0.0.1-alpha.13",
 		"@mainsail/crypto-transaction-vote": "0.0.1-alpha.13",
 		"@mainsail/crypto-validation": "0.0.1-alpha.13",
