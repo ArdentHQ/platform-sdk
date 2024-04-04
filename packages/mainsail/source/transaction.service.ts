@@ -18,11 +18,13 @@ import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-
 import { ServiceProvider as CoreFees } from "@mainsail/fees";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import {
-	ServiceProvider as CoreCryptoTransactionTransfer,
-	TransferBuilder,
-} from "@mainsail/crypto-transaction-transfer";
+import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import { Container } from "@mainsail/container";
+
+import {
+	MultiPaymentBuilder,
+	ServiceProvider as CoreCryptoMultipaymentTransfer,
+} from "@mainsail/crypto-transaction-multi-payment";
 
 import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
@@ -78,7 +80,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransaction).register(),
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
-			this.#app.resolve(CoreCryptoVoteTransfer).register(),
 		]);
 
 		this.#app
