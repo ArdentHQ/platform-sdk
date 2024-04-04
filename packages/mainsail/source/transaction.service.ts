@@ -104,6 +104,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
+		if (!input.fee) {
+			throw new Error(
+				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
+			);
+		}
+
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
