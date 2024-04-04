@@ -271,7 +271,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("createFromData called", type, input);
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
