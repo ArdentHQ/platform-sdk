@@ -3,14 +3,17 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { TransactionTypeService } from "./transaction-type.service.js";
-import { Identities } from "./crypto/index.js";
+import { Identities, Interfaces } from "./crypto/index.js";
 import { BindingType } from "./coin.contract.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
-	readonly #config!: any;
+	readonly #config!: Interfaces.NetworkConfig;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
+
+		// @TODO: temporary workaround to get the right sender address
+		// from a public key. Will be removed down the line.
 		this.#config = container.get(BindingType.Crypto);
 	}
 
