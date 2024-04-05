@@ -126,15 +126,11 @@ export const usernameRegistration = extend(transactionBaseSchema, {
 		amount: { bignumber: { maximum: 0, minimum: 0 } },
 		asset: {
 			properties: {
-				delegate: {
-					properties: {
-						username: { $ref: "Username" },
-					},
-					required: ["username"],
-					type: "object",
+				username: {
+					$ref: "usernameRegistration",
 				},
 			},
-			required: ["delegate"],
+			required: ["username"],
 			type: "object",
 		},
 		fee: { bignumber: { minimum: 1 } },

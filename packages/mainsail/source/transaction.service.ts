@@ -20,7 +20,6 @@ import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
 import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
-	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
 import { Container } from "@mainsail/container";
 
@@ -32,6 +31,10 @@ import {
 import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
 import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
+import {
+	ServiceProvider as CoreCryptoTransactionUsername,
+	UsernameRegistrationBuilder,
+} from "@mainsail/crypto-transaction-username-registration";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -85,6 +88,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
 			this.#app.resolve(CoreCryptoTransactionVote).register(),
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
+			this.#app.resolve(CoreCryptoTransactionUsername).register(),
 		]);
 
 		this.#app
@@ -255,7 +259,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.UsernameRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
 		console.log("usernameRegistration", input);
-		return this.#createFromData("usernameRegistration", input);
+		return this.#createFromData("usernameRegistration", input, (
+			{transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string; }}) => {
+				transaction.usernameAsset(data.username);
+		});
+
 	}
 
 	public override async delegateResignation(
@@ -278,7 +286,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("createFromData", type);
+		console.log("createFromData 1232", type, input);
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
@@ -289,6 +297,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let senderPublicKey: string | undefined;
 
 		const transaction = await Transactions.BuilderFactory[type]();
+
+		console.log('after tx builder')
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -365,6 +375,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// If we fail to set the expiration we'll still continue.
 		}
 
+		console.log('before callback')
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}
@@ -435,6 +446,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
+		console.log('before sign')
 		const signedTransaction = await signedTransactionBuilder?.build();
 
 		return this.dataTransferObjectService.signedTransaction(
