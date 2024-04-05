@@ -26,7 +26,10 @@ import { ServiceProvider as CoreFees } from "@mainsail/fees/distribution/service
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction/distribution/service-provider";
 import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
-import { ServiceProvider as CoreCryptoTransactionUsername, UsernameRegistrationBuilder} from "@mainsail/crypto-transaction-username-registration";
+import {
+	ServiceProvider as CoreCryptoTransactionUsername,
+	UsernameRegistrationBuilder,
+} from "@mainsail/crypto-transaction-username-registration";
 
 export * from "./transaction.js";
 
