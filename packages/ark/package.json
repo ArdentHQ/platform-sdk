@@ -17,6 +17,7 @@
 		"build": "pnpm run clean && tsc",
 		"build:analyze": "webpack --config ../../webpack.analyze.cjs",
 		"build:release": "webpack --config ../../webpack.config.cjs",
+		"build:release:watch": "webpack watch --config ../../webpack.config.cjs",
 		"build:validators": "npx tsx ./cli/compile-validators.ts",
 		"build:watch": "pnpm run clean && tsc -w",
 		"clean": "rimraf .coverage distribution tmp",
