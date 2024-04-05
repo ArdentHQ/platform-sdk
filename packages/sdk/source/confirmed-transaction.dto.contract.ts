@@ -66,6 +66,8 @@ export interface ConfirmedTransactionData {
 
 	isSecondSignature(): boolean;
 
+	isUsernameRegistration(): boolean;
+
 	isDelegateRegistration(): boolean;
 
 	isVoteCombination(): boolean;

@@ -9,4 +9,5 @@ export * as schemas from "./schemas.js";
 export * from "./second-signature-registration.js";
 export * from "./transaction.js";
 export * from "./transfer.js";
+export * from "./username-registration.js";
 export * from "./vote.js";

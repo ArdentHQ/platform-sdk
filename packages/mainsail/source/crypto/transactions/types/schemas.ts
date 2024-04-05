@@ -120,6 +120,29 @@ export const delegateRegistration = extend(transactionBaseSchema, {
 	required: ["asset"],
 });
 
+export const usernameRegistration = extend(transactionBaseSchema, {
+	$id: "usernameRegistration",
+	properties: {
+		amount: { bignumber: { maximum: 0, minimum: 0 } },
+		asset: {
+			properties: {
+				delegate: {
+					properties: {
+						username: { $ref: "Username" },
+					},
+					required: ["username"],
+					type: "object",
+				},
+			},
+			required: ["delegate"],
+			type: "object",
+		},
+		fee: { bignumber: { minimum: 1 } },
+		type: { transactionType: TransactionType.UsernameRegistration },
+	},
+	required: ["asset"],
+});
+
 export const vote = extend(transactionBaseSchema, {
 	$id: "vote",
 	properties: {

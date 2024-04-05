@@ -95,6 +95,7 @@ const availableSchemas = [
 	"secondSignature",
 	"delegateResignation",
 	"delegateRegistration",
+	"usernameRegistration",
 	"vote",
 	"ipfs",
 	"multiPayment",

@@ -52,6 +52,7 @@ const updaters = {
 				serviceSourceFile,
 				serviceName,
 				[
+					"usernameRegistration",
 					"delegateRegistration",
 					"delegateResignation",
 					"estimateExpiration",

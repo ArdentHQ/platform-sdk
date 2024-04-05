@@ -12,6 +12,7 @@ export type WalletPermission = "read" | "write";
 
 export type TransactionType =
 	| "delegateRegistration"
+	| "usernameRegistration"
 	| "delegateResignation"
 	| "ipfs"
 	| "multiPayment"
@@ -234,6 +235,7 @@ export type TransactionMethod =
 	| "delegateRegistration.ledgerX"
 	| "delegateRegistration.musig"
 	| "delegateRegistration"
+	| "usernameRegistration"
 	| "delegateResignation.ledgerS"
 	| "delegateResignation.ledgerX"
 	| "delegateResignation.musig"

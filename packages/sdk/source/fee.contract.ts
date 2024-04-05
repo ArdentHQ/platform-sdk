@@ -15,6 +15,7 @@ export interface TransactionFees {
 	transfer: TransactionFee;
 	secondSignature: TransactionFee;
 	delegateRegistration: TransactionFee;
+	usernameRegistration: TransactionFee;
 	vote: TransactionFee;
 	multiSignature: TransactionFee;
 	ipfs: TransactionFee;

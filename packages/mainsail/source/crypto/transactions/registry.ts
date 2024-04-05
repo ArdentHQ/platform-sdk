@@ -7,6 +7,7 @@ import {
 import { validator } from "../validation/index.js";
 import {
 	DelegateRegistrationTransaction,
+	UsernameRegistrationTransaction,
 	DelegateResignationTransaction,
 	IpfsTransaction,
 	MultiPaymentTransaction,
@@ -30,6 +31,7 @@ class TransactionRegistry {
 		this.registerTransactionType(TransferTransaction);
 		this.registerTransactionType(SecondSignatureRegistrationTransaction);
 		this.registerTransactionType(DelegateRegistrationTransaction);
+		this.registerTransactionType(UsernameRegistrationTransaction);
 		this.registerTransactionType(VoteTransaction);
 		this.registerTransactionType(MultiSignatureRegistrationTransaction);
 		this.registerTransactionType(IpfsTransaction);

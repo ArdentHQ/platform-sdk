@@ -117,6 +117,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return this.#data.isSecondSignature();
 	}
 
+	public isUsernameRegistration(): boolean {
+		return this.#data.isUsernameRegistration();
+	}
+
 	public isDelegateRegistration(): boolean {
 		return this.#data.isDelegateRegistration();
 	}
