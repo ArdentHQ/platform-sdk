@@ -131,7 +131,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	// Delegate Registration
 	public override username(): string {
-		return this.data.asset.delegate.username;
+		return this.data.asset?.username;
 	}
 
 	// Transfer
