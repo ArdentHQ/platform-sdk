@@ -129,7 +129,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return TransactionTypeService.isMagistrate(this.data);
 	}
 
-	// Delegate Registration
+	// Username registration
 	public override username(): string {
 		return this.data.asset?.username;
 	}
