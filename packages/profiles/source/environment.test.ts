@@ -13,7 +13,7 @@ import { importByMnemonic } from "../test/mocking";
 import { StubStorage } from "../test/stubs/storage";
 import { container } from "./container";
 import { Identifiers } from "./container.models";
-import { ProfileData } from "./contracts";
+import { ProfileData, ProfileSetting } from "./contracts";
 import { DataRepository } from "./data.repository";
 import { Environment } from "./environment";
 import { ExchangeRateService } from "./exchange-rate.service.js";
@@ -165,6 +165,9 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		// Create a Setting
 		profile.settings().set("ADVANCED_MODE", false);
 
+		// Create a Setting
+		profile.settings().set(ProfileSetting.LastVisitedPage, { path: "test", data: { foo: "bar" } });
+
 		// Encode all data
 		await context.subject.profiles().persist(profile);
 
@@ -220,6 +223,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
+			LAST_VISITED_PAGE: { path: "test", data: { foo: "bar" } },
 		});
 	});
 
@@ -244,6 +248,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		assert.equal(newProfile.data().all(), {
 			LATEST_MIGRATION: "0.0.0",
 		});
+
 		assert.equal(newProfile.settings().all(), {
 			ACCENT_COLOR: "green",
 			ADVANCED_MODE: false,
@@ -426,6 +431,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		await makeSubject(context);
 
 		const john = await context.subject.profiles().create("John");
+
 		await importByMnemonic(john, identity.mnemonic, "ARK", "ark.devnet");
 		await context.subject.profiles().persist(john);
 

@@ -21,21 +21,19 @@ export const transactionBaseSchema: Record<string, any> = {
 	properties: {
 		amount: { bignumber: { minimum: 1 } },
 		fee: { bignumber: { minimum: 0 } },
-		id: { anyOf: [{ $ref: "transactionId" }, { type: "null" }] },
+		id: { type: "string" },
 		network: { $ref: "networkByte" },
 		nonce: { bignumber: { minimum: 0 } },
-		secondSignature: { $ref: "alphanumeric" },
-		senderPublicKey: { $ref: "publicKey" },
-		signSignature: { $ref: "alphanumeric" },
-		signature: { $ref: "alphanumeric" },
+		secondSignature: { type: "string" },
+		senderPublicKey: { type: "string" },
+		signSignature: { type: "string" },
+		signature: { type: "string" },
 		version: { enum: [1, 2] },
 		signatures: {
-			additionalItems: false,
-			items: { allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }] },
+			items: { type: "string" },
 			maxItems: 16,
 			minItems: 1,
 			type: "array",
-			uniqueItems: true,
 		},
 		timestamp: { type: "integer", minimum: 0 },
 		typeGroup: { minimum: 0, type: "integer" },
@@ -64,9 +62,9 @@ export const transfer = extend(transactionBaseSchema, {
 	properties: {
 		expiration: { minimum: 0, type: "integer" },
 		fee: { bignumber: { minimum: 1 } },
-		recipientId: { $ref: "address" },
+		recipientId: { type: "string" },
 		type: { transactionType: TransactionType.Transfer },
-		vendorField: { anyOf: [{ type: "null" }, { format: "vendorField", type: "string" }] },
+		vendorField: { anyOf: [{ type: "null" }, { type: "string" }] },
 	},
 	required: ["recipientId"],
 });
@@ -80,7 +78,7 @@ export const secondSignature = extend(transactionBaseSchema, {
 				signature: {
 					properties: {
 						publicKey: {
-							$ref: "publicKey",
+							type: "string",
 						},
 					},
 					required: ["publicKey"],
@@ -105,7 +103,7 @@ export const delegateRegistration = extend(transactionBaseSchema, {
 			properties: {
 				delegate: {
 					properties: {
-						username: { $ref: "delegateUsername" },
+						username: { type: "string" },
 					},
 					required: ["username"],
 					type: "object",
@@ -127,8 +125,6 @@ export const vote = extend(transactionBaseSchema, {
 		asset: {
 			properties: {
 				votes: {
-					additionalItems: false,
-					items: { $ref: "walletVote" },
 					minItems: 1,
 					maxItems: 2,
 					type: "array",
@@ -138,7 +134,7 @@ export const vote = extend(transactionBaseSchema, {
 			type: "object",
 		},
 		fee: { bignumber: { minimum: 1 } },
-		recipientId: { $ref: "address" },
+		recipientId: { type: "string" },
 		type: { transactionType: TransactionType.Vote },
 	},
 	required: ["asset"],
@@ -158,12 +154,8 @@ export const multiSignature = extend(transactionBaseSchema, {
 							type: "integer",
 						},
 						publicKeys: {
-							additionalItems: false,
-							minItems: 1,
-							items: { $ref: "publicKey" },
+							items: { type: "string" },
 							type: "array",
-							maxItems: 16,
-							uniqueItems: true,
 						},
 					},
 					required: ["min", "publicKeys"],
@@ -175,12 +167,10 @@ export const multiSignature = extend(transactionBaseSchema, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		signatures: {
-			additionalItems: false,
-			items: { allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }] },
+			items: { type: "string" },
 			maxItems: { $data: "1/asset/multiSignature/publicKeys/length" },
 			minItems: { $data: "1/asset/multiSignature/min" },
 			type: "array",
-			uniqueItems: true,
 		},
 		type: { transactionType: TransactionType.MultiSignature },
 	},
@@ -207,10 +197,9 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 						keysgroup: {
 							minItems: 1,
 							type: "array",
-							additionalItems: false,
 							maxItems: 16,
 							items: {
-								allOf: [{ minimum: 67, type: "string", maximum: 67, transform: ["toLowerCase"] }],
+								allOf: [{ minimum: 67, type: "string", maximum: 67 }],
 							},
 						},
 						min: {
@@ -228,8 +217,7 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		signatures: {
-			additionalItems: false,
-			items: { $ref: "alphanumeric" },
+			items: { type: "string" },
 			maxItems: 1,
 			minItems: 1,
 			type: "array",
@@ -246,10 +234,7 @@ export const ipfs = extend(transactionBaseSchema, {
 		amount: { bignumber: { maximum: 0, minimum: 0 } },
 		asset: {
 			properties: {
-				ipfs: {
-					allOf: [{ maxLength: 90, minLength: 2 }, { $ref: "base58" }],
-					// ipfs hash has varying length but we set max limit to twice the length of base58 ipfs sha-256 hash
-				},
+				ipfs: { type: "string" },
 			},
 			required: ["ipfs"],
 			type: "object",
@@ -266,18 +251,16 @@ export const multiPayment = extend(transactionBaseSchema, {
 		asset: {
 			properties: {
 				payments: {
-					additionalItems: false,
 					items: {
 						required: ["amount", "recipientId"],
 						properties: {
 							amount: { bignumber: { minimum: 1 } },
-							recipientId: { $ref: "address" },
+							recipientId: { type: "string" },
 						},
 						type: "object",
 					},
 					minItems: 2,
 					type: "array",
-					uniqueItems: false,
 				},
 			},
 			required: ["payments"],
@@ -285,7 +268,7 @@ export const multiPayment = extend(transactionBaseSchema, {
 		},
 		fee: { bignumber: { minimum: 1 } },
 		type: { transactionType: TransactionType.MultiPayment },
-		vendorField: { anyOf: [{ type: "null" }, { format: "vendorField", type: "string" }] },
+		vendorField: { anyOf: [{ type: "null" }, { type: "string" }] },
 	},
 });
 
