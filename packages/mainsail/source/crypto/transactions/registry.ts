@@ -11,7 +11,6 @@ import {
 	IpfsTransaction,
 	MultiPaymentTransaction,
 	MultiSignatureRegistrationTransaction,
-	SecondSignatureRegistrationTransaction,
 	Transaction,
 	TransactionTypeFactory,
 	TransferTransaction,
@@ -28,7 +27,6 @@ class TransactionRegistry {
 		TransactionTypeFactory.initialize(this.transactionTypes);
 
 		this.registerTransactionType(TransferTransaction);
-		this.registerTransactionType(SecondSignatureRegistrationTransaction);
 		this.registerTransactionType(DelegateRegistrationTransaction);
 		this.registerTransactionType(VoteTransaction);
 		this.registerTransactionType(MultiSignatureRegistrationTransaction);
