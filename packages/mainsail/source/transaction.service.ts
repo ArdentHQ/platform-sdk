@@ -301,7 +301,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async usernameResignation(
 		input: Services.UsernameResignationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("usernameResignation", input);
 		return this.#createFromData("usernameResignation", input);
 	}
 
@@ -326,7 +325,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("createFromData 1232", type, input);
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
@@ -337,8 +335,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let senderPublicKey: string | undefined;
 
 		const transaction = await Transactions.BuilderFactory[type]();
-
-		console.log("after tx builder");
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -415,7 +411,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// If we fail to set the expiration we'll still continue.
 		}
 
-		console.log("before callback");
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}
@@ -486,7 +481,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		console.log("before sign");
 		const signedTransaction = await signedTransactionBuilder?.build();
 
 		return this.dataTransferObjectService.signedTransaction(
