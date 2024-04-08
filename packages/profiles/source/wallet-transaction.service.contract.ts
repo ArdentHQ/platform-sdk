@@ -81,6 +81,15 @@ export interface ITransactionService {
 	signUsernameRegistration(input: Services.UsernameRegistrationInput): Promise<string>;
 
 	/**
+	 * Sign a Username Resignation transaction.
+	 *
+	 * @param {Services.UsernameResignationInput} input
+	 * @return {Promise<string>}
+	 * @memberof ITransactionService
+	 */
+	signUsernameRegistration(input: Services.UsernameResignationInput): Promise<string>;
+
+	/**
 	 * Sign a Vote transaction.
 	 *
 	 * @param {Services.VoteInput} input
