@@ -35,6 +35,7 @@ import {
 	ServiceProvider as CoreCryptoTransactionUsername,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
+import {TransferBuilder} from "./crypto/transactions/builders/transfer";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -375,7 +376,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// If we fail to set the expiration we'll still continue.
 		}
 
-		console.log('before callback')
+		console.log('before callback');
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}

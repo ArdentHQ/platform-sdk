@@ -13,7 +13,6 @@ export const milestones = [
 			staticFees: {
 				delegateRegistration: 2_500_000_000,
 				delegateResignation: 2_500_000_000,
-				usernameResignation: 0,
 				htlcClaim: 0,
 				htlcLock: 10_000_000,
 				htlcRefund: 0,
