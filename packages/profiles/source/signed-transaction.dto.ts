@@ -86,6 +86,10 @@ export class ExtendedSignedTransactionData {
 		return this.#data.isUsernameRegistration();
 	}
 
+	public isUsernameResignation(): boolean {
+		return this.#data.isUsernameResignation();
+	}
+
 	public isVoteCombination(): boolean {
 		return this.#data.isVoteCombination();
 	}

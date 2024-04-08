@@ -41,6 +41,7 @@
 		"@mainsail/crypto-transaction-multi-payment": "0.0.1-alpha.14",
 		"@mainsail/crypto-transaction-transfer": "0.0.1-alpha.14",
 		"@mainsail/crypto-transaction-username-registration": "0.0.1-alpha.14",
+		"@mainsail/crypto-transaction-username-resignation": "0.0.1-alpha.14",
 		"@mainsail/crypto-transaction-vote": "0.0.1-alpha.14",
 		"@mainsail/crypto-validation": "0.0.1-alpha.14",
 		"@mainsail/fees": "0.0.1-alpha.14",

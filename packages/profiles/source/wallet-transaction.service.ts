@@ -101,6 +101,12 @@ export class TransactionService implements ITransactionService {
 		return this.#signTransaction("usernameRegistration", input);
 	}
 
+	/** {@inheritDoc ITransactionService.signUsernameResignation} */
+	public async signUsernameResignation(input: Services.UsernameResingationInput): Promise<string> {
+		console.log('wallet-transaction -> signUsernameResignation')
+		return this.#signTransaction("usernameResignation", input);
+	}
+
 	/** {@inheritDoc ITransactionService.signDelegateRegistration} */
 	public async signDelegateRegistration(input: Services.DelegateRegistrationInput): Promise<string> {
 		console.log('wallet-transaction -> signDelegateRegistration')

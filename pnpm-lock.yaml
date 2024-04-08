@@ -446,6 +446,9 @@ importers:
       '@mainsail/crypto-transaction-username-registration':
         specifier: 0.0.1-alpha.14
         version: 0.0.1-alpha.14
+      '@mainsail/crypto-transaction-username-resignation':
+        specifier: 0.0.1-alpha.14
+        version: 0.0.1-alpha.14
       '@mainsail/crypto-transaction-vote':
         specifier: 0.0.1-alpha.14
         version: 0.0.1-alpha.14
@@ -2455,6 +2458,21 @@ packages:
       '@mainsail/container': 0.0.1-alpha.14
       '@mainsail/contracts': 0.0.1-alpha.14
       '@mainsail/crypto-transaction': 0.0.1-alpha.14
+      '@mainsail/kernel': 0.0.1-alpha.14
+      '@mainsail/transactions': 0.0.1-alpha.14
+      '@mainsail/utils': 0.0.1-alpha.14
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-transaction-username-resignation@0.0.1-alpha.14:
+    resolution: {integrity: sha512-bbmX8NxRmmLMxXHFY74YttCuuN0QGObxG26PgDeQUuAANNn6BOP8AKEEUbJJqmiqREYxlLvrk7yVJsz/C/AIBw==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.14
+      '@mainsail/contracts': 0.0.1-alpha.14
+      '@mainsail/crypto-transaction': 0.0.1-alpha.14
+      '@mainsail/crypto-transaction-username-registration': 0.0.1-alpha.14
       '@mainsail/kernel': 0.0.1-alpha.14
       '@mainsail/transactions': 0.0.1-alpha.14
       '@mainsail/utils': 0.0.1-alpha.14

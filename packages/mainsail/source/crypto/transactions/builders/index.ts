@@ -27,9 +27,14 @@ import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction/distribution/service-provider";
 import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
 import {
-	ServiceProvider as CoreCryptoTransactionUsername,
+	ServiceProvider as CoreCryptoTransactionUsernameRegistration,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
+
+import {
+	ServiceProvider as CoreCryptoTransactionUsernameResignation,
+	UsernameResignationBuilder,
+} from "@mainsail/crypto-transaction-username-resignation";
 
 export * from "./transaction.js";
 
@@ -50,7 +55,8 @@ export class BuilderFactory {
 			app.resolve(CoreCryptoTransaction).register(),
 			app.resolve(CoreCryptoTransactionTransfer).register(),
 			app.resolve(CoreCryptoTransactionVote).register(),
-			app.resolve(CoreCryptoTransactionUsername).register(),
+			app.resolve(CoreCryptoTransactionUsernameRegistration).register(),
+			app.resolve(CoreCryptoTransactionUsernameResignation).register(),
 			app.resolve(CoreCryptoMultipaymentTransfer).register(),
 		]);
 
@@ -77,6 +83,11 @@ export class BuilderFactory {
 	public static async usernameRegistration(): Promise<UsernameRegistrationBuilder> {
 		const app = await this.app();
 		return app.resolve(UsernameRegistrationBuilder);
+	}
+
+	public static async usernameResignation(): Promise<UsernameResignationBuilder> {
+		const app = await this.app();
+		return app.resolve(UsernameResignationBuilder);
 	}
 
 	public static async vote(): Promise<VoteBuilder> {

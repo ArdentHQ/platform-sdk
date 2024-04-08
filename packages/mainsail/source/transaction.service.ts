@@ -35,7 +35,6 @@ import {
 	ServiceProvider as CoreCryptoTransactionUsername,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
-import {TransferBuilder} from "./crypto/transactions/builders/transfer";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -259,13 +258,20 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async usernameRegistration(
 		input: Services.UsernameRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("usernameRegistration", input);
 		return this.#createFromData("usernameRegistration", input, (
 			{transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string; }}) => {
 				transaction.usernameAsset(data.username);
 		});
 
 	}
+
+	public override async usernameResignation(
+		input: Services.UsernameResignationInput,
+	): Promise<Contracts.SignedTransactionData> {
+		console.log("usernameResignation", input);
+		return this.#createFromData("usernameResignation", input);
+	}
+
 
 	public override async delegateResignation(
 		input: Services.DelegateResignationInput,

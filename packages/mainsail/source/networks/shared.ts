@@ -11,6 +11,7 @@ export const transactions: Networks.NetworkManifestTransactions = {
 	types: [
 		"delegateRegistration",
 		"usernameRegistration",
+		"usernameResignation",
 		"delegateResignation",
 		"ipfs",
 		"multiPayment",
@@ -64,6 +65,7 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 	Transaction: [
 		"delegateRegistration",
 		"usernameRegistration",
+		"usernameResignation",
 		"delegateResignation",
 		"estimateExpiration",
 		"ipfs.ledgerS",
