@@ -28,6 +28,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	readonly #types = {
 		delegateRegistration: "isDelegateRegistration",
 		usernameRegistration: "isUsernameRegistration",
+		usernameResignation: "isUsernameResignation",
 		delegateResignation: "isDelegateResignation",
 		htlcClaim: "isHtlcClaim",
 		htlcLock: "isHtlcLock",
@@ -167,6 +168,11 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	public isUsernameRegistration(): boolean {
 		return false;
 	}
+
+	public isUsernameResignation(): boolean {
+		return false;
+	}
+
 	public isDelegateRegistration(): boolean {
 		return false;
 	}

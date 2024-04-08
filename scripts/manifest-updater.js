@@ -53,6 +53,7 @@ const updaters = {
 				serviceName,
 				[
 					"usernameRegistration",
+					"usernameResignation",
 					"delegateRegistration",
 					"delegateResignation",
 					"estimateExpiration",

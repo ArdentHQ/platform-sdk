@@ -19,12 +19,12 @@ export abstract class UsernameRegistrationTransaction extends Transaction {
 	public serialize(options?: ISerializeOptions): ByteBuffer | undefined {
 		const { data } = this;
 
-		if (data.asset && data.asset.delegate) {
-			const delegateBytes: Buffer = Buffer.from(data.asset.delegate.username, "utf8");
-			const buf: ByteBuffer = new ByteBuffer(Buffer.alloc(delegateBytes.length + 1));
+		if (data.asset && data.asset.username) {
+			const usernameBytes: Buffer = Buffer.from(data.asset.username, "utf8");
+			const buf: ByteBuffer = new ByteBuffer(Buffer.alloc(usernameBytes.length + 1));
 
-			buf.writeUInt8(delegateBytes.length);
-			buf.writeBuffer(delegateBytes);
+			buf.writeUInt8(usernameBytes.length);
+			buf.writeBuffer(usernameBytes);
 
 			return buf;
 		}
@@ -37,9 +37,7 @@ export abstract class UsernameRegistrationTransaction extends Transaction {
 		const usernameLength = buf.readUInt8();
 
 		data.asset = {
-			delegate: {
-				username: buf.readBuffer(usernameLength).toString("utf8"),
-			},
+			username: buf.readBuffer(usernameLength).toString("utf8"),
 		};
 	}
 }

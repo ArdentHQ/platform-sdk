@@ -36,6 +36,7 @@ export interface SignedTransactionData {
 	isSecondSignature(): boolean;
 	isDelegateRegistration(): boolean;
 	isUsernameRegistration(): boolean;
+	isUsernameResignation(): boolean;
 	isVoteCombination(): boolean;
 	isVote(): boolean;
 	isUnvote(): boolean;

@@ -68,7 +68,7 @@ export interface ConfirmedTransactionData {
 
 	isUsernameRegistration(): boolean;
 
-	isUsernameRegistration(): boolean;
+	isUsernameResignation(): boolean;
 
 	isDelegateRegistration(): boolean;
 

@@ -56,7 +56,7 @@ export class TransactionTypeService {
 		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 8;
 	}
 
-	// https://github.com/ArkEcosystem/mainsail/blob/develop/packages/contracts/source/contracts/crypto/enums.ts#L8C2-L8C22
+	// https://github.com/ArkEcosystem/mainsail/blob/develop/packages/contracts/source/contracts/crypto/enums.ts#L9C2-L8C22
 	public static isUsernameResignation(data: TransactionData): boolean {
 		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 9;
 	}

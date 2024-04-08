@@ -14,6 +14,7 @@ export const milestones = [
 				delegateRegistration: 2_500_000_000,
 				delegateResignation: 2_500_000_000,
 				usernameRegistration: 2_500_000_000,
+				usernameResignation: 2_500_000_000,
 				htlcClaim: 0,
 				htlcLock: 10_000_000,
 				htlcRefund: 0,

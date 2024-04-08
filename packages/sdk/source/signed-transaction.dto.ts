@@ -123,6 +123,11 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 		return false;
 	}
 
+
+	public isUsernameResignation(): boolean {
+		return false;
+	}
+
 	public isDelegateRegistration(): boolean {
 		return false;
 	}

@@ -8,6 +8,7 @@ export interface TransactionService {
 	secondSignature(input: SecondSignatureInput): Promise<SignedTransactionData>;
 	delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData>;
 	usernameRegistration(input: UsernameRegistrationInput): Promise<SignedTransactionData>;
+	usernameResignation(input: UsernameResignationInput): Promise<SignedTransactionData>;
 	vote(input: VoteInput): Promise<SignedTransactionData>;
 	multiSignature(input: MultiSignatureInput): Promise<SignedTransactionData>;
 	ipfs(input: IpfsInput): Promise<SignedTransactionData>;

@@ -14,6 +14,7 @@ import { NetworkHostSelector } from "./network.models.js";
 import { BindingType } from "./service-provider.contract.js";
 import {
 	UsernameRegistrationInput,
+	UsernameResignationInput,
 	DelegateRegistrationInput,
 	DelegateResignationInput,
 	IpfsInput,
@@ -53,6 +54,10 @@ export class AbstractTransactionService implements Contract {
 
 	public async usernameRegistration(input: UsernameRegistrationInput): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.usernameRegistration.name);
+	}
+
+	public async usernameResignation(input: UsernameResignationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.usernameResignation().name);
 	}
 
 	public async delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData> {
