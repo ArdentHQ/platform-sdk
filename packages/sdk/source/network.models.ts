@@ -11,9 +11,9 @@ export type NetworkHostType = "full" | "tx" | "musig" | "archival" | "explorer";
 export type WalletPermission = "read" | "write";
 
 export type TransactionType =
-	| "delegateRegistration"
 	| "usernameRegistration"
 	| "usernameResignation"
+	| "delegateRegistration"
 	| "delegateResignation"
 	| "ipfs"
 	| "multiPayment"
@@ -232,18 +232,18 @@ export type MessageMethod = "sign" | "verify";
 export type MessageMethods = MessageMethod[];
 
 export type TransactionMethod =
-	| "delegateRegistration.ledgerS"
-	| "delegateRegistration.ledgerX"
-	| "delegateRegistration.musig"
-	| "delegateRegistration"
+	| "usernameRegistration"
 	| "usernameRegistration.ledgerS"
 	| "usernameRegistration.ledgerX"
 	| "usernameRegistration.musig"
-	| "usernameRegistration"
+	| "usernameResignation"
 	| "usernameResignation.ledgerS"
 	| "usernameResignation.ledgerX"
 	| "usernameResignation.musig"
-	| "usernameResignation"
+	| "delegateRegistration"
+	| "delegateRegistration.ledgerS"
+	| "delegateRegistration.ledgerX"
+	| "delegateRegistration.musig"
 	| "delegateResignation.ledgerS"
 	| "delegateResignation.ledgerX"
 	| "delegateResignation.musig"
