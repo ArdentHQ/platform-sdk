@@ -312,8 +312,8 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       big.js:
-        specifier: ^6.2.1
-        version: 6.2.1
+        specifier: ^6.1.1
+        version: 6.1.1
       censorify-it:
         specifier: ^3.0.2
         version: 3.0.2
@@ -2764,8 +2764,8 @@ packages:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
     dev: false
 
-  /big.js@6.2.1:
-    resolution: {integrity: sha512-bCtHMwL9LeDIozFn+oNhhFoq+yQ3BNdnsLSASUxLciOb1vgvpHsIO1dsENiGMgbb4SkP5TrzWzRiLddn8ahVOQ==}
+  /big.js@6.1.1:
+    resolution: {integrity: sha512-1vObw81a8ylZO5ePrtMay0n018TcftpTA5HFKDaSuiUDBo8biRBtjIobw60OpwuvrGk+FsxKamqN4cnmj/eXdg==}
     dev: false
 
   /bigi@1.4.2:
