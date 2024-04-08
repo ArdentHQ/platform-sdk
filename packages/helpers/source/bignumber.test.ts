@@ -75,6 +75,8 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 		assert.is(BigNumber.make(10).minus(1).valueOf(), "9");
 
 		assert.is(BigNumber.make(0.010_000_01).minus(0.01).valueOf(), "1e-8");
+
+		assert.is(BigNumber.make(0.010_000_01).minus(0.01).toFixed(12), "0.000000010000");
 	});
 
 	it("#divide", () => {
