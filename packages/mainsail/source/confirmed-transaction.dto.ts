@@ -1,10 +1,22 @@
-import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { Identities, Interfaces } from "./crypto/index.js";
+import { BindingType } from "./coin.contract.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
+	readonly #config!: Interfaces.NetworkConfig;
+
+	public constructor(container: IoC.IContainer) {
+		super(container);
+
+		// @TODO: temporary workaround to get the right sender address
+		// from a public key. Will be removed down the line.
+		this.#config = container.get(BindingType.Crypto);
+	}
+
 	public override id(): string {
 		return this.data.id;
 	}
@@ -21,10 +33,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return BigNumber.make(this.data.confirmations);
 	}
 
-	// @TODO: Revert when sender will be available from /api/transactions endpoint.
 	public override sender(): string {
-		// return this.data.sender;
-		return this.data.recipient;
+		return Identities.Address.fromPublicKey(this.data.senderPublicKey, this.#config.network);
 	}
 
 	public override recipient(): string {
@@ -127,9 +137,9 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return TransactionTypeService.isMagistrate(this.data);
 	}
 
-	// Delegate Registration
+	// Username registration
 	public override username(): string {
-		return this.data.asset.delegate.username;
+		return this.data.asset?.username;
 	}
 
 	// Transfer

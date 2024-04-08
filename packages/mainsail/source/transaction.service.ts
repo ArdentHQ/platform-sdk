@@ -18,9 +18,7 @@ import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-
 import { ServiceProvider as CoreFees } from "@mainsail/fees";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import {
-	ServiceProvider as CoreCryptoTransactionTransfer,
-} from "@mainsail/crypto-transaction-transfer";
+import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import { Container } from "@mainsail/container";
 
 import {
@@ -108,13 +106,46 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("transfer", input, ({ transaction, data }) => {
-			transaction.recipientId(data.to);
+		if (!input.data.amount) {
+			throw new Error(
+				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
+			);
+		}
 
-			if (data.memo) {
-				transaction.vendorField(data.memo);
-			}
+		if (!input.fee) {
+			throw new Error(
+				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
+			);
+		}
+
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
+
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
 		});
+
+		const builder = this.#app
+			.resolve(TransferBuilder)
+			.fee(BigNumber.make(this.toSatoshi(input.fee)).toString())
+			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
+			.recipientId(input.signatory.address())
+			.amount(BigNumber.make(this.toSatoshi(input.data.amount)).toString());
+
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		const signedData = await builder.sign(input.signatory.signingKey());
+		const signedTransaction = await signedData.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	public override async secondSignature(
@@ -258,11 +289,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async usernameRegistration(
 		input: Services.UsernameRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("usernameRegistration", input, (
-			{transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string; }}) => {
+		return this.#createFromData(
+			"usernameRegistration",
+			input,
+			({ transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string } }) => {
 				transaction.usernameAsset(data.username);
-		});
-
+			},
+		);
 	}
 
 	public override async usernameResignation(
@@ -305,7 +338,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const transaction = await Transactions.BuilderFactory[type]();
 
-		console.log('after tx builder')
+		console.log("after tx builder");
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -382,7 +415,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// If we fail to set the expiration we'll still continue.
 		}
 
-		console.log('before callback');
+		console.log("before callback");
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}
@@ -453,7 +486,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		console.log('before sign')
+		console.log("before sign");
 		const signedTransaction = await signedTransactionBuilder?.build();
 
 		return this.dataTransferObjectService.signedTransaction(

@@ -63,9 +63,9 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 	PrivateKey: ["mnemonic.bip39", "wif"],
 	PublicKey: ["mnemonic.bip39", "multiSignature", "wif"],
 	Transaction: [
-		"delegateRegistration",
 		"usernameRegistration",
 		"usernameResignation",
+		"delegateRegistration",
 		"delegateResignation",
 		"estimateExpiration",
 		"ipfs.ledgerS",

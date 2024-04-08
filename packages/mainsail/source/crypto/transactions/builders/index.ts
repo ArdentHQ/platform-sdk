@@ -3,7 +3,6 @@ import { DelegateResignationBuilder } from "./delegate-resignation.js";
 import { IPFSBuilder } from "./ipfs.js";
 import { MultiPaymentBuilder } from "./multi-payment.js";
 import { MultiSignatureBuilder } from "./multi-signature.js";
-import { SecondSignatureBuilder } from "./second-signature.js";
 import { Application } from "@mainsail/kernel";
 import { Container } from "@mainsail/container";
 import {
@@ -70,10 +69,6 @@ export class BuilderFactory {
 	public static async transfer(): Promise<TransferBuilder> {
 		const app = await this.app();
 		return app.resolve(TransferBuilder);
-	}
-
-	public static secondSignature(): SecondSignatureBuilder {
-		return new SecondSignatureBuilder();
 	}
 
 	public static delegateRegistration(): DelegateRegistrationBuilder {

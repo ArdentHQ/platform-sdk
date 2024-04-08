@@ -97,7 +97,7 @@ export class TransactionService implements ITransactionService {
 
 	/** {@inheritDoc ITransactionService.signUsernameRegistration} */
 	public async signUsernameRegistration(input: Services.UsernameRegistrationInput): Promise<string> {
-		console.log('wallet-transaction -> signUsernameRegistration')
+		console.log("wallet-transaction -> signUsernameRegistration");
 		return this.#signTransaction("usernameRegistration", input);
 	}
 
@@ -109,7 +109,7 @@ export class TransactionService implements ITransactionService {
 
 	/** {@inheritDoc ITransactionService.signDelegateRegistration} */
 	public async signDelegateRegistration(input: Services.DelegateRegistrationInput): Promise<string> {
-		console.log('wallet-transaction -> signDelegateRegistration')
+		console.log("wallet-transaction -> signDelegateRegistration");
 		return this.#signTransaction("delegateRegistration", input);
 	}
 
@@ -404,7 +404,7 @@ export class TransactionService implements ITransactionService {
 	 * @memberof TransactionService
 	 */
 	async #signTransaction(type: string, input: any): Promise<string> {
-		console.log('wallet-transaction -> signUsernameRegistration -> signTransaction')
+		console.log("wallet-transaction -> signUsernameRegistration -> signTransaction");
 		const transaction: ExtendedSignedTransactionData = this.#createExtendedSignedTransactionData(
 			await this.#wallet.coin().transaction()[type](input),
 		);
