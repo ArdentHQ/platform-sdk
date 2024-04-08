@@ -139,14 +139,14 @@ export const usernameRegistration = extend(transactionBaseSchema, {
 	required: ["asset"],
 });
 
-export const usernameResignation= extend(transactionBaseSchema, {
+export const usernameResignation = extend(transactionBaseSchema, {
 	$id: "usernameResignation",
 	properties: {
 		amount: { bignumber: { maximum: 0, minimum: 0 } },
 		fee: { bignumber: { minimum: 1 } },
-		type: { transactionType: TransactionType.UsernameResignation},
+		type: { transactionType: TransactionType.UsernameResignation },
 	},
-})
+});
 
 export const vote = extend(transactionBaseSchema, {
 	$id: "vote",
