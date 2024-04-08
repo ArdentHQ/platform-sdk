@@ -6,7 +6,7 @@ import { configManager } from "../../managers/index.js";
 import * as schemas from "./schemas.js";
 import { Transaction } from "./transaction.js";
 
-export abstract class DelegateResignationTransaction extends Transaction {
+export abstract class UsernameResignationTransaction extends Transaction {
 	public static override typeGroup: number = TransactionTypeGroup.Core;
 	public static override type: number = TransactionType.UsernameResignation;
 	public static override key = "usernameResignation";
