@@ -18,7 +18,10 @@ import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-
 import { ServiceProvider as CoreFees } from "@mainsail/fees";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import { ServiceProvider as CoreCryptoTransactionTransfer, TransferBuilder } from "@mainsail/crypto-transaction-transfer";
+import {
+	ServiceProvider as CoreCryptoTransactionTransfer,
+	TransferBuilder,
+} from "@mainsail/crypto-transaction-transfer";
 import { Container } from "@mainsail/container";
 
 import {
@@ -303,7 +306,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData("usernameResignation", input);
 	}
-
 
 	public override async delegateResignation(
 		input: Services.DelegateResignationInput,
