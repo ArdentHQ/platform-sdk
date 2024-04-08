@@ -87,7 +87,7 @@ export interface ITransactionService {
 	 * @return {Promise<string>}
 	 * @memberof ITransactionService
 	 */
-	signUsernameRegistration(input: Services.UsernameResignationInput): Promise<string>;
+	signUsernameResignation(input: Services.UsernameResignationInput): Promise<string>;
 
 	/**
 	 * Sign a Vote transaction.
