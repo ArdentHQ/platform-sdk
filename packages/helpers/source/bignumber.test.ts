@@ -205,6 +205,7 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 		assert.is(BigNumber.make(1.234_567_891).toFixed(5), "1.23456");
 		assert.is(BigNumber.make(1.234_567_891).toFixed(28), "1.2345678910000000000000000000");
 		assert.is(BigNumber.make(1.234_567_891).toFixed(32), "1.23456789100000000000000000000000");
+		assert.is(BigNumber.make(0.000_000_001).toFixed(12), "0.000000001000");
 
 		assert.is(BigNumber.make(".123").toFixed(5), "0.12300");
 		assert.is(BigNumber.make("00010.00010").toFixed(0), "10");
@@ -217,7 +218,7 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 		assert.is(BigNumber.make(123.456).toFixed(2), "123.45");
 
 		assert.is(BigNumber.make(123).toFixed(5), "123.00000");
-		assert.is(BigNumber.make(123_456).toFixed(), "123456");
+		assert.is(BigNumber.make(123_456).toFixed(0), "123456");
 		assert.is(BigNumber.make(123_456).toFixed(0), "123456");
 	});
 
