@@ -101,7 +101,7 @@ export class TransactionService implements ITransactionService {
 	}
 
 	/** {@inheritDoc ITransactionService.signUsernameResignation} */
-	public async signUsernameResignation(input: Services.UsernameResingationInput): Promise<string> {
+	public async signUsernameResignation(input: Services.UsernameResignationInput): Promise<string> {
 		return this.#signTransaction("usernameResignation", input);
 	}
 
