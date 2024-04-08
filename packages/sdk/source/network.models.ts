@@ -13,7 +13,7 @@ export type WalletPermission = "read" | "write";
 export type TransactionType =
 	| "delegateRegistration"
 	| "usernameRegistration"
-	| "usernameResingation"
+	| "usernameResignation"
 	| "delegateResignation"
 	| "ipfs"
 	| "multiPayment"
