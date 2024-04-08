@@ -109,13 +109,46 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("transfer", input, ({ transaction, data }) => {
-			transaction.recipientId(data.to);
+		if (!input.data.amount) {
+			throw new Error(
+				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
+			);
+		}
 
-			if (data.memo) {
-				transaction.vendorField(data.memo);
-			}
+		if (!input.fee) {
+			throw new Error(
+				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
+			);
+		}
+
+		if (!this.#isBooted) {
+			await this.#boot();
+		}
+
+		const transactionWallet = await this.clientService.wallet({
+			type: "address",
+			value: input.signatory.address(),
 		});
+
+		const builder = this.#app
+			.resolve(TransferBuilder)
+			.fee(BigNumber.make(this.toSatoshi(input.fee)).toString())
+			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
+			.recipientId(input.signatory.address())
+			.amount(BigNumber.make(this.toSatoshi(input.data.amount)).toString());
+
+		if (input.data.memo) {
+			builder.vendorField(input.data.memo);
+		}
+
+		const signedData = await builder.sign(input.signatory.signingKey());
+		const signedTransaction = await signedData.build();
+
+		return this.dataTransferObjectService.signedTransaction(
+			signedTransaction.id!,
+			signedTransaction.data,
+			signedTransaction.serialized.toString("hex"),
+		);
 	}
 
 	public override async secondSignature(
