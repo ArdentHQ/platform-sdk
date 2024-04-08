@@ -57,7 +57,7 @@ export class AbstractTransactionService implements Contract {
 	}
 
 	public async usernameResignation(input: UsernameResignationInput): Promise<SignedTransactionData> {
-		throw new NotImplemented(this.constructor.name, this.usernameResignation().name);
+		throw new NotImplemented(this.constructor.name, this.usernameResignation.name);
 	}
 
 	public async delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData> {
