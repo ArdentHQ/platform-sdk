@@ -18,9 +18,7 @@ import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-
 import { ServiceProvider as CoreFees } from "@mainsail/fees";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import {
-	ServiceProvider as CoreCryptoTransactionTransfer,
-} from "@mainsail/crypto-transaction-transfer";
+import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import { Container } from "@mainsail/container";
 
 import {
@@ -35,7 +33,7 @@ import {
 	ServiceProvider as CoreCryptoTransactionUsername,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
-import {TransferBuilder} from "./crypto/transactions/builders/transfer";
+import { TransferBuilder } from "./crypto/transactions/builders/transfer";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -293,11 +291,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.UsernameRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
 		console.log("usernameRegistration", input);
-		return this.#createFromData("usernameRegistration", input, (
-			{transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string; }}) => {
+		return this.#createFromData(
+			"usernameRegistration",
+			input,
+			({ transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string } }) => {
 				transaction.usernameAsset(data.username);
-		});
-
+			},
+		);
 	}
 
 	public override async delegateResignation(
@@ -332,7 +332,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const transaction = await Transactions.BuilderFactory[type]();
 
-		console.log('after tx builder')
+		console.log("after tx builder");
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -409,7 +409,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// If we fail to set the expiration we'll still continue.
 		}
 
-		console.log('before callback');
+		console.log("before callback");
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}
@@ -480,7 +480,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		console.log('before sign')
+		console.log("before sign");
 		const signedTransaction = await signedTransactionBuilder?.build();
 
 		return this.dataTransferObjectService.signedTransaction(
