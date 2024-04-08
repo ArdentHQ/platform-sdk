@@ -341,7 +341,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		await context.subject.fees().sync(await context.subject.profiles().create("John"), "ARK", "ark.devnet");
 
-		assert.length(Object.keys(context.subject.fees().all("ARK", "ark.devnet")), 9);
+		assert.length(Object.keys(context.subject.fees().all("ARK", "ark.devnet")), 10);
 	});
 
 	it("#delegates", async (context) => {
