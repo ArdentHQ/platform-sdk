@@ -51,6 +51,13 @@ export class SignedTransactionData
 		return TransactionTypeService.isSecondSignature(this.signedData);
 	}
 
+	public override isUsernameRegistration(): boolean {
+		return TransactionTypeService.isUsernameRegistration(this.signedData);
+	}
+
+	public override isUsernameResignation(): boolean {
+		return TransactionTypeService.isUsernameResignation(this.signedData);
+	}
 	public override isDelegateRegistration(): boolean {
 		return TransactionTypeService.isDelegateRegistration(this.signedData);
 	}

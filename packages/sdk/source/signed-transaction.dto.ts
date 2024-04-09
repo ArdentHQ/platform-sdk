@@ -21,6 +21,7 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 
 	readonly #types = {
 		delegateRegistration: "isDelegateRegistration",
+		usernameRegistration: "isUsernameRegistration",
 		delegateResignation: "isDelegateResignation",
 		ipfs: "isIpfs",
 		magistrate: "isMagistrate",
@@ -115,6 +116,14 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	public isSecondSignature(): boolean {
+		return false;
+	}
+
+	public isUsernameRegistration(): boolean {
+		return false;
+	}
+
+	public isUsernameResignation(): boolean {
 		return false;
 	}
 

@@ -32,6 +32,10 @@ import {
 import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
 import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
+import {
+	ServiceProvider as CoreCryptoTransactionUsername,
+	UsernameRegistrationBuilder,
+} from "@mainsail/crypto-transaction-username-registration";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -85,6 +89,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
 			this.#app.resolve(CoreCryptoTransactionVote).register(),
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
+			this.#app.resolve(CoreCryptoTransactionUsername).register(),
 		]);
 
 		this.#app
@@ -282,6 +287,24 @@ export class TransactionService extends Services.AbstractTransactionService {
 			signedTransaction.data,
 			signedTransaction.serialized.toString("hex"),
 		);
+	}
+
+	public override async usernameRegistration(
+		input: Services.UsernameRegistrationInput,
+	): Promise<Contracts.SignedTransactionData> {
+		return this.#createFromData(
+			"usernameRegistration",
+			input,
+			({ transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string } }) => {
+				transaction.usernameAsset(data.username);
+			},
+		);
+	}
+
+	public override async usernameResignation(
+		input: Services.UsernameResignationInput,
+	): Promise<Contracts.SignedTransactionData> {
+		return this.#createFromData("usernameResignation", input);
 	}
 
 	public override async delegateResignation(

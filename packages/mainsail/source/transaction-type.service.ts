@@ -51,6 +51,14 @@ export class TransactionTypeService {
 		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 6;
 	}
 
+	public static isUsernameRegistration(data: TransactionData): boolean {
+		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 8;
+	}
+
+	public static isUsernameResignation(data: TransactionData): boolean {
+		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 9;
+	}
+
 	public static isDelegateResignation(data: TransactionData): boolean {
 		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 7;
 	}
