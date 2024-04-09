@@ -31,6 +31,8 @@ export class FeeService extends Services.AbstractFeeService {
 			multiSignature: this.#transform("multiSignature", 1, staticFees, dynamicFees),
 			secondSignature: this.#transform("secondSignature", 1, staticFees, dynamicFees),
 			transfer: this.#transform("transfer", 1, staticFees, dynamicFees),
+			usernameRegistration: this.#transform("usernameRegistration", 1, staticFees, dynamicFees),
+			usernameResignation: this.#transform("usernameResignation", 1, staticFees, dynamicFees),
 			vote: this.#transform("vote", 1, staticFees, dynamicFees),
 		};
 	}

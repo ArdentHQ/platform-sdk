@@ -10,6 +10,8 @@ export const transactions: Networks.NetworkManifestTransactions = {
 	multiPaymentRecipients: 64,
 	types: [
 		"delegateRegistration",
+		"usernameRegistration",
+		"usernameResignation",
 		"delegateResignation",
 		"ipfs",
 		"multiPayment",
@@ -60,6 +62,8 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 	PrivateKey: ["mnemonic.bip39", "wif"],
 	PublicKey: ["mnemonic.bip39", "multiSignature", "wif"],
 	Transaction: [
+		"usernameRegistration",
+		"usernameResignation",
 		"delegateRegistration",
 		"delegateResignation",
 		"estimateExpiration",

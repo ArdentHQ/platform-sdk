@@ -35,7 +35,7 @@ describe("FeeService", ({ beforeEach, loader, nock, it, assert }) => {
 		assert.throws(() => context.subject.all("ARK", "ark.devnet"), "have not been synchronized yet");
 
 		await context.subject.sync(context.profile, "ARK", "ark.devnet");
-		assert.length(Object.keys(context.subject.all("ARK", "ark.devnet")), 8);
+		assert.length(Object.keys(context.subject.all("ARK", "ark.devnet")), 10);
 	});
 
 	it("should sync fees of all coins", async (context) => {
@@ -43,7 +43,7 @@ describe("FeeService", ({ beforeEach, loader, nock, it, assert }) => {
 
 		await context.subject.syncAll(context.profile);
 
-		assert.length(Object.keys(context.subject.all("ARK", "ark.devnet")), 8);
+		assert.length(Object.keys(context.subject.all("ARK", "ark.devnet")), 10);
 	});
 
 	it("#findByType", async (context) => {

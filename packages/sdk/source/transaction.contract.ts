@@ -7,6 +7,8 @@ export interface TransactionService {
 	transfer(input: TransferInput): Promise<SignedTransactionData>;
 	secondSignature(input: SecondSignatureInput): Promise<SignedTransactionData>;
 	delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData>;
+	usernameRegistration(input: UsernameRegistrationInput): Promise<SignedTransactionData>;
+	usernameResignation(input: UsernameResignationInput): Promise<SignedTransactionData>;
 	vote(input: VoteInput): Promise<SignedTransactionData>;
 	multiSignature(input: MultiSignatureInput): Promise<SignedTransactionData>;
 	ipfs(input: IpfsInput): Promise<SignedTransactionData>;
@@ -41,6 +43,12 @@ export interface TransferInput extends TransactionInput {
 export interface SecondSignatureInput extends TransactionInput {
 	data: { mnemonic: string };
 }
+
+export interface UsernameRegistrationInput extends TransactionInput {
+	data: { username: string };
+}
+
+export declare type UsernameResignationInput = TransactionInput;
 
 export interface DelegateRegistrationInput extends TransactionInput {
 	data: { username: string };
