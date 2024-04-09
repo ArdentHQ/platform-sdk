@@ -95,6 +95,16 @@ export class TransactionService implements ITransactionService {
 		return this.#signTransaction("secondSignature", input);
 	}
 
+	/** {@inheritDoc ITransactionService.signUsernameRegistration} */
+	public async signUsernameRegistration(input: Services.UsernameRegistrationInput): Promise<string> {
+		return this.#signTransaction("usernameRegistration", input);
+	}
+
+	/** {@inheritDoc ITransactionService.signUsernameResignation} */
+	public async signUsernameResignation(input: Services.UsernameResignationInput): Promise<string> {
+		return this.#signTransaction("usernameResignation", input);
+	}
+
 	/** {@inheritDoc ITransactionService.signDelegateRegistration} */
 	public async signDelegateRegistration(input: Services.DelegateRegistrationInput): Promise<string> {
 		return this.#signTransaction("delegateRegistration", input);

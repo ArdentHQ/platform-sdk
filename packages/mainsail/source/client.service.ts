@@ -212,6 +212,14 @@ export class ClientService extends Services.AbstractClientService {
 					type: Enums.TransactionType.DelegateResignation,
 					typeGroup: Enums.TransactionTypeGroup.Core,
 				},
+				usernameRegistration: {
+					type: Enums.TransactionType.UsernameRegistration,
+					typeGroup: Enums.TransactionTypeGroup.Core,
+				},
+				usernameResignation: {
+					type: Enums.TransactionType.UsernameResignation,
+					typeGroup: Enums.TransactionTypeGroup.Core,
+				},
 				htlcClaim: {
 					type: Enums.TransactionType.HtlcClaim,
 					typeGroup: Enums.TransactionTypeGroup.Core,
