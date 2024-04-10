@@ -58,7 +58,6 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 	],
 	Fee: ["all", "calculate"],
 	KeyPair: ["mnemonic.bip39", "privateKey", "wif"],
-	Ledger: ["getVersion", "getPublicKey", "signTransaction", "signMessage"],
 	Message: ["sign", "verify"],
 	PrivateKey: ["mnemonic.bip39", "wif"],
 	PublicKey: ["mnemonic.bip39", "multiSignature", "wif"],
