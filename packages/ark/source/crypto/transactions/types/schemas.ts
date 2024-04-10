@@ -1,6 +1,5 @@
-import deepmerge from "deepmerge";
-
 import { TransactionType } from "../../enums.js";
+import deepmerge from "deepmerge";
 
 const signedTransaction = {
 	anyOf: [
@@ -226,22 +225,6 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 		version: { anyOf: [{ type: "null" }, { const: 1 }] },
 	},
 	required: ["asset"],
-});
-
-export const ipfs = extend(transactionBaseSchema, {
-	$id: "ipfs",
-	properties: {
-		amount: { bignumber: { maximum: 0, minimum: 0 } },
-		asset: {
-			properties: {
-				ipfs: { type: "string" },
-			},
-			required: ["ipfs"],
-			type: "object",
-		},
-		fee: { bignumber: { minimum: 1 } },
-		type: { transactionType: TransactionType.Ipfs },
-	},
 });
 
 export const multiPayment = extend(transactionBaseSchema, {
