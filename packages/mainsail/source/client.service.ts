@@ -220,25 +220,6 @@ export class ClientService extends Services.AbstractClientService {
 					type: Enums.TransactionType.UsernameResignation,
 					typeGroup: Enums.TransactionTypeGroup.Core,
 				},
-				htlcClaim: {
-					type: Enums.TransactionType.HtlcClaim,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				htlcLock: {
-					type: Enums.TransactionType.HtlcLock,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				htlcRefund: {
-					type: Enums.TransactionType.HtlcRefund,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				ipfs: {
-					type: Enums.TransactionType.Ipfs,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				magistrate: {
-					typeGroup: 2,
-				},
 				multiPayment: {
 					type: Enums.TransactionType.MultiPayment,
 					typeGroup: Enums.TransactionTypeGroup.Core,

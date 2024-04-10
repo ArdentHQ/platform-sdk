@@ -4,14 +4,11 @@ export enum TransactionType {
 	DelegateRegistration = 2,
 	Vote = 3,
 	MultiSignature = 4,
-	Ipfs = 5,
+
 	MultiPayment = 6,
 	DelegateResignation = 7,
 	UsernameRegistration = 8,
 	UsernameResignation = 9,
-	HtlcLock = 8,
-	HtlcClaim = 9,
-	HtlcRefund = 10,
 }
 
 export enum TransactionTypeGroup {

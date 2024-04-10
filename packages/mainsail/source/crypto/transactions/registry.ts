@@ -1,24 +1,24 @@
 import {
-	TransactionAlreadyRegisteredError,
-	TransactionKeyAlreadyRegisteredError,
-	TransactionVersionAlreadyRegisteredError,
-	UnkownTransactionError,
-} from "../errors.js";
-import { validator } from "../validation/index.js";
-import {
 	DelegateRegistrationTransaction,
-	UsernameRegistrationTransaction,
-	UsernameResignationTransaction,
 	DelegateResignationTransaction,
-	IpfsTransaction,
 	MultiPaymentTransaction,
 	MultiSignatureRegistrationTransaction,
 	Transaction,
 	TransactionTypeFactory,
 	TransferTransaction,
+	UsernameRegistrationTransaction,
+	UsernameResignationTransaction,
 	VoteTransaction,
 } from "./types/index.js";
+import {
+	TransactionAlreadyRegisteredError,
+	TransactionKeyAlreadyRegisteredError,
+	TransactionVersionAlreadyRegisteredError,
+	UnkownTransactionError,
+} from "../errors.js";
+
 import { InternalTransactionType } from "./types/internal-transaction-type.js";
+import { validator } from "../validation/index.js";
 
 export type TransactionConstructor = typeof Transaction;
 
@@ -34,7 +34,6 @@ class TransactionRegistry {
 		this.registerTransactionType(UsernameResignationTransaction);
 		this.registerTransactionType(VoteTransaction);
 		this.registerTransactionType(MultiSignatureRegistrationTransaction);
-		this.registerTransactionType(IpfsTransaction);
 		this.registerTransactionType(MultiPaymentTransaction);
 		this.registerTransactionType(DelegateResignationTransaction);
 	}
