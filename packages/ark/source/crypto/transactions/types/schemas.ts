@@ -227,6 +227,22 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 	required: ["asset"],
 });
 
+export const ipfs = extend(transactionBaseSchema, {
+	$id: "ipfs",
+	properties: {
+		amount: { bignumber: { maximum: 0, minimum: 0 } },
+		asset: {
+			properties: {
+				ipfs: { type: "string" },
+			},
+			required: ["ipfs"],
+			type: "object",
+		},
+		fee: { bignumber: { minimum: 1 } },
+		type: { transactionType: TransactionType.Ipfs },
+	},
+});
+
 export const multiPayment = extend(transactionBaseSchema, {
 	$id: "multiPayment",
 	properties: {
