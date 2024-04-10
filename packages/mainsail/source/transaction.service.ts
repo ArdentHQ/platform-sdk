@@ -134,7 +134,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.resolve(TransferBuilder)
 			.fee(BigNumber.make(this.toSatoshi(input.fee)).toString())
 			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
-			.recipientId(input.signatory.address())
+			.recipientId(input.data.to)
 			.amount(BigNumber.make(this.toSatoshi(input.data.amount)).toString());
 
 		if (input.data.memo) {
