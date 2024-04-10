@@ -5,6 +5,10 @@ import { abort_if, abort_unless } from "@ardenthq/sdk-helpers";
 import { BindingType } from "./coin.contract.js";
 import { PublicKey as BasePublicKey } from "./crypto/identities/public-key.js";
 import { Interfaces } from "./crypto/index.js";
+import { Container } from "@mainsail/container";
+import { Application } from "@mainsail/kernel";
+import { Contracts } from "@mainsail/contracts";
+import { PublicKeyFactory } from "@mainsail/crypto-key-pair-bls12-381";
 
 export class PublicKeyService extends Services.AbstractPublicKeyService {
 	readonly #config!: Interfaces.NetworkConfig;
@@ -47,5 +51,11 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		return {
 			publicKey: BasePublicKey.fromWIF(wif),
 		};
+	}
+
+	public override async verifyPublicKeyWithBLS(publicKey: string): Promise<boolean> {
+		const app = new Application(new Container());
+		console.log("verifyPublicKeyWithBLS", publicKey);
+		return await app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory).verify(publicKey);
 	}
 }

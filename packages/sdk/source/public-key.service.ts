@@ -32,4 +32,8 @@ export class AbstractPublicKeyService implements PublicKeyService {
 	public async fromSecret(secret: string): Promise<PublicKeyDataTransferObject> {
 		throw new NotImplemented(this.constructor.name, this.fromSecret.name);
 	}
+
+	public async verifyPublicKeyWithBLS(secret: string): Promise<boolean> {
+		throw new NotImplemented(this.constructor.name, this.verifyPublicKeyWithBLS.name);
+	}
 }

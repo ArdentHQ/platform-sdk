@@ -35,6 +35,7 @@
 		"@mainsail/crypto-address-base58": "0.0.1-alpha.14",
 		"@mainsail/crypto-config": "0.0.1-alpha.14",
 		"@mainsail/crypto-hash-bcrypto": "0.0.1-alpha.14",
+		"@mainsail/crypto-key-pair-bls12-381": "0.0.1-alpha.14",
 		"@mainsail/crypto-key-pair-ecdsa": "0.0.1-alpha.14",
 		"@mainsail/crypto-signature-schnorr-secp256k1": "0.0.1-alpha.14",
 		"@mainsail/crypto-transaction": "0.0.1-alpha.14",
