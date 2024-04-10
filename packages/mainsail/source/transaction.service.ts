@@ -149,12 +149,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	public override async secondSignature(
-		input: Services.SecondSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.secondSignature.name);
-	}
-
 	public override async delegateRegistration(
 		input: Services.DelegateRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
@@ -229,13 +223,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 				publicKeys: data.publicKeys,
 			});
 		});
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public override async ipfs(input: Services.IpfsInput): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.ipfs.name);
 	}
 
 	/**
