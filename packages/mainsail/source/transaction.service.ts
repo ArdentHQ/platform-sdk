@@ -105,8 +105,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 *
 	 * @musig
-	 * @ledgerX
-	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		if (!input.data.amount) {
@@ -169,8 +167,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 *
 	 * @musig
-	 * @ledgerX
-	 * @ledgerS
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData(
@@ -219,7 +215,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 *
 	 * @musig
-	 * @ledgerX
 	 */
 	public override async multiSignature(
 		input: Services.MultiSignatureInput,
