@@ -154,9 +154,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async secondSignature(
 		input: Services.SecondSignatureInput,
 	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("secondSignature", input, ({ transaction, data }) =>
-			transaction.signatureAsset(BIP39.normalize(data.mnemonic)),
-		);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.secondSignature.name);
 	}
 
 	public override async delegateRegistration(
@@ -240,10 +238,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 	/**
 	 * @inheritDoc
-	 *
-	 * @musig
-	 * @ledgerX
-	 * @ledgerS
 	 */
 	public override async ipfs(input: Services.IpfsInput): Promise<Contracts.SignedTransactionData> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.ipfs.name);
