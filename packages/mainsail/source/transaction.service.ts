@@ -40,6 +40,7 @@ import {
 	ServiceProvider as CoreCryptoTransactionUsername,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
+import { ServiceProvider as CoreCryptoTransactionUsernameResignation } from "@mainsail/crypto-transaction-username-resignation";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -95,6 +96,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 			this.#app.resolve(CoreCryptoTransactionUsername).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
+			this.#app.resolve(CoreCryptoTransactionUsernameResignation).register(),
 		]);
 
 		this.#app

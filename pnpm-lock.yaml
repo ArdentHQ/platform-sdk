@@ -452,6 +452,9 @@ importers:
       '@mainsail/crypto-transaction-validator-registration':
         specifier: 0.0.1-alpha.15
         version: 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-validator-resignation':
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction-vote':
         specifier: 0.0.1-alpha.15
         version: 0.0.1-alpha.15
@@ -2490,6 +2493,21 @@ packages:
       '@mainsail/container': 0.0.1-alpha.15
       '@mainsail/contracts': 0.0.1-alpha.15
       '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-transaction-validator-resignation@0.0.1-alpha.15:
+    resolution: {integrity: sha512-uMbhP0iklRHEgz81LODkSLr3XzzKFDP3Qmb3fxWcjbW7Z5QpOB+AcaQ56BCAqmpn7ppRx7nu002mZoqcxx1uKw==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.15
       '@mainsail/kernel': 0.0.1-alpha.15
       '@mainsail/transactions': 0.0.1-alpha.15
       '@mainsail/utils': 0.0.1-alpha.15

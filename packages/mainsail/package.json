@@ -43,6 +43,7 @@
 		"@mainsail/crypto-transaction-username-registration": "0.0.1-alpha.15",
 		"@mainsail/crypto-transaction-username-resignation": "0.0.1-alpha.15",
 		"@mainsail/crypto-transaction-validator-registration": "0.0.1-alpha.15",
+		"@mainsail/crypto-transaction-validator-resignation": "0.0.1-alpha.15",
 		"@mainsail/crypto-transaction-vote": "0.0.1-alpha.15",
 		"@mainsail/crypto-validation": "0.0.1-alpha.15",
 		"@mainsail/fees": "0.0.1-alpha.15",
