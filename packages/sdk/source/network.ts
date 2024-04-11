@@ -367,6 +367,7 @@ export class Network {
 	/**
 	 * Return the object representation of the network.
 	 *
+	 * @memberof Network
 	 * @returns {NetworkManifest}
 	 */
 	public toObject(): NetworkManifest {
