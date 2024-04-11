@@ -1,6 +1,5 @@
-import deepmerge from "deepmerge";
-
 import { TransactionType } from "../../enums.js";
+import deepmerge from "deepmerge";
 
 const signedTransaction = {
 	anyOf: [
@@ -266,25 +265,6 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 		version: { anyOf: [{ type: "null" }, { const: 1 }] },
 	},
 	required: ["asset"],
-});
-
-export const ipfs = extend(transactionBaseSchema, {
-	$id: "ipfs",
-	properties: {
-		amount: { bignumber: { maximum: 0, minimum: 0 } },
-		asset: {
-			properties: {
-				ipfs: {
-					allOf: [{ maxLength: 90, minLength: 2 }, { $ref: "base58" }],
-					// ipfs hash has varying length but we set max limit to twice the length of base58 ipfs sha-256 hash
-				},
-			},
-			required: ["ipfs"],
-			type: "object",
-		},
-		fee: { bignumber: { minimum: 1 } },
-		type: { transactionType: TransactionType.Ipfs },
-	},
 });
 
 export const multiPayment = extend(transactionBaseSchema, {

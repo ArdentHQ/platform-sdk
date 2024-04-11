@@ -1,6 +1,5 @@
-import deepmerge from "deepmerge";
-
 import { TransactionType } from "../../enums.js";
+import deepmerge from "deepmerge";
 
 const signedTransaction = {
 	anyOf: [

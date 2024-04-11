@@ -213,4 +213,8 @@ describe("Network", ({ assert, beforeEach, it, stub }) => {
 	it("should get the word count for mnemonics", (context) => {
 		assert.is(context.subject.wordCount(), 24);
 	});
+
+	it("should allow Ledger", (context) => {
+		assert.is(context.subject.allowsLedger(), true);
+	});
 });

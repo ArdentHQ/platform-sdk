@@ -105,8 +105,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 *
 	 * @musig
-	 * @ledgerX
-	 * @ledgerS
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		if (!input.data.amount) {
@@ -134,7 +132,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.resolve(TransferBuilder)
 			.fee(BigNumber.make(this.toSatoshi(input.fee)).toString())
 			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
-			.recipientId(input.signatory.address())
+			.recipientId(input.data.to)
 			.amount(BigNumber.make(this.toSatoshi(input.data.amount)).toString());
 
 		if (input.data.memo) {
@@ -151,14 +149,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	public override async secondSignature(
-		input: Services.SecondSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("secondSignature", input, ({ transaction, data }) =>
-			transaction.signatureAsset(BIP39.normalize(data.mnemonic)),
-		);
-	}
-
 	public override async delegateRegistration(
 		input: Services.DelegateRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
@@ -171,8 +161,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 *
 	 * @musig
-	 * @ledgerX
-	 * @ledgerS
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData(
@@ -221,7 +209,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 *
 	 * @musig
-	 * @ledgerX
 	 */
 	public override async multiSignature(
 		input: Services.MultiSignatureInput,
@@ -236,17 +223,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 				publicKeys: data.publicKeys,
 			});
 		});
-	}
-
-	/**
-	 * @inheritDoc
-	 *
-	 * @musig
-	 * @ledgerX
-	 * @ledgerS
-	 */
-	public override async ipfs(input: Services.IpfsInput): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.ipfs.name);
 	}
 
 	/**

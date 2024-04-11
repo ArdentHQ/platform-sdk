@@ -149,15 +149,11 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	// Vote
 	public override votes(): string[] {
-		return this.data.asset.votes
-			.filter((vote: string) => vote.startsWith("+"))
-			.map((publicKey: string) => publicKey.slice(1));
+		return this.data.asset?.votes ?? [];
 	}
 
 	public override unvotes(): string[] {
-		return this.data.asset.votes
-			.filter((vote: string) => vote.startsWith("-"))
-			.map((publicKey: string) => publicKey.slice(1));
+		return this.data.asset?.unvotes ?? [];
 	}
 
 	// Second-Signature Registration

@@ -1,5 +1,4 @@
 import { get } from "@ardenthq/sdk-helpers";
-
 import { randomHost } from "./helpers.js";
 import {
 	CoinManifest,
@@ -367,6 +366,9 @@ export class Network {
 
 	/**
 	 * Return the object representation of the network.
+	 *
+	 * @memberof Network
+	 * @returns {NetworkManifest}
 	 */
 	public toObject(): NetworkManifest {
 		return this.#network;
@@ -374,8 +376,21 @@ export class Network {
 
 	/**
 	 * Return the JSON representation of the network.
+	 *
+	 * @memberof Network
+	 * @returns {string}
 	 */
 	public toJson(): string {
 		return JSON.stringify(this.toObject());
+	}
+
+	/**
+	 * Determines if Ledger transactions are supported in network.
+	 *
+	 * @memberof Network
+	 * @returns {boolean}
+	 */
+	public allowsLedger(): boolean {
+		return get(this.#network, "featureFlags.Ledger", []).length > 0;
 	}
 }
