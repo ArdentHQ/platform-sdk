@@ -19,11 +19,10 @@ export abstract class DelegateRegistrationTransaction extends Transaction {
 	public serialize(options?: ISerializeOptions): ByteBuffer | undefined {
 		const { data } = this;
 
-		if (data.asset && data.asset.delegate) {
-			const delegateBytes: Buffer = Buffer.from(data.asset.delegate.username, "utf8");
-			const buf: ByteBuffer = new ByteBuffer(Buffer.alloc(delegateBytes.length + 1));
+		if (data.asset) {
+			const delegateBytes: Buffer = Buffer.from(data.asset.validatorPublicKey, "utf8");
+			const buf: ByteBuffer = new ByteBuffer(Buffer.alloc(delegateBytes.length));
 
-			buf.writeUInt8(delegateBytes.length);
 			buf.writeBuffer(delegateBytes);
 
 			return buf;

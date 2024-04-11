@@ -19,6 +19,10 @@ import { ServiceProvider as CoreFees } from "@mainsail/fees";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
 import {
+	ServiceProvider as CoreCryptoTransactionValidatorRegistration,
+	ValidatorRegistrationBuilder,
+} from "@mainsail/crypto-transaction-validator-registration";
+import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
@@ -90,6 +94,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionVote).register(),
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 			this.#app.resolve(CoreCryptoTransactionUsername).register(),
+			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 		]);
 
 		this.#app
@@ -152,8 +157,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async delegateRegistration(
 		input: Services.DelegateRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("delegateRegistration", input, ({ transaction, data }) =>
-			transaction.usernameAsset(data.username),
+		return this.#createFromData(
+			"delegateRegistration",
+			input,
+			({ transaction, data }: { transaction: ValidatorRegistrationBuilder; data: { publicKey: string } }) => {
+				transaction.publicKeyAsset(data.publicKey);
+			},
 		);
 	}
 

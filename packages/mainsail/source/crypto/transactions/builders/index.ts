@@ -10,6 +10,10 @@ import {
 	ServiceProvider as CoreCryptoTransactionUsernameResignation,
 	UsernameResignationBuilder,
 } from "@mainsail/crypto-transaction-username-resignation";
+import {
+	ServiceProvider as CoreCryptoTransactionValidatorRegistration,
+	ValidatorRegistrationBuilder,
+} from "@mainsail/crypto-transaction-validator-registration";
 import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
 
 import { Application } from "@mainsail/kernel";
@@ -25,7 +29,6 @@ import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-valida
 import { ServiceProvider as CoreFees } from "@mainsail/fees/distribution/service-provider";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
-import { DelegateRegistrationBuilder } from "./delegate-registration.js";
 import { DelegateResignationBuilder } from "./delegate-resignation.js";
 import { Identifiers } from "@mainsail/contracts";
 import { MultiPaymentBuilder } from "./multi-payment.js";
@@ -55,6 +58,7 @@ export class BuilderFactory {
 			app.resolve(CoreCryptoTransactionUsernameRegistration).register(),
 			app.resolve(CoreCryptoTransactionUsernameResignation).register(),
 			app.resolve(CoreCryptoMultipaymentTransfer).register(),
+			app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 		]);
 
 		app.get<{
@@ -69,8 +73,9 @@ export class BuilderFactory {
 		return app.resolve(TransferBuilder);
 	}
 
-	public static delegateRegistration(): DelegateRegistrationBuilder {
-		return new DelegateRegistrationBuilder();
+	public static async delegateRegistration(): Promise<ValidatorRegistrationBuilder> {
+		const app = await this.app();
+		return app.resolve(ValidatorRegistrationBuilder);
 	}
 
 	public static async usernameRegistration(): Promise<UsernameRegistrationBuilder> {
