@@ -159,11 +159,18 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async delegateRegistration(
 		input: Services.DelegateRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
+		console.log("delegateRegistration");
 		return this.#createFromData(
 			"delegateRegistration",
 			input,
-			({ transaction, data }: { transaction: ValidatorRegistrationBuilder; data: { publicKey: string } }) => {
-				transaction.publicKeyAsset(data.publicKey);
+			({
+				transaction,
+				data,
+			}: {
+				transaction: ValidatorRegistrationBuilder;
+				data: { validatorPublicKey: string };
+			}) => {
+				transaction.publicKeyAsset(data.validatorPublicKey);
 			},
 		);
 	}
@@ -318,12 +325,15 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#boot();
 		}
 
+		console.log("createFromData");
 		applyCryptoConfiguration(this.#configCrypto);
 
 		let address: string | undefined;
 		let senderPublicKey: string | undefined;
 
+		console.log("BuilderFactory before");
 		const transaction = await Transactions.BuilderFactory[type]();
+		console.log("BuilderFactory after");
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -444,7 +454,9 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let signedTransactionBuilder;
 
 		if (input.signatory.actsWithMnemonic()) {
+			console.log("with mnemonic");
 			signedTransactionBuilder = await transaction.sign(input.signatory.signingKey());
+			console.log("after sign");
 		}
 
 		if (input.signatory.actsWithConfirmationMnemonic()) {
@@ -470,7 +482,9 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
+		console.log("before signing");
 		const signedTransaction = await signedTransactionBuilder?.build();
+		console.log("after signing");
 
 		return this.dataTransferObjectService.signedTransaction(
 			signedTransaction.id!,

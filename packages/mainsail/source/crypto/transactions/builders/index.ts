@@ -78,6 +78,7 @@ export class BuilderFactory {
 	}
 
 	public static async delegateRegistration(): Promise<ValidatorRegistrationBuilder> {
+		console.log("delegateRegistration");
 		const app = await this.app();
 		return app.resolve(ValidatorRegistrationBuilder);
 	}

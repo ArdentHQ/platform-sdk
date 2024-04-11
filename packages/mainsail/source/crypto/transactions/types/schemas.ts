@@ -102,15 +102,9 @@ export const delegateRegistration = extend(transactionBaseSchema, {
 		amount: { bignumber: { maximum: 0, minimum: 0 } },
 		asset: {
 			properties: {
-				delegate: {
-					properties: {
-						username: { $ref: "delegateUsername" },
-					},
-					required: ["username"],
-					type: "object",
-				},
+				validatorPublicKey: { $ref: "validatorPublicKey" },
 			},
-			required: ["delegate"],
+			required: ["validatorPublicKey"],
 			type: "object",
 		},
 		fee: { bignumber: { minimum: 1 } },

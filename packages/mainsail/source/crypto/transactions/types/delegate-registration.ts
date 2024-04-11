@@ -20,7 +20,7 @@ export abstract class DelegateRegistrationTransaction extends Transaction {
 		const { data } = this;
 
 		if (data.asset) {
-			const delegateBytes: Buffer = Buffer.from(data.asset.validatorPublicKey, "utf8");
+			const delegateBytes: Buffer = Buffer.from(data.asset.validatorPublicKey, "hex");
 			const buf: ByteBuffer = new ByteBuffer(Buffer.alloc(delegateBytes.length));
 
 			buf.writeBuffer(delegateBytes);
@@ -33,12 +33,9 @@ export abstract class DelegateRegistrationTransaction extends Transaction {
 
 	public deserialize(buf: ByteBuffer): void {
 		const { data } = this;
-		const usernameLength = buf.readUInt8();
 
 		data.asset = {
-			delegate: {
-				username: buf.readBuffer(usernameLength).toString("utf8"),
-			},
+			validatorPublicKey: buf.readBuffer(96).toString("hex"),
 		};
 	}
 }
