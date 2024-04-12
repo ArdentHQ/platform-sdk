@@ -1,3 +1,13 @@
+import { Container } from "@mainsail/container";
+import { Identifiers } from "@mainsail/contracts";
+import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config/distribution/service-provider";
+import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
+import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
+import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction/distribution/service-provider";
+import { MultiPaymentBuilder, ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
 import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
@@ -19,26 +29,15 @@ import {
 	ValidatorResignationBuilder,
 } from "@mainsail/crypto-transaction-validator-resignation";
 import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
-
-import { Application } from "@mainsail/kernel";
-import { Container } from "@mainsail/container";
-import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
-import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config/distribution/service-provider";
-import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
-import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
-import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
-import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
-import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
-import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction/distribution/service-provider";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation/distribution/service-provider";
 import { ServiceProvider as CoreFees } from "@mainsail/fees/distribution/service-provider";
 import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
+import { Application } from "@mainsail/kernel";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
-import { Identifiers } from "@mainsail/contracts";
-import { MultiPaymentBuilder } from "./multi-payment.js";
-import { MultiSignatureBuilder } from "./multi-signature.js";
+
 import { milestones } from "../../networks/devnet/milestones";
 import { network } from "../../networks/devnet/network";
+import { MultiSignatureBuilder } from "./multi-signature.js";
 
 export * from "./transaction.js";
 
@@ -103,8 +102,9 @@ export class BuilderFactory {
 		return new MultiSignatureBuilder();
 	}
 
-	public static multiPayment(): MultiPaymentBuilder {
-		return new MultiPaymentBuilder();
+	public static async multiPayment(): Promise<MultiPaymentBuilder> {
+		const app = await this.app();
+		return app.resolve(MultiPaymentBuilder);
 	}
 
 	public static async delegateResignation(): Promise<ValidatorResignationBuilder> {

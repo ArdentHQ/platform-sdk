@@ -10,12 +10,10 @@ import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
 import {
-	MultiPaymentBuilder,
 	ServiceProvider as CoreCryptoMultipaymentTransfer,
 } from "@mainsail/crypto-transaction-multi-payment";
 import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
-	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
 import {
 	ServiceProvider as CoreCryptoTransactionUsername,
@@ -230,38 +228,14 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
-		const transactionWallet = await this.clientService.wallet({
-			type: "address",
-			value: input.signatory.address(),
-		});
-
-		let builder = this.#app.resolve(MultiPaymentBuilder).nonce(transactionWallet.nonce().plus(1).toFixed(0));
-
-		if (input.fee) {
-			builder = builder.fee(this.toSatoshi(input.fee).toString());
-		}
-
-		if (input.data.memo) {
-			builder.vendorField(input.data.memo);
-		}
-
-		for (const { amount, to } of input.data.payments) {
-			builder = builder.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
-		}
-
-		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
-
-		const signedTransaction = await signedTransactionBuilder.build();
-
-		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id!,
-			signedTransaction.data,
-			signedTransaction.serialized.toString("hex"),
-		);
+		return this.#createFromData(
+			"multiPayment",
+			input,
+			({ transaction, data }) => {
+				if (data.memo) {
+					transaction.vendorField(data.memo);
+				}
+			});
 	}
 
 	public override async usernameRegistration(
@@ -360,6 +334,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.amount(this.toSatoshi(input.data.amount).toString());
 		}
 
+		if (input.data && Array.isArray(input.data.payments)) {
+			for (const { amount, to } of input.data.payments) {
+				transaction.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
+			}
+		}
+	
 		if (input.fee) {
 			transaction.fee(this.toSatoshi(input.fee).toString());
 		}
