@@ -51,6 +51,10 @@ export interface UsernameRegistrationInput extends TransactionInput {
 export declare type UsernameResignationInput = TransactionInput;
 
 export interface DelegateRegistrationInput extends TransactionInput {
+	data: { username: string };
+}
+
+export interface ValidatorRegistrationInput extends TransactionInput {
 	data: { validatorPublicKey: string };
 }
 

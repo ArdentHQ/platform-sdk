@@ -159,7 +159,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	public override async delegateRegistration(
-		input: Services.DelegateRegistrationInput,
+		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData(
 			"delegateRegistration",
