@@ -17,11 +17,9 @@ export abstract class DelegateRegistrationTransaction extends Transaction {
 	}
 
 	public serialize(options?: ISerializeOptions): ByteBuffer | undefined {
-		console.log("delegateRegistration - serialize");
 		const { data } = this;
 
 		if (data.asset) {
-			console.log("delegateRegistration - serialize - data.asset", data.asset);
 			const delegateBytes: Buffer = Buffer.from(data.asset.validatorPublicKey, "hex");
 			const buf: ByteBuffer = new ByteBuffer(Buffer.alloc(delegateBytes.length));
 

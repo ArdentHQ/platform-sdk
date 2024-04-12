@@ -161,8 +161,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async delegateRegistration(
 		input: Services.DelegateRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("delegateRegistration - TransactionService");
-		console.log("delegateRegistration - TransactionService - input", input);
 		return this.#createFromData(
 			"delegateRegistration",
 			input,
@@ -328,21 +326,17 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#boot();
 		}
 
-		console.log("createFromData", input);
 		applyCryptoConfiguration(this.#configCrypto);
 
 		let address: string | undefined;
 		let senderPublicKey: string | undefined;
 
-		console.log("BuilderFactory before");
 		const transaction = await Transactions.BuilderFactory[type]();
-		console.log("BuilderFactory after");
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
 		}
-		console.log("after signatory mnemonic");
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
 			address = (await this.#addressService.fromSecret(input.signatory.signingKey())).address;
@@ -374,8 +368,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.senderPublicKey(senderPublicKey);
 		}
 
-		console.log("after senderPublicKey");
-
 		if (input.nonce) {
 			transaction.nonce(input.nonce);
 		} else {
@@ -391,8 +383,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		if (input.fee) {
 			transaction.fee(this.toSatoshi(input.fee).toString());
 		}
-
-		console.log("after fee");
 
 		try {
 			if (input.data && input.data.expiration) {
@@ -418,12 +408,9 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// If we fail to set the expiration we'll still continue.
 		}
 
-		console.log("before callback");
-		console.log(callback);
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}
-		console.log("after callback");
 
 		if (input.signatory.actsWithMultiSignature()) {
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());
@@ -465,9 +452,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let signedTransactionBuilder;
 
 		if (input.signatory.actsWithMnemonic()) {
-			console.log("with mnemonic");
 			signedTransactionBuilder = await transaction.sign(input.signatory.signingKey());
-			console.log("after sign");
 		}
 
 		if (input.signatory.actsWithConfirmationMnemonic()) {
@@ -493,9 +478,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		console.log("before signing");
 		const signedTransaction = await signedTransactionBuilder?.build();
-		console.log("after signing");
 
 		return this.dataTransferObjectService.signedTransaction(
 			signedTransaction.id!,
