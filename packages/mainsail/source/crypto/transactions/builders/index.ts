@@ -24,6 +24,7 @@ import { Application } from "@mainsail/kernel";
 import { Container } from "@mainsail/container";
 import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config/distribution/service-provider";
+import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
 import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
 import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
@@ -63,6 +64,7 @@ export class BuilderFactory {
 			app.resolve(CoreCryptoMultipaymentTransfer).register(),
 			app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 			app.resolve(CoreCryptoTransactionValidatorResignation).register(),
+			app.resolve(CoreCryptoConsensusBls12381).register(),
 		]);
 
 		app.get<{
@@ -78,7 +80,7 @@ export class BuilderFactory {
 	}
 
 	public static async delegateRegistration(): Promise<ValidatorRegistrationBuilder> {
-		console.log("delegateRegistration");
+		console.log("delegateRegistration - BuilderFactory - delegateRegistration");
 		const app = await this.app();
 		return app.resolve(ValidatorRegistrationBuilder);
 	}

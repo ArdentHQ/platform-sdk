@@ -41,6 +41,7 @@ import {
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
 import { ServiceProvider as CoreCryptoTransactionUsernameResignation } from "@mainsail/crypto-transaction-username-resignation";
+import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -97,6 +98,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionUsername).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 			this.#app.resolve(CoreCryptoTransactionUsernameResignation).register(),
+			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
 		]);
 
 		this.#app
@@ -159,7 +161,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async delegateRegistration(
 		input: Services.DelegateRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("delegateRegistration");
+		console.log("delegateRegistration - TransactionService");
+		console.log("delegateRegistration - TransactionService - input", input);
 		return this.#createFromData(
 			"delegateRegistration",
 			input,
@@ -325,7 +328,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#boot();
 		}
 
-		console.log("createFromData");
+		console.log("createFromData", input);
 		applyCryptoConfiguration(this.#configCrypto);
 
 		let address: string | undefined;
@@ -339,6 +342,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
 		}
+		console.log("after signatory mnemonic");
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
 			address = (await this.#addressService.fromSecret(input.signatory.signingKey())).address;
@@ -370,6 +374,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.senderPublicKey(senderPublicKey);
 		}
 
+		console.log("after senderPublicKey");
+
 		if (input.nonce) {
 			transaction.nonce(input.nonce);
 		} else {
@@ -385,6 +391,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 		if (input.fee) {
 			transaction.fee(this.toSatoshi(input.fee).toString());
 		}
+
+		console.log("after fee");
 
 		try {
 			if (input.data && input.data.expiration) {
@@ -410,9 +418,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// If we fail to set the expiration we'll still continue.
 		}
 
+		console.log("before callback");
+		console.log(callback);
 		if (callback) {
 			callback({ data: input.data, transaction });
 		}
+		console.log("after callback");
 
 		if (input.signatory.actsWithMultiSignature()) {
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());

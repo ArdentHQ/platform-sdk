@@ -61,7 +61,7 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 			return false;
 		}
 
-		return !!this.#getProperty(["validatorPublicKey"]);
+		return !!this.#getProperty(["attributes.validatorPublicKey"]);
 	}
 
 	public override isResignedDelegate(): boolean {
