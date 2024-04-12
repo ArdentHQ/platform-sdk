@@ -414,59 +414,68 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@mainsail/container':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/contracts':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-address-base58':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-config':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
+      '@mainsail/crypto-consensus-bls12-381':
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-hash-bcrypto':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-key-pair-ecdsa':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-signature-schnorr-secp256k1':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction-multi-payment':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction-transfer':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction-username-registration':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction-username-resignation':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-validator-registration':
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-validator-resignation':
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction-vote':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-validation':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/fees':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/fees-static':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/kernel':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/validation':
-        specifier: 0.0.1-alpha.14
-        version: 0.0.1-alpha.14
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       ajv:
         specifier: 6.12.6
         version: 6.12.6
@@ -1955,6 +1964,46 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: false
 
+  /@chainsafe/bls-hd-key@0.3.0:
+    resolution: {integrity: sha512-LsYYnfBEEmqGFPDm8hQN3Kc+v9wPFnhn+CToD403KEynUiUSHKLAf5B6UCY5eooShDOcaGCUgAUhIw1CmpEf3Q==}
+    dependencies:
+      '@noble/hashes': 1.4.0
+    dev: false
+
+  /@chainsafe/bls-keygen@0.4.0:
+    resolution: {integrity: sha512-wqtuj4G/sWpIugJW1mb/nSTwcTuZKqB3DS3ANUIOn7pva8EB6LfxgIL34o4qk3lti/8Mdxqtqc2n4xRszrNdzA==}
+    dependencies:
+      '@chainsafe/bls-hd-key': 0.3.0
+      '@noble/hashes': 1.4.0
+      '@scure/bip39': 1.3.0
+    dev: false
+
+  /@chainsafe/bls@7.1.3(@chainsafe/blst@0.2.10):
+    resolution: {integrity: sha512-d21eYdWxDSb63n7nB+viD+3U4yJW8huiKRibJyh8X7btPLoXkvtmDf7geYyHVbKfLDgbuHkc+b48pfPQkUTLxA==}
+    engines: {node: '>=14.8.0'}
+    peerDependencies:
+      '@chainsafe/blst': ^0.2.4
+    peerDependenciesMeta:
+      '@chainsafe/blst':
+        optional: true
+    dependencies:
+      '@chainsafe/bls-keygen': 0.4.0
+      '@chainsafe/blst': 0.2.10
+      bls-eth-wasm: 0.4.8
+    dev: false
+
+  /@chainsafe/blst@0.2.10:
+    resolution: {integrity: sha512-ofecTL5fWsNwnpS2oUh56dDXJRmCEcDKNNBFDb2ux+WtvdjrdSq6B+L/eNlg+sVBzXbzrCw1jq8Y8+cYiHg32w==}
+    requiresBuild: true
+    dependencies:
+      '@types/tar': 6.1.12
+      node-fetch: 2.6.1
+      node-gyp: 8.4.1
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: false
+
   /@discoveryjs/json-ext@0.5.5:
     resolution: {integrity: sha512-6nFkfkmSeV/rqSaS4oWHgmpnYw194f6hmWF5is6b0J1naJZoiD0NTc9AiUwPHvWsowkjuHErCZT1wa0jg+BLIA==}
     engines: {node: '>=10.0.0'}
@@ -1975,6 +2024,10 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@gar/promisify@1.1.3:
+    resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: false
 
   /@hapi/accept@6.0.3:
@@ -2258,7 +2311,7 @@ packages:
       '@ledgerhq/errors': 5.50.0
       '@ledgerhq/logs': 5.50.0
       rxjs: 6.6.7
-      semver: 7.3.5
+      semver: 7.6.0
     dev: false
 
   /@ledgerhq/devices@6.20.0:
@@ -2267,7 +2320,7 @@ packages:
       '@ledgerhq/errors': 6.10.0
       '@ledgerhq/logs': 6.10.0
       rxjs: 6.6.7
-      semver: 7.3.5
+      semver: 7.6.0
 
   /@ledgerhq/errors@5.50.0:
     resolution: {integrity: sha512-gu6aJ/BHuRlpU7kgVpy2vcYk6atjB4iauP2ymF7Gk0ez0Y/6VSMVSJvubeEQN+IV60+OBK0JgeIZG7OiHaw8ow==}
@@ -2333,20 +2386,20 @@ packages:
   /@ledgerhq/logs@6.10.0:
     resolution: {integrity: sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==}
 
-  /@mainsail/container@0.0.1-alpha.14:
-    resolution: {integrity: sha512-hPGoCRtPGIdfBLcO22nD7amNstFGYDURhzVzjRjtWXQc8Ey0XaEUfyNfPydI1+0vUVptSBns4DJ96yFfQH0SpQ==}
+  /@mainsail/container@0.0.1-alpha.15:
+    resolution: {integrity: sha512-W9qvOerTNL7Tnlx+ID9rKVYoF1Fgjpruq1GJVTOeUmwkTlGit9lH/TUB3EzFnuBvvLfn/biK8UP7B0Zzt2idZQ==}
     engines: {node: '>=20.x'}
     dependencies:
       inversify: 6.0.2
       reflect-metadata: 0.2.1
     dev: false
 
-  /@mainsail/contracts@0.0.1-alpha.14:
-    resolution: {integrity: sha512-+RGW1vxBfZ6Jc5bRiQp0kYC7oqHd36tkS7GD2Ucub7G6NIoz2DV401N9FXbIXJYBxD7p/afBIUB+LIpqO6Ce0A==}
+  /@mainsail/contracts@0.0.1-alpha.15:
+    resolution: {integrity: sha512-00RQbmNt3MxpNRrK7hRglSfJFEaed7+MKzUGinPQx19mJ3D2eUASGx3xUuU0CmaIX/rigQgfMF9K51GUanzdpw==}
     engines: {node: '>=20.x'}
     dependencies:
       '@hapi/hapi': 21.3.6
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/utils': 0.0.1-alpha.15
       ajv: 8.12.0
       dayjs: 1.11.10
       inversify: 6.0.2
@@ -2354,27 +2407,27 @@ packages:
       type-fest: 4.12.0
     dev: false
 
-  /@mainsail/crypto-address-base58@0.0.1-alpha.14:
-    resolution: {integrity: sha512-mJDPNhpn4M16NCqTttKlaVaMwPNZ0T5aZkOGZKVSBBQp854vsvViZ/TgSJKhSPdeKVzsjuToG0s8yDfANGW40A==}
+  /@mainsail/crypto-address-base58@0.0.1-alpha.15:
+    resolution: {integrity: sha512-4hZuaWW75hk6tWRooTE1qCswPu234iTZKVZIXFZqmLHPMZzxWpXZJHI3QQR3LnKtzckcOQbRKIiJETQ9oXQRPw==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       bcrypto: 5.5.2
       bstring: 0.3.9
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-config@0.0.1-alpha.14:
-    resolution: {integrity: sha512-MgKPiUky257fEhz9lNMwyTWA2sVCRIKuLUUq3+XXK++r/LKWtBaaIu1kiIiiMq1cF7VLvrTr+WDp1GsxD/eWWA==}
+  /@mainsail/crypto-config@0.0.1-alpha.15:
+    resolution: {integrity: sha512-yCyeQvhA752At6pJ1fak76ke+5KevKGD8v7WgEhUzWDnynCC2tJB2aQTemKOhKEWCCYGTANVg+uwRZRPa74MDA==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
       deepmerge: 4.3.1
       lodash.clone: 4.5.0
       lodash.get: 4.4.2
@@ -2383,190 +2436,251 @@ packages:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-hash-bcrypto@0.0.1-alpha.14:
-    resolution: {integrity: sha512-K6ZOkEdAIe65FwL0b585WuqRG1/rY7AxCtroJczdQZ816wW5j3NCQ1OjJ9qfktFXcZmln+B/RYxdjjalpZVeEA==}
+  /@mainsail/crypto-consensus-bls12-381@0.0.1-alpha.15:
+    resolution: {integrity: sha512-Y+zuSMcMDrConnpdnpKMIYiUFhmTFBhQGiGS8wQ0A8XMpOZLR40iKM0D3LiJ60Ty5SuP15KHiIs/p4iRVcEIUQ==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-alpha.15
+      '@mainsail/crypto-signature-bls12-381': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-hash-bcrypto@0.0.1-alpha.15:
+    resolution: {integrity: sha512-qp8cpesi+S7AIXNI2s+L4xjTiCYvdgVvapgQ1s/3BovuC9Rg4HyrHYYqopXw9JU7EGRIu+rZHQLneaSgZtmNrQ==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
       bcrypto: 5.5.2
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-key-pair-ecdsa@0.0.1-alpha.14:
-    resolution: {integrity: sha512-SlRxVEwJjLEps9cY636VXgIQ8UD9LhB3zhoDp0SQwSmp7aixEjciaLthilV3/Oa+m67sk8hH2WRy6ZGob8Bgxg==}
+  /@mainsail/crypto-key-pair-bls12-381@0.0.1-alpha.15:
+    resolution: {integrity: sha512-xq92nFufnTWiTZyDC9gb6Wly/oRgmq/CRiK37EUWRRVW+XEi/HQLHxEEVis6B62e4OwmONgaQ1cWke7n81HRNw==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@chainsafe/bls': 7.1.3(@chainsafe/blst@0.2.10)
+      '@chainsafe/blst': 0.2.10
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
+      '@scure/bip39': 1.3.0
+      bls12-381-keygen: 0.2.4
+      wif: 4.0.0
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-key-pair-ecdsa@0.0.1-alpha.15:
+    resolution: {integrity: sha512-/Lm08mL595dnLZlGJZ7a13L4QsMsCrR09kZYDTRzSHsolXBQnyEVJpfRd8IvTSB+YowIAoASNut5XGokamj9Kw==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       bcrypto: 5.5.2
       wif: 4.0.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-signature-schnorr-secp256k1@0.0.1-alpha.14:
-    resolution: {integrity: sha512-EgrnrqwGdFDueyCyyGLZoR3gtMR55tsn7pEzgx+u+5ukyUWm19wLuwlXgsK4bTOKhZR8bjb75oMAJn/urwBzXw==}
+  /@mainsail/crypto-signature-bls12-381@0.0.1-alpha.15:
+    resolution: {integrity: sha512-XMp15cvbaG/2mk/FTZTRgkg2mfr/uD3apeVhx/S1E0g7sbfRrhsTMZjPqhGaBPbc/eWw61jCM55AeZVvZ4kH1Q==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-signature-schnorr-secp256k1@0.0.1-alpha.15:
+    resolution: {integrity: sha512-Q0+pm4rTuR2eUf2IO4nwBQ+Hsw39F/soZdFnfu5jhXsbFsusKouIweMTBK9Lq1GnD1FqVjoExm+MOWRAVfh+Gg==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       bcrypto: 5.5.2
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-transaction-multi-payment@0.0.1-alpha.14:
-    resolution: {integrity: sha512-VICX4GW6eZtabagELbgklW3tsh0+tv2pDh94yg6zQANhWTYAV0vXcFTnlL89w+eb0AUYkfm+KFxUeO29h7aUMQ==}
+  /@mainsail/crypto-transaction-multi-payment@0.0.1-alpha.15:
+    resolution: {integrity: sha512-+iJsRAYNUbOPN/d8lD6IntpvXl9SFtRwMIu7vaiXkNfTOiH0gHF5u/L7I10CCgicySqjFMhBOZizFVNySC9aNA==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/transactions': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-transaction-transfer@0.0.1-alpha.14:
-    resolution: {integrity: sha512-6Y33Nq2BGPbnYxQ4RrRuzCaCTcagM1RC+LiLCAsdg5uJb1YVBVpWTjzHQRi2+u4WkCv+wuxJS2QfjPJNcvuTKA==}
+  /@mainsail/crypto-transaction-transfer@0.0.1-alpha.15:
+    resolution: {integrity: sha512-zYS3gWJ80fdxXgXZvZaWnW8Dnvizzyo5zlsVDsPwL+YRlU4evcqX909qzRmyA8N8bF2yjSWj0IeXhn9IX2yjqw==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/transactions': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-transaction-username-registration@0.0.1-alpha.14:
-    resolution: {integrity: sha512-ttKJM7VjsP7iST24DKV9dSmLuRRLqjawP39kMJ9QNPqlArllkSa1DAtSX1O9odawhauyMH8n+bxaiXWKMwmpzQ==}
+  /@mainsail/crypto-transaction-username-registration@0.0.1-alpha.15:
+    resolution: {integrity: sha512-HONOhY71XnnWc1fTjlkHCWXdG62EO5jbo+hJ+hVJHViR9vsxLDynuaRQRhDpOgDMAnogLLAgbn7k5MZ8nM6S3w==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/transactions': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-transaction-username-resignation@0.0.1-alpha.14:
-    resolution: {integrity: sha512-bbmX8NxRmmLMxXHFY74YttCuuN0QGObxG26PgDeQUuAANNn6BOP8AKEEUbJJqmiqREYxlLvrk7yVJsz/C/AIBw==}
+  /@mainsail/crypto-transaction-username-resignation@0.0.1-alpha.15:
+    resolution: {integrity: sha512-EBxit1dsx8Jr2R2PiIw2+1jEf5Jb2iOOisRBL/BTsXSH/YY6MkdrwMYaxbUauF6qikW+3kBWb667fF+TiXLF8A==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction-username-registration': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/transactions': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-username-registration': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-transaction-validator-registration@0.0.1-alpha.14:
-    resolution: {integrity: sha512-35wUn27VTvF5ekdM2M9RheVoekahl1PDGiw/6QYHjylTRfs/2v6KW4E4pXELpohO00rvnDgCyjYxhStRfxTeWw==}
+  /@mainsail/crypto-transaction-validator-registration@0.0.1-alpha.15:
+    resolution: {integrity: sha512-Otb/GWjkQZ8o8ITuFNtMPGZjSUJUb/9P59ZyFX2rjf56tRAcKHsAMp0grzEetyMDVn7s71GTjHD1tuXL07LuSw==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/transactions': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-transaction-vote@0.0.1-alpha.14:
-    resolution: {integrity: sha512-ykmIce07zfYzJrqHn3Vr7A/eisnldFaG1pp2BWLWipBRmxSl+KhjJ9NHuxZL1W2dys/sObrvbYMEWpkNqA9i5A==}
+  /@mainsail/crypto-transaction-validator-resignation@0.0.1-alpha.15:
+    resolution: {integrity: sha512-uMbhP0iklRHEgz81LODkSLr3XzzKFDP3Qmb3fxWcjbW7Z5QpOB+AcaQ56BCAqmpn7ppRx7nu002mZoqcxx1uKw==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/transactions': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-transaction-vote@0.0.1-alpha.15:
+    resolution: {integrity: sha512-mOQiVTMynROFJ3ZxQgzieJKMm36zbYgVywVQcADxJ9rB0qCYrsmG3qbpYReImRZsSAmvpGLCmoSd7BNdvnIMow==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-transaction@0.0.1-alpha.14:
-    resolution: {integrity: sha512-nSD3CvU/muZD4OkncYbQAgY91phrbpPA9DYhXFTUjEYc8368VUvnkn6m2Q9vqY/VF+C5kvIgWtb+/UAe3cXa2Q==}
+  /@mainsail/crypto-transaction@0.0.1-alpha.15:
+    resolution: {integrity: sha512-6KQwcHUVI2mU8JR6E5fEKx9aK/6X6CWMggQe2NXeU+3+rIaVouFnVuJ0FrkA6IZdl9F2R+G46ef4Rhx2tpaaHQ==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/crypto-validation@0.0.1-alpha.14:
-    resolution: {integrity: sha512-dIqcqmC9IZAjxENd75TISxYXVD4WJBSdojR8kRQhSCs4goUEy5lAfG++a0+8T2sWRZ3LoUz39Ya38FEpyMAElA==}
+  /@mainsail/crypto-validation@0.0.1-alpha.15:
+    resolution: {integrity: sha512-ZabSB5GTtm4i8MRy9KuQbnKGOSX6Iztftg76PzXk5X/APoSsB7EWQYG5yT2HIXiFUfir4fW4X1r+CVQeIu/N1A==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/fees-static@0.0.1-alpha.14:
-    resolution: {integrity: sha512-yFz8c0cLL9PJzSCaUzbYBZJE1g8zvKvOMXNVSdleKXn0krKIh1p7/iwDbtZxCTw1aQaUgPzLOMy9zIeahPRX+g==}
+  /@mainsail/fees-static@0.0.1-alpha.15:
+    resolution: {integrity: sha512-mSd0ay/AvKujH/ARdwayltWnzuiJVi0lvtqWlU2T6/rGtvFrwZh8/rtUgkEl/DT+6XGbeKN2CJTlK/fl+yEXRg==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/fees': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/fees': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/fees@0.0.1-alpha.14:
-    resolution: {integrity: sha512-sg+AqHNOBnnRRaB1hQ/FJfbSlnu8gMhbObtcT79x2owTRQdg7rEyM3imcIc6fpgx+/wNHGNq85Ab+7VQn9412w==}
+  /@mainsail/fees@0.0.1-alpha.15:
+    resolution: {integrity: sha512-CIYQYKLBxncHRSQlkfZhL49LOGgu0Z8iO1Imd/ieReHkUU0mCQ26H/DC1tJO7MSJm0jeF10sJwS3EL7jaow+Fw==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/kernel@0.0.1-alpha.14:
-    resolution: {integrity: sha512-1xrFz39QELYLP7oBdiFWGkwg9SmgjJwHfZsFjvMwQLyEzifvhtMbAUYFWoxYqtfIYIQGTbUUpk9hcihyJZnXJg==}
+  /@mainsail/kernel@0.0.1-alpha.15:
+    resolution: {integrity: sha512-/r8j7+tLO9iW9mMYcof/51G71LHOiiutspnmZulvW/p5yVpceOBhVJ1aN6EnqufteMCwh4HUxcItGUoVJKvdBA==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
       chalk: 5.3.0
       cron: 3.1.6
       date-fns: 3.4.0
@@ -2584,21 +2698,21 @@ packages:
       - supports-color
     dev: false
 
-  /@mainsail/transactions@0.0.1-alpha.14:
-    resolution: {integrity: sha512-MTbDaETFr85yc7LsA+1TmzjJAORGXlFDFdEPmk2ms8Jq23LIbSAhUC9jNbWkSYbrkhD1CyBglMMLLIi5i9oCiQ==}
+  /@mainsail/transactions@0.0.1-alpha.15:
+    resolution: {integrity: sha512-ncV01a0AF2tZHnaUKkvNr3KzM1huHOMU/KE1xPUsYlwZBGKr3oQJsqkKchYY7Zi3m0jlCtZQsTgp7vqTnNHNbQ==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/crypto-transaction': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
-      '@mainsail/utils': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@mainsail/utils@0.0.1-alpha.14:
-    resolution: {integrity: sha512-QD4QEvgzNRA3b2CXYEMFuwLk5UpmfuTedxTBE8e7CiDtrVwMiL/uf4U+3T3cyV0QzxC3emOFk1wN3j9qUJXZwg==}
+  /@mainsail/utils@0.0.1-alpha.15:
+    resolution: {integrity: sha512-UgY3G5lMdy4ji11xP3bOobRcReKoZS7QRyGzEvH4YF3FiOqasjDF+bOSYyuWtwVy6eizVAFeGIAtks95/LXyKw==}
     engines: {node: '>=20.x'}
     dependencies:
       '@hapi/bourne': 3.0.0
@@ -2609,13 +2723,13 @@ packages:
       type-fest: 4.12.0
     dev: false
 
-  /@mainsail/validation@0.0.1-alpha.14:
-    resolution: {integrity: sha512-yC1gvoCgqwa2QaAFjarbITKbEJgCOHJvvYdGU7RKDS8r1tTs+p7lvGsoxImgq62IvG9+CAA1R5HsSHZOaG4Ucg==}
+  /@mainsail/validation@0.0.1-alpha.15:
+    resolution: {integrity: sha512-/Cr+GDLPp55yq+IPG2lpaZwSxCgslWI6s1d3loELahF2BCStCl8EcQ/gtmV4dXWsHDfCcp1H9KmrCLt4yGeV/Q==}
     engines: {node: '>=20.x'}
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.14
-      '@mainsail/contracts': 0.0.1-alpha.14
-      '@mainsail/kernel': 0.0.1-alpha.14
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
       ajv: 8.12.0
       ajv-formats: 2.1.1(ajv@8.12.0)
       ajv-keywords: 5.1.0(ajv@8.12.0)
@@ -2657,6 +2771,22 @@ packages:
       fastq: 1.11.0
     dev: false
 
+  /@npmcli/fs@1.1.1:
+    resolution: {integrity: sha512-8KG5RD0GVP4ydEzRn/I4BNDuxDtqVbOdm8675T49OIG/NGhaK0pjPX7ZcDlvKYbA+ulvVK3ztfcF4uBdOxuJbQ==}
+    dependencies:
+      '@gar/promisify': 1.1.3
+      semver: 7.6.0
+    dev: false
+
+  /@npmcli/move-file@1.1.2:
+    resolution: {integrity: sha512-1SUf/Cg2GzGDyaf15aR9St9TWlb+XvbZXWpDx8YKs7MLzMH/BCeopv+y9vzrzgkfykCGuWOlSu3mZhj2+FQcrg==}
+    engines: {node: '>=10'}
+    deprecated: This functionality has been moved to @npmcli/fs
+    dependencies:
+      mkdirp: 1.0.4
+      rimraf: 3.0.2
+    dev: false
+
   /@pkgjs/parseargs@0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -2666,6 +2796,17 @@ packages:
 
   /@polka/url@1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
+    dev: false
+
+  /@scure/base@1.1.6:
+    resolution: {integrity: sha512-ok9AWwhcgYuGG3Zfhyqg+zwl+Wn5uE+dwC0NV/2qQkx4dABbb/bx96vWu8NSj+BNjjSjno+JRYRjle1jV08k3g==}
+    dev: false
+
+  /@scure/bip39@1.3.0:
+    resolution: {integrity: sha512-disdg7gHuTDZtY+ZdkmLpPCk7fxZSu3gBiEGuoC1XYxv9cGx3Z6cpTggCgW6odSOOIXCiDjuGejW+aJKCY/pIQ==}
+    dependencies:
+      '@noble/hashes': 1.4.0
+      '@scure/base': 1.1.6
     dev: false
 
   /@sideway/address@4.1.3:
@@ -2718,6 +2859,11 @@ packages:
 
   /@sinonjs/text-encoding@0.7.1:
     resolution: {integrity: sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==}
+    dev: false
+
+  /@tootallnate/once@1.1.2:
+    resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
+    engines: {node: '>= 6'}
     dev: false
 
   /@ts-morph/common@0.11.0:
@@ -2839,7 +2985,6 @@ packages:
 
   /@types/node@17.0.8:
     resolution: {integrity: sha512-YofkM6fGv4gDJq78g4j0mMuGMkZVxZDgtU0JRdx6FgiJDG+0fY0GKVolOV8WqVmEhLCXkQRjwDdKyPxJp/uucg==}
-    dev: true
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -2868,6 +3013,13 @@ packages:
     dependencies:
       '@sinonjs/fake-timers': 7.1.2
     dev: true
+
+  /@types/tar@6.1.12:
+    resolution: {integrity: sha512-FwbJPi9YuovB6ilnHrz8Y4pb0Fh6N7guFkbnlCl39ua893Qi5gkXui7LSDpTQMJCmA4z5f6SeSrTPQEWLdtFVw==}
+    dependencies:
+      '@types/node': 17.0.8
+      minipass: 4.2.8
+    dev: false
 
   /@types/uuid@8.3.4:
     resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
@@ -2970,7 +3122,7 @@ packages:
       debug: 4.3.2
       globby: 11.0.4
       is-glob: 4.0.3
-      semver: 7.3.5
+      semver: 7.6.0
       tsutils: 3.21.0(typescript@4.5.2)
       typescript: 4.5.2
     transitivePeerDependencies:
@@ -3136,6 +3288,10 @@ packages:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
     dev: false
 
+  /abbrev@1.1.1:
+    resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
+    dev: false
+
   /acorn-import-assertions@1.8.0(acorn@8.6.0):
     resolution: {integrity: sha512-m7VZ3jwz4eK6A4Vtt8Ew1/mNbP24u0FhdyfA7fSvnJR6LMdfOYnmuIrrJAgrYfYJ10F/otaHTtrtrtmHdMNzEw==}
     peerDependencies:
@@ -3175,6 +3331,30 @@ packages:
     resolution: {integrity: sha512-U1riIR+lBSNi3IbxtaHOIKdH8sLFv3NYfNv8sg7ZsNhcfl4HF2++BfqqrNAxoCLQW1iiylOj76ecnaUxz+z9yw==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+    dev: false
+
+  /agent-base@6.0.2:
+    resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      debug: 4.3.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /agentkeepalive@4.5.0:
+    resolution: {integrity: sha512-5GG/5IbQQpC9FpkRGsSvZI5QYeSCzlJHdpBQntCsuTOxhKD8lqKhrleg2Yi7yvMIf82Ycmmqln9U8V9qwEiJew==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      humanize-ms: 1.2.1
+    dev: false
+
+  /aggregate-error@3.1.0:
+    resolution: {integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==}
+    engines: {node: '>=8'}
+    dependencies:
+      clean-stack: 2.2.0
+      indent-string: 4.0.0
     dev: false
 
   /ajv-formats@2.1.1(ajv@8.12.0):
@@ -3274,6 +3454,18 @@ packages:
   /ansi-styles@6.2.1:
     resolution: {integrity: sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==}
     engines: {node: '>=12'}
+    dev: false
+
+  /aproba@2.0.0:
+    resolution: {integrity: sha512-lYe4Gx7QT+MKGbDsA+Z+he/Wtef0BiwDOlK/XkBrdfsh9J/jPPXbX0tE9x9cl27Tmu5gg3QUbUrQYa/y+KOHPQ==}
+    dev: false
+
+  /are-we-there-yet@3.0.1:
+    resolution: {integrity: sha512-QZW4EDmGwlYur0Yyf/b2uGucHQMa8aFUP7eu9ddR73vvhFyt4V0Vl3QHPcTNJ8l6qYOBdxgXdnBXQrHilfRQBg==}
+    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    dependencies:
+      delegates: 1.0.0
+      readable-stream: 3.6.0
     dev: false
 
   /argparse@1.0.10:
@@ -3526,6 +3718,16 @@ packages:
       randombytes: 2.1.0
     dev: false
 
+  /bls-eth-wasm@0.4.8:
+    resolution: {integrity: sha512-ye7+G6KFLb3i9xSrLASAoYqOUK5WLB6XA5DD8Sh0UQpZ3T999ylsYbFdoOJpmvTDuBuMi23Vy8Jm0pn/GF01CA==}
+    dev: false
+
+  /bls12-381-keygen@0.2.4:
+    resolution: {integrity: sha512-vkJlc6ZRPtGI6Lu1bm8lTIVOq/MXe70b75LNZIohWbzw/kEDX0HXZCzoBbW1QxdAoGS9rZY40nchQ+KUPdDdEQ==}
+    dependencies:
+      '@noble/hashes': 1.4.0
+    dev: false
+
   /blueimp-md5@2.19.0:
     resolution: {integrity: sha512-DRQrD6gJyy8FbiE4s+bDoXS9hiW3Vbx5uCdwvcCf3zLHL+Iv7LtGHLpr+GZV8rHG8tK766FGYBwRbu8pELTt+w==}
     dev: false
@@ -3737,6 +3939,32 @@ packages:
       yargs-parser: 20.2.9
     dev: false
 
+  /cacache@15.3.0:
+    resolution: {integrity: sha512-VVdYzXEn+cnbXpFgWs5hTT7OScegHVmLhJIR8Ufqk3iFD6A6j5iSX1KuBTfNEv4tdJWE2PzA6IVFtcLC7fN9wQ==}
+    engines: {node: '>= 10'}
+    dependencies:
+      '@npmcli/fs': 1.1.1
+      '@npmcli/move-file': 1.1.2
+      chownr: 2.0.0
+      fs-minipass: 2.1.0
+      glob: 7.2.0
+      infer-owner: 1.0.4
+      lru-cache: 6.0.0
+      minipass: 3.3.6
+      minipass-collect: 1.0.2
+      minipass-flush: 1.0.5
+      minipass-pipeline: 1.2.4
+      mkdirp: 1.0.4
+      p-map: 4.0.0
+      promise-inflight: 1.0.1
+      rimraf: 3.0.2
+      ssri: 8.0.1
+      tar: 6.2.1
+      unique-filename: 1.1.1
+    transitivePeerDependencies:
+      - bluebird
+    dev: false
+
   /cache-base@1.0.1:
     resolution: {integrity: sha512-AKcdTnFSWATd5/GCPRxr2ChwIJ85CeyrEyjRHlKxQ56d4XJMGym0uAiKn0xbLOGOl3+yRpOTi484dVCEc5AUzQ==}
     engines: {node: '>=0.10.0'}
@@ -3809,6 +4037,11 @@ packages:
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: false
 
+  /chownr@2.0.0:
+    resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
+    engines: {node: '>=10'}
+    dev: false
+
   /chrome-trace-event@1.0.3:
     resolution: {integrity: sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==}
     engines: {node: '>=6.0'}
@@ -3839,6 +4072,11 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       escape-string-regexp: 1.0.5
+    dev: false
+
+  /clean-stack@2.2.0:
+    resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
+    engines: {node: '>=6'}
     dev: false
 
   /cliui@6.0.0:
@@ -3904,6 +4142,11 @@ packages:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
     dev: false
 
+  /color-support@1.1.3:
+    resolution: {integrity: sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==}
+    hasBin: true
+    dev: false
+
   /colorette@2.0.16:
     resolution: {integrity: sha512-hUewv7oMjCp+wkBv5Rm0v87eJhq4woh5rSR+42YSQJKecCqgIqNkZ6lAlQms/BwHPJA5NKMRlpxPRv0n8HQW6g==}
     dev: false
@@ -3945,6 +4188,10 @@ packages:
 
   /console-browserify@1.2.0:
     resolution: {integrity: sha512-ZMkYO/LkF17QvCPqM0gxw8yUzigAOZOSWSHg91FH6orS7vcEj5dVZTidN2fQ14yBSdg97RqhSNwLUXInd52OTA==}
+    dev: false
+
+  /console-control-strings@1.1.0:
+    resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
     dev: false
 
   /constants-browserify@1.0.0:
@@ -4109,6 +4356,18 @@ packages:
       ms: 2.1.2
     dev: false
 
+  /debug@4.3.4:
+    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+    dev: false
+
   /decamelize@1.2.0:
     resolution: {integrity: sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=}
     engines: {node: '>=0.10.0'}
@@ -4160,6 +4419,10 @@ packages:
     dependencies:
       is-descriptor: 1.0.3
       isobject: 3.0.1
+    dev: false
+
+  /delegates@1.0.0:
+    resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
     dev: false
 
   /dequal@2.0.2:
@@ -4287,6 +4550,14 @@ packages:
     resolution: {integrity: sha512-ucAnuBEhUK4boH2HjVYG5Q2mQyPorvv0u/ocS+zhdw0S8AlHYY+GOFhP1Gio5z4icpP2ivFSvhtFjQi8+T9ppw==}
     dev: false
 
+  /encoding@0.1.13:
+    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+    requiresBuild: true
+    dependencies:
+      iconv-lite: 0.6.3
+    dev: false
+    optional: true
+
   /enhanced-resolve@5.8.3:
     resolution: {integrity: sha512-EGAbGvH7j7Xt2nc0E7D99La1OiEs8LnyimkRgwExpUMScN6O+3x9tIWs7PLQZVNx4YD+00skHXPXi1yQHpAmZA==}
     engines: {node: '>=10.13.0'}
@@ -4306,6 +4577,11 @@ packages:
     resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
     dev: false
 
+  /env-paths@2.2.1:
+    resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
+    engines: {node: '>=6'}
+    dev: false
+
   /env-paths@3.0.0:
     resolution: {integrity: sha512-dtJUTepzMW3Lm/NPxRf3wP4642UWhjL2sQxc+ym2YMj1m/H2zDNQOlezafzkHwn6sMstjHTwG6iQQsctDW/b1A==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -4315,6 +4591,10 @@ packages:
     resolution: {integrity: sha512-/o+BXHmB7ocbHEAs6F2EnG0ogybVVUdkRunTT2glZU9XAaGmhqskrvKwqXuDfNjEO0LZKWdejEEpnq8aM0tOaw==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
+
+  /err-code@2.0.3:
+    resolution: {integrity: sha512-2bmlRpNKBxT/CRmPOlyISQpNj+qSeYvcym/uT0Jx2bMOlKLtSy1ZmLuVxSEKKyor/N5yhvp/ZiG1oE3DEYMSFA==}
     dev: false
 
   /error-ex@1.3.2:
@@ -5116,6 +5396,13 @@ packages:
       universalify: 2.0.0
     dev: false
 
+  /fs-minipass@2.1.0:
+    resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
+    engines: {node: '>= 8'}
+    dependencies:
+      minipass: 3.3.6
+    dev: false
+
   /fs.realpath@1.0.0:
     resolution: {integrity: sha1-FQStJSMVjKpA20onh8sBQRmU6k8=}
     dev: false
@@ -5130,6 +5417,20 @@ packages:
 
   /functional-red-black-tree@1.0.1:
     resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=}
+    dev: false
+
+  /gauge@4.0.4:
+    resolution: {integrity: sha512-f9m+BEN5jkg6a0fZjleidjN51VE1X+mPFQ2DJ0uv1V39oCLCbsGe6yjbBnp7eK7z/+GAon99a3nHuqbuuthyPg==}
+    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    dependencies:
+      aproba: 2.0.0
+      color-support: 1.1.3
+      console-control-strings: 1.1.0
+      has-unicode: 2.0.1
+      signal-exit: 3.0.7
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      wide-align: 1.1.5
     dev: false
 
   /gensync@1.0.0-beta.2:
@@ -5305,6 +5606,10 @@ packages:
       has-symbols: 1.0.2
     dev: false
 
+  /has-unicode@2.0.1:
+    resolution: {integrity: sha512-8Rf9Y83NBReMnx0gFzA8JImQACstCYWUplepDa9xprwwtmgEZUF0h/i5xSA625zB/I37EtrswSST6OXxwaaIJQ==}
+    dev: false
+
   /has-value@0.3.1:
     resolution: {integrity: sha512-gpG936j8/MzaeID5Yif+577c17TxaDmhuyVgSwtnL/q8UUTySg8Mecb+8Cf1otgLoD7DDH75axp86ER7LFsf3Q==}
     engines: {node: '>=0.10.0'}
@@ -5389,14 +5694,54 @@ packages:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
     dev: false
 
+  /http-cache-semantics@4.1.1:
+    resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
+    dev: false
+
+  /http-proxy-agent@4.0.1:
+    resolution: {integrity: sha512-k0zdNgqWTGA6aeIRVpvfVob4fL52dTfaehylg0Y4UvSySvOq/Y+BOyPrgpUrA7HylqvU8vIZGsRuXmspskV0Tg==}
+    engines: {node: '>= 6'}
+    dependencies:
+      '@tootallnate/once': 1.1.2
+      agent-base: 6.0.2
+      debug: 4.3.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /https-browserify@1.0.0:
     resolution: {integrity: sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=}
+    dev: false
+
+  /https-proxy-agent@5.0.1:
+    resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
+    engines: {node: '>= 6'}
+    dependencies:
+      agent-base: 6.0.2
+      debug: 4.3.2
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
     dev: false
+
+  /humanize-ms@1.2.1:
+    resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
+    dependencies:
+      ms: 2.1.3
+    dev: false
+
+  /iconv-lite@0.6.3:
+    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
+    engines: {node: '>=0.10.0'}
+    requiresBuild: true
+    dependencies:
+      safer-buffer: 2.1.2
+    dev: false
+    optional: true
 
   /ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -5442,6 +5787,10 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /infer-owner@1.0.4:
+    resolution: {integrity: sha512-IClj+Xz94+d7irH5qRyfJonOdfTzuDaifE6ZPWfx0N0+/ATZCbuTPq2prFl526urkQd90WyUKIh1DfBQ2hMz9A==}
+    dev: false
+
   /inflight@1.0.6:
     resolution: {integrity: sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk=}
     dependencies:
@@ -5468,6 +5817,14 @@ packages:
 
   /inversify@6.0.2:
     resolution: {integrity: sha512-i9m8j/7YIv4mDuYXUAcrpKPSaju/CIly9AHK5jvCBeoiM/2KEsuCQTTP+rzSWWpLYWRukdXFSl6ZTk2/uumbiA==}
+    dev: false
+
+  /ip-address@9.0.5:
+    resolution: {integrity: sha512-zHtQzGojZXTwZTHQqra+ETKd4Sn3vgi7uBmlPoXVWZqYvuKmtI0l/VZTjqGmJY9x88GGOaZ9+G9ES8hC4T4X8g==}
+    engines: {node: '>= 12'}
+    dependencies:
+      jsbn: 1.1.0
+      sprintf-js: 1.1.3
     dev: false
 
   /ipaddr.js@2.1.0:
@@ -5611,6 +5968,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       is-extglob: 2.1.1
+    dev: false
+
+  /is-lambda@1.0.1:
+    resolution: {integrity: sha512-z7CMFGNrENq5iFB9Bqo64Xk6Y9sg+epq1myIcdHaGnbMTYOxvzsEtdYqQUylB7LxfkvgrrjP32T6Ywciio9UIQ==}
     dev: false
 
   /is-nan@1.3.2:
@@ -5823,6 +6184,10 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
+    dev: false
+
+  /jsbn@1.1.0:
+    resolution: {integrity: sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==}
     dev: false
 
   /jsesc@0.5.0:
@@ -6072,6 +6437,31 @@ packages:
       semver: 6.3.0
     dev: false
 
+  /make-fetch-happen@9.1.0:
+    resolution: {integrity: sha512-+zopwDy7DNknmwPQplem5lAZX/eCOzSvSNNcSKm5eVwTkOBzoktEfXsa9L23J/GIRhxRsaxzkPEhrJEpE2F4Gg==}
+    engines: {node: '>= 10'}
+    dependencies:
+      agentkeepalive: 4.5.0
+      cacache: 15.3.0
+      http-cache-semantics: 4.1.1
+      http-proxy-agent: 4.0.1
+      https-proxy-agent: 5.0.1
+      is-lambda: 1.0.1
+      lru-cache: 6.0.0
+      minipass: 3.3.6
+      minipass-collect: 1.0.2
+      minipass-fetch: 1.4.1
+      minipass-flush: 1.0.5
+      minipass-pipeline: 1.2.4
+      negotiator: 0.6.3
+      promise-retry: 2.0.1
+      socks-proxy-agent: 6.2.1
+      ssri: 8.0.1
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: false
+
   /map-cache@0.2.2:
     resolution: {integrity: sha512-8y/eV9QQZCiyn1SprXSrCmqJN0yNRATe+PO8ztwqrvrbdRLA3eYJF0yaR0YayLWkMbsQSKWS9N2gPcGEc4UsZg==}
     engines: {node: '>=0.10.0'}
@@ -6200,9 +6590,73 @@ packages:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: false
 
+  /minipass-collect@1.0.2:
+    resolution: {integrity: sha512-6T6lH0H8OG9kITm/Jm6tdooIbogG9e0tLgpY6mphXSm/A9u8Nq1ryBG+Qspiub9LjWlBPsPS3tWQ/Botq4FdxA==}
+    engines: {node: '>= 8'}
+    dependencies:
+      minipass: 3.3.6
+    dev: false
+
+  /minipass-fetch@1.4.1:
+    resolution: {integrity: sha512-CGH1eblLq26Y15+Azk7ey4xh0J/XfJfrCox5LDJiKqI2Q2iwOLOKrlmIaODiSQS8d18jalF6y2K2ePUm0CmShw==}
+    engines: {node: '>=8'}
+    dependencies:
+      minipass: 3.3.6
+      minipass-sized: 1.0.3
+      minizlib: 2.1.2
+    optionalDependencies:
+      encoding: 0.1.13
+    dev: false
+
+  /minipass-flush@1.0.5:
+    resolution: {integrity: sha512-JmQSYYpPUqX5Jyn1mXaRwOda1uQ8HP5KAT/oDSLCzt1BYRhQU0/hDtsB1ufZfEEzMZ9aAVmsBw8+FWsIXlClWw==}
+    engines: {node: '>= 8'}
+    dependencies:
+      minipass: 3.3.6
+    dev: false
+
+  /minipass-pipeline@1.2.4:
+    resolution: {integrity: sha512-xuIq7cIOt09RPRJ19gdi4b+RiNvDFYe5JH+ggNvBqGqpQXcru3PcRmOZuHBKWK1Txf9+cQ+HMVN4d6z46LZP7A==}
+    engines: {node: '>=8'}
+    dependencies:
+      minipass: 3.3.6
+    dev: false
+
+  /minipass-sized@1.0.3:
+    resolution: {integrity: sha512-MbkQQ2CTiBMlA2Dm/5cY+9SWFEN8pzzOXi6rlM5Xxq0Yqbda5ZQy9sU75a673FE9ZK0Zsbr6Y5iP6u9nktfg2g==}
+    engines: {node: '>=8'}
+    dependencies:
+      minipass: 3.3.6
+    dev: false
+
+  /minipass@3.3.6:
+    resolution: {integrity: sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw==}
+    engines: {node: '>=8'}
+    dependencies:
+      yallist: 4.0.0
+    dev: false
+
+  /minipass@4.2.8:
+    resolution: {integrity: sha512-fNzuVyifolSLFL4NzpF+wEF4qrgqaaKX0haXPQEdQ7NKAN+WecoKMHV09YcuL/DHxrUsYQOK3MiuDf7Ip2OXfQ==}
+    engines: {node: '>=8'}
+    dev: false
+
+  /minipass@5.0.0:
+    resolution: {integrity: sha512-3FnjYuehv9k6ovOEbyOswadCDPX1piCfhV8ncmYtHOjuPwylVWsghTLo7rabjC3Rx5xD4HDx8Wm1xnMF7S5qFQ==}
+    engines: {node: '>=8'}
+    dev: false
+
   /minipass@7.0.4:
     resolution: {integrity: sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==}
     engines: {node: '>=16 || 14 >=14.17'}
+    dev: false
+
+  /minizlib@2.1.2:
+    resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
+    engines: {node: '>= 8'}
+    dependencies:
+      minipass: 3.3.6
+      yallist: 4.0.0
     dev: false
 
   /mixin-deep@1.3.2:
@@ -6272,6 +6726,11 @@ packages:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
     dev: false
 
+  /negotiator@0.6.3:
+    resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
   /neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: false
@@ -6336,6 +6795,26 @@ packages:
     hasBin: true
     dev: false
 
+  /node-gyp@8.4.1:
+    resolution: {integrity: sha512-olTJRgUtAb/hOXG0E93wZDs5YiJlgbXxTwQAFHyNlRsXQnYzUaF2aGgujZbw+hR8aF4ZG/rST57bWMWD16jr9w==}
+    engines: {node: '>= 10.12.0'}
+    hasBin: true
+    dependencies:
+      env-paths: 2.2.1
+      glob: 7.2.0
+      graceful-fs: 4.2.8
+      make-fetch-happen: 9.1.0
+      nopt: 5.0.0
+      npmlog: 6.0.2
+      rimraf: 3.0.2
+      semver: 7.6.0
+      tar: 6.2.1
+      which: 2.0.2
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: false
+
   /node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4):
     resolution: {integrity: sha512-Z0XTKj1wRWO8o/Vjobsw5iOJCN+Sua3EZEUc2Ziy9CyVvmHKu6o+t4gUH9GOE0czyPR94LI6ZCV/PpcM8b5yow==}
     engines: {node: '>=10'}
@@ -6373,6 +6852,14 @@ packages:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
     dev: false
 
+  /nopt@5.0.0:
+    resolution: {integrity: sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ==}
+    engines: {node: '>=6'}
+    hasBin: true
+    dependencies:
+      abbrev: 1.1.1
+    dev: false
+
   /normalize-exception@3.0.0:
     resolution: {integrity: sha512-SMZtWSLjls45KBgwvS2jWyXLtOI9j90JyQ6tJstl91Gti4W7QwZyF/nWwlFRz/Cx4Gy70DAtLT0EzXYXcPJJUw==}
     engines: {node: '>=16.17.0'}
@@ -6395,6 +6882,16 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-key: 3.1.1
+    dev: false
+
+  /npmlog@6.0.2:
+    resolution: {integrity: sha512-/vBvz5Jfr9dT/aFWd0FIRf+T/Q2WBsLENygUaFUqstqsycmZAP/t5BvFJTK0viFmSUxiUKTUplWy5vt+rvKIxg==}
+    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    dependencies:
+      are-we-there-yet: 3.0.1
+      console-control-strings: 1.1.0
+      gauge: 4.0.4
+      set-blocking: 2.0.0
     dev: false
 
   /nsfw@2.2.4:
@@ -6543,6 +7040,13 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-limit: 3.1.0
+    dev: false
+
+  /p-map@4.0.0:
+    resolution: {integrity: sha512-/bjOqmgETBYB5BoEeGVea8dmvHb2m9GLy1E9W43yeyfP6QQCZGFNa+XRceJEuDB6zqr+gKpIAmlLebMpykw/MQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      aggregate-error: 3.1.0
     dev: false
 
   /p-queue@7.1.0:
@@ -6742,6 +7246,23 @@ packages:
   /progress@2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
+    dev: false
+
+  /promise-inflight@1.0.1:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dev: false
+
+  /promise-retry@2.0.1:
+    resolution: {integrity: sha512-y+WKFlBR8BGXnsNlIHFGPZmyDf3DFMoLhaflAnyZgV6rG6xu+JwesTo2Q9R6XwYmtmwAFCkAk3e35jEdoeh/3g==}
+    engines: {node: '>=10'}
+    dependencies:
+      err-code: 2.0.3
+      retry: 0.12.0
     dev: false
 
   /propagate@2.0.1:
@@ -6987,6 +7508,11 @@ packages:
     engines: {node: '>=0.12'}
     dev: false
 
+  /retry@0.12.0:
+    resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
+    engines: {node: '>= 4'}
+    dev: false
+
   /retry@0.13.1:
     resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
     engines: {node: '>= 4'}
@@ -7112,6 +7638,7 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+    dev: false
 
   /semver@7.6.0:
     resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}
@@ -7119,7 +7646,6 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: false
 
   /serialize-javascript@6.0.0:
     resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==}
@@ -7194,6 +7720,10 @@ packages:
     resolution: {integrity: sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ==}
     dev: false
 
+  /signal-exit@3.0.7:
+    resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
+    dev: false
+
   /signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
@@ -7224,6 +7754,11 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /smart-buffer@4.2.0:
+    resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
+    engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
+    dev: false
+
   /snapdragon@0.8.2:
     resolution: {integrity: sha512-FtyOnWN/wCHTVXOMwvSv26d+ko5vWlIDD6zoUJ7LW8vh+ZBC8QdljveRP+crNrtBwioEUWy/4dMtbBjA4ioNlg==}
     engines: {node: '>=0.10.0'}
@@ -7238,6 +7773,25 @@ packages:
       use: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /socks-proxy-agent@6.2.1:
+    resolution: {integrity: sha512-a6KW9G+6B3nWZ1yB8G7pJwL3ggLy1uTzKAgCb7ttblwqdz9fMGJUuTy3uFzEP48FAs9FLILlmzDlE2JJhVQaXQ==}
+    engines: {node: '>= 10'}
+    dependencies:
+      agent-base: 6.0.2
+      debug: 4.3.4
+      socks: 2.8.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /socks@2.8.3:
+    resolution: {integrity: sha512-l5x7VUUWbjVFbafGLxPWkYsHIhEvmF85tbIeFZWc8ZPtoMyybuEhL7Jye/ooC4/d48FgOjSJXgsF/AJPYCW8Zw==}
+    engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
+    dependencies:
+      ip-address: 9.0.5
+      smart-buffer: 4.2.0
     dev: false
 
   /sort-object-keys@1.1.3:
@@ -7330,6 +7884,17 @@ packages:
 
   /sprintf-js@1.0.3:
     resolution: {integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=}
+    dev: false
+
+  /sprintf-js@1.1.3:
+    resolution: {integrity: sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==}
+    dev: false
+
+  /ssri@8.0.1:
+    resolution: {integrity: sha512-97qShzy1AiyxvPNIkLWoGua7xoQzzPjQ0HAH4B0rWKo7SZ6USuPcrUiAFrws0UH8RrbWmgq3LMTObhPIHbbBeQ==}
+    engines: {node: '>= 8'}
+    dependencies:
+      minipass: 3.3.6
     dev: false
 
   /static-extend@0.1.2:
@@ -7463,6 +8028,18 @@ packages:
   /tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
+    dev: false
+
+  /tar@6.2.1:
+    resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
+    engines: {node: '>=10'}
+    dependencies:
+      chownr: 2.0.0
+      fs-minipass: 2.1.0
+      minipass: 5.0.0
+      minizlib: 2.1.2
+      mkdirp: 1.0.4
+      yallist: 4.0.0
     dev: false
 
   /terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4):
@@ -7767,6 +8344,18 @@ packages:
       set-value: 2.0.1
     dev: false
 
+  /unique-filename@1.1.1:
+    resolution: {integrity: sha512-Vmp0jIp2ln35UTXuryvjzkjGdRyf9b2lTXuSYUiPmzRcl3FDtYqAwOnTJkAngD9SWhnoJzDbTKwaOrZ+STtxNQ==}
+    dependencies:
+      unique-slug: 2.0.2
+    dev: false
+
+  /unique-slug@2.0.2:
+    resolution: {integrity: sha512-zoWr9ObaxALD3DOPfjPSqxt4fnZiWblxHIgeWqW8x7UqDzEtHEQLzji2cuJYQFCU6KmoJikOYAZlrTHHebjx2w==}
+    dependencies:
+      imurmurhash: 0.1.4
+    dev: false
+
   /universalify@2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
@@ -8042,6 +8631,12 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+    dev: false
+
+  /wide-align@1.1.5:
+    resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
+    dependencies:
+      string-width: 4.2.3
     dev: false
 
   /wif@2.0.6:

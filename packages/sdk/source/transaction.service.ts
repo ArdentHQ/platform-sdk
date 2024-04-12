@@ -1,31 +1,32 @@
 /* istanbul ignore file */
 
 import { BigNumber, NumberLike } from "@ardenthq/sdk-helpers";
-
-import { BigNumberService } from "./big-number.service.js";
-import { ClientService } from "./client.contract.js";
-import { ConfigRepository } from "./coins.js";
-import { IContainer } from "./container.contracts.js";
-import { SignedTransactionData } from "./contracts.js";
-import { DataTransferObjectService } from "./data-transfer-object.contract.js";
-import { NotImplemented } from "./exceptions.js";
-import { HttpClient } from "./http.js";
-import { NetworkHostSelector } from "./network.models.js";
-import { BindingType } from "./service-provider.contract.js";
 import {
-	UsernameRegistrationInput,
-	UsernameResignationInput,
+	TransactionService as Contract,
 	DelegateRegistrationInput,
 	DelegateResignationInput,
 	IpfsInput,
 	MultiPaymentInput,
 	MultiSignatureInput,
 	SecondSignatureInput,
-	TransactionService as Contract,
 	TransferInput,
 	UnlockTokenInput,
+	UsernameRegistrationInput,
+	UsernameResignationInput,
+	ValidatorRegistrationInput,
 	VoteInput,
 } from "./transaction.contract.js";
+
+import { BigNumberService } from "./big-number.service.js";
+import { BindingType } from "./service-provider.contract.js";
+import { ClientService } from "./client.contract.js";
+import { ConfigRepository } from "./coins.js";
+import { DataTransferObjectService } from "./data-transfer-object.contract.js";
+import { HttpClient } from "./http.js";
+import { IContainer } from "./container.contracts.js";
+import { NetworkHostSelector } from "./network.models.js";
+import { NotImplemented } from "./exceptions.js";
+import { SignedTransactionData } from "./contracts.js";
 
 export class AbstractTransactionService implements Contract {
 	protected readonly bigNumberService: BigNumberService;
@@ -60,7 +61,9 @@ export class AbstractTransactionService implements Contract {
 		throw new NotImplemented(this.constructor.name, this.usernameResignation.name);
 	}
 
-	public async delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData> {
+	public async delegateRegistration(
+		input: DelegateRegistrationInput | ValidatorRegistrationInput,
+	): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.delegateRegistration.name);
 	}
 

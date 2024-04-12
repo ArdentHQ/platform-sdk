@@ -1,6 +1,6 @@
-import { UnlockableBalance } from "./client.contract.js";
-import { SignedTransactionData } from "./contracts.js";
 import { Signatory } from "./signatories.js";
+import { SignedTransactionData } from "./contracts.js";
+import { UnlockableBalance } from "./client.contract.js";
 
 export interface TransactionService {
 	// Core
@@ -52,6 +52,10 @@ export declare type UsernameResignationInput = TransactionInput;
 
 export interface DelegateRegistrationInput extends TransactionInput {
 	data: { username: string };
+}
+
+export interface ValidatorRegistrationInput extends TransactionInput {
+	data: { validatorPublicKey: string };
 }
 
 export interface VoteInput extends TransactionInput {
