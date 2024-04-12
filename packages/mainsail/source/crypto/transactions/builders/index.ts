@@ -7,7 +7,10 @@ import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction/distribution/service-provider";
-import { MultiPaymentBuilder, ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
+import {
+	MultiPaymentBuilder,
+	ServiceProvider as CoreCryptoMultipaymentTransfer,
+} from "@mainsail/crypto-transaction-multi-payment";
 import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,

@@ -9,12 +9,8 @@ import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import {
-	ServiceProvider as CoreCryptoMultipaymentTransfer,
-} from "@mainsail/crypto-transaction-multi-payment";
-import {
-	ServiceProvider as CoreCryptoTransactionTransfer,
-} from "@mainsail/crypto-transaction-transfer";
+import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
+import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import {
 	ServiceProvider as CoreCryptoTransactionUsername,
 	UsernameRegistrationBuilder,
@@ -124,16 +120,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 			);
 		}
 
-		return this.#createFromData(
-			"transfer",
-			input,
-			({ transaction, data }) => {
-				transaction.recipientId(data.to);
-	
-				if (data.memo) {
-					transaction.vendorField(data.memo);
-				}
-			});
+		return this.#createFromData("transfer", input, ({ transaction, data }) => {
+			transaction.recipientId(data.to);
+
+			if (data.memo) {
+				transaction.vendorField(data.memo);
+			}
+		});
 	}
 
 	public override async delegateRegistration(
@@ -228,14 +221,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData(
-			"multiPayment",
-			input,
-			({ transaction, data }) => {
-				if (data.memo) {
-					transaction.vendorField(data.memo);
-				}
-			});
+		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
+			if (data.memo) {
+				transaction.vendorField(data.memo);
+			}
+		});
 	}
 
 	public override async usernameRegistration(
@@ -339,7 +329,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 				transaction.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
 			}
 		}
-	
+
 		if (input.fee) {
 			transaction.fee(this.toSatoshi(input.fee).toString());
 		}
