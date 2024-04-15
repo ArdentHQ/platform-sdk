@@ -78,6 +78,10 @@ export class SignedTransactionData
 		return TransactionTypeService.isMultiSignatureRegistration(this.signedData);
 	}
 
+	public override username(): string {
+		return this.signedData.asset.username;
+	}
+
 	public override isIpfs(): boolean {
 		return false;
 	}
