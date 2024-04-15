@@ -9,14 +9,71 @@ import { Container } from "@mainsail/container";
 import { Application } from "@mainsail/kernel";
 import { Contracts } from "@mainsail/contracts";
 import { PublicKeyFactory } from "@mainsail/crypto-key-pair-bls12-381";
+import { ServiceProvider as CoreValidation } from "@mainsail/validation";
+import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
+import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
+import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
+import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
+import { Identifiers } from "@mainsail/contracts";
+import { milestones } from "./crypto/networks/devnet/milestones.js";
+import { network } from "./crypto/networks/devnet/network.js";
+
+import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
+import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
+import { ServiceProvider as CoreCryptoTransactionUsername } from "@mainsail/crypto-transaction-username-registration";
+import { ServiceProvider as CoreCryptoTransactionValidatorRegistration } from "@mainsail/crypto-transaction-validator-registration";
+import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
+import { ServiceProvider as CoreCryptoTransactionValidatorResignation } from "@mainsail/crypto-transaction-validator-resignation";
+import { ServiceProvider as CoreFees } from "@mainsail/fees";
+import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 
 export class PublicKeyService extends Services.AbstractPublicKeyService {
 	readonly #config!: Interfaces.NetworkConfig;
+	readonly #app: Application;
+	#isBooted: boolean;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
 		this.#config = container.get(BindingType.Crypto);
+
+		this.#app = new Application(new Container());
+
+		this.#isBooted = false;
+	}
+
+	async #boot(): Promise<void> {
+		await Promise.all([
+			this.#app.resolve(CoreValidation).register(),
+			this.#app.resolve(CoreCryptoConfig).register(),
+			this.#app.resolve(CoreCryptoValidation).register(),
+			this.#app.resolve(CoreCryptoKeyPairEcdsa).register(),
+			this.#app.resolve(CoreCryptoAddressBase58).register(),
+			this.#app.resolve(CoreCryptoSignatureSchnorr).register(),
+			this.#app.resolve(CoreCryptoHashBcrypto).register(),
+			this.#app.resolve(CoreFees).register(),
+			this.#app.resolve(CoreFeesStatic).register(),
+			this.#app.resolve(CoreCryptoTransaction).register(),
+			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			this.#app.resolve(CoreCryptoTransactionVote).register(),
+			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
+			this.#app.resolve(CoreCryptoTransactionUsername).register(),
+			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
+			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
+			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
+		]);
+
+		this.#app
+			.get<{
+				setConfig: Function;
+			}>(Identifiers.Cryptography.Configuration)
+			.setConfig({ milestones, network });
+
+		this.#isBooted = true;
 	}
 
 	public override async fromMnemonic(
@@ -54,8 +111,11 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 	}
 
 	public override async verifyPublicKeyWithBLS(publicKey: string): Promise<boolean> {
-		const app = new Application(new Container());
-		console.log("verifyPublicKeyWithBLS", publicKey);
-		return await app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory).verify(publicKey);
+		if (!this.#isBooted) {
+			console.log("booting");
+			await this.#boot();
+		}
+
+		return await this.#app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory).verify(publicKey);
 	}
 }
