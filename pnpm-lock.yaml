@@ -443,6 +443,9 @@ importers:
       '@mainsail/crypto-transaction-multi-payment':
         specifier: 0.0.1-alpha.15
         version: 0.0.1-alpha.15
+      '@mainsail/crypto-transaction-multi-signature-registration':
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-transaction-transfer':
         specifier: 0.0.1-alpha.15
         version: 0.0.1-alpha.15
@@ -2532,6 +2535,20 @@ packages:
       '@mainsail/transactions': 0.0.1-alpha.15
       '@mainsail/utils': 0.0.1-alpha.15
       ajv: 8.12.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@mainsail/crypto-transaction-multi-signature-registration@0.0.1-alpha.15:
+    resolution: {integrity: sha512-a++lDICaTP+S1nJyiGMIJH4n9fFewMEVTy+ts1swdXL70ATMgZZIaYrd2/h8uTFYa2LSiUC0fqWBZdafPYfcHw==}
+    engines: {node: '>=20.x'}
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.15
+      '@mainsail/crypto-transaction': 0.0.1-alpha.15
+      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/transactions': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.15
     transitivePeerDependencies:
       - supports-color
     dev: false

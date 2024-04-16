@@ -27,6 +27,7 @@ import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { Application } from "@mainsail/kernel";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
+import { ServiceProvider as CoreCryptoTransactionMultiSignature, MultiSignatureBuilder } from "@mainsail/crypto-transaction-multi-signature-registration";
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
@@ -91,6 +92,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
 			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
+			this.#app.resolve(CoreCryptoTransactionMultiSignature).register(),
 		]);
 
 		this.#app
@@ -203,7 +205,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async multiSignature(
 		input: Services.MultiSignatureInput,
 	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiSignature", input, ({ transaction, data }) => {
+		console.log('transaction.service -> multiSignature', input)
+		return this.#createFromData("multiSignature", input, ({transaction, data}: {
+			transaction: MultiSignatureBuilder,
+			data: Services.MultiSignatureInput['data']
+		}) => {
 			if (data.senderPublicKey) {
 				transaction.senderPublicKey(data.senderPublicKey);
 			}
@@ -376,12 +382,15 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (type === "multiSignature") {
+			const multiSignatureAsset = {
+				min: input.data.min,
+				publicKeys: input.data.publicKeys,
+			}
+
+			console.log('transaction.service multiSignature===type')
 			return this.#addSignature(
 				transaction,
-				{
-					min: input.data.min,
-					publicKeys: input.data.publicKeys,
-				},
+				multiSignatureAsset,
 				input.signatory,
 				senderPublicKey,
 			);
@@ -443,16 +452,31 @@ export class TransactionService extends Services.AbstractTransactionService {
 		signatory: Signatories.Signatory,
 		senderPublicKey?: string,
 	): Promise<Contracts.SignedTransactionData> {
+		console.log('transaction.service addSignature called')
 		transaction.data.signatures = [];
 
 		if (senderPublicKey) {
+			console.log('transaction.service senderPublicKey has been set')
 			transaction.senderPublicKey(senderPublicKey);
 		} else {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
 
-		const struct = transaction.getStruct();
+		console.log('transaction.service addSignature before getStruct', transaction.data)
+
+
+		let struct;
+
+		try {
+			struct = await transaction.getStruct();
+		} catch (error) {
+			console.log('transaction.service addSignature error when getStruct', error.message);
+			return;
+		}
+
 		struct.multiSignature = multiSignature;
+
+		console.log('struct', struct)
 
 		return this.#multiSignatureService.addSignature(struct, signatory);
 	}

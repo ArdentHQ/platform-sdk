@@ -46,15 +46,19 @@ export class MultiSignatureSigner {
 		transaction: Contracts.RawTransactionData,
 		signatory: Signatories.Signatory,
 	): Promise<MultiSignatureTransaction> {
+		console.log('add signature called', transaction)
 		const pendingMultiSignature = new PendingMultiSignatureTransaction(transaction);
 
+		console.log('add signature called - 1')
 		const isReady = pendingMultiSignature.isMultiSignatureReady({ excludeFinal: true });
 
+		console.log('add signature called - 2')
 		const { signingKeys, confirmKeys } = await this.#deriveKeyPairs(
 			signatory,
 			isReady && pendingMultiSignature.needsFinalSignature(),
 		);
 
+		console.log('add signature called - pre ready')
 		if (!isReady) {
 			if (signatory.actsWithLedger()) {
 				const index: number = this.#publicKeyIndex(
@@ -75,6 +79,7 @@ export class MultiSignatureSigner {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
 
+				console.log('add signature called - multisig called')
 				Transactions.Signer.multiSign(
 					transaction,
 					signingKeys,
