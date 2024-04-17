@@ -112,10 +112,16 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 
 	public override async verifyPublicKeyWithBLS(publicKey: string): Promise<boolean> {
 		if (!this.#isBooted) {
-			console.log("booting");
 			await this.#boot();
 		}
 
-		return await this.#app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory).verify(publicKey);
+		// @see https://github.com/ArkEcosystem/mainsail-browser-example/blob/main/examples/bls12-381.md
+		const consensusPublicKeyFactory: Contracts.Crypto.PublicKeyFactory = this.#app.getTagged(
+			Identifiers.Cryptography.Identity.PublicKey.Factory,
+			"type",
+			"consensus",
+		);
+
+		return await consensusPublicKeyFactory.verify(publicKey);
 	}
 }
