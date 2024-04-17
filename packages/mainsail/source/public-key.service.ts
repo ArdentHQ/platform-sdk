@@ -8,7 +8,7 @@ import { Interfaces } from "./crypto/index.js";
 import { Container } from "@mainsail/container";
 import { Application } from "@mainsail/kernel";
 import { Contracts } from "@mainsail/contracts";
-import { PublicKeyFactory } from "@mainsail/crypto-key-pair-bls12-381";
+import { PublicKeyFactory, KeyPairFactory } from "@mainsail/crypto-key-pair-bls12-381";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
@@ -43,7 +43,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 
 		this.#app = new Application(new Container());
 
-		this.#isBooted = false;
+		this.#boot();
 	}
 
 	async #boot(): Promise<void> {
@@ -64,14 +64,12 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 			this.#app.resolve(CoreCryptoTransactionUsername).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
+			this.#app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory),
 			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
 		]);
 
-		this.#app
-			.get<{
-				setConfig: Function;
-			}>(Identifiers.Cryptography.Configuration)
-			.setConfig({ milestones, network });
+		this.#app.get<Contracts.Crypto.PublicKeyFactory>(Identifiers.Cryptography.Identity.KeyPair.Factory);
+		this.#app.get<Contracts.Crypto.PublicKeyFactory>(Identifiers.Cryptography.Identity.PublicKey.Factory);
 
 		this.#isBooted = true;
 	}
@@ -115,6 +113,14 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 			await this.#boot();
 		}
 
+		console.log("running consensus");
+		// Example: generate consensus keys
+		const consensusKeyPairFactory: Contracts.Crypto.KeyPairFactory = this.#app.getTagged(
+			Identifiers.Cryptography.Identity.KeyPair.Factory,
+			"type",
+			"consensus",
+		);
+
 		// @see https://github.com/ArkEcosystem/mainsail-browser-example/blob/main/examples/bls12-381.md
 		const consensusPublicKeyFactory: Contracts.Crypto.PublicKeyFactory = this.#app.getTagged(
 			Identifiers.Cryptography.Identity.PublicKey.Factory,
@@ -122,6 +128,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 			"consensus",
 		);
 
+		console.log("verifying");
 		return await consensusPublicKeyFactory.verify(publicKey);
 	}
 }
