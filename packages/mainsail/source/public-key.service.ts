@@ -48,28 +48,25 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 
 	async #boot(): Promise<void> {
 		await Promise.all([
-			this.#app.resolve(CoreValidation).register(),
-			this.#app.resolve(CoreCryptoConfig).register(),
-			this.#app.resolve(CoreCryptoValidation).register(),
-			this.#app.resolve(CoreCryptoKeyPairEcdsa).register(),
-			this.#app.resolve(CoreCryptoAddressBase58).register(),
-			this.#app.resolve(CoreCryptoSignatureSchnorr).register(),
-			this.#app.resolve(CoreCryptoHashBcrypto).register(),
-			this.#app.resolve(CoreFees).register(),
-			this.#app.resolve(CoreFeesStatic).register(),
-			this.#app.resolve(CoreCryptoTransaction).register(),
-			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
-			this.#app.resolve(CoreCryptoTransactionVote).register(),
-			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
-			this.#app.resolve(CoreCryptoTransactionUsername).register(),
-			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
-			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
-			this.#app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory),
+			// this.#app.resolve(CoreValidation).register(),
+			// this.#app.resolve(CoreCryptoConfig).register(),
+			// this.#app.resolve(CoreCryptoValidation).register(),
+			// this.#app.resolve(CoreCryptoKeyPairEcdsa).register(),
+			// this.#app.resolve(CoreCryptoAddressBase58).register(),
+			// this.#app.resolve(CoreCryptoSignatureSchnorr).register(),
+			// this.#app.resolve(CoreCryptoHashBcrypto).register(),
+			// this.#app.resolve(CoreFees).register(),
+			// this.#app.resolve(CoreFeesStatic).register(),
+			// this.#app.resolve(CoreCryptoTransaction).register(),
+			// this.#app.resolve(CoreCryptoTransactionTransfer).register(),
+			// this.#app.resolve(CoreCryptoTransactionVote).register(),
+			// this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
+			// this.#app.resolve(CoreCryptoTransactionUsername).register(),
+			// this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
+			// this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
+			// this.#app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory),
 			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
 		]);
-
-		this.#app.get<Contracts.Crypto.PublicKeyFactory>(Identifiers.Cryptography.Identity.KeyPair.Factory);
-		this.#app.get<Contracts.Crypto.PublicKeyFactory>(Identifiers.Cryptography.Identity.PublicKey.Factory);
 
 		this.#isBooted = true;
 	}
@@ -113,22 +110,19 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 			await this.#boot();
 		}
 
-		console.log("running consensus");
-		// Example: generate consensus keys
 		const consensusKeyPairFactory: Contracts.Crypto.KeyPairFactory = this.#app.getTagged(
 			Identifiers.Cryptography.Identity.KeyPair.Factory,
 			"type",
 			"consensus",
 		);
 
-		// @see https://github.com/ArkEcosystem/mainsail-browser-example/blob/main/examples/bls12-381.md
 		const consensusPublicKeyFactory: Contracts.Crypto.PublicKeyFactory = this.#app.getTagged(
 			Identifiers.Cryptography.Identity.PublicKey.Factory,
 			"type",
 			"consensus",
 		);
 
-		console.log("verifying");
+		console.log("verifying", { publicKey });
 		return await consensusPublicKeyFactory.verify(publicKey);
 	}
 }
