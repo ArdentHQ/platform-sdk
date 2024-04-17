@@ -4,7 +4,7 @@ export const transactions: Networks.NetworkManifestTransactions = {
 	expirationType: "height",
 	fees: {
 		ticker: "ARK",
-		type: "dynamic",
+		type: "static",
 	},
 	memo: true,
 	multiPaymentRecipients: 64,
