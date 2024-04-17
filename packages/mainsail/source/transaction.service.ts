@@ -214,6 +214,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 				transaction.senderPublicKey(data.senderPublicKey);
 			}
 
+			data.publicKeys.map((publicKey) => {
+				transaction.participant(publicKey);
+			})
+
 			transaction.multiSignatureAsset({
 				min: data.min,
 				publicKeys: data.publicKeys,
