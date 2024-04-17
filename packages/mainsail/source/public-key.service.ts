@@ -65,7 +65,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 			// this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 			// this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
 			// this.#app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory),
-			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
+			// this.#app.resolve(CoreCryptoConsensusBls12381).register(),
 		]);
 
 		this.#isBooted = true;
