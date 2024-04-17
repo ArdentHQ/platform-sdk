@@ -104,6 +104,7 @@ export class Verifier {
 	}
 
 	public static verifySchema(data: ITransactionData, strict = true): ISchemaValidationResult {
+		console.log("verifySchema", data)
 		data.timestamp = DateTime.make().toUNIX();
 		const transactionType = TransactionTypeFactory.get(data.type, data.typeGroup, data.version);
 

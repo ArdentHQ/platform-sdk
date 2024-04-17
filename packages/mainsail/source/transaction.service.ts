@@ -284,6 +284,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const transaction = await Transactions.BuilderFactory[type]();
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
+			console.log('transaction.service -> actsWithMnemonic')
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
 		}
@@ -299,6 +300,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
+			console.log('transaction.service -> actsWithMultiSignature')
 			address = (
 				await this.#addressService.fromMultiSignature({
 					min: input.signatory.asset().min,
@@ -369,6 +371,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
+			console.log('transaction.service -> actsWithMultiSignature')
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());
 
 			return this.dataTransferObjectService.signedTransaction(
@@ -378,6 +381,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.hasMultiSignature()) {
+			console.log('transaction.service -> hasMultiSignature')
 			return this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
 		}
 
@@ -470,7 +474,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		try {
 			struct = await transaction.getStruct();
 		} catch (error) {
-			console.log('transaction.service addSignature error when getStruct', error.message);
+			console.log('transaction.service addSignature error when getStruct: ', error.message);
 			return;
 		}
 
