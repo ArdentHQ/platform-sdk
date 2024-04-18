@@ -8,33 +8,16 @@ import { Interfaces } from "./crypto/index.js";
 import { Container } from "@mainsail/container";
 import { Application } from "@mainsail/kernel";
 import { Contracts } from "@mainsail/contracts";
-import { PublicKeyFactory, KeyPairFactory } from "@mainsail/crypto-key-pair-bls12-381";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
-import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
 import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
-import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
-import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
-import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
 import { Identifiers } from "@mainsail/contracts";
-import { milestones } from "./crypto/networks/devnet/milestones.js";
-import { network } from "./crypto/networks/devnet/network.js";
-
-import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
-import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
-import { ServiceProvider as CoreCryptoTransactionUsername } from "@mainsail/crypto-transaction-username-registration";
-import { ServiceProvider as CoreCryptoTransactionValidatorRegistration } from "@mainsail/crypto-transaction-validator-registration";
-import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
-import { ServiceProvider as CoreCryptoTransactionValidatorResignation } from "@mainsail/crypto-transaction-validator-resignation";
-import { ServiceProvider as CoreFees } from "@mainsail/fees";
-import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 
 export class PublicKeyService extends Services.AbstractPublicKeyService {
 	readonly #config!: Interfaces.NetworkConfig;
 	readonly #app: Application;
-	#isBooted: boolean;
+	#isBooted: boolean = false;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
