@@ -57,6 +57,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 	public override async broadcast(
 		transaction: Services.MultiSignatureTransaction,
 	): Promise<Services.BroadcastResponse> {
+		console.log('abc called', transaction)
 		let multisigAsset = transaction.multiSignature;
 
 		if (transaction.asset && transaction.asset.multiSignature) {
@@ -68,10 +69,23 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		}
 
 		try {
-			const { id } = await this.#post("store", {
-				data: transaction,
-				multisigAsset,
-			});
+			// const { id } = await this.#post("transaction-pool", {
+			// 	data: transaction,
+			// 	multisigAsset,
+			// });
+
+			const result = await this.#request.post(
+				"transaction-pool",
+				{
+					body: {
+						transactions: [transaction.toBroadcast()]
+					},
+				},
+				"tx",
+			)
+			console.log("call result", result)
+
+			const id = "1256";
 
 			return {
 				accepted: [id],
@@ -148,6 +162,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 	}
 
 	async #post(method: string, parameters: any): Promise<Contracts.KeyValuePair> {
+		console.log('xyz called')
 		return (
 			await this.#request.post(
 				"/",
@@ -159,7 +174,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 						params: parameters,
 					},
 				},
-				"musig",
+				"tx",
 			)
 		).result;
 	}

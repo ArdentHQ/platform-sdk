@@ -101,6 +101,8 @@ export class ClientService extends Services.AbstractClientService {
 	): Promise<Services.BroadcastResponse> {
 		let response: Contracts.KeyValuePair;
 
+		console.log('mno called')
+
 		const body = {
 			transactions: transactions.map((transaction) => transaction.toBroadcast()),
 		};

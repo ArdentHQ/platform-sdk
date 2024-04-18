@@ -52,7 +52,7 @@ export class MultiSignatureSigner {
 		console.log('add signature called - 1')
 		const isReady = pendingMultiSignature.isMultiSignatureReady({ excludeFinal: true });
 
-		console.log('add signature called - 2')
+		console.log('add signature called - 2', isReady)
 		const { signingKeys, confirmKeys } = await this.#deriveKeyPairs(
 			signatory,
 			isReady && pendingMultiSignature.needsFinalSignature(),
@@ -60,6 +60,7 @@ export class MultiSignatureSigner {
 
 		console.log('add signature called - pre ready')
 		if (!isReady) {
+			console.log('add signature called - #3', isReady)
 			if (signatory.actsWithLedger()) {
 				const index: number = this.#publicKeyIndex(
 					transaction,
@@ -75,6 +76,7 @@ export class MultiSignatureSigner {
 
 				transaction.signatures.push(`${signatureIndex}${signature}`);
 			} else {
+				console.log('add signature called - #4', isReady)
 				if (!signingKeys) {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
@@ -89,6 +91,7 @@ export class MultiSignatureSigner {
 		}
 
 		if (isReady && pendingMultiSignature.needsFinalSignature()) {
+			console.log('add signature called - #5')
 			if (signingKeys) {
 				Transactions.Signer.sign(transaction, signingKeys);
 			}
@@ -105,6 +108,8 @@ export class MultiSignatureSigner {
 		}
 
 		transaction.signatures = uniq(transaction.signatures);
+
+		console.log('add signature called - #6', transaction)
 
 		return transaction;
 	}
