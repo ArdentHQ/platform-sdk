@@ -47,26 +47,10 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 	}
 
 	async #boot(): Promise<void> {
-		await Promise.all([
-			// this.#app.resolve(CoreValidation).register(),
-			// this.#app.resolve(CoreCryptoConfig).register(),
-			// this.#app.resolve(CoreCryptoValidation).register(),
-			// this.#app.resolve(CoreCryptoKeyPairEcdsa).register(),
-			// this.#app.resolve(CoreCryptoAddressBase58).register(),
-			// this.#app.resolve(CoreCryptoSignatureSchnorr).register(),
-			// this.#app.resolve(CoreCryptoHashBcrypto).register(),
-			// this.#app.resolve(CoreFees).register(),
-			// this.#app.resolve(CoreFeesStatic).register(),
-			// this.#app.resolve(CoreCryptoTransaction).register(),
-			// this.#app.resolve(CoreCryptoTransactionTransfer).register(),
-			// this.#app.resolve(CoreCryptoTransactionVote).register(),
-			// this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
-			// this.#app.resolve(CoreCryptoTransactionUsername).register(),
-			// this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
-			// this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
-			// this.#app.resolve<Contracts.Crypto.PublicKeyFactory>(PublicKeyFactory),
-			// this.#app.resolve(CoreCryptoConsensusBls12381).register(),
-		]);
+		await this.#app.resolve(CoreValidation).register();
+		await this.#app.resolve(CoreCryptoConfig).register();
+		await this.#app.resolve(CoreCryptoValidation).register();
+		await this.#app.resolve(CoreCryptoConsensusBls12381).register();
 
 		this.#isBooted = true;
 	}
