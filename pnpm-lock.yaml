@@ -431,6 +431,9 @@ importers:
       '@mainsail/crypto-hash-bcrypto':
         specifier: 0.0.1-alpha.15
         version: 0.0.1-alpha.15
+      '@mainsail/crypto-key-pair-bls12-381':
+        specifier: 0.0.1-alpha.15
+        version: 0.0.1-alpha.15
       '@mainsail/crypto-key-pair-ecdsa':
         specifier: 0.0.1-alpha.15
         version: 0.0.1-alpha.15
@@ -3337,7 +3340,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.2
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5704,7 +5707,7 @@ packages:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.2
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5718,7 +5721,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.2
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false

@@ -38,4 +38,8 @@ module.exports = {
 			module: false,
 		},
 	},
+	output: {
+		...baseConfig.output,
+		chunkFormat: false,
+	},
 };
