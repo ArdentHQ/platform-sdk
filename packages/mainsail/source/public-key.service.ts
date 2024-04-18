@@ -89,7 +89,6 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 			"consensus",
 		);
 
-		console.log("verifying", { publicKey });
 		return await consensusPublicKeyFactory.verify(publicKey);
 	}
 }
