@@ -2,9 +2,10 @@
 
 import { Contracts, Services, Signatories } from "@ardenthq/sdk";
 import { IReadWriteWallet, ITransactionService, WalletData } from "./contracts.js";
-import { pqueueSettled } from "./helpers/queue.js";
+
 import { ExtendedSignedTransactionData } from "./signed-transaction.dto.js";
 import { SignedTransactionDataDictionary } from "./wallet-transaction.service.contract.js";
+import { pqueueSettled } from "./helpers/queue.js";
 
 export class TransactionService implements ITransactionService {
 	/**
@@ -304,9 +305,7 @@ export class TransactionService implements ITransactionService {
 		if (this.canBeBroadcasted(id)) {
 			result = await this.#wallet.client().broadcast([transaction.data()]);
 		} else if (transaction.isMultiSignatureRegistration() || transaction.usesMultiSignature()) {
-			console.log('target hit')
-			result = await this.#wallet.client().broadcast([transaction.data()]);
-			// result = await this.#wallet.coin().multiSignature().broadcast(transaction.data().toSignedData());
+			result = await this.#wallet.coin().multiSignature().broadcast(transaction.data().toSignedData());
 		}
 
 		if (result.accepted.includes(transaction.id())) {

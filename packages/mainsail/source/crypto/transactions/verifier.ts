@@ -1,16 +1,17 @@
-import { DateTime } from "@ardenthq/sdk-intl";
 import { DuplicateParticipantInMultiSignatureError, InvalidMultiSignatureAssetError } from "../errors.js";
-import { Hash } from "../hash.js";
 import {
 	IMultiSignatureAsset,
 	ISchemaValidationResult,
 	ITransactionData,
 	IVerifyOptions,
 } from "../interfaces/index.js";
-import { configManager } from "../managers/index.js";
-import { validator } from "../validation/index.js";
+
+import { DateTime } from "@ardenthq/sdk-intl";
+import { Hash } from "../hash.js";
 import { TransactionTypeFactory } from "./types/factory.js";
 import { Utils } from "./utils.js";
+import { configManager } from "../managers/index.js";
+import { validator } from "../validation/index.js";
 
 export class Verifier {
 	public static verify(data: ITransactionData, options?: IVerifyOptions): boolean {
@@ -104,7 +105,6 @@ export class Verifier {
 	}
 
 	public static verifySchema(data: ITransactionData, strict = true): ISchemaValidationResult {
-		console.log("verifySchema", data)
 		data.timestamp = DateTime.make().toUNIX();
 		const transactionType = TransactionTypeFactory.get(data.type, data.typeGroup, data.version);
 

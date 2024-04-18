@@ -1,9 +1,9 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
+import { Enums, Identities, Interfaces, Managers, Transactions } from "./crypto/index.js";
+import { MultiSignatureAsset, MultiSignatureTransaction } from "./multi-signature.contract.js";
 import { numberToHex, uniq } from "@ardenthq/sdk-helpers";
 
 import { BindingType } from "./coin.contract.js";
-import { Enums, Identities, Interfaces, Managers, Transactions } from "./crypto/index.js";
-import { MultiSignatureAsset, MultiSignatureTransaction } from "./multi-signature.contract.js";
 import { PendingMultiSignatureTransaction } from "./multi-signature.transaction.js";
 
 export class MultiSignatureSigner {
@@ -46,21 +46,16 @@ export class MultiSignatureSigner {
 		transaction: Contracts.RawTransactionData,
 		signatory: Signatories.Signatory,
 	): Promise<MultiSignatureTransaction> {
-		console.log('add signature called', transaction)
 		const pendingMultiSignature = new PendingMultiSignatureTransaction(transaction);
 
-		console.log('add signature called - 1')
 		const isReady = pendingMultiSignature.isMultiSignatureReady({ excludeFinal: true });
 
-		console.log('add signature called - 2', isReady)
 		const { signingKeys, confirmKeys } = await this.#deriveKeyPairs(
 			signatory,
 			isReady && pendingMultiSignature.needsFinalSignature(),
 		);
 
-		console.log('add signature called - pre ready')
 		if (!isReady) {
-			console.log('add signature called - #3', isReady)
 			if (signatory.actsWithLedger()) {
 				const index: number = this.#publicKeyIndex(
 					transaction,
@@ -76,12 +71,10 @@ export class MultiSignatureSigner {
 
 				transaction.signatures.push(`${signatureIndex}${signature}`);
 			} else {
-				console.log('add signature called - #4', isReady)
 				if (!signingKeys) {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
 
-				console.log('add signature called - multisig called')
 				Transactions.Signer.multiSign(
 					transaction,
 					signingKeys,
@@ -91,7 +84,6 @@ export class MultiSignatureSigner {
 		}
 
 		if (isReady && pendingMultiSignature.needsFinalSignature()) {
-			console.log('add signature called - #5')
 			if (signingKeys) {
 				Transactions.Signer.sign(transaction, signingKeys);
 			}
@@ -108,8 +100,6 @@ export class MultiSignatureSigner {
 		}
 
 		transaction.signatures = uniq(transaction.signatures);
-
-		console.log('add signature called - #6', transaction)
 
 		return transaction;
 	}

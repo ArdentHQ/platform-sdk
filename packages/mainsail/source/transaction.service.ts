@@ -27,7 +27,10 @@ import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
 import { Application } from "@mainsail/kernel";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
-import { ServiceProvider as CoreCryptoTransactionMultiSignature, MultiSignatureBuilder } from "@mainsail/crypto-transaction-multi-signature-registration";
+import {
+	ServiceProvider as CoreCryptoTransactionMultiSignature,
+	MultiSignatureBuilder,
+} from "@mainsail/crypto-transaction-multi-signature-registration";
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
@@ -197,7 +200,25 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
+	/**
+	 * @inheritDoc
+	 *
+	 * @musig
+	 */
+	public override async multiSignature(
+		input: Services.MultiSignatureInput,
+	): Promise<Contracts.SignedTransactionData> {
+		return this.#createFromData("multiSignature", input, ({ transaction, data }) => {
+			if (data.senderPublicKey) {
+				transaction.senderPublicKey(data.senderPublicKey);
+			}
 
+			transaction.multiSignatureAsset({
+				min: data.min,
+				publicKeys: data.publicKeys,
+			});
+		});
+	}
 
 	/**
 	 * @inheritDoc
@@ -262,7 +283,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const transaction = await Transactions.BuilderFactory[type]();
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
-			console.log('transaction.service -> actsWithMnemonic')
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
 		}
@@ -278,7 +298,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
-			console.log('transaction.service -> actsWithMultiSignature')
 			address = (
 				await this.#addressService.fromMultiSignature({
 					min: input.signatory.asset().min,
@@ -349,7 +368,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
-			console.log('transaction.service -> actsWithMultiSignature')
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());
 
 			return this.dataTransferObjectService.signedTransaction(
@@ -359,20 +377,16 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.hasMultiSignature()) {
-			console.log('transaction.service -> hasMultiSignature')
 			return this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
 		}
 
 		if (type === "multiSignature") {
-			const multiSignatureAsset = {
-				min: input.data.min,
-				publicKeys: input.data.publicKeys,
-			}
-
-			console.log('transaction.service multiSignature===type')
 			return this.#addSignature(
 				transaction,
-				multiSignatureAsset,
+				{
+					min: input.data.min,
+					publicKeys: input.data.publicKeys,
+				},
 				input.signatory,
 				senderPublicKey,
 			);
@@ -421,43 +435,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const signedTransaction = await signedTransactionBuilder?.build();
 
-		const dto = this.dataTransferObjectService.signedTransaction(
+		return this.dataTransferObjectService.signedTransaction(
 			signedTransaction.id!,
 			signedTransaction.data,
 			signedTransaction.serialized.toString("hex"),
 		);
-
-		console.log(dto);
-
-		return dto;
-	}
-
-	/**
-	 * @inheritDoc
-	 *
-	 * @musig
-	 */
-	public override async multiSignature(
-		input: Services.MultiSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		console.log('transaction.service -> multiSignature', input)
-		return this.#createFromData("multiSignature", input, ({transaction, data}: {
-			transaction: MultiSignatureBuilder,
-			data: Services.MultiSignatureInput['data']
-		}) => {
-			if (data.senderPublicKey) {
-				transaction.senderPublicKey(data.senderPublicKey);
-			}
-
-			data.publicKeys.map((publicKey) => {
-				transaction.participant(publicKey);
-			})
-
-			transaction.multiSignatureAsset({
-				min: data.min,
-				publicKeys: data.publicKeys,
-			});
-		});
 	}
 
 	async #addSignature(
@@ -466,42 +448,15 @@ export class TransactionService extends Services.AbstractTransactionService {
 		signatory: Signatories.Signatory,
 		senderPublicKey?: string,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log('transaction.service addSignature called')
-
 		if (senderPublicKey) {
-			console.log('transaction.service senderPublicKey has been set')
 			transaction.senderPublicKey(senderPublicKey);
 		} else {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
 
-		const passphrasePublicKeyMap = {
-			"031f89f409d92d6e45c8b13eab43329e0a0a3ade16931bb192a53d20abb80a85a4": "oven mail hurt someone stage giggle peace online claw survey amateur absurd notice prepare good risk drum anchor wire garlic annual mule eight settle",
-			"033a11cc4f1a33c842e538735ee073507381f0e2e23bf8ec1d2577053496511353": "monitor strike judge valve video hair damage wide strategy enjoy coyote clay lawn reward tenant vessel sentence utility lunar arrange lunar swift time base"
-		}
+		const struct = transaction.getStruct();
+		struct.multiSignature = multiSignature;
 
-		console.log('transaction.service addSignature #1', transaction.data)
-		transaction.data.signatures = [];
-
-		console.log('transaction.service addSignature #2', transaction.data.signatures)
-
-		for (const [index, key] of multiSignature.publicKeys.entries()) {
-			console.log(index, key, passphrasePublicKeyMap[key]);
-			await transaction.multiSign(passphrasePublicKeyMap[key], index);
-		}
-
-		console.log('transaction.service addSignature before getStruct', transaction.data)
-
-		// Sign with the sender
-		const signedTransactionBuilder = await transaction.sign(signatory.signingKey());
-
-		const signedTransaction = await signedTransactionBuilder.build();
-		console.log('salam', signedTransaction)
-
-		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id!,
-			signedTransaction,
-			signedTransaction.serialized.toString("hex"),
-		);
+		return this.#multiSignatureService.addSignature(struct, signatory);
 	}
 }
