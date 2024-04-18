@@ -67,6 +67,8 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 		"estimateExpiration",
 		"multiPayment.musig",
 		"multiPayment",
+		"multiSignature.musig",
+		"multiSignature",
 		"transfer.musig",
 		"transfer",
 		"vote.musig",
