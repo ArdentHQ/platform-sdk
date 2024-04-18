@@ -448,6 +448,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 		signatory: Signatories.Signatory,
 		senderPublicKey?: string,
 	): Promise<Contracts.SignedTransactionData> {
+		transaction.data.signatures = [];
+
 		if (senderPublicKey) {
 			transaction.senderPublicKey(senderPublicKey);
 		} else {
