@@ -116,7 +116,7 @@ export class DelegateService implements IDelegateService {
 		const result = this.all(coin, network).find((delegate) => delegate[key]() === value);
 
 		if (result === undefined) {
-			throw new Error(`No delegate for ${key} with ${value} could be found.`);
+			throw new Error(`No delegate for ${key} with value ${value} could be found.`);
 		}
 
 		return result;
