@@ -105,7 +105,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
-	 * @musig
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		if (!input.data.amount) {
@@ -150,7 +149,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
-	 * @musig
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData(
@@ -198,27 +196,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
-	 * @musig
-	 */
-	public override async multiSignature(
-		input: Services.MultiSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiSignature", input, ({ transaction, data }) => {
-			if (data.senderPublicKey) {
-				transaction.senderPublicKey(data.senderPublicKey);
-			}
-
-			transaction.multiSignatureAsset({
-				min: data.min,
-				publicKeys: data.publicKeys,
-			});
-		});
-	}
-
-	/**
-	 * @inheritDoc
-	 *
-	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
