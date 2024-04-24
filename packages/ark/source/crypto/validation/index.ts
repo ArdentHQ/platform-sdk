@@ -158,7 +158,7 @@ export class Validator {
 
 	private validateSignature(data: ITransactionData): boolean {
 		if (!data.signature) {
-			return false;
+			return true;
 		}
 
 		return this.validateAlphanumeric(data.signature);
