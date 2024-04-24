@@ -32,12 +32,15 @@ import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
 import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
+import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
 	readonly #addressService!: Services.AddressService;
 	readonly #publicKeyService!: Services.PublicKeyService;
+	readonly #multiSignatureService!: Services.MultiSignatureService;
+	readonly #multiSignatureSigner!: IoC.Factory<MultiSignatureSigner>;
 	readonly #request: Request;
 	readonly #app: Application;
 	#isBooted: boolean;
@@ -50,6 +53,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 		this.#ledgerService = container.get(IoC.BindingType.LedgerService);
 		this.#addressService = container.get(IoC.BindingType.AddressService);
 		this.#publicKeyService = container.get(IoC.BindingType.PublicKeyService);
+		this.#multiSignatureService = container.get(IoC.BindingType.MultiSignatureService);
+		this.#multiSignatureSigner = container.factory(MultiSignatureSigner);
 
 		this.#configCrypto = {
 			crypto: container.get(BindingType.Crypto),
