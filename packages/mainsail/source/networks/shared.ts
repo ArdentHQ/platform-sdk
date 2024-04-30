@@ -14,7 +14,6 @@ export const transactions: Networks.NetworkManifestTransactions = {
 		"usernameResignation",
 		"delegateResignation",
 		"multiPayment",
-		"multiSignature",
 		"transfer",
 		"vote",
 	],
@@ -42,7 +41,7 @@ export const importMethods: Networks.NetworkManifestImportMethods = {
 };
 
 export const featureFlags: Networks.NetworkManifestFeatureFlags = {
-	Address: ["mnemonic.bip39", "multiSignature", "privateKey", "publicKey", "validate", "wif"],
+	Address: ["mnemonic.bip39", "privateKey", "publicKey", "validate", "wif"],
 	Client: [
 		"transaction",
 		"transactions",
@@ -58,20 +57,15 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 	KeyPair: ["mnemonic.bip39", "privateKey", "wif"],
 	Message: ["sign", "verify"],
 	PrivateKey: ["mnemonic.bip39", "wif"],
-	PublicKey: ["mnemonic.bip39", "multiSignature", "wif"],
+	PublicKey: ["mnemonic.bip39", "wif"],
 	Transaction: [
 		"usernameRegistration",
 		"usernameResignation",
 		"delegateRegistration",
 		"delegateResignation",
 		"estimateExpiration",
-		"multiPayment.musig",
 		"multiPayment",
-		"multiSignature.musig",
-		"multiSignature",
-		"transfer.musig",
 		"transfer",
-		"vote.musig",
 		"vote",
 	],
 	WIF: ["mnemonic.bip39"],

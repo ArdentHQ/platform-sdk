@@ -1,16 +1,11 @@
 // Based on https://github.com/near/near-ledger-js/blob/master/supportedTransports.js
-import LedgerU2F from "@ledgerhq/hw-transport-u2f";
 import LedgerHID from "@ledgerhq/hw-transport-webhid";
 import LedgerUSB from "@ledgerhq/hw-transport-webusb";
 import platform from "platform";
 
 export class LedgerTransportFactory {
-	public async supportedTransport(): Promise<LedgerHID | LedgerUSB | LedgerU2F> {
-		const [supportsHID, supportsUSB, supportsU2F] = await Promise.all([
-			this.#supportsHID(),
-			this.#supportsUSB(),
-			this.#supportsU2F(),
-		]);
+	public async supportedTransport(): Promise<typeof LedgerHID | typeof LedgerUSB> {
+		const [supportsHID, supportsUSB] = await Promise.all([this.#supportsHID(), this.#supportsUSB()]);
 
 		if (supportsHID) {
 			return LedgerHID;
@@ -18,10 +13,6 @@ export class LedgerTransportFactory {
 
 		if (supportsUSB) {
 			return LedgerUSB;
-		}
-
-		if (supportsU2F) {
-			return LedgerU2F;
 		}
 
 		throw new Error("No transports appear to be supported.");
@@ -42,14 +33,6 @@ export class LedgerTransportFactory {
 			}
 
 			return false;
-		} catch {
-			return false;
-		}
-	}
-
-	async #supportsU2F(): Promise<boolean> {
-		try {
-			return await LedgerU2F.isSupported();
 		} catch {
 			return false;
 		}
