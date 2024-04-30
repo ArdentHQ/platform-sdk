@@ -243,11 +243,35 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.toString();
 	}
 
+	/**
+	 * @inheritDoc
+	 *
+	 * @musig
+	 */
+	public override async multiSignature(
+		input: Services.MultiSignatureInput,
+	): Promise<Contracts.SignedTransactionData> {
+		return this.#createFromData("multiSignature", input, ({ transaction, data }: {transaction: MultiSignatureBuilder; data: any}) => {
+			console.log('trx service multiSignature', input);
+			if (data.senderPublicKey) {
+				transaction.senderPublicKey(data.senderPublicKey);
+			}
+
+			transaction.min(data.min);
+
+			transaction.multiSignatureAsset({
+				min: data.min,
+				publicKeys: data.publicKeys,
+			});
+		});
+	}
+
 	async #createFromData(
 		type: string,
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
+		console.log('createFromData', input)
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
@@ -258,6 +282,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let senderPublicKey: string | undefined;
 
 		const transaction = await Transactions.BuilderFactory[type]();
+		console.log('trx has built', transaction)
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -358,6 +383,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (type === "multiSignature") {
+			console.log('type is multiSignature')
 			return this.#addSignature(
 				transaction,
 				{
@@ -420,12 +446,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	async #addSignature(
-		transaction,
+		transaction: MultiSignatureBuilder,
 		multiSignature: Interfaces.IMultiSignatureAsset,
 		signatory: Signatories.Signatory,
 		senderPublicKey?: string,
 	): Promise<Contracts.SignedTransactionData> {
-		transaction.data.signatures = [];
+		// transaction.data.signatures = [];
+		console.log('trx service addSignature', transaction.data);
 
 		if (senderPublicKey) {
 			transaction.senderPublicKey(senderPublicKey);
@@ -433,8 +460,18 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
 
-		const struct = transaction.getStruct();
-		struct.multiSignature = multiSignature;
+
+
+		let struct;
+
+		try {
+			console.log('getting struct', transaction)
+			struct = await transaction.getStruct();
+			struct.multiSignature = multiSignature;
+		}catch (e) {
+			console.log("error - ", e)
+			throw e;
+		}
 
 		return this.#multiSignatureService.addSignature(struct, signatory);
 	}

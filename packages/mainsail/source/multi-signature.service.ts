@@ -68,8 +68,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		}
 
 		try {
-			// TODO: refactor to handle Mainsail index-based response
-			const { id } = await this.#post("transaction-pool", {
+			const { id } = await this.#post("store", {
 				data: transaction,
 				multisigAsset,
 			});
@@ -138,6 +137,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		transaction: Contracts.RawTransactionData,
 		signatory: Signatories.Signatory,
 	): Promise<Contracts.SignedTransactionData> {
+		console.log("musig service - addSignature", transaction)
 		applyCryptoConfiguration(this.#configCrypto);
 
 		const transactionWithSignature = await this.#multiSignatureSigner().addSignature(transaction, signatory);
