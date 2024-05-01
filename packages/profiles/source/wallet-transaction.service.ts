@@ -402,14 +402,17 @@ export class TransactionService implements ITransactionService {
 	 * @memberof TransactionService
 	 */
 	async #signTransaction(type: string, input: any): Promise<string> {
+		console.log('wallet-transaction.service.ts => Starting to sign transaction', type, input)
 		const transaction: ExtendedSignedTransactionData = this.#createExtendedSignedTransactionData(
 			await this.#wallet.coin().transaction()[type](input),
 		);
+		console.log('wallet-transaction.service.ts => transaction has been created', transaction)
 
 		// When we are working with Multi-Signatures we need to sign them in split through
 		// broadcasting and fetching them multiple times until all participants have signed
 		// the transaction. Once the transaction is fully signed we can mark it as finished.
 		if (transaction.isMultiSignatureRegistration() || transaction.usesMultiSignature()) {
+			console.log('wallet-transaction.service.ts => transaction is pending', transaction)
 			this.#pending[transaction.id()] = transaction;
 		} else {
 			this.#signed[transaction.id()] = transaction;

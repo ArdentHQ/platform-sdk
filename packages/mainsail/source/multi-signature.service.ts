@@ -137,7 +137,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		transaction: Contracts.RawTransactionData,
 		signatory: Signatories.Signatory,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("musig service - addSignature", transaction)
+		console.log("mainsail-multi-signature.service.ts => addSignature");
 		applyCryptoConfiguration(this.#configCrypto);
 
 		const transactionWithSignature = await this.#multiSignatureSigner().addSignature(transaction, signatory);

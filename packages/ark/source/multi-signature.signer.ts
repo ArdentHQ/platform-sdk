@@ -46,6 +46,7 @@ export class MultiSignatureSigner {
 		transaction: Contracts.RawTransactionData,
 		signatory: Signatories.Signatory,
 	): Promise<MultiSignatureTransaction> {
+		console.log("ark-multi-signature.signer.ts => addSignature", transaction);
 		const pendingMultiSignature = new PendingMultiSignatureTransaction(transaction);
 
 		const isReady = pendingMultiSignature.isMultiSignatureReady({ excludeFinal: true });
@@ -74,6 +75,7 @@ export class MultiSignatureSigner {
 				if (!signingKeys) {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
+				console.log("ark-multi-signature.signer.ts => addSignature - not ready");
 
 				Transactions.Signer.multiSign(
 					transaction,
@@ -99,6 +101,7 @@ export class MultiSignatureSigner {
 			transaction.id = Transactions.Utils.getId(transaction);
 		}
 
+		console.log("ark-multi-signature.signer.ts => addSignature - returning", transaction);
 		transaction.signatures = uniq(transaction.signatures);
 
 		return transaction;

@@ -134,6 +134,8 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 	}
 
 	public getStruct(): ITransactionData {
+		console.log("ark - transaction.ts - getStruct", this.data);
+
 		if (!this.data.senderPublicKey || (!this.data.signature && !this.data.signatures)) {
 			throw new MissingTransactionSignatureError();
 		}

@@ -46,6 +46,7 @@ export class MultiSignatureSigner {
 		transaction: Contracts.RawTransactionData,
 		signatory: Signatories.Signatory,
 	): Promise<MultiSignatureTransaction> {
+		console.log("mainsail-multi-signature.signer.ts => addSignature", transaction);
 		const pendingMultiSignature = new PendingMultiSignatureTransaction(transaction);
 
 		const isReady = pendingMultiSignature.isMultiSignatureReady({ excludeFinal: true });
@@ -74,6 +75,7 @@ export class MultiSignatureSigner {
 				if (!signingKeys) {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
+				console.log("mansail-multi-signature.signer.ts => addSignature - not ready");
 
 				Transactions.Signer.multiSign(
 					transaction,
@@ -100,6 +102,7 @@ export class MultiSignatureSigner {
 		}
 
 		transaction.signatures = uniq(transaction.signatures);
+		console.log("mainsail-multi-signature.signer.ts => addSignature - returning", transaction);
 
 		return transaction;
 	}

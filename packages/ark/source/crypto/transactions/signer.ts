@@ -32,6 +32,7 @@ export class Signer {
 	}
 
 	public static multiSign(transaction: ITransactionData, keys: IKeyPair, index = -1): string {
+		console.log("ark - signer.ts => multiSign", transaction);
 		if (!transaction.signatures) {
 			transaction.signatures = [];
 		}
@@ -48,6 +49,7 @@ export class Signer {
 		const indexedSignature = `${numberToHex(index)}${signature}`;
 		transaction.signatures.push(indexedSignature);
 
+		console.log("ark - signer.ts => multiSign after signing", transaction);
 		return indexedSignature;
 	}
 }
