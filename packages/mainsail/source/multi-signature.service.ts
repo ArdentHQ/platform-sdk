@@ -57,6 +57,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 	public override async broadcast(
 		transaction: Services.MultiSignatureTransaction,
 	): Promise<Services.BroadcastResponse> {
+		console.log("mainsail - broadcasting", transaction)
 		let multisigAsset = transaction.multiSignature;
 
 		if (transaction.asset && transaction.asset.multiSignature) {
@@ -68,10 +69,15 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		}
 
 		try {
-			const { id } = await this.#post("store", {
+			console.log('a store request has been made to the musig server', transaction)
+			const resp = await this.#post("store", {
 				data: transaction,
 				multisigAsset,
 			});
+
+			console.log('broadcast response is - ', resp)
+
+			const id = resp.id;
 
 			return {
 				accepted: [id],
@@ -137,7 +143,6 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		transaction: Contracts.RawTransactionData,
 		signatory: Signatories.Signatory,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("mainsail-multi-signature.service.ts => addSignature");
 		applyCryptoConfiguration(this.#configCrypto);
 
 		const transactionWithSignature = await this.#multiSignatureSigner().addSignature(transaction, signatory);
@@ -149,20 +154,26 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 	}
 
 	async #post(method: string, parameters: any): Promise<Contracts.KeyValuePair> {
-		return (
-			await this.#request.post(
-				"/",
-				{
-					body: {
-						id: UUID.random(),
-						jsonrpc: "2.0",
-						method,
-						params: parameters,
-					},
+		const log = method !== "list";
+
+		const x = await this.#request.post(
+			"/",
+			{
+				body: {
+					id: UUID.random(),
+					jsonrpc: "2.0",
+					method,
+					params: parameters,
 				},
-				"musig",
-			)
-		).result;
+			},
+			"musig",
+		);
+
+		if(log) {
+			console.log('mainsail - requesting to musig server', method, parameters)
+			console.log("request response is", x);
+		}
+		return x.result;
 	}
 
 	/**

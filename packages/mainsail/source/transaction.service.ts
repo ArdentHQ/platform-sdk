@@ -252,9 +252,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async multiSignature(
 		input: Services.MultiSignatureInput,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("mainsail-transaction.service.ts => multiSignature", input);
 		return this.#createFromData("multiSignature", input, ({ transaction, data }: {transaction: MultiSignatureBuilder; data: any}) => {
-			console.log('mainsail - musig callback', input, data);
 			if (data.senderPublicKey) {
 				transaction.senderPublicKey(data.senderPublicKey);
 			}
@@ -271,7 +269,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("mainsail-transaction.service.ts => createFromData", type, input);
 		if (!this.#isBooted) {
 			await this.#boot();
 		}
@@ -282,28 +279,23 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let senderPublicKey: string | undefined;
 
 		const transaction = await Transactions.BuilderFactory[type]();
-		console.log('trx has built', transaction)
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
-			console.log("mainsail-transaction.service.ts => createFromData - actsWithMnemonic");
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
-			console.log("mainsail-transaction.service.ts => createFromData - actsWithWIF");
 			address = (await this.#addressService.fromSecret(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromSecret(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithWIF() || input.signatory.actsWithConfirmationWIF()) {
-			console.log("mainsail-transaction.service.ts => createFromData - actsWithMultiSignature");
 			address = (await this.#addressService.fromWIF(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromWIF(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
-			console.log("mainsail-transaction.service.ts => createFromData - actsWithMultiSignature");
 			address = (
 				await this.#addressService.fromMultiSignature({
 					min: input.signatory.asset().min,
@@ -370,12 +362,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (callback) {
-			console.log("mainsail-transaction.service.ts => createFromData - callback run");
 			callback({ data: input.data, transaction });
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
-			console.log("mainsail-transaction.service.ts => createFromData - actsWithMultiSignature - 1");
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());
 
 			return this.dataTransferObjectService.signedTransaction(
@@ -385,12 +375,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.hasMultiSignature()) {
-			console.log("mainsail-transaction.service.ts => createFromData - hasMultiSignature");
 			return this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
 		}
 
 		if (type === "multiSignature") {
-			console.log("mainsail-transaction.service.ts => createFromData - type === \"multiSignature\"");
 			return this.#addSignature(
 				transaction,
 				{
@@ -459,7 +447,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		senderPublicKey?: string,
 	): Promise<Contracts.SignedTransactionData> {
 		transaction.data.signatures = [];
-		console.log("mainsail-transaction.service.ts => addSignature - starting");
 
 		if (senderPublicKey) {
 			transaction.senderPublicKey(senderPublicKey);

@@ -28,9 +28,7 @@ export class AbstractDataTransferObjectService implements DataTransferObjectServ
 	}
 
 	public signedTransaction(identifier: string, signedData: string, broadcastData?: any): SignedTransactionData {
-		console.log("data-transfer-object.service.ts => signedTransaction");
-
-		const data = this.#container
+		return this.#container
 			.resolve<SignedTransactionData>(this.#dataTransferObjects.SignedTransactionData)
 			.configure(
 				identifier,
@@ -38,9 +36,6 @@ export class AbstractDataTransferObjectService implements DataTransferObjectServ
 				broadcastData,
 				this.#configRepository.get<number>(ConfigKey.CurrencyDecimals),
 			);
-
-		console.log("data-transfer-object.service.ts => signedTransaction", data.toObject());
-		return data;
 	}
 
 	public transaction(transaction: unknown): ConfirmedTransactionData {

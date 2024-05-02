@@ -138,7 +138,6 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		signatory: Signatories.Signatory,
 	): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		console.log("ark-multi-signature.service.ts => addSignature");
 
 		const transactionWithSignature = await this.#multiSignatureSigner().addSignature(transaction, signatory);
 

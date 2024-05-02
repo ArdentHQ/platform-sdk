@@ -49,9 +49,7 @@ export class MultiSignatureBuilder extends TransactionBuilder<MultiSignatureBuil
 	}
 
 	public override getStruct(): ITransactionData {
-		console.log("ark - multi-signature.ts - getStruct")
 		const struct: ITransactionData = super.getStruct();
-		console.log("ark - multi-signature.ts - superStruct is", struct)
 		struct.amount = this.data.amount;
 		struct.recipientId = this.data.recipientId;
 		struct.asset = this.data.asset;

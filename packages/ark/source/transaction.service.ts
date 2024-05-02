@@ -127,10 +127,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async multiSignature(
 		input: Services.MultiSignatureInput,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("ark-transaction.service.ts => multiSignature", input);
-
 		return this.#createFromData("multiSignature", input, ({ transaction, data }) => {
-			console.log('ark - musig callback', input, data);
 			if (data.senderPublicKey) {
 				transaction.senderPublicKey(data.senderPublicKey);
 			}
@@ -190,7 +187,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("ark-transaction.service.ts => createFromData", type, input);
 		applyCryptoConfiguration(this.#configCrypto);
 
 		let address: string | undefined;
@@ -200,25 +196,21 @@ export class TransactionService extends Services.AbstractTransactionService {
 		transaction.version(2);
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
-			console.log("ark-transaction.service.ts => createFromData - actsWithMnemonic");
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
-			console.log("ark-transaction.service.ts => createFromData - actsWithSecret");
 			address = (await this.#addressService.fromSecret(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromSecret(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithWIF() || input.signatory.actsWithConfirmationWIF()) {
-			console.log("ark-transaction.service.ts => createFromData - actsWithWIF");
 			address = (await this.#addressService.fromWIF(input.signatory.signingKey())).address;
 			senderPublicKey = (await this.#publicKeyService.fromWIF(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
-			console.log("ark-transaction.service.ts => createFromData - actsWithMultiSignature");
 			address = (
 				await this.#addressService.fromMultiSignature({
 					min: input.signatory.asset().min,
@@ -279,12 +271,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (callback) {
-			console.log("ark-transaction.service.ts => createFromData - callback run");
 			callback({ data: input.data, transaction });
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
-			console.log("ark-transaction.service.ts => createFromData - actsWithMultiSignature - 1");
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());
 
 			return this.dataTransferObjectService.signedTransaction(
@@ -294,12 +284,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.hasMultiSignature()) {
-			console.log("ark-transaction.service.ts => createFromData - hasMultiSignature");
 			return this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
 		}
 
 		if (type === "multiSignature") {
-			console.log("ark-transaction.service.ts => createFromData - type === multiSignature");
 			return this.#addSignature(
 				transaction,
 				{
@@ -361,7 +349,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		signatory: Signatories.Signatory,
 		senderPublicKey?: string,
 	): Promise<Contracts.SignedTransactionData> {
-		console.log("ark-transaction.service.ts => addSignature - starting");
 		transaction.data.signatures = [];
 
 		if (senderPublicKey) {
@@ -372,7 +359,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const struct = transaction.getStruct();
 		struct.multiSignature = multiSignature;
-		console.log("ark-transaction.service.ts => addSignature - getStruct", struct);
 
 		return this.#multiSignatureService.addSignature(struct, signatory);
 	}
