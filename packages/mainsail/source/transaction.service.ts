@@ -1,5 +1,4 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
-import {SignedTransactionData} from "@ardenthq/sdk/source/signed-transaction.dto.contract";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Container } from "@mainsail/container";
 import { Identifiers } from "@mainsail/contracts";
@@ -9,13 +8,13 @@ import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto
 import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
-import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import { ServiceProvider as CoreCryptoTransaction, Utils } from "@mainsail/crypto-transaction";
 import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
 import {
 	MultiSignatureBuilder,
 	ServiceProvider as CoreCryptoTransactionMultiSignature,
 } from "@mainsail/crypto-transaction-multi-signature-registration";
-import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
+import {ServiceProvider as CoreCryptoTransactionTransfer, TransferBuilder} from "@mainsail/crypto-transaction-transfer";
 import {
 	ServiceProvider as CoreCryptoTransactionUsername,
 	UsernameRegistrationBuilder,
@@ -39,6 +38,39 @@ import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
+
+export const boot = async () => {
+	const app = new Application(new Container());
+
+	await Promise.all([
+		app.resolve(CoreValidation).register(),
+		app.resolve(CoreCryptoConfig).register(),
+		app.resolve(CoreCryptoValidation).register(),
+		app.resolve(CoreCryptoKeyPairEcdsa).register(),
+		app.resolve(CoreCryptoAddressBase58).register(),
+		app.resolve(CoreCryptoSignatureSchnorr).register(),
+		app.resolve(CoreCryptoHashBcrypto).register(),
+		app.resolve(CoreFees).register(),
+		app.resolve(CoreFeesStatic).register(),
+		app.resolve(CoreCryptoTransaction).register(),
+		app.resolve(CoreCryptoTransactionTransfer).register(),
+		app.resolve(CoreCryptoTransactionVote).register(),
+		app.resolve(CoreCryptoMultipaymentTransfer).register(),
+		app.resolve(CoreCryptoTransactionUsername).register(),
+		app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
+		app.resolve(CoreCryptoTransactionValidatorResignation).register(),
+		app.resolve(CoreCryptoConsensusBls12381).register(),
+		app.resolve(CoreCryptoTransactionMultiSignature).register(),
+	]);
+
+	app
+		.get<{
+			setConfig: Function;
+		}>(Identifiers.Cryptography.Configuration)
+		.setConfig({ milestones, network });
+
+	return app;
+}
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -379,7 +411,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (type === "multiSignature") {
-			return this.#addSignature(
+			return await this.#addSignature(
 				transaction,
 				{
 					min: input.data.min,
@@ -454,18 +486,32 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
 
-		// let struct;
-		//
-		// try {
-		// 	console.log('getting struct', transaction)
-		// 	struct = await transaction.getStruct();
-		// 	struct.multiSignature = multiSignature;
-		// }catch (e) {
-		// 	console.log("error - ", e)
-		// 	throw e;
-		// }
-		const struct = transaction.data as SignedTransactionData;
-		console.log("mainsail-transaction.service.ts => addSignature - getStruct", struct);
+		let struct;
+
+		try {
+			console.log('getting struct', transaction, this.#app.resolve(Utils))
+			// struct = await transaction.getStruct();
+
+			struct = transaction.data;
+
+			console.log("trx data", struct, struct.id)
+
+			const serialized = await this.#app.resolve(Utils).toBytes(struct);
+			const id = (await this.#app.resolve(Utils).getId({ serialized })).toString();
+
+			console.log("generated id is", id);
+
+			// transaction.data.id = id;
+			// transaction.data.multiSignature = multiSignature;
+			//
+			struct.id = id;
+			struct.multiSignature = multiSignature;
+		}catch (e) {
+			console.log("error - ", e)
+			throw e;
+		}
+		// const struct = transaction.data as SignedTransactionData;
+		// console.log("mainsail-transaction.service.ts => addSignature - getStruct", struct);
 
 		return this.#multiSignatureService.addSignature(struct, signatory);
 	}

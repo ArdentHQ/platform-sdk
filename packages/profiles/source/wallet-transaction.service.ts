@@ -410,7 +410,6 @@ export class TransactionService implements ITransactionService {
 		// broadcasting and fetching them multiple times until all participants have signed
 		// the transaction. Once the transaction is fully signed we can mark it as finished.
 		if (transaction.isMultiSignatureRegistration() || transaction.usesMultiSignature()) {
-			console.log('wallet-transaction.service.ts => transaction is pending', transaction)
 			this.#pending[transaction.id()] = transaction;
 		} else {
 			this.#signed[transaction.id()] = transaction;
