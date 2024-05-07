@@ -5,10 +5,6 @@ import dotify from "node-dotify";
 import { Enums } from "./crypto/index.js";
 import { Request } from "./request.js";
 
-import { Contracts as MainSailContracts } from "@mainsail/contracts";
-import {boot} from "./transaction.service";
-import {Utils} from "@mainsail/crypto-transaction";
-
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
 
@@ -103,20 +99,8 @@ export class ClientService extends Services.AbstractClientService {
 	): Promise<Services.BroadcastResponse> {
 		let response: Contracts.KeyValuePair;
 
-		const app = await boot();
-
-		const tx = transactions[0];
-
-		let payload = tx.toBroadcast();
-
-		if (tx.isMultiSignatureRegistration()) {
-			const serialized = await app.resolve(Utils).toBytes(tx.toBroadcast())
-			payload =  serialized.toString("hex")
-		}
-
-
 		const body = {
-			transactions: [payload]
+			transactions: transactions.map((transaction) => transaction.toBroadcast()),
 		};
 
 		console.log("mainsail broadcast to pool", transactions, body)

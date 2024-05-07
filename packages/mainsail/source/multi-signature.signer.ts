@@ -1,9 +1,9 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
-import { Enums, Identities, Interfaces, Managers, Transactions } from "./crypto/index.js";
-import { MultiSignatureAsset, MultiSignatureTransaction } from "./multi-signature.contract.js";
 import { numberToHex, uniq } from "@ardenthq/sdk-helpers";
 
 import { BindingType } from "./coin.contract.js";
+import { Enums, Identities, Interfaces, Managers, Transactions } from "./crypto/index.js";
+import { MultiSignatureAsset, MultiSignatureTransaction } from "./multi-signature.contract.js";
 import { PendingMultiSignatureTransaction } from "./multi-signature.transaction.js";
 
 export class MultiSignatureSigner {

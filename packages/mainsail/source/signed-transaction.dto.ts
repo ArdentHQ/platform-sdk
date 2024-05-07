@@ -1,8 +1,10 @@
 import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { Utils } from "@mainsail/crypto-transaction";
 
 import { Identities } from "./crypto/index.js";
+import { boot } from "./transaction.service";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
@@ -114,7 +116,10 @@ export class SignedTransactionData
 		return !!this.signedData.multiSignature;
 	}
 
-	public override toBroadcast() {
-		return this.broadcastData;
+	public override async toBroadcast() {
+		const app = await boot();
+		const serialized = await app.resolve(Utils).toBytes(this.broadcastData)
+
+		return serialized.toString("hex")
 	}
 }

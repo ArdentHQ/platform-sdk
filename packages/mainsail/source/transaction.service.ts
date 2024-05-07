@@ -468,7 +468,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.dataTransferObjectService.signedTransaction(
 			signedTransaction.id!,
 			signedTransaction.data,
-			signedTransaction.serialized.toString("hex"),
 		);
 	}
 
@@ -489,22 +488,14 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let struct;
 
 		try {
-			console.log('getting struct', transaction, this.#app.resolve(Utils))
-			// struct = await transaction.getStruct();
-
 			struct = transaction.data;
 
-			console.log("trx data", struct, struct.id)
+			// const serialized = await this.#app.resolve(Utils).toBytes(struct);
+			// const id = (await this.#app.resolve(Utils).getId({ serialized })).toString();
 
-			const serialized = await this.#app.resolve(Utils).toBytes(struct);
-			const id = (await this.#app.resolve(Utils).getId({ serialized })).toString();
+			// console.log("generated id is", id);
 
-			console.log("generated id is", id);
-
-			// transaction.data.id = id;
-			// transaction.data.multiSignature = multiSignature;
-			//
-			struct.id = id;
+			// struct.id = id;
 			struct.multiSignature = multiSignature;
 		}catch (e) {
 			console.log("error - ", e)
