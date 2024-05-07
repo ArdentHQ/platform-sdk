@@ -490,12 +490,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		try {
 			struct = transaction.data;
 
-			// const serialized = await this.#app.resolve(Utils).toBytes(struct);
-			// const id = (await this.#app.resolve(Utils).getId({ serialized })).toString();
+			const serialized = await this.#app.resolve(Utils).toBytes(struct);
+			const id = (await this.#app.resolve(Utils).getId({ serialized })).toString();
 
-			// console.log("generated id is", id);
+			console.log("generated id is", id);
 
-			// struct.id = id;
+			struct.id = id;
 			struct.multiSignature = multiSignature;
 		}catch (e) {
 			console.log("error - ", e)
