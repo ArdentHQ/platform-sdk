@@ -1,9 +1,9 @@
-import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
-import { DateTime } from "@ardenthq/sdk-intl";
+import {Collections, Contracts, IoC, Services} from "@ardenthq/sdk";
+import {DateTime} from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
 
-import { Enums } from "./crypto/index.js";
-import { Request } from "./request.js";
+import {Enums} from "./crypto/index.js";
+import {Request} from "./request.js";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -99,16 +99,21 @@ export class ClientService extends Services.AbstractClientService {
 	): Promise<Services.BroadcastResponse> {
 		let response: Contracts.KeyValuePair;
 
-		const body = {
-			transactions: transactions.map(async (transaction) => await transaction.toBroadcast()),
-		};
+		const transactionToBroadcast: any[] = [];
 
-		console.log("mainsail broadcast to pool", transactions, body)
+		for (const transaction of transactions) {
+			const data = await transaction.toBroadcast();
+			transactionToBroadcast.push(data);
+		}
+
+		console.log("mainsail broadcast to pool", transactions, )
 		try {
 			response = await this.#request.post(
 				"transaction-pool",
 				{
-					body,
+					body: {
+						transactions: transactionToBroadcast
+					},
 				},
 				"tx",
 			);
