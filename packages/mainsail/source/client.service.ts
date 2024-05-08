@@ -100,7 +100,7 @@ export class ClientService extends Services.AbstractClientService {
 		let response: Contracts.KeyValuePair;
 
 		const body = {
-			transactions: transactions.map((transaction) => transaction.toBroadcast()),
+			transactions: transactions.map(async (transaction) => await transaction.toBroadcast()),
 		};
 
 		console.log("mainsail broadcast to pool", transactions, body)
