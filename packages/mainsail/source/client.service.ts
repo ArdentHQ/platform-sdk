@@ -1,9 +1,9 @@
-import {Collections, Contracts, IoC, Services} from "@ardenthq/sdk";
-import {DateTime} from "@ardenthq/sdk-intl";
+import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
+import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
 
-import {Enums} from "./crypto/index.js";
-import {Request} from "./request.js";
+import { Enums } from "./crypto/index.js";
+import { Request } from "./request.js";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -106,13 +106,13 @@ export class ClientService extends Services.AbstractClientService {
 			transactionToBroadcast.push(data);
 		}
 
-		console.log("mainsail broadcast to pool", transactions, )
+		console.log("mainsail broadcast to pool", transactions);
 		try {
 			response = await this.#request.post(
 				"transaction-pool",
 				{
 					body: {
-						transactions: transactionToBroadcast
+						transactions: transactionToBroadcast,
 					},
 				},
 				"tx",
@@ -120,7 +120,6 @@ export class ClientService extends Services.AbstractClientService {
 		} catch (error) {
 			response = (error as any).response.json();
 		}
-		console.log("mainsail broadcast to pool response", response);
 
 		const { data, errors } = response;
 
@@ -131,11 +130,15 @@ export class ClientService extends Services.AbstractClientService {
 		};
 
 		if (Array.isArray(data.accept)) {
-			result.accepted = data.accept;
+			for (const acceptedIndex of data.accept) {
+				result.accepted.push(transactions[acceptedIndex]?.id());
+			}
 		}
 
 		if (Array.isArray(data.invalid)) {
-			result.rejected = data.invalid;
+			for (const rejected of data.invalid) {
+				result.rejected.push(transactions[rejected]?.id());
+			}
 		}
 
 		if (errors) {
