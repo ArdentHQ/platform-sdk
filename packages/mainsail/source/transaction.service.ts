@@ -1,41 +1,39 @@
-import { Contracts, Exceptions, IoC, Services, Signatories } from "@ardenthq/sdk";
-import { BIP39 } from "@ardenthq/sdk-cryptography";
+import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { BindingType } from "./coin.contract.js";
-import { applyCryptoConfiguration } from "./config.js";
-import { Identities, Interfaces, Transactions } from "./crypto/index.js";
-import { MultiSignatureSigner } from "./multi-signature.signer.js";
-import { Request } from "./request.js";
-import { Application } from "@mainsail/kernel";
-import { Identifiers } from "@mainsail/contracts";
-import { ServiceProvider as CoreValidation } from "@mainsail/validation";
-import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
-import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
-import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
-import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
-import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
-import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
-import { ServiceProvider as CoreFees } from "@mainsail/fees";
-import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
-import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
-import {
-	ServiceProvider as CoreCryptoTransactionTransfer,
-	TransferBuilder,
-} from "@mainsail/crypto-transaction-transfer";
 import { Container } from "@mainsail/container";
-
-import {
-	MultiPaymentBuilder,
-	ServiceProvider as CoreCryptoMultipaymentTransfer,
-} from "@mainsail/crypto-transaction-multi-payment";
-
-import { milestones } from "./crypto/networks/devnet/milestones.js";
-import { network } from "./crypto/networks/devnet/network.js";
-import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
+import { Identifiers } from "@mainsail/contracts";
+import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
+import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
+import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
+import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
+import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
+import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import {
 	ServiceProvider as CoreCryptoTransactionUsername,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
+import {
+	ServiceProvider as CoreCryptoTransactionValidatorRegistration,
+	ValidatorRegistrationBuilder,
+} from "@mainsail/crypto-transaction-validator-registration";
+import { ServiceProvider as CoreCryptoTransactionValidatorResignation } from "@mainsail/crypto-transaction-validator-resignation";
+import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
+import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
+import { ServiceProvider as CoreFees } from "@mainsail/fees";
+import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
+import { Application } from "@mainsail/kernel";
+import { ServiceProvider as CoreValidation } from "@mainsail/validation";
+
+import { BindingType } from "./coin.contract.js";
+import { applyCryptoConfiguration } from "./config.js";
+import { Identities, Interfaces, Transactions } from "./crypto/index.js";
+import { milestones } from "./crypto/networks/devnet/milestones.js";
+import { network } from "./crypto/networks/devnet/network.js";
+import { MultiSignatureSigner } from "./multi-signature.signer.js";
+import { Request } from "./request.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -90,6 +88,9 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionVote).register(),
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
 			this.#app.resolve(CoreCryptoTransactionUsername).register(),
+			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
+			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
+			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
 		]);
 
 		this.#app
@@ -104,7 +105,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
-	 * @musig
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		if (!input.data.amount) {
@@ -119,48 +119,36 @@ export class TransactionService extends Services.AbstractTransactionService {
 			);
 		}
 
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
+		return this.#createFromData("transfer", input, ({ transaction, data }) => {
+			transaction.recipientId(data.to);
 
-		const transactionWallet = await this.clientService.wallet({
-			type: "address",
-			value: input.signatory.address(),
+			if (data.memo) {
+				transaction.vendorField(data.memo);
+			}
 		});
-
-		const builder = this.#app
-			.resolve(TransferBuilder)
-			.fee(BigNumber.make(this.toSatoshi(input.fee)).toString())
-			.nonce(transactionWallet.nonce().plus(1).toFixed(0))
-			.recipientId(input.data.to)
-			.amount(BigNumber.make(this.toSatoshi(input.data.amount)).toString());
-
-		if (input.data.memo) {
-			builder.vendorField(input.data.memo);
-		}
-
-		const signedData = await builder.sign(input.signatory.signingKey());
-		const signedTransaction = await signedData.build();
-
-		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id!,
-			signedTransaction.data,
-			signedTransaction.serialized.toString("hex"),
-		);
 	}
 
 	public override async delegateRegistration(
-		input: Services.DelegateRegistrationInput,
+		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("delegateRegistration", input, ({ transaction, data }) =>
-			transaction.usernameAsset(data.username),
+		return this.#createFromData(
+			"delegateRegistration",
+			input,
+			({
+				transaction,
+				data,
+			}: {
+				transaction: ValidatorRegistrationBuilder;
+				data: { validatorPublicKey: string };
+			}) => {
+				transaction.publicKeyAsset(data.validatorPublicKey);
+			},
 		);
 	}
 
 	/**
 	 * @inheritDoc
 	 *
-	 * @musig
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData(
@@ -208,61 +196,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
-	 * @musig
-	 */
-	public override async multiSignature(
-		input: Services.MultiSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData("multiSignature", input, ({ transaction, data }) => {
-			if (data.senderPublicKey) {
-				transaction.senderPublicKey(data.senderPublicKey);
-			}
-
-			transaction.multiSignatureAsset({
-				min: data.min,
-				publicKeys: data.publicKeys,
-			});
-		});
-	}
-
-	/**
-	 * @inheritDoc
-	 *
-	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
-		const transactionWallet = await this.clientService.wallet({
-			type: "address",
-			value: input.signatory.address(),
+		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
+			if (data.memo) {
+				transaction.vendorField(data.memo);
+			}
 		});
-
-		let builder = this.#app.resolve(MultiPaymentBuilder).nonce(transactionWallet.nonce().plus(1).toFixed(0));
-
-		if (input.fee) {
-			builder = builder.fee(this.toSatoshi(input.fee).toString());
-		}
-
-		if (input.data.memo) {
-			builder.vendorField(input.data.memo);
-		}
-
-		for (const { amount, to } of input.data.payments) {
-			builder = builder.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
-		}
-
-		const signedTransactionBuilder = await builder.sign(input.signatory.signingKey());
-
-		const signedTransaction = await signedTransactionBuilder.build();
-
-		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id!,
-			signedTransaction.data,
-			signedTransaction.serialized.toString("hex"),
-		);
 	}
 
 	public override async usernameRegistration(
@@ -359,6 +299,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		if (input.data && input.data.amount) {
 			transaction.amount(this.toSatoshi(input.data.amount).toString());
+		}
+
+		if (input.data && Array.isArray(input.data.payments)) {
+			for (const { amount, to } of input.data.payments) {
+				transaction.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
+			}
 		}
 
 		if (input.fee) {

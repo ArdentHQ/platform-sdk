@@ -24,8 +24,8 @@ export class FeeService extends Services.AbstractFeeService {
 		const dynamicFees: object = node.data;
 
 		return {
-			delegateRegistration: this.#transform("delegateRegistration", 1, staticFees, dynamicFees),
-			delegateResignation: this.#transform("delegateResignation", 1, staticFees, dynamicFees),
+			delegateRegistration: this.#transform("validatorRegistration", 1, staticFees, dynamicFees),
+			delegateResignation: this.#transform("validatorResignation", 1, staticFees, dynamicFees),
 			ipfs: this.#transform("ipfs", 1, staticFees, dynamicFees),
 			multiPayment: this.#transform("multiPayment", 1, staticFees, dynamicFees),
 			multiSignature: this.#transform("multiSignature", 1, staticFees, dynamicFees),
