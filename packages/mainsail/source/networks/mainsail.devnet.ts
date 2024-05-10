@@ -30,7 +30,7 @@ const network: Networks.NetworkManifest = {
 			type: "tx",
 		},
 		{
-			host: "https://ark-live-musig.arkvault.io",
+			host: "https://ark-test-musig.arkvault.io",
 			type: "musig",
 		},
 		{
