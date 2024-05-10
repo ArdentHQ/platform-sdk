@@ -106,7 +106,6 @@ export class ClientService extends Services.AbstractClientService {
 			transactionToBroadcast.push(data);
 		}
 
-		console.log("mainsail broadcast to pool", transactions, )
 		try {
 			response = await this.#request.post(
 				"transaction-pool",
@@ -120,7 +119,6 @@ export class ClientService extends Services.AbstractClientService {
 		} catch (error) {
 			response = (error as any).response.json();
 		}
-		console.log("mainsail broadcast to pool response", response);
 
 		const { data, errors } = response;
 
