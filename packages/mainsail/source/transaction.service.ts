@@ -409,7 +409,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.hasMultiSignature()) {
-			return this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
+			return await this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
 		}
 
 		if (type === "multiSignature") {
@@ -471,7 +471,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	async #addSignature(
-		transaction: MultiSignatureBuilder,
+		transaction,
 		multiSignature: Interfaces.IMultiSignatureAsset,
 		signatory: Signatories.Signatory,
 		senderPublicKey?: string,
@@ -483,8 +483,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		} else {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
-
-		let struct;
 
 		let struct = transaction.data;
 
