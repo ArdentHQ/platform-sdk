@@ -1,7 +1,7 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Container } from "@mainsail/container";
-import { Identifiers } from "@mainsail/contracts";
+import { Contracts as MainsailContracts , Identifiers } from "@mainsail/contracts";
 import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
 import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
@@ -484,11 +484,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
 
-		let struct = transaction.data;
+		const struct = transaction.data;
 
 		const serialized = await this.#app.resolve(Utils).toBytes(struct);
 
-		struct.id = (await this.#app.resolve(Utils).getId({ serialized })).toString();
+		const id = await this.#app.resolve(Utils).getId({ serialized } as MainsailContracts.Crypto.Transaction);
+
+		struct.id = id.toString();
 		struct.multiSignature = multiSignature;
 
 		return this.#multiSignatureService.addSignature(struct, signatory);
