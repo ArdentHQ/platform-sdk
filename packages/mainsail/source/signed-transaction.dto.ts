@@ -4,7 +4,7 @@ import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
 
 import { Identities } from "./crypto/index.js";
-import { boot } from "./transaction.service";
+import { getApp } from "./transaction.service";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
@@ -117,9 +117,9 @@ export class SignedTransactionData
 	}
 
 	public override async toBroadcast() {
-		const app = await boot();
-		const serialized = await app.resolve(Utils).toBytes(this.broadcastData)
+		const app = await getApp();
+		const serialized = await app.resolve(Utils).toBytes(this.broadcastData);
 
-		return serialized.toString("hex")
+		return serialized.toString("hex");
 	}
 }
