@@ -129,11 +129,15 @@ export class ClientService extends Services.AbstractClientService {
 		};
 
 		if (Array.isArray(data.accept)) {
-			result.accepted = data.accept;
+			for (const acceptedIndex of data.accept) {
+				result.accepted.push(transactions[acceptedIndex]?.id());
+			}
 		}
 
 		if (Array.isArray(data.invalid)) {
-			result.rejected = data.invalid;
+			for (const rejected of data.invalid) {
+				result.rejected.push(transactions[rejected]?.id());
+			}
 		}
 
 		if (errors) {
