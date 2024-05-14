@@ -488,11 +488,45 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const serialized = await this.#app.resolve(Utils).toBytes(struct);
 
-		const id = await this.#app.resolve(Utils).getId({ serialized } as MainsailContracts.Crypto.Transaction);
+		const utils = this.#app.resolve(Utils);
+		const data = {
+			fee: BigNumber.make("500000000"),
+			id: "0562f645b349acceab92105693bc752666cb6e5ff00ebf1d6ae8a5d1d172d6d8",
+			nonce: BigNumber.make("4"),
+			typeGroup: 1,
+			version: 1,
+			type: 4,
+			amount: BigNumber.make("0"),
+			senderPublicKey: "0272993973238080970753a3764da6a50384fbf91fa0b3c3634dc38fd5d5bb00cc",
+			asset: {
+				multiSignature: {
+					min: 2,
+					publicKeys: [
+						"0272993973238080970753a3764da6a50384fbf91fa0b3c3634dc38fd5d5bb00cc",
+						"02f8e831d501f2ac596ccd51bc4ca3d4e231d5ebd8bfa8ee34168915047e09932e",
+					],
+				},
+			},
+			signatures: [
+				"0070213bd79c68618b7166648afc8c310fd2856686d2e5c08464cdfad8b4126dcf37a5a0ca05e02e291eaeb835a71310b0cf3ceb8c4a93e6c736f4d04990a3b1d3",
+			],
+			multiSignature: {
+				min: 2,
+				publicKeys: [
+					"0272993973238080970753a3764da6a50384fbf91fa0b3c3634dc38fd5d5bb00cc",
+					"02f8e831d501f2ac596ccd51bc4ca3d4e231d5ebd8bfa8ee34168915047e09932e",
+				],
+			},
+		};
+		const hash = await utils.toHash(data, { excludeMultiSignature: true, excludeSignature: true });
+		console.log({ mainsailHash: hash.toString("hex") });
+
+		const id = await utils.getId({ serialized } as MainsailContracts.Crypto.Transaction);
 
 		struct.id = id.toString();
 		struct.multiSignature = multiSignature;
 
-		return this.#multiSignatureService.addSignature(struct, signatory);
+		const signed = await this.#multiSignatureService.addSignature(struct, signatory);
+		return signed;
 	}
 }
