@@ -39,6 +39,7 @@ import { network } from "./crypto/networks/devnet/network.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
 
+// @TODO https://app.clickup.com/t/86dth6590
 export const getApp = async () => {
 	const app = new Application(new Container());
 
