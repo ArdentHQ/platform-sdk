@@ -145,6 +145,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @musig
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
+		console.log("transfer", input);
 		if (!input.data.amount) {
 			throw new Error(
 				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
@@ -317,6 +318,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let senderPublicKey: string | undefined;
 
 		const transaction = await Transactions.BuilderFactory[type]();
+		console.log({ transaction });
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -340,6 +342,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 					publicKeys: input.signatory.asset().publicKeys,
 				})
 			).address;
+			console.log({ address });
 		}
 
 		if (input.signatory.actsWithLedger()) {
@@ -404,6 +407,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
+			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
+			const id = await this.#app.resolve(Utils).getId({ serialized } as MainsailContracts.Crypto.Transaction);
+
+			transaction.data.id = id.toString();
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());
 
 			return this.dataTransferObjectService.signedTransaction(

@@ -102,6 +102,7 @@ export class ClientService extends Services.AbstractClientService {
 		const transactionToBroadcast: any[] = [];
 
 		for (const transaction of transactions) {
+			console.log({ transaction });
 			const data = await transaction.toBroadcast();
 			transactionToBroadcast.push(data);
 		}
