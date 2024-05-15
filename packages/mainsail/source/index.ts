@@ -19,6 +19,8 @@ import { WIFService } from "./wif.service.js";
 import { WalletData } from "./wallet.dto.js";
 import { manifest } from "./manifest.js";
 
+export * from "./crypto/managers/network.js";
+
 export const Mainsail: Coins.CoinBundle = bundle({
 	dataTransferObjects: {
 		ConfirmedTransactionData,
