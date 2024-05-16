@@ -5,8 +5,6 @@ import dotify from "node-dotify";
 import { Enums } from "./crypto/index.js";
 import { Request } from "./request.js";
 
-import { Contracts as MainSailContracts } from "@mainsail/contracts";
-
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
 
@@ -101,15 +99,20 @@ export class ClientService extends Services.AbstractClientService {
 	): Promise<Services.BroadcastResponse> {
 		let response: Contracts.KeyValuePair;
 
-		const body = {
-			transactions: transactions.map((transaction) => transaction.toBroadcast()),
-		};
+		const transactionToBroadcast: any[] = [];
+
+		for (const transaction of transactions) {
+			const data = await transaction.toBroadcast();
+			transactionToBroadcast.push(data);
+		}
 
 		try {
 			response = await this.#request.post(
 				"transaction-pool",
 				{
-					body,
+					body: {
+						transactions: transactionToBroadcast,
+					},
 				},
 				"tx",
 			);
@@ -126,11 +129,15 @@ export class ClientService extends Services.AbstractClientService {
 		};
 
 		if (Array.isArray(data.accept)) {
-			result.accepted = data.accept;
+			for (const acceptedIndex of data.accept) {
+				result.accepted.push(transactions[acceptedIndex]?.id());
+			}
 		}
 
 		if (Array.isArray(data.invalid)) {
-			result.rejected = data.invalid;
+			for (const rejected of data.invalid) {
+				result.rejected.push(transactions[rejected]?.id());
+			}
 		}
 
 		if (errors) {

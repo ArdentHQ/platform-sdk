@@ -34,13 +34,13 @@ importers:
         version: 3.1.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.4.0
-        version: 5.4.0(@typescript-eslint/parser@5.4.0)(eslint@8.3.0)(typescript@4.5.2)
+        version: 5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2)
       '@typescript-eslint/parser':
         specifier: ^5.4.0
         version: 5.4.0(eslint@8.3.0)(typescript@4.5.2)
       babel-loader:
         specifier: ^8.2.3
-        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4)
+        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1))
       big-integer:
         specifier: ^1.6.51
         version: 1.6.51
@@ -55,13 +55,13 @@ importers:
         version: 8.3.0(eslint@8.3.0)
       eslint-plugin-import:
         specifier: ^2.25.3
-        version: 2.25.3(@typescript-eslint/parser@5.4.0)(eslint@8.3.0)
+        version: 2.25.3(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)
       eslint-plugin-jsx-a11y:
         specifier: ^6.5.1
         version: 6.5.1(eslint@8.3.0)
       eslint-plugin-prettier:
         specifier: ^4.0.0
-        version: 4.0.0(eslint-config-prettier@8.3.0)(eslint@8.3.0)(prettier@2.4.1)
+        version: 4.0.0(eslint-config-prettier@8.3.0(eslint@8.3.0))(eslint@8.3.0)(prettier@2.4.1)
       eslint-plugin-promise:
         specifier: ^5.1.1
         version: 5.1.1(eslint@8.3.0)
@@ -85,16 +85,16 @@ importers:
         version: 39.0.0(eslint@8.3.0)
       eslint-plugin-unused-imports:
         specifier: ^2.0.0
-        version: 2.0.0(@typescript-eslint/eslint-plugin@5.4.0)(eslint@8.3.0)
+        version: 2.0.0(@typescript-eslint/eslint-plugin@5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)
       node-polyfill-webpack-plugin:
         specifier: ^1.1.4
-        version: 1.1.4(webpack@5.64.4)
+        version: 1.1.4(webpack@5.64.4(webpack-cli@4.9.1))
       prettier:
         specifier: ^2.4.1
         version: 2.4.1
       resolve-typescript-plugin:
         specifier: ^1.1.1
-        version: 1.1.1(webpack@5.64.4)
+        version: 1.1.1(webpack@5.64.4(webpack-cli@4.9.1))
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -103,7 +103,7 @@ importers:
         version: 1.53.1
       ts-loader:
         specifier: ^9.2.6
-        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4)
+        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1))
       ts-morph:
         specifier: ^12.0.0
         version: 12.0.0
@@ -411,71 +411,74 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@mainsail/container':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/contracts':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-address-base58':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-config':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-consensus-bls12-381':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-hash-bcrypto':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-key-pair-bls12-381':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-key-pair-ecdsa':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-signature-schnorr-secp256k1':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction-multi-payment':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
+      '@mainsail/crypto-transaction-multi-signature-registration':
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction-transfer':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction-username-registration':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction-username-resignation':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction-validator-registration':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction-validator-resignation':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-transaction-vote':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/crypto-validation':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/fees':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/fees-static':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/kernel':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       '@mainsail/validation':
-        specifier: 0.0.1-alpha.15
-        version: 0.0.1-alpha.15
+        specifier: 0.0.1-alpha.16
+        version: 0.0.1-alpha.16
       ajv:
         specifier: 6.12.6
         version: 6.12.6
@@ -1488,104 +1491,108 @@ packages:
   '@ledgerhq/logs@6.10.0':
     resolution: {integrity: sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==}
 
-  '@mainsail/container@0.0.1-alpha.15':
-    resolution: {integrity: sha512-W9qvOerTNL7Tnlx+ID9rKVYoF1Fgjpruq1GJVTOeUmwkTlGit9lH/TUB3EzFnuBvvLfn/biK8UP7B0Zzt2idZQ==}
+  '@mainsail/container@0.0.1-alpha.16':
+    resolution: {integrity: sha512-+EWKi4LAz94Bfgo6IQzuA1XzcargeE0t6BJUroZvUwb+oa8vhKg8jurafiwNSCHfP+JvckHNPpBq6iGkj18Fyg==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/contracts@0.0.1-alpha.15':
-    resolution: {integrity: sha512-00RQbmNt3MxpNRrK7hRglSfJFEaed7+MKzUGinPQx19mJ3D2eUASGx3xUuU0CmaIX/rigQgfMF9K51GUanzdpw==}
+  '@mainsail/contracts@0.0.1-alpha.16':
+    resolution: {integrity: sha512-2T69tISjPkvF19udoPmHiMz04U68qApVf+sR2Of/MRgx/Ji1GpFqmn3auC2BrJrnS5EioKVYS06xH7XF+Tp7IQ==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-address-base58@0.0.1-alpha.15':
-    resolution: {integrity: sha512-4hZuaWW75hk6tWRooTE1qCswPu234iTZKVZIXFZqmLHPMZzxWpXZJHI3QQR3LnKtzckcOQbRKIiJETQ9oXQRPw==}
+  '@mainsail/crypto-address-base58@0.0.1-alpha.16':
+    resolution: {integrity: sha512-44G6ZL+nl22GE+EuJDMBDINP3HX38BtW4N0VYUPjhw36x6d8ihqnU6heeUZNetYaY/V2cogDxfrdU9M29apVLA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-config@0.0.1-alpha.15':
-    resolution: {integrity: sha512-yCyeQvhA752At6pJ1fak76ke+5KevKGD8v7WgEhUzWDnynCC2tJB2aQTemKOhKEWCCYGTANVg+uwRZRPa74MDA==}
+  '@mainsail/crypto-config@0.0.1-alpha.16':
+    resolution: {integrity: sha512-t/2QT1qtU5DcVoBi41UZzreLUPrxo7jr+e+amGNBDTVKQGL+IvOqZQsU1ukXJpVlMfi384tBbB3hUGTIwIoP9A==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-consensus-bls12-381@0.0.1-alpha.15':
-    resolution: {integrity: sha512-Y+zuSMcMDrConnpdnpKMIYiUFhmTFBhQGiGS8wQ0A8XMpOZLR40iKM0D3LiJ60Ty5SuP15KHiIs/p4iRVcEIUQ==}
+  '@mainsail/crypto-consensus-bls12-381@0.0.1-alpha.16':
+    resolution: {integrity: sha512-UdJOJY5YdbdeTXyPZFQtZWYfpaYNIkTkMUFwm39EyR/vY8zple+b7GQ0YEYQgLm/u5Po/o1T9YQUtxD8n1dQcA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-hash-bcrypto@0.0.1-alpha.15':
-    resolution: {integrity: sha512-qp8cpesi+S7AIXNI2s+L4xjTiCYvdgVvapgQ1s/3BovuC9Rg4HyrHYYqopXw9JU7EGRIu+rZHQLneaSgZtmNrQ==}
+  '@mainsail/crypto-hash-bcrypto@0.0.1-alpha.16':
+    resolution: {integrity: sha512-zR/DGLxl4DQCqROnz6IxBlIICElJefy5ZihW7P+x64lw6cQOIHIlGMhfFuyBgP9IUu2Nz8xEPTcRWyg7Ncniuw==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-key-pair-bls12-381@0.0.1-alpha.15':
-    resolution: {integrity: sha512-xq92nFufnTWiTZyDC9gb6Wly/oRgmq/CRiK37EUWRRVW+XEi/HQLHxEEVis6B62e4OwmONgaQ1cWke7n81HRNw==}
+  '@mainsail/crypto-key-pair-bls12-381@0.0.1-alpha.16':
+    resolution: {integrity: sha512-8AeP3RyOKBs0rAGI/NqcTNLULNGElQXMuobJyzbVeEhrY6bAUDR/1cjX4jb13g2VZylKM7M0W0gcL+sqUUUasw==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-key-pair-ecdsa@0.0.1-alpha.15':
-    resolution: {integrity: sha512-/Lm08mL595dnLZlGJZ7a13L4QsMsCrR09kZYDTRzSHsolXBQnyEVJpfRd8IvTSB+YowIAoASNut5XGokamj9Kw==}
+  '@mainsail/crypto-key-pair-ecdsa@0.0.1-alpha.16':
+    resolution: {integrity: sha512-480UQqqtffFXTIdXwxTLs1w/tmokI01aoMuDTVc/OGsRjY1ZjiDnoyS+Hkgm/pq0K9gs6dl7GX7VPuc0rQ58Ig==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-signature-bls12-381@0.0.1-alpha.15':
-    resolution: {integrity: sha512-XMp15cvbaG/2mk/FTZTRgkg2mfr/uD3apeVhx/S1E0g7sbfRrhsTMZjPqhGaBPbc/eWw61jCM55AeZVvZ4kH1Q==}
+  '@mainsail/crypto-signature-bls12-381@0.0.1-alpha.16':
+    resolution: {integrity: sha512-Nz4AkuyEuT6EUqTUqSEL/XiF/bSM95h+KdQVI6JtpP/BNvkDupmr2ZyniDKZhYDY70VL5bn1CJVEQkD+JYr+bg==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-signature-schnorr-secp256k1@0.0.1-alpha.15':
-    resolution: {integrity: sha512-Q0+pm4rTuR2eUf2IO4nwBQ+Hsw39F/soZdFnfu5jhXsbFsusKouIweMTBK9Lq1GnD1FqVjoExm+MOWRAVfh+Gg==}
+  '@mainsail/crypto-signature-schnorr-secp256k1@0.0.1-alpha.16':
+    resolution: {integrity: sha512-cYgr32AerL5L/SqO07C/eEEx7wZAwjpshzw7onjEr5KOLPf4hLoXnxQEC326lGWIN/kWL/+w/mgtQ15ds7tUag==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction-multi-payment@0.0.1-alpha.15':
-    resolution: {integrity: sha512-+iJsRAYNUbOPN/d8lD6IntpvXl9SFtRwMIu7vaiXkNfTOiH0gHF5u/L7I10CCgicySqjFMhBOZizFVNySC9aNA==}
+  '@mainsail/crypto-transaction-multi-payment@0.0.1-alpha.16':
+    resolution: {integrity: sha512-JGVNGLbCc0oa5HtQDTLdBIURwWIALrJ3SesbSS/0RahqWAz/2qB+c28Re1LxMAe1t0cBt9miwsyseddIAbydKg==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction-transfer@0.0.1-alpha.15':
-    resolution: {integrity: sha512-zYS3gWJ80fdxXgXZvZaWnW8Dnvizzyo5zlsVDsPwL+YRlU4evcqX909qzRmyA8N8bF2yjSWj0IeXhn9IX2yjqw==}
+  '@mainsail/crypto-transaction-multi-signature-registration@0.0.1-alpha.16':
+    resolution: {integrity: sha512-Z5uUDtZP/TDCb/2qrVrnOL+xkD6qOy/AwnnlqEcm1e/HtUnmk3uuUdcWdsGb6M+wdK4anFunx2Xqq9KLxBVeyA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction-username-registration@0.0.1-alpha.15':
-    resolution: {integrity: sha512-HONOhY71XnnWc1fTjlkHCWXdG62EO5jbo+hJ+hVJHViR9vsxLDynuaRQRhDpOgDMAnogLLAgbn7k5MZ8nM6S3w==}
+  '@mainsail/crypto-transaction-transfer@0.0.1-alpha.16':
+    resolution: {integrity: sha512-RvmVyXARXJHQoKSO9DTqSG3FA3Epd1Zi1vGADv8aRNsNZbe56kHIlyVZ3WAS/e5EQRSfi1s+dghUsGtgtnzs3A==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction-username-resignation@0.0.1-alpha.15':
-    resolution: {integrity: sha512-EBxit1dsx8Jr2R2PiIw2+1jEf5Jb2iOOisRBL/BTsXSH/YY6MkdrwMYaxbUauF6qikW+3kBWb667fF+TiXLF8A==}
+  '@mainsail/crypto-transaction-username-registration@0.0.1-alpha.16':
+    resolution: {integrity: sha512-UuxmgLVlfvyJSbD6/Nj8gWLh3moV48W/2lhL8uPsXuBWwShjWXY739jveHDfphxdW6+xfP654IPRqTu/Uao+1Q==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction-validator-registration@0.0.1-alpha.15':
-    resolution: {integrity: sha512-Otb/GWjkQZ8o8ITuFNtMPGZjSUJUb/9P59ZyFX2rjf56tRAcKHsAMp0grzEetyMDVn7s71GTjHD1tuXL07LuSw==}
+  '@mainsail/crypto-transaction-username-resignation@0.0.1-alpha.16':
+    resolution: {integrity: sha512-nt0WMKRUEs5QtpIcW6zSzrV0Sziy6mU3wq+agT7O+l8wEXxZpxqRqFWteC4W4bEfo7+qJpMQ3ndIJly9tMHWyw==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction-validator-resignation@0.0.1-alpha.15':
-    resolution: {integrity: sha512-uMbhP0iklRHEgz81LODkSLr3XzzKFDP3Qmb3fxWcjbW7Z5QpOB+AcaQ56BCAqmpn7ppRx7nu002mZoqcxx1uKw==}
+  '@mainsail/crypto-transaction-validator-registration@0.0.1-alpha.16':
+    resolution: {integrity: sha512-zXk4S2YgOk9Ame8yxULkV6NciSR2R+pD5zeVeflQjgfEfbE4xv6g5jYJsrq5XJfxXCMUo0+ApBarFevjBxkj0w==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction-vote@0.0.1-alpha.15':
-    resolution: {integrity: sha512-mOQiVTMynROFJ3ZxQgzieJKMm36zbYgVywVQcADxJ9rB0qCYrsmG3qbpYReImRZsSAmvpGLCmoSd7BNdvnIMow==}
+  '@mainsail/crypto-transaction-validator-resignation@0.0.1-alpha.16':
+    resolution: {integrity: sha512-lOLfLt5nWOngO7984xRfb08REcG4jVZOBCJWcrAVxtB5ivyZmVCI/BJuLw485QVBP+Ovdp4hEDzOVXaSCACCkA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-transaction@0.0.1-alpha.15':
-    resolution: {integrity: sha512-6KQwcHUVI2mU8JR6E5fEKx9aK/6X6CWMggQe2NXeU+3+rIaVouFnVuJ0FrkA6IZdl9F2R+G46ef4Rhx2tpaaHQ==}
+  '@mainsail/crypto-transaction-vote@0.0.1-alpha.16':
+    resolution: {integrity: sha512-+kvqB3oip5A9H7ahcQhWg/1voVfY999t/H6yJmh9+fQCGynUlEWnhOWTX7iOUl8gtVvZwz1freKUNqEgzBSAhw==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-validation@0.0.1-alpha.15':
-    resolution: {integrity: sha512-ZabSB5GTtm4i8MRy9KuQbnKGOSX6Iztftg76PzXk5X/APoSsB7EWQYG5yT2HIXiFUfir4fW4X1r+CVQeIu/N1A==}
+  '@mainsail/crypto-transaction@0.0.1-alpha.16':
+    resolution: {integrity: sha512-SycpHUt/ukY7NeOdAWNA2rWrAQXMZQN88gZKknXhPgJbD43pyJHj6Gyj9IWV3fPJhMBRjZtNVKWz5v7D68sQJw==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/fees-static@0.0.1-alpha.15':
-    resolution: {integrity: sha512-mSd0ay/AvKujH/ARdwayltWnzuiJVi0lvtqWlU2T6/rGtvFrwZh8/rtUgkEl/DT+6XGbeKN2CJTlK/fl+yEXRg==}
+  '@mainsail/crypto-validation@0.0.1-alpha.16':
+    resolution: {integrity: sha512-eKVBZdRIoeGax62rQDeL60mK4SNUX1Z8pXEvKbgll9qEb/JPnh6OED0S3PwquyYe8vRQ1bYySvBdc0YCm4ijgA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/fees@0.0.1-alpha.15':
-    resolution: {integrity: sha512-CIYQYKLBxncHRSQlkfZhL49LOGgu0Z8iO1Imd/ieReHkUU0mCQ26H/DC1tJO7MSJm0jeF10sJwS3EL7jaow+Fw==}
+  '@mainsail/fees-static@0.0.1-alpha.16':
+    resolution: {integrity: sha512-Q0Dy561Vfp2XDH0Gm8xlBBvY0j4FhCV/TKznv9CuVYrwpQZVR8lqDC1JcHgEvDRj/OJU313jqmisK0uZRLiVIA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/kernel@0.0.1-alpha.15':
-    resolution: {integrity: sha512-/r8j7+tLO9iW9mMYcof/51G71LHOiiutspnmZulvW/p5yVpceOBhVJ1aN6EnqufteMCwh4HUxcItGUoVJKvdBA==}
+  '@mainsail/fees@0.0.1-alpha.16':
+    resolution: {integrity: sha512-QtR6ZF0lwVcfrFEdK1u1GkFHUBrhKbh65Qhp0NUQtW3WneoWU9qfZrimutFxrP56wavawvfAWuK/T1UlTlQiIw==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/transactions@0.0.1-alpha.15':
-    resolution: {integrity: sha512-ncV01a0AF2tZHnaUKkvNr3KzM1huHOMU/KE1xPUsYlwZBGKr3oQJsqkKchYY7Zi3m0jlCtZQsTgp7vqTnNHNbQ==}
+  '@mainsail/kernel@0.0.1-alpha.16':
+    resolution: {integrity: sha512-+iuFApb3n1yYjx/CdL0QdfBihRHA1jyaaPrvONLPMGCTfV6bsNWoIkaMF+NsXdpKppDbSf0/CPONoGe+RT8xsA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/utils@0.0.1-alpha.15':
-    resolution: {integrity: sha512-UgY3G5lMdy4ji11xP3bOobRcReKoZS7QRyGzEvH4YF3FiOqasjDF+bOSYyuWtwVy6eizVAFeGIAtks95/LXyKw==}
+  '@mainsail/transactions@0.0.1-alpha.16':
+    resolution: {integrity: sha512-8zgo7dvi7Ucx/pOCc0eOx/C72TfSQoFA7DnqrCYbv5CuZiCRMVWx2Pa5UmtGuNCStQlT4/CeSyxgNU7YpYFMGQ==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/validation@0.0.1-alpha.15':
-    resolution: {integrity: sha512-/Cr+GDLPp55yq+IPG2lpaZwSxCgslWI6s1d3loELahF2BCStCl8EcQ/gtmV4dXWsHDfCcp1H9KmrCLt4yGeV/Q==}
+  '@mainsail/utils@0.0.1-alpha.16':
+    resolution: {integrity: sha512-liNdHuBxcJfPmvYwhnfbG4YkqL230NOAP2U1ipL4TjzcXILltn53M4TSVQcWOOujDKRakzPeWRb9FoLNCZMz3A==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/validation@0.0.1-alpha.16':
+    resolution: {integrity: sha512-T5j0FAB4hpof3sc45oNF93RLy4BSR7wJCe/DOcJAcDf6FqSKyPLGW8uwmvdB3xo6CKU146NGn1He07FzVpWChg==}
     engines: {node: '>=20.x'}
 
   '@noble/hashes@0.5.9':
@@ -3434,7 +3441,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   isobject@3.0.1:
-    resolution: {integrity: sha1-TkMekrEalzFjaqH5yNHMvP2reN8=}
+    resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
 
   istanbul-lib-coverage@3.2.0:
@@ -5733,8 +5740,9 @@ snapshots:
   '@chainsafe/bls@7.1.3(@chainsafe/blst@0.2.10)':
     dependencies:
       '@chainsafe/bls-keygen': 0.4.0
-      '@chainsafe/blst': 0.2.10
       bls-eth-wasm: 0.4.8
+    optionalDependencies:
+      '@chainsafe/blst': 0.2.10
 
   '@chainsafe/blst@0.2.10':
     dependencies:
@@ -5962,14 +5970,14 @@ snapshots:
       '@ledgerhq/errors': 5.50.0
       '@ledgerhq/logs': 5.50.0
       rxjs: 6.6.7
-      semver: 7.3.5
+      semver: 7.6.0
 
   '@ledgerhq/devices@6.20.0':
     dependencies:
       '@ledgerhq/errors': 6.10.0
       '@ledgerhq/logs': 6.10.0
       rxjs: 6.6.7
-      semver: 7.3.5
+      semver: 7.6.0
 
   '@ledgerhq/errors@5.50.0': {}
 
@@ -6010,37 +6018,37 @@ snapshots:
 
   '@ledgerhq/logs@6.10.0': {}
 
-  '@mainsail/container@0.0.1-alpha.15':
+  '@mainsail/container@0.0.1-alpha.16':
     dependencies:
       inversify: 6.0.2
       reflect-metadata: 0.2.1
 
-  '@mainsail/contracts@0.0.1-alpha.15':
+  '@mainsail/contracts@0.0.1-alpha.16':
     dependencies:
       '@hapi/hapi': 21.3.6
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/utils': 0.0.1-alpha.16
       ajv: 8.12.0
       dayjs: 1.11.10
       inversify: 6.0.2
       reflect-metadata: 0.2.1
       type-fest: 4.12.0
 
-  '@mainsail/crypto-address-base58@0.0.1-alpha.15':
+  '@mainsail/crypto-address-base58@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       bcrypto: 5.5.2
       bstring: 0.3.9
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-config@0.0.1-alpha.15':
+  '@mainsail/crypto-config@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
       deepmerge: 4.3.1
       lodash.clone: 4.5.0
       lodash.get: 4.4.2
@@ -6048,34 +6056,34 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-consensus-bls12-381@0.0.1-alpha.15':
+  '@mainsail/crypto-consensus-bls12-381@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-alpha.15
-      '@mainsail/crypto-signature-bls12-381': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-alpha.16
+      '@mainsail/crypto-signature-bls12-381': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
     transitivePeerDependencies:
       - bluebird
       - supports-color
 
-  '@mainsail/crypto-hash-bcrypto@0.0.1-alpha.15':
+  '@mainsail/crypto-hash-bcrypto@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
       bcrypto: 5.5.2
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-key-pair-bls12-381@0.0.1-alpha.15':
+  '@mainsail/crypto-key-pair-bls12-381@0.0.1-alpha.16':
     dependencies:
       '@chainsafe/bls': 7.1.3(@chainsafe/blst@0.2.10)
       '@chainsafe/blst': 0.2.10
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       '@scure/bip39': 1.3.0
       bls12-381-keygen: 0.2.4
       wif: 4.0.0
@@ -6083,163 +6091,174 @@ snapshots:
       - bluebird
       - supports-color
 
-  '@mainsail/crypto-key-pair-ecdsa@0.0.1-alpha.15':
+  '@mainsail/crypto-key-pair-ecdsa@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       bcrypto: 5.5.2
       wif: 4.0.0
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-signature-bls12-381@0.0.1-alpha.15':
+  '@mainsail/crypto-signature-bls12-381@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - bluebird
       - supports-color
 
-  '@mainsail/crypto-signature-schnorr-secp256k1@0.0.1-alpha.15':
+  '@mainsail/crypto-signature-schnorr-secp256k1@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       bcrypto: 5.5.2
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction-multi-payment@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction-multi-payment@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/transactions': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction-transfer@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction-multi-signature-registration@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/transactions': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction-username-registration@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction-transfer@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/transactions': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction-username-resignation@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction-username-registration@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction-username-registration': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/transactions': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction-validator-registration@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction-username-resignation@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/transactions': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction-username-registration': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction-validator-resignation@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction-validator-registration@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/transactions': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction-vote@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction-validator-resignation@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/transactions': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
+    transitivePeerDependencies:
+      - supports-color
+
+  '@mainsail/crypto-transaction-vote@0.0.1-alpha.16':
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction-validator-registration': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/transactions': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-transaction@0.0.1-alpha.15':
+  '@mainsail/crypto-transaction@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/crypto-validation@0.0.1-alpha.15':
+  '@mainsail/crypto-validation@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       ajv: 8.12.0
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/fees-static@0.0.1-alpha.15':
+  '@mainsail/fees-static@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/fees': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/fees': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/fees@0.0.1-alpha.15':
+  '@mainsail/fees@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/kernel@0.0.1-alpha.15':
+  '@mainsail/kernel@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
       chalk: 5.3.0
       cron: 3.1.6
       date-fns: 3.4.0
@@ -6256,17 +6275,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/transactions@0.0.1-alpha.15':
+  '@mainsail/transactions@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/crypto-transaction': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
-      '@mainsail/utils': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/crypto-transaction': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
+      '@mainsail/utils': 0.0.1-alpha.16
     transitivePeerDependencies:
       - supports-color
 
-  '@mainsail/utils@0.0.1-alpha.15':
+  '@mainsail/utils@0.0.1-alpha.16':
     dependencies:
       '@hapi/bourne': 3.0.0
       deepmerge: 4.3.1
@@ -6275,11 +6294,11 @@ snapshots:
       fast-sort: 3.4.0
       type-fest: 4.12.0
 
-  '@mainsail/validation@0.0.1-alpha.15':
+  '@mainsail/validation@0.0.1-alpha.16':
     dependencies:
-      '@mainsail/container': 0.0.1-alpha.15
-      '@mainsail/contracts': 0.0.1-alpha.15
-      '@mainsail/kernel': 0.0.1-alpha.15
+      '@mainsail/container': 0.0.1-alpha.16
+      '@mainsail/contracts': 0.0.1-alpha.16
+      '@mainsail/kernel': 0.0.1-alpha.16
       ajv: 8.12.0
       ajv-formats: 2.1.1(ajv@8.12.0)
       ajv-keywords: 5.1.0(ajv@8.12.0)
@@ -6307,7 +6326,7 @@ snapshots:
   '@npmcli/fs@1.1.1':
     dependencies:
       '@gar/promisify': 1.1.3
-      semver: 7.3.5
+      semver: 7.6.0
 
   '@npmcli/move-file@1.1.2':
     dependencies:
@@ -6460,7 +6479,7 @@ snapshots:
     dependencies:
       '@types/node': 17.0.8
 
-  '@typescript-eslint/eslint-plugin@5.4.0(@typescript-eslint/parser@5.4.0)(eslint@8.3.0)(typescript@4.5.2)':
+  '@typescript-eslint/eslint-plugin@5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2)':
     dependencies:
       '@typescript-eslint/experimental-utils': 5.4.0(eslint@8.3.0)(typescript@4.5.2)
       '@typescript-eslint/parser': 5.4.0(eslint@8.3.0)(typescript@4.5.2)
@@ -6472,6 +6491,7 @@ snapshots:
       regexpp: 3.2.0
       semver: 7.3.5
       tsutils: 3.21.0(typescript@4.5.2)
+    optionalDependencies:
       typescript: 4.5.2
     transitivePeerDependencies:
       - supports-color
@@ -6496,6 +6516,7 @@ snapshots:
       '@typescript-eslint/typescript-estree': 5.4.0(typescript@4.5.2)
       debug: 4.3.2
       eslint: 8.3.0
+    optionalDependencies:
       typescript: 4.5.2
     transitivePeerDependencies:
       - supports-color
@@ -6516,6 +6537,7 @@ snapshots:
       is-glob: 4.0.3
       semver: 7.3.5
       tsutils: 3.21.0(typescript@4.5.2)
+    optionalDependencies:
       typescript: 4.5.2
     transitivePeerDependencies:
       - supports-color
@@ -6605,17 +6627,17 @@ snapshots:
       '@webassemblyjs/ast': 1.11.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)':
+  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))':
     dependencies:
       webpack: 5.64.4(webpack-cli@4.9.1)
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1)':
+  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
     dependencies:
       envinfo: 7.8.1
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1)':
+  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
     dependencies:
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
@@ -6645,7 +6667,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.2
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -6659,7 +6681,7 @@ snapshots:
       indent-string: 4.0.0
 
   ajv-formats@2.1.1(ajv@8.12.0):
-    dependencies:
+    optionalDependencies:
       ajv: 8.12.0
 
   ajv-keywords@3.4.1(ajv@6.12.6):
@@ -6777,7 +6799,7 @@ snapshots:
 
   axobject-query@2.2.0: {}
 
-  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4):
+  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       '@babel/core': 7.16.5
       find-cache-dir: 3.3.2
@@ -7523,26 +7545,26 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.7.1(@typescript-eslint/parser@5.4.0)(eslint-import-resolver-node@0.3.6):
+  eslint-module-utils@2.7.1(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint-import-resolver-node@0.3.6):
     dependencies:
-      '@typescript-eslint/parser': 5.4.0(eslint@8.3.0)(typescript@4.5.2)
       debug: 3.2.7
-      eslint-import-resolver-node: 0.3.6
       find-up: 2.1.0
       pkg-dir: 2.0.0
+    optionalDependencies:
+      '@typescript-eslint/parser': 5.4.0(eslint@8.3.0)(typescript@4.5.2)
+      eslint-import-resolver-node: 0.3.6
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.25.3(@typescript-eslint/parser@5.4.0)(eslint@8.3.0):
+  eslint-plugin-import@2.25.3(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0):
     dependencies:
-      '@typescript-eslint/parser': 5.4.0(eslint@8.3.0)(typescript@4.5.2)
       array-includes: 3.1.4
       array.prototype.flat: 1.2.5
       debug: 2.6.9
       doctrine: 2.1.0
       eslint: 8.3.0
       eslint-import-resolver-node: 0.3.6
-      eslint-module-utils: 2.7.1(@typescript-eslint/parser@5.4.0)(eslint-import-resolver-node@0.3.6)
+      eslint-module-utils: 2.7.1(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint-import-resolver-node@0.3.6)
       has: 1.0.3
       is-core-module: 2.8.0
       is-glob: 4.0.3
@@ -7550,6 +7572,8 @@ snapshots:
       object.values: 1.1.5
       resolve: 1.20.0
       tsconfig-paths: 3.12.0
+    optionalDependencies:
+      '@typescript-eslint/parser': 5.4.0(eslint@8.3.0)(typescript@4.5.2)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -7571,12 +7595,13 @@ snapshots:
       language-tags: 1.0.5
       minimatch: 3.0.4
 
-  eslint-plugin-prettier@4.0.0(eslint-config-prettier@8.3.0)(eslint@8.3.0)(prettier@2.4.1):
+  eslint-plugin-prettier@4.0.0(eslint-config-prettier@8.3.0(eslint@8.3.0))(eslint@8.3.0)(prettier@2.4.1):
     dependencies:
       eslint: 8.3.0
-      eslint-config-prettier: 8.3.0(eslint@8.3.0)
       prettier: 2.4.1
       prettier-linter-helpers: 1.0.0
+    optionalDependencies:
+      eslint-config-prettier: 8.3.0(eslint@8.3.0)
 
   eslint-plugin-promise@5.1.1(eslint@8.3.0):
     dependencies:
@@ -7628,11 +7653,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-unused-imports@2.0.0(@typescript-eslint/eslint-plugin@5.4.0)(eslint@8.3.0):
+  eslint-plugin-unused-imports@2.0.0(@typescript-eslint/eslint-plugin@5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 5.4.0(@typescript-eslint/parser@5.4.0)(eslint@8.3.0)(typescript@4.5.2)
       eslint: 8.3.0
       eslint-rule-composer: 0.3.0
+    optionalDependencies:
+      '@typescript-eslint/eslint-plugin': 5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2)
 
   eslint-rule-composer@0.3.0: {}
 
@@ -8052,7 +8078,7 @@ snapshots:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.2
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -8061,7 +8087,7 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.2
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -8684,14 +8710,14 @@ snapshots:
       nopt: 5.0.0
       npmlog: 6.0.2
       rimraf: 3.0.2
-      semver: 7.3.5
+      semver: 7.6.0
       tar: 6.2.1
       which: 2.0.2
     transitivePeerDependencies:
       - bluebird
       - supports-color
 
-  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4):
+  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       assert: 2.0.0
       browserify-zlib: 0.2.0
@@ -9073,7 +9099,7 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-typescript-plugin@1.1.1(webpack@5.64.4):
+  resolve-typescript-plugin@1.1.1(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       tslib: 2.3.1
       webpack: 5.64.4(webpack-cli@4.9.1)
@@ -9408,7 +9434,7 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4):
+  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       jest-worker: 27.3.1
       schema-utils: 3.1.1
@@ -9421,10 +9447,11 @@ snapshots:
 
   terser@5.10.0(acorn@8.6.0):
     dependencies:
-      acorn: 8.6.0
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21
+    optionalDependencies:
+      acorn: 8.6.0
 
   test-exclude@6.0.0:
     dependencies:
@@ -9461,7 +9488,7 @@ snapshots:
 
   totalist@2.0.0: {}
 
-  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4):
+  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.8.3
@@ -9675,9 +9702,9 @@ snapshots:
   webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4):
     dependencies:
       '@discoveryjs/json-ext': 0.5.5
-      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)
-      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1)
-      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1)
+      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))
+      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
+      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
       colorette: 2.0.16
       commander: 7.2.0
       execa: 5.1.1
@@ -9686,8 +9713,9 @@ snapshots:
       interpret: 2.2.0
       rechoir: 0.7.1
       webpack: 5.64.4(webpack-cli@4.9.1)
-      webpack-bundle-analyzer: 4.5.0
       webpack-merge: 5.8.0
+    optionalDependencies:
+      webpack-bundle-analyzer: 4.5.0
 
   webpack-merge@5.8.0:
     dependencies:
@@ -9719,10 +9747,11 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4)
+      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1))
       watchpack: 2.3.0
-      webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
       webpack-sources: 3.2.2
+    optionalDependencies:
+      webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild

@@ -26,7 +26,7 @@ const network: Networks.NetworkManifest = {
 			type: "full",
 		},
 		{
-			host: "https://ark-live-musig.arkvault.io",
+			host: "https://musig-demo.mainsailhq.com",
 			type: "musig",
 		},
 		{

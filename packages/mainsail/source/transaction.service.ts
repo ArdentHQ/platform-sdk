@@ -1,15 +1,19 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Container } from "@mainsail/container";
-import { Identifiers } from "@mainsail/contracts";
+import { Contracts as MainsailContracts, Identifiers } from "@mainsail/contracts";
 import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
 import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
 import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
-import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import { ServiceProvider as CoreCryptoTransaction, Utils } from "@mainsail/crypto-transaction";
 import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
+import {
+	MultiSignatureBuilder,
+	ServiceProvider as CoreCryptoTransactionMultiSignature,
+} from "@mainsail/crypto-transaction-multi-signature-registration";
 import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import {
 	ServiceProvider as CoreCryptoTransactionUsername,
@@ -34,6 +38,38 @@ import { milestones } from "./crypto/networks/devnet/milestones.js";
 import { network } from "./crypto/networks/devnet/network.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
+
+// @TODO https://app.clickup.com/t/86dth6590
+export const getApp = async () => {
+	const app = new Application(new Container());
+
+	await Promise.all([
+		app.resolve(CoreValidation).register(),
+		app.resolve(CoreCryptoConfig).register(),
+		app.resolve(CoreCryptoValidation).register(),
+		app.resolve(CoreCryptoKeyPairEcdsa).register(),
+		app.resolve(CoreCryptoAddressBase58).register(),
+		app.resolve(CoreCryptoSignatureSchnorr).register(),
+		app.resolve(CoreCryptoHashBcrypto).register(),
+		app.resolve(CoreFees).register(),
+		app.resolve(CoreFeesStatic).register(),
+		app.resolve(CoreCryptoTransaction).register(),
+		app.resolve(CoreCryptoTransactionTransfer).register(),
+		app.resolve(CoreCryptoTransactionVote).register(),
+		app.resolve(CoreCryptoMultipaymentTransfer).register(),
+		app.resolve(CoreCryptoTransactionUsername).register(),
+		app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
+		app.resolve(CoreCryptoTransactionValidatorResignation).register(),
+		app.resolve(CoreCryptoConsensusBls12381).register(),
+		app.resolve(CoreCryptoTransactionMultiSignature).register(),
+	]);
+
+	app.get<{
+		setConfig: Function;
+	}>(Identifiers.Cryptography.Configuration).setConfig({ milestones, network });
+
+	return app;
+};
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -91,6 +127,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
 			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
+			this.#app.resolve(CoreCryptoTransactionMultiSignature).register(),
 		]);
 
 		this.#app
@@ -105,6 +142,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
+	 * @musig
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		if (!input.data.amount) {
@@ -149,6 +187,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
+	 * @musig
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData(
@@ -196,6 +235,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	/**
 	 * @inheritDoc
 	 *
+	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
@@ -236,6 +276,30 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return BigNumber.make(blockchain.block.height)
 			.plus((value ? Number(value) : 5) * configuration.constants.activeValidators)
 			.toString();
+	}
+
+	/**
+	 * @inheritDoc
+	 *
+	 * @musig
+	 */
+	public override async multiSignature(
+		input: Services.MultiSignatureInput,
+	): Promise<Contracts.SignedTransactionData> {
+		return this.#createFromData(
+			"multiSignature",
+			input,
+			({ transaction, data }: { transaction: MultiSignatureBuilder; data: any }) => {
+				if (data.senderPublicKey) {
+					transaction.senderPublicKey(data.senderPublicKey);
+				}
+
+				transaction.multiSignatureAsset({
+					min: data.min,
+					publicKeys: data.publicKeys,
+				});
+			},
+		);
 	}
 
 	async #createFromData(
@@ -349,11 +413,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.hasMultiSignature()) {
-			return this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
+			return await this.#addSignature(transaction, input.signatory.multiSignature()!, input.signatory);
 		}
 
 		if (type === "multiSignature") {
-			return this.#addSignature(
+			return await this.#addSignature(
 				transaction,
 				{
 					min: input.data.min,
@@ -407,11 +471,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const signedTransaction = await signedTransactionBuilder?.build();
 
-		return this.dataTransferObjectService.signedTransaction(
-			signedTransaction.id!,
-			signedTransaction.data,
-			signedTransaction.serialized.toString("hex"),
-		);
+		return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 	}
 
 	async #addSignature(
@@ -428,7 +488,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
 
-		const struct = transaction.getStruct();
+		const struct = transaction.data;
+
+		const serialized = await this.#app.resolve(Utils).toBytes(struct);
+
+		const id = await this.#app.resolve(Utils).getId({ serialized } as MainsailContracts.Crypto.Transaction);
+
+		struct.id = id.toString();
 		struct.multiSignature = multiSignature;
 
 		return this.#multiSignatureService.addSignature(struct, signatory);

@@ -2,9 +2,10 @@
 
 import { Contracts, Services, Signatories } from "@ardenthq/sdk";
 import { IReadWriteWallet, ITransactionService, WalletData } from "./contracts.js";
-import { pqueueSettled } from "./helpers/queue.js";
+
 import { ExtendedSignedTransactionData } from "./signed-transaction.dto.js";
 import { SignedTransactionDataDictionary } from "./wallet-transaction.service.contract.js";
+import { pqueueSettled } from "./helpers/queue.js";
 
 export class TransactionService implements ITransactionService {
 	/**
