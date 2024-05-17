@@ -78,8 +78,6 @@ export class MultiSignatureSigner {
 			}
 		}
 
-		console.log("addSignature", { pendingMultiSignature });
-
 		if (isReady && pendingMultiSignature.needsFinalSignature()) {
 			if (signingKeys) {
 				Transactions.Signer.sign(transaction, signingKeys);
