@@ -30,8 +30,6 @@ describe("SignatoryFactory", ({ beforeEach, assert, nock, loader, stub, it }) =>
 			network: "ark.devnet",
 		});
 
-		context.wallet.data().set("PUBLIC_KEY", "0291bd988a9375618f2b4cc2a45ed4189066870342708efebbeb6e46951e15263a");
-
 		context.subject = new SignatoryFactory(context.wallet);
 	});
 
