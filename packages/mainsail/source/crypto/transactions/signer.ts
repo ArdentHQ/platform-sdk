@@ -3,6 +3,9 @@ import { numberToHex } from "@ardenthq/sdk-helpers";
 import { Hash } from "../hash.js";
 import { IKeyPair, ISerializeOptions, ITransactionData } from "../interfaces/index.js";
 import { Utils } from "./utils.js";
+import { Utils as MainsailUtils } from "@mainsail/crypto-transaction";
+import { getApp } from "../../transaction.service";
+import { Contracts as MainsailContracts } from "@mainsail/contracts";
 
 export class Signer {
 	public static sign(transaction: ITransactionData, keys: IKeyPair, options?: ISerializeOptions): string {
@@ -31,18 +34,27 @@ export class Signer {
 		return signature;
 	}
 
-	public static multiSign(transaction: ITransactionData, keys: IKeyPair, index = -1): string {
+	public static async multiSign(transaction: MainsailContracts.Crypto.TransactionData, keys: IKeyPair, index = -1): Promise<string> {
 		if (!transaction.signatures) {
 			transaction.signatures = [];
 		}
 
 		index = index === -1 ? transaction.signatures.length : index;
 
-		const hash: Buffer = Utils.toHash(transaction, {
+		const app = await getApp();
+
+		const hash = await app.resolve(MainsailUtils).toHash(transaction, {
 			excludeMultiSignature: true,
-			excludeSecondSignature: true,
 			excludeSignature: true,
 		});
+
+		// const hash2: Buffer = Utils.toHash(transaction, {
+		// 	excludeMultiSignature: true,
+		// 	excludeSecondSignature: true,
+		// 	excludeSignature: true,
+		// });
+
+		console.log("multiSign hash", hash.toString("hex"));
 
 		const signature: string = Hash.signSchnorr(hash, keys);
 		const indexedSignature = `${numberToHex(index)}${signature}`;

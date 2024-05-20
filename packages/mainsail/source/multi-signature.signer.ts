@@ -70,7 +70,7 @@ export class MultiSignatureSigner {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
 
-				Transactions.Signer.multiSign(
+				await Transactions.Signer.multiSign(
 					transaction,
 					signingKeys,
 					this.#publicKeyIndex(transaction, signingKeys.publicKey),
