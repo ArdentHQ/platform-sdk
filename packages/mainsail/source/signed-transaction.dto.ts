@@ -125,9 +125,9 @@ export class SignedTransactionData
 	}
 
 	public async generateHash(options: { excludeMultiSignature?: boolean } = {}) {
-		return Transactions.Utils.toHash(this.signedData, {
+		const app = await getApp();
+		return app.resolve(Utils).toHash(this.signedData, {
 			excludeMultiSignature: options?.excludeMultiSignature ?? true,
-			excludeSecondSignature: true,
 			excludeSignature: true,
 		});
 	}
@@ -145,7 +145,9 @@ export class SignedTransactionData
 
 			const hash = await this.generateHash();
 
-			if (Hash.verifySchnorr(hash, partialSignature, publicKey)) {
+			const isValid = Hash.verifySchnorr(hash, partialSignature, publicKey);
+
+			if (isValid) {
 				validSignatures.push(signature);
 			}
 		}
