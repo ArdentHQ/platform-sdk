@@ -379,9 +379,9 @@ export class TransactionService implements ITransactionService {
 			for (const [id, transaction] of Object.entries(transactions)) {
 				this.#assertHasValidIdentifier(id);
 
-				throw new Error("[restore] TODO fix #createExtendedSignedTransactionData async");
-				storage[id] = this.#createExtendedSignedTransactionData(
+				storage[id] = new ExtendedSignedTransactionData(
 					this.#wallet.dataTransferObject().signedTransaction(id, transaction),
+					this.#wallet,
 				);
 			}
 		};
