@@ -34,7 +34,11 @@ export class Signer {
 		return signature;
 	}
 
-	public static async multiSign(transaction: MainsailContracts.Crypto.TransactionData, keys: IKeyPair, index = -1): Promise<string> {
+	public static async multiSign(
+		transaction: MainsailContracts.Crypto.TransactionData,
+		keys: IKeyPair,
+		index = -1,
+	): Promise<string> {
 		if (!transaction.signatures) {
 			transaction.signatures = [];
 		}
@@ -47,14 +51,6 @@ export class Signer {
 			excludeMultiSignature: true,
 			excludeSignature: true,
 		});
-
-		// const hash2: Buffer = Utils.toHash(transaction, {
-		// 	excludeMultiSignature: true,
-		// 	excludeSecondSignature: true,
-		// 	excludeSignature: true,
-		// });
-
-		console.log("multiSign hash", hash.toString("hex"));
 
 		const signature: string = Hash.signSchnorr(hash, keys);
 		const indexedSignature = `${numberToHex(index)}${signature}`;
