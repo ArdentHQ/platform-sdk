@@ -5,6 +5,8 @@ import { MultiSignatureTransaction } from "./multi-signature.contract.js";
 
 export class PendingMultiSignatureTransaction {
 	readonly #transaction: MultiSignatureTransaction;
+	#validSignatures: string[] = [];
+	#validFinalSignature: string | undefined;
 
 	public constructor(transaction: MultiSignatureTransaction) {
 		this.#transaction = {
@@ -82,8 +84,7 @@ export class PendingMultiSignatureTransaction {
 			return true;
 		}
 
-		// return !Hash.verifySchnorr(this.#getHash(), signature.slice(2, 130), publicKey);
-		return false;
+		return !this.#validSignatures.includes(signature);
 	}
 
 	public needsFinalSignature(): boolean {
@@ -93,12 +94,7 @@ export class PendingMultiSignatureTransaction {
 			return false;
 		}
 
-		// return (
-		// 	!transaction.signature ||
-		// 	!Hash.verifySchnorr(this.#getHash(false), transaction.signature, transaction.senderPublicKey!)
-		// );
-
-		return (!transaction.signature || !true);
+		return !this.#validFinalSignature;
 	}
 
 	public remainingSignatureCount(): number {
@@ -114,31 +110,47 @@ export class PendingMultiSignatureTransaction {
 	}
 
 	#getValidMultiSignatures(): string[] {
-		const transaction: MultiSignatureTransaction = this.#transaction;
-
 		if (!this.isMultiSignature()) {
 			return [];
 		}
 
-		if (!transaction.signatures || !transaction.signatures.length) {
-			return [];
-		}
-
-		// const validSignatures: string[] = [];
-		// for (const signature of transaction.signatures) {
-		// 	const publicKeyIndex: number = parseInt(signature.slice(0, 2), 16);
-		// 	const partialSignature: string = signature.slice(2, 130);
-		// 	const publicKey: string = transaction.multiSignature.publicKeys[publicKeyIndex];
-		//
-		// 	if (Hash.verifySchnorr(this.#getHash(), partialSignature, publicKey)) {
-		// 		validSignatures.push(signature);
-		// 	}
-		// }
-
-		return transaction.signatures;
+		return this.#validSignatures;
 	}
 
-	#getHash(excludeMultiSignature = true): Buffer {
+	public async constructSignatures(): Promise<void> {
+		const transaction: MultiSignatureTransaction = this.#transaction;
+		const signatures = transaction.signatures ?? [];
+
+		this.#validSignatures = [];
+
+		for (const signature of signatures) {
+			const publicKeyIndex: number = parseInt(signature.slice(0, 2), 16);
+			const partialSignature: string = signature.slice(2, 130);
+			const publicKey: string = transaction.multiSignature.publicKeys[publicKeyIndex];
+
+			const hash = await this.#getHash();
+
+			if (Hash.verifySchnorr(hash, partialSignature, publicKey)) {
+				this.#validSignatures.push(signature);
+			}
+		}
+
+		this.#validFinalSignature = undefined;
+
+		if (transaction.signature) {
+			const hash = await this.#getHash(false);
+			const isValid = Hash.verifySchnorr(hash, transaction.signature, transaction.senderPublicKey!);
+
+			if (isValid) {
+				this.#validFinalSignature = transaction.signature;
+			}
+		}
+
+		return;
+	}
+
+	// TODO: Replace with mainsail Util.
+	async #getHash(excludeMultiSignature = true): Promise<Buffer> {
 		return Transactions.Utils.toHash(this.#transaction, {
 			excludeSignature: true,
 			excludeSecondSignature: true,
