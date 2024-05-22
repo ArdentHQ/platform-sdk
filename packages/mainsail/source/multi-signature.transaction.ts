@@ -1,12 +1,7 @@
-import { Transactions } from "./crypto/index.js";
-import { Hash } from "./crypto/hash.js";
-
 import { MultiSignatureTransaction } from "./multi-signature.contract.js";
 
 export class PendingMultiSignatureTransaction {
 	readonly #transaction: MultiSignatureTransaction;
-	#validSignatures: string[] = [];
-	#validFinalSignature: string | undefined;
 
 	public constructor(transaction: MultiSignatureTransaction) {
 		this.#transaction = {
@@ -84,17 +79,15 @@ export class PendingMultiSignatureTransaction {
 			return true;
 		}
 
-		return !this.#validSignatures.includes(signature);
+		return !this.#getValidMultiSignatures().includes(signature);
 	}
 
 	public needsFinalSignature(): boolean {
-		const transaction: MultiSignatureTransaction = this.#transaction;
-
 		if (this.isMultiSignature() && !this.isMultiSignatureRegistration()) {
 			return false;
 		}
 
-		return !this.#validFinalSignature;
+		return !this.#transaction.signature;
 	}
 
 	public remainingSignatureCount(): number {
@@ -114,47 +107,6 @@ export class PendingMultiSignatureTransaction {
 			return [];
 		}
 
-		return this.#validSignatures;
-	}
-
-	public async constructSignatures(): Promise<void> {
-		const transaction: MultiSignatureTransaction = this.#transaction;
-		const signatures = transaction.signatures ?? [];
-
-		this.#validSignatures = [];
-
-		for (const signature of signatures) {
-			const publicKeyIndex: number = parseInt(signature.slice(0, 2), 16);
-			const partialSignature: string = signature.slice(2, 130);
-			const publicKey: string = transaction.multiSignature.publicKeys[publicKeyIndex];
-
-			const hash = await this.#getHash();
-
-			if (Hash.verifySchnorr(hash, partialSignature, publicKey)) {
-				this.#validSignatures.push(signature);
-			}
-		}
-
-		this.#validFinalSignature = undefined;
-
-		if (transaction.signature) {
-			const hash = await this.#getHash(false);
-			const isValid = Hash.verifySchnorr(hash, transaction.signature, transaction.senderPublicKey!);
-
-			if (isValid) {
-				this.#validFinalSignature = transaction.signature;
-			}
-		}
-
-		return;
-	}
-
-	// TODO: Replace with mainsail Util.
-	async #getHash(excludeMultiSignature = true): Promise<Buffer> {
-		return Transactions.Utils.toHash(this.#transaction, {
-			excludeSignature: true,
-			excludeSecondSignature: true,
-			excludeMultiSignature,
-		});
+		return this.#transaction.signatures ?? [];
 	}
 }
