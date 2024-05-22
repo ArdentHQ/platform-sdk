@@ -16,7 +16,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		super(container);
 
 		this.#config = container.get(BindingType.Crypto);
-		this.#app = container.resolve<any>(container.get(BindingType.ServiceProvider)).app();
+		this.#app = container.get(BindingType.Application);
 	}
 
 	public override async fromMnemonic(
@@ -54,12 +54,6 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 	}
 
 	public override async verifyPublicKeyWithBLS(publicKey: string): Promise<boolean> {
-		const consensusKeyPairFactory: Contracts.Crypto.KeyPairFactory = this.#app.getTagged(
-			Identifiers.Cryptography.Identity.KeyPair.Factory,
-			"type",
-			"consensus",
-		);
-
 		const consensusPublicKeyFactory: Contracts.Crypto.PublicKeyFactory = this.#app.getTagged(
 			Identifiers.Cryptography.Identity.PublicKey.Factory,
 			"type",

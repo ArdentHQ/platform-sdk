@@ -1,75 +1,18 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Container } from "@mainsail/container";
-import { Contracts as MainsailContracts, Identifiers } from "@mainsail/contracts";
-import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
-import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
-import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
-import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
-import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
-import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr-secp256k1";
-import { ServiceProvider as CoreCryptoTransaction, Utils } from "@mainsail/crypto-transaction";
-import { ServiceProvider as CoreCryptoMultipaymentTransfer } from "@mainsail/crypto-transaction-multi-payment";
-import {
-	MultiSignatureBuilder,
-	ServiceProvider as CoreCryptoTransactionMultiSignature,
-} from "@mainsail/crypto-transaction-multi-signature-registration";
-import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
-import {
-	ServiceProvider as CoreCryptoTransactionUsername,
-	UsernameRegistrationBuilder,
-} from "@mainsail/crypto-transaction-username-registration";
-import {
-	ServiceProvider as CoreCryptoTransactionValidatorRegistration,
-	ValidatorRegistrationBuilder,
-} from "@mainsail/crypto-transaction-validator-registration";
-import { ServiceProvider as CoreCryptoTransactionValidatorResignation } from "@mainsail/crypto-transaction-validator-resignation";
-import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
-import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
-import { ServiceProvider as CoreFees } from "@mainsail/fees";
-import { ServiceProvider as CoreFeesStatic } from "@mainsail/fees-static";
+import { Contracts as MainsailContracts } from "@mainsail/contracts";
+import { Utils } from "@mainsail/crypto-transaction";
+import { MultiSignatureBuilder } from "@mainsail/crypto-transaction-multi-signature-registration";
+import { UsernameRegistrationBuilder } from "@mainsail/crypto-transaction-username-registration";
+import { ValidatorRegistrationBuilder } from "@mainsail/crypto-transaction-validator-registration";
+import { VoteBuilder } from "@mainsail/crypto-transaction-vote";
 import { Application } from "@mainsail/kernel";
-import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
-import { milestones } from "./crypto/networks/devnet/milestones.js";
-import { network } from "./crypto/networks/devnet/network.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
-
-// @TODO https://app.clickup.com/t/86dth6590
-export const getApp = async () => {
-	const app = new Application(new Container());
-
-	await Promise.all([
-		app.resolve(CoreValidation).register(),
-		app.resolve(CoreCryptoConfig).register(),
-		app.resolve(CoreCryptoValidation).register(),
-		app.resolve(CoreCryptoKeyPairEcdsa).register(),
-		app.resolve(CoreCryptoAddressBase58).register(),
-		app.resolve(CoreCryptoSignatureSchnorr).register(),
-		app.resolve(CoreCryptoHashBcrypto).register(),
-		app.resolve(CoreFees).register(),
-		app.resolve(CoreFeesStatic).register(),
-		app.resolve(CoreCryptoTransaction).register(),
-		app.resolve(CoreCryptoTransactionTransfer).register(),
-		app.resolve(CoreCryptoTransactionVote).register(),
-		app.resolve(CoreCryptoMultipaymentTransfer).register(),
-		app.resolve(CoreCryptoTransactionUsername).register(),
-		app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
-		app.resolve(CoreCryptoTransactionValidatorResignation).register(),
-		app.resolve(CoreCryptoConsensusBls12381).register(),
-		app.resolve(CoreCryptoTransactionMultiSignature).register(),
-	]);
-
-	app.get<{
-		setConfig: Function;
-	}>(Identifiers.Cryptography.Configuration).setConfig({ milestones, network });
-
-	return app;
-};
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -79,7 +22,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	readonly #multiSignatureSigner!: IoC.Factory<MultiSignatureSigner>;
 	readonly #request: Request;
 	readonly #app: Application;
-	#isBooted: boolean;
 
 	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
 
@@ -91,6 +33,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		this.#publicKeyService = container.get(IoC.BindingType.PublicKeyService);
 		this.#multiSignatureService = container.get(IoC.BindingType.MultiSignatureService);
 		this.#multiSignatureSigner = container.factory(MultiSignatureSigner);
+		this.#app = container.get(BindingType.Application);
 
 		this.#configCrypto = {
 			crypto: container.get(BindingType.Crypto),
@@ -102,41 +45,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			container.get(IoC.BindingType.HttpClient),
 			container.get(IoC.BindingType.NetworkHostSelector),
 		);
-
-		this.#app = new Application(new Container());
-
-		this.#isBooted = false;
-	}
-
-	async #boot(): Promise<void> {
-		await Promise.all([
-			this.#app.resolve(CoreValidation).register(),
-			this.#app.resolve(CoreCryptoConfig).register(),
-			this.#app.resolve(CoreCryptoValidation).register(),
-			this.#app.resolve(CoreCryptoKeyPairEcdsa).register(),
-			this.#app.resolve(CoreCryptoAddressBase58).register(),
-			this.#app.resolve(CoreCryptoSignatureSchnorr).register(),
-			this.#app.resolve(CoreCryptoHashBcrypto).register(),
-			this.#app.resolve(CoreFees).register(),
-			this.#app.resolve(CoreFeesStatic).register(),
-			this.#app.resolve(CoreCryptoTransaction).register(),
-			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
-			this.#app.resolve(CoreCryptoTransactionVote).register(),
-			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
-			this.#app.resolve(CoreCryptoTransactionUsername).register(),
-			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
-			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
-			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
-			this.#app.resolve(CoreCryptoTransactionMultiSignature).register(),
-		]);
-
-		this.#app
-			.get<{
-				setConfig: Function;
-			}>(Identifiers.Cryptography.Configuration)
-			.setConfig({ milestones, network });
-
-		this.#isBooted = true;
 	}
 
 	/**
@@ -307,10 +215,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.TransactionInputs,
 		callback?: Function,
 	): Promise<Contracts.SignedTransactionData> {
-		if (!this.#isBooted) {
-			await this.#boot();
-		}
-
 		applyCryptoConfiguration(this.#configCrypto);
 
 		let address: string | undefined;
