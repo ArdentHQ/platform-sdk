@@ -1,5 +1,3 @@
-import { Container } from "@mainsail/container";
-import { Identifiers } from "@mainsail/contracts";
 import { MultiPaymentBuilder } from "@mainsail/crypto-transaction-multi-payment";
 import { TransferBuilder } from "@mainsail/crypto-transaction-transfer";
 import { UsernameRegistrationBuilder } from "@mainsail/crypto-transaction-username-registration";
@@ -10,7 +8,7 @@ import { MultiSignatureBuilder } from "@mainsail/crypto-transaction-multi-signat
 import { VoteBuilder } from "@mainsail/crypto-transaction-vote";
 import { Application } from "@mainsail/kernel";
 
-import { Contracts, IoC } from "@ardenthq/sdk";
+import { IoC } from "@ardenthq/sdk";
 import { BindingType } from "../../../coin.contract.js";
 
 export * from "./transaction.js";
@@ -26,31 +24,31 @@ export class BuilderFactory {
 		return this.#app.resolve(TransferBuilder);
 	}
 
-	public async delegateRegistration(): Promise<ValidatorRegistrationBuilder> {
+	public delegateRegistration(): ValidatorRegistrationBuilder {
 		return this.#app.resolve(ValidatorRegistrationBuilder);
 	}
 
-	public async usernameRegistration(): Promise<UsernameRegistrationBuilder> {
+	public usernameRegistration(): UsernameRegistrationBuilder {
 		return this.#app.resolve(UsernameRegistrationBuilder);
 	}
 
-	public async usernameResignation(): Promise<UsernameResignationBuilder> {
+	public usernameResignation(): UsernameResignationBuilder {
 		return this.#app.resolve(UsernameResignationBuilder);
 	}
 
-	public async vote(): Promise<VoteBuilder> {
+	public vote(): VoteBuilder {
 		return this.#app.resolve(VoteBuilder);
 	}
 
-	public async multiSignature(): Promise<MultiSignatureBuilder> {
+	public multiSignature(): MultiSignatureBuilder {
 		return this.#app.resolve(MultiSignatureBuilder);
 	}
 
-	public async multiPayment(): Promise<MultiPaymentBuilder> {
+	public multiPayment(): MultiPaymentBuilder {
 		return this.#app.resolve(MultiPaymentBuilder);
 	}
 
-	public async delegateResignation(): Promise<ValidatorResignationBuilder> {
+	public delegateResignation(): ValidatorResignationBuilder {
 		return this.#app.resolve(ValidatorResignationBuilder);
 	}
 }
