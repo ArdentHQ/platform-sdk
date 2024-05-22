@@ -80,10 +80,8 @@ export class TransactionService implements ITransactionService {
 			//
 		}
 
-		return this.#wallet
-			.coin()
-			.multiSignature()
-			.broadcast(this.#createExtendedSignedTransactionData(transactionWithSignature).data().toSignedData());
+		const signedTransaction = await this.#createExtendedSignedTransactionData(transactionWithSignature);
+		return this.#wallet.coin().multiSignature().broadcast(signedTransaction.data().toSignedData());
 	}
 
 	/** {@inheritDoc ITransactionService.signTransfer} */
@@ -381,6 +379,7 @@ export class TransactionService implements ITransactionService {
 			for (const [id, transaction] of Object.entries(transactions)) {
 				this.#assertHasValidIdentifier(id);
 
+				throw new Error("[restore] TODO fix #createExtendedSignedTransactionData async");
 				storage[id] = this.#createExtendedSignedTransactionData(
 					this.#wallet.dataTransferObject().signedTransaction(id, transaction),
 				);
@@ -402,7 +401,7 @@ export class TransactionService implements ITransactionService {
 	 * @memberof TransactionService
 	 */
 	async #signTransaction(type: string, input: any): Promise<string> {
-		const transaction: ExtendedSignedTransactionData = this.#createExtendedSignedTransactionData(
+		const transaction: ExtendedSignedTransactionData = await this.#createExtendedSignedTransactionData(
 			await this.#wallet.coin().transaction()[type](input),
 		);
 
@@ -460,7 +459,7 @@ export class TransactionService implements ITransactionService {
 		this.#pending = {};
 
 		for (const transaction of transactions) {
-			this.#pending[transaction.id] = this.#createExtendedSignedTransactionData(
+			this.#pending[transaction.id] = await this.#createExtendedSignedTransactionData(
 				this.#wallet.coin().dataTransferObject().signedTransaction(transaction.id, transaction),
 			);
 		}
@@ -475,13 +474,18 @@ export class TransactionService implements ITransactionService {
 		this.#signed = {};
 
 		for (const transaction of transactions) {
-			this.#signed[transaction.id] = this.#createExtendedSignedTransactionData(
+			this.#signed[transaction.id] = await this.#createExtendedSignedTransactionData(
 				this.#wallet.coin().dataTransferObject().signedTransaction(transaction.id, transaction),
 			);
 		}
 	}
 
-	#createExtendedSignedTransactionData(transaction: Contracts.SignedTransactionData): ExtendedSignedTransactionData {
+	async #createExtendedSignedTransactionData(
+		transaction: Contracts.SignedTransactionData,
+	): Promise<ExtendedSignedTransactionData> {
+		console.log("case 1", transaction);
+		await transaction.sanitizeSignatures();
+		console.log("case 2", transaction);
 		return new ExtendedSignedTransactionData(transaction, this.#wallet);
 	}
 }
