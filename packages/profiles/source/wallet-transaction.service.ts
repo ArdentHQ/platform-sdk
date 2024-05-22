@@ -483,9 +483,7 @@ export class TransactionService implements ITransactionService {
 	async #createExtendedSignedTransactionData(
 		transaction: Contracts.SignedTransactionData,
 	): Promise<ExtendedSignedTransactionData> {
-		console.log("case 1", transaction);
 		await transaction.sanitizeSignatures();
-		console.log("case 2", transaction);
 		return new ExtendedSignedTransactionData(transaction, this.#wallet);
 	}
 }
