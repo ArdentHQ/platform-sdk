@@ -11,4 +11,5 @@ export const BindingType = {
 	Height: Symbol.for("ARK<Height>"),
 	MultiSignatureSigner: Symbol.for("ARK<MultiSignatureSigner>"),
 	ServiceProvider: Symbol.for("Coin<ServiceProvider>"),
+	TransferBuilder: Symbol.for("Coin<TransferBuilder>"),
 };

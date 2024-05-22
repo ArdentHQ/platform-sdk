@@ -1,7 +1,7 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
-import { Utils } from "@mainsail/crypto-transaction";
+import { TransactionBuilder, Utils } from "@mainsail/crypto-transaction";
 import { MultiSignatureBuilder } from "@mainsail/crypto-transaction-multi-signature-registration";
 import { UsernameRegistrationBuilder } from "@mainsail/crypto-transaction-username-registration";
 import { ValidatorRegistrationBuilder } from "@mainsail/crypto-transaction-validator-registration";
@@ -13,6 +13,7 @@ import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
+import { BuilderFactory } from "./crypto/transactions/index.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -23,6 +24,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	readonly #request: Request;
 	readonly #app: Application;
 
+	#transactionBuilder!: IoC.Factory<BuilderFactory>;
 	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
 
 	public constructor(container: IoC.IContainer) {
@@ -33,6 +35,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		this.#publicKeyService = container.get(IoC.BindingType.PublicKeyService);
 		this.#multiSignatureService = container.get(IoC.BindingType.MultiSignatureService);
 		this.#multiSignatureSigner = container.factory(MultiSignatureSigner);
+		this.#transactionBuilder = container.factory(Transactions.BuilderFactory);
 		this.#app = container.get(BindingType.Application);
 
 		this.#configCrypto = {
@@ -220,7 +223,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		let address: string | undefined;
 		let senderPublicKey: string | undefined;
 
-		const transaction = await Transactions.BuilderFactory[type]();
+		const transaction = this.#transactionBuilder()[type]();
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
