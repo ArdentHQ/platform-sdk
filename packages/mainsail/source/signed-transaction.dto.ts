@@ -132,7 +132,7 @@ export class SignedTransactionData
 		});
 	}
 
-	public async sanitizeSignatures(): Promise<void> {
+	public override async sanitizeSignatures(): Promise<void> {
 		const transaction = this.signedData;
 
 		const validSignatures: string[] = [];
