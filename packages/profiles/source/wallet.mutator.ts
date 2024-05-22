@@ -74,12 +74,6 @@ export class WalletMutator implements IWalletMutator {
 			this.#wallet.data().set(WalletData.ImportMethod, WalletImportMethod.BIP84.MNEMONIC);
 		}
 
-		const value = this.#wallet.network().usesExtendedPublicKey()
-			? await this.#wallet.coin().extendedPublicKey().fromMnemonic(mnemonic, options)
-			: (await this.#wallet.coin().publicKey().fromMnemonic(mnemonic, options)).publicKey;
-
-		this.#wallet.data().set(WalletData.PublicKey, value);
-
 		return this.address({ address, path, type });
 	}
 
