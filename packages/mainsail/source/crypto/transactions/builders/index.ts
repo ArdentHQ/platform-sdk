@@ -45,8 +45,6 @@ import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 import { milestones } from "../../networks/devnet/milestones";
 import { network } from "../../networks/devnet/network";
 
-// export * from "./transaction.js";
-
 export class BuilderFactory {
 	private static async app() {
 		const app = new Application(new Container());
