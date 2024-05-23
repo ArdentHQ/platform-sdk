@@ -265,4 +265,8 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 			}),
 		);
 	}
+
+	public async sanitizeSignatures(): Promise<void> {
+		return undefined;
+	}
 }

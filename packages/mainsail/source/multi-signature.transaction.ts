@@ -1,6 +1,3 @@
-import { Transactions } from "./crypto/index.js";
-import { Hash } from "./crypto/hash.js";
-
 import { MultiSignatureTransaction } from "./multi-signature.contract.js";
 
 export class PendingMultiSignatureTransaction {
@@ -82,23 +79,15 @@ export class PendingMultiSignatureTransaction {
 			return true;
 		}
 
-		// return !Hash.verifySchnorr(this.#getHash(), signature.slice(2, 130), publicKey);
-		return false;
+		return !this.#getValidMultiSignatures().includes(signature);
 	}
 
 	public needsFinalSignature(): boolean {
-		const transaction: MultiSignatureTransaction = this.#transaction;
-
 		if (this.isMultiSignature() && !this.isMultiSignatureRegistration()) {
 			return false;
 		}
 
-		// return (
-		// 	!transaction.signature ||
-		// 	!Hash.verifySchnorr(this.#getHash(false), transaction.signature, transaction.senderPublicKey!)
-		// );
-
-		return (!transaction.signature || !true);
+		return !this.#transaction.signature;
 	}
 
 	public remainingSignatureCount(): number {
@@ -114,35 +103,10 @@ export class PendingMultiSignatureTransaction {
 	}
 
 	#getValidMultiSignatures(): string[] {
-		const transaction: MultiSignatureTransaction = this.#transaction;
-
 		if (!this.isMultiSignature()) {
 			return [];
 		}
 
-		if (!transaction.signatures || !transaction.signatures.length) {
-			return [];
-		}
-
-		// const validSignatures: string[] = [];
-		// for (const signature of transaction.signatures) {
-		// 	const publicKeyIndex: number = parseInt(signature.slice(0, 2), 16);
-		// 	const partialSignature: string = signature.slice(2, 130);
-		// 	const publicKey: string = transaction.multiSignature.publicKeys[publicKeyIndex];
-		//
-		// 	if (Hash.verifySchnorr(this.#getHash(), partialSignature, publicKey)) {
-		// 		validSignatures.push(signature);
-		// 	}
-		// }
-
-		return transaction.signatures;
-	}
-
-	#getHash(excludeMultiSignature = true): Buffer {
-		return Transactions.Utils.toHash(this.#transaction, {
-			excludeSignature: true,
-			excludeSecondSignature: true,
-			excludeMultiSignature,
-		});
+		return this.#transaction.signatures ?? [];
 	}
 }
