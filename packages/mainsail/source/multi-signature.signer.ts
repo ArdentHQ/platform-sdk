@@ -28,18 +28,13 @@ export class MultiSignatureSigner {
 			transaction.senderPublicKey(Identities.PublicKey.fromMultiSignatureAsset(multiSignature));
 		}
 
-		const data =
-			transaction.data.type === Enums.TransactionType.MultiSignature
-				? transaction.getStruct()
-				: transaction.build().toJson();
+		transaction.data.multiSignature = multiSignature;
 
-		data.multiSignature = multiSignature;
-
-		if (!data.signatures) {
-			data.signatures = [];
+		if (!transaction.data.signatures) {
+			transaction.data.signatures = [];
 		}
 
-		return data;
+		return transaction.data;
 	}
 
 	public async addSignature(
@@ -75,7 +70,7 @@ export class MultiSignatureSigner {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
 
-				Transactions.Signer.multiSign(
+				await Transactions.Signer.multiSign(
 					transaction,
 					signingKeys,
 					this.#publicKeyIndex(transaction, signingKeys.publicKey),

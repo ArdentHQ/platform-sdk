@@ -311,6 +311,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
+			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
+			const id = await this.#app.resolve(Utils).getId({ serialized } as MainsailContracts.Crypto.Transaction);
+
+			transaction.data.id = id.toString();
 			const transactionWithSignature = this.#multiSignatureSigner().sign(transaction, input.signatory.asset());
 
 			return this.dataTransferObjectService.signedTransaction(

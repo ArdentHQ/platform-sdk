@@ -11,8 +11,6 @@ import { Application } from "@mainsail/kernel";
 import { IoC } from "@ardenthq/sdk";
 import { BindingType } from "../../../coin.contract.js";
 
-export * from "./transaction.js";
-
 export class BuilderFactory {
 	#app: Application;
 
