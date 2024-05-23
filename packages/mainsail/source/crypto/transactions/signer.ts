@@ -3,8 +3,6 @@ import { numberToHex } from "@ardenthq/sdk-helpers";
 import { Hash } from "../hash.js";
 import { IKeyPair, ISerializeOptions, ITransactionData } from "../interfaces/index.js";
 import { Utils } from "./utils.js";
-import { Utils as MainsailUtils } from "@mainsail/crypto-transaction";
-import { getApp } from "../../transaction.service";
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
 
 export class Signer {
