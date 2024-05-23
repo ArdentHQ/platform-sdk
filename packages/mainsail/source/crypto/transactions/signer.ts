@@ -38,19 +38,13 @@ export class Signer {
 		transaction: MainsailContracts.Crypto.TransactionData,
 		keys: IKeyPair,
 		index = -1,
+		hash: Buffer,
 	): Promise<string> {
 		if (!transaction.signatures) {
 			transaction.signatures = [];
 		}
 
 		index = index === -1 ? transaction.signatures.length : index;
-
-		const app = await getApp();
-
-		const hash = await app.resolve(MainsailUtils).toHash(transaction, {
-			excludeMultiSignature: true,
-			excludeSignature: true,
-		});
 
 		const signature: string = Hash.signSchnorr(hash, keys);
 		const indexedSignature = `${numberToHex(index)}${signature}`;

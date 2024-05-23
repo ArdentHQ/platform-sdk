@@ -1,5 +1,7 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { numberToHex, uniq } from "@ardenthq/sdk-helpers";
+import { Utils } from "@mainsail/crypto-transaction";
+import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "./coin.contract.js";
 import { Enums, Identities, Interfaces, Managers, Transactions } from "./crypto/index.js";
@@ -9,10 +11,12 @@ import { PendingMultiSignatureTransaction } from "./multi-signature.transaction.
 export class MultiSignatureSigner {
 	readonly #ledgerService!: Services.LedgerService;
 	readonly #keyPairService!: Services.KeyPairService;
+	readonly #app!: Application;
 
 	public constructor(container: IoC.IContainer) {
 		this.#ledgerService = container.get(IoC.BindingType.LedgerService);
 		this.#keyPairService = container.get(IoC.BindingType.KeyPairService);
+		this.#app = container.get(BindingType.Application);
 
 		Managers.configManager.setConfig(container.get(BindingType.Crypto));
 		Managers.configManager.setHeight(container.get(BindingType.Height));
@@ -70,10 +74,16 @@ export class MultiSignatureSigner {
 					throw new Error("Failed to retrieve the signing keys for the signatory wallet.");
 				}
 
+				const hash = await this.#app.resolve(Utils).toHash(transaction, {
+					excludeMultiSignature: true,
+					excludeSignature: true,
+				});
+
 				await Transactions.Signer.multiSign(
 					transaction,
 					signingKeys,
 					this.#publicKeyIndex(transaction, signingKeys.publicKey),
+					hash,
 				);
 			}
 		}
