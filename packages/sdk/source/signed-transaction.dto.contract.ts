@@ -65,4 +65,5 @@ export interface SignedTransactionData {
 	username(): string;
 	hash(): string;
 	recipients(): MultiPaymentRecipient[];
+	sanitizeSignatures(): Promise<void>;
 }

@@ -2,8 +2,9 @@ import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
+import { Hash } from "./crypto/hash.js";
 
-import { Identities } from "./crypto/index.js";
+import { Identities, Transactions } from "./crypto/index.js";
 import { getApp } from "./transaction.service";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
@@ -121,5 +122,45 @@ export class SignedTransactionData
 		const serialized = await app.resolve(Utils).toBytes(this.broadcastData);
 
 		return serialized.toString("hex");
+	}
+
+	public async generateHash(options: { excludeMultiSignature?: boolean } = {}) {
+		const app = await getApp();
+		return app.resolve(Utils).toHash(this.signedData, {
+			excludeMultiSignature: options?.excludeMultiSignature ?? true,
+			excludeSignature: true,
+		});
+	}
+
+	public override async sanitizeSignatures(): Promise<void> {
+		const transaction = this.signedData;
+
+		const validSignatures: string[] = [];
+		const signatures: string[] = this.signedData.signatures ?? ([] as string[]);
+
+		for (const signature of signatures) {
+			const publicKeyIndex: number = parseInt(signature.slice(0, 2), 16);
+			const partialSignature: string = signature.slice(2, 130);
+			const publicKey: string = transaction.multiSignature.publicKeys[publicKeyIndex];
+
+			const hash = await this.generateHash();
+
+			const isValid = Hash.verifySchnorr(hash, partialSignature, publicKey);
+
+			if (isValid) {
+				validSignatures.push(signature);
+			}
+		}
+
+		transaction.signatures = validSignatures;
+
+		if (transaction.signature) {
+			const hash = await this.generateHash({ excludeMultiSignature: false });
+			const isValid = Hash.verifySchnorr(hash, transaction.signature, transaction.senderPublicKey!);
+
+			if (!isValid) {
+				transaction.signature = undefined;
+			}
+		}
 	}
 }

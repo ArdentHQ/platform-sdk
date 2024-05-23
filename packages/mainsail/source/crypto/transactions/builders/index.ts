@@ -12,6 +12,10 @@ import {
 	ServiceProvider as CoreCryptoMultipaymentTransfer,
 } from "@mainsail/crypto-transaction-multi-payment";
 import {
+	MultiSignatureBuilder,
+	ServiceProvider as CoreCryptoTransactionMultiSignature,
+} from "@mainsail/crypto-transaction-multi-signature-registration";
+import {
 	ServiceProvider as CoreCryptoTransactionTransfer,
 	TransferBuilder,
 } from "@mainsail/crypto-transaction-transfer";
@@ -31,10 +35,6 @@ import {
 	ServiceProvider as CoreCryptoTransactionValidatorResignation,
 	ValidatorResignationBuilder,
 } from "@mainsail/crypto-transaction-validator-resignation";
-import {
-	ServiceProvider as CoreCryptoTransactionMultiSignature,
-	MultiSignatureBuilder,
-} from "@mainsail/crypto-transaction-multi-signature-registration";
 import { ServiceProvider as CoreCryptoTransactionVote, VoteBuilder } from "@mainsail/crypto-transaction-vote";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation/distribution/service-provider";
 import { ServiceProvider as CoreFees } from "@mainsail/fees/distribution/service-provider";
@@ -44,8 +44,6 @@ import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
 import { milestones } from "../../networks/devnet/milestones";
 import { network } from "../../networks/devnet/network";
-
-export * from "./transaction.js";
 
 export class BuilderFactory {
 	private static async app() {
