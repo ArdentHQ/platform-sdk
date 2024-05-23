@@ -133,8 +133,7 @@ export class SignedTransactionData
 	}
 
 	public async generateHash(options: { excludeMultiSignature?: boolean } = {}) {
-		const app = await getApp();
-		return app.resolve(Utils).toHash(this.signedData, {
+		return this.#app.resolve(Utils).toHash(this.signedData, {
 			excludeMultiSignature: options?.excludeMultiSignature ?? true,
 			excludeSignature: true,
 		});
