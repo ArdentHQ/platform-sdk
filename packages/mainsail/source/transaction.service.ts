@@ -19,9 +19,7 @@ import {
 	ServiceProvider as CoreCryptoTransactionUsernameRegistration,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
-import {
-	ServiceProvider as CoreCryptoTransactionUsernameResignation,
-} from "@mainsail/crypto-transaction-username-resignation";
+import { ServiceProvider as CoreCryptoTransactionUsernameResignation } from "@mainsail/crypto-transaction-username-resignation";
 import {
 	ServiceProvider as CoreCryptoTransactionValidatorRegistration,
 	ValidatorRegistrationBuilder,
