@@ -16,9 +16,10 @@ import {
 } from "@mainsail/crypto-transaction-multi-signature-registration";
 import { ServiceProvider as CoreCryptoTransactionTransfer } from "@mainsail/crypto-transaction-transfer";
 import {
-	ServiceProvider as CoreCryptoTransactionUsername,
+	ServiceProvider as CoreCryptoTransactionUsernameRegistration,
 	UsernameRegistrationBuilder,
 } from "@mainsail/crypto-transaction-username-registration";
+import { ServiceProvider as CoreCryptoTransactionUsernameResignation } from "@mainsail/crypto-transaction-username-resignation";
 import {
 	ServiceProvider as CoreCryptoTransactionValidatorRegistration,
 	ValidatorRegistrationBuilder,
@@ -57,7 +58,8 @@ export const getApp = async () => {
 		app.resolve(CoreCryptoTransactionTransfer).register(),
 		app.resolve(CoreCryptoTransactionVote).register(),
 		app.resolve(CoreCryptoMultipaymentTransfer).register(),
-		app.resolve(CoreCryptoTransactionUsername).register(),
+		app.resolve(CoreCryptoTransactionUsernameRegistration).register(),
+		app.resolve(CoreCryptoTransactionUsernameResignation).register(),
 		app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 		app.resolve(CoreCryptoTransactionValidatorResignation).register(),
 		app.resolve(CoreCryptoConsensusBls12381).register(),
@@ -123,7 +125,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 			this.#app.resolve(CoreCryptoTransactionTransfer).register(),
 			this.#app.resolve(CoreCryptoTransactionVote).register(),
 			this.#app.resolve(CoreCryptoMultipaymentTransfer).register(),
-			this.#app.resolve(CoreCryptoTransactionUsername).register(),
+			this.#app.resolve(CoreCryptoTransactionUsernameRegistration).register(),
+			this.#app.resolve(CoreCryptoTransactionUsernameResignation).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorRegistration).register(),
 			this.#app.resolve(CoreCryptoTransactionValidatorResignation).register(),
 			this.#app.resolve(CoreCryptoConsensusBls12381).register(),
