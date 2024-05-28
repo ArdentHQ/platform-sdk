@@ -61,13 +61,13 @@ export class TransactionIndex implements ITransactionIndex {
 
 		const transactions = result.items();
 
-		if (this.#wallet.isCold() && transactions.some((t) => t.isSent() || t.isReturn())) {
-			this.#wallet.data().set(WalletData.Status, WalletFlag.Hot);
-		}
-
 		for (const transaction of transactions) {
 			transaction.setMeta("address", this.#wallet.address());
 			transaction.setMeta("publicKey", this.#wallet.publicKey());
+		}
+
+		if (this.#wallet.isCold() && transactions.some((t) => t.isSent() || t.isReturn())) {
+			this.#wallet.data().set(WalletData.Status, WalletFlag.Hot);
 		}
 
 		return transformConfirmedTransactionDataCollection(this.#wallet, result);
