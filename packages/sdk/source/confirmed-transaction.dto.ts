@@ -98,7 +98,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	}
 
 	public confirmations(): BigNumber {
-		return BigNumber.ZERO;
+		return BigNumber.make(this.data.confirmations);
 	}
 
 	public sender(): string {
