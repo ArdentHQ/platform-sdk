@@ -59,13 +59,15 @@ export class TransactionIndex implements ITransactionIndex {
 	async #fetch(query: Services.ClientTransactionsInput): Promise<ExtendedConfirmedTransactionDataCollection> {
 		const result = await this.#wallet.getAttributes().get<Coins.Coin>("coin").client().transactions(query);
 
-		for (const transaction of result.items()) {
-			if (this.#wallet.isCold() && (transaction.isSent() || transaction.isReturn())) {
-				this.#wallet.data().set(WalletData.Status, WalletFlag.Hot);
-			}
+		const transactions = result.items();
 
+		for (const transaction of transactions) {
 			transaction.setMeta("address", this.#wallet.address());
 			transaction.setMeta("publicKey", this.#wallet.publicKey());
+		}
+
+		if (this.#wallet.isCold() && transactions.some((t) => t.isSent() || t.isReturn())) {
+			this.#wallet.data().set(WalletData.Status, WalletFlag.Hot);
 		}
 
 		return transformConfirmedTransactionDataCollection(this.#wallet, result);
