@@ -1,17 +1,26 @@
-import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
-import { Hash } from "./crypto/hash.js";
 
-import { Identities, Transactions } from "./crypto/index.js";
-import { getApp } from "./transaction.service";
+import { Application } from "@mainsail/kernel";
+import { BindingType } from "./coin.contract.js";
+import { Identities } from "./crypto/index.js";
+import { Hash } from "./crypto/hash.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
 	implements Contracts.SignedTransactionData
 {
+	#app: Application;
+
+	public constructor(container: IoC.Container) {
+		super(container);
+
+		this.#app = container.get(BindingType.Application);
+	}
+
 	public override sender(): string {
 		return Identities.Address.fromPublicKey(this.signedData.senderPublicKey);
 	}
@@ -118,15 +127,13 @@ export class SignedTransactionData
 	}
 
 	public override async toBroadcast() {
-		const app = await getApp();
-		const serialized = await app.resolve(Utils).toBytes(this.broadcastData);
+		const serialized = await this.#app.resolve(Utils).toBytes(this.broadcastData);
 
 		return serialized.toString("hex");
 	}
 
 	public async generateHash(options: { excludeMultiSignature?: boolean } = {}) {
-		const app = await getApp();
-		return app.resolve(Utils).toHash(this.signedData, {
+		return this.#app.resolve(Utils).toHash(this.signedData, {
 			excludeMultiSignature: options?.excludeMultiSignature ?? true,
 			excludeSignature: true,
 		});

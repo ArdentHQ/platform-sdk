@@ -3,8 +3,6 @@ import { numberToHex } from "@ardenthq/sdk-helpers";
 import { Hash } from "../hash.js";
 import { IKeyPair, ISerializeOptions, ITransactionData } from "../interfaces/index.js";
 import { Utils } from "./utils.js";
-import { Utils as MainsailUtils } from "@mainsail/crypto-transaction";
-import { getApp } from "../../transaction.service";
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
 
 export class Signer {
@@ -38,19 +36,13 @@ export class Signer {
 		transaction: MainsailContracts.Crypto.TransactionData,
 		keys: IKeyPair,
 		index = -1,
+		hash: Buffer,
 	): Promise<string> {
 		if (!transaction.signatures) {
 			transaction.signatures = [];
 		}
 
 		index = index === -1 ? transaction.signatures.length : index;
-
-		const app = await getApp();
-
-		const hash = await app.resolve(MainsailUtils).toHash(transaction, {
-			excludeMultiSignature: true,
-			excludeSignature: true,
-		});
 
 		const signature: string = Hash.signSchnorr(hash, keys);
 		const indexedSignature = `${numberToHex(index)}${signature}`;
