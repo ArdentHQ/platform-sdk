@@ -34,10 +34,18 @@ export class WalletFactory implements IWalletFactory {
 		network,
 		locale,
 		wordCount,
+		withPublicKey,
 	}: IGenerateOptions): Promise<{ mnemonic: string; wallet: IReadWriteWallet }> {
 		const mnemonic: string = BIP39.generate(locale, wordCount);
 
-		return { mnemonic, wallet: await this.fromMnemonicWithBIP39({ coin, mnemonic, network }) };
+		const wallet =  await this.fromMnemonicWithBIP39({ coin, mnemonic, network });
+
+		if (withPublicKey) {
+			const value = (await wallet.coin().publicKey().fromMnemonic(mnemonic)).publicKey;
+			wallet.data().set(WalletData.PublicKey, value);
+		}
+
+		return { mnemonic, wallet };
 	}
 
 	/** {@inheritDoc IWalletFactory.fromMnemonicWithBIP39} */
