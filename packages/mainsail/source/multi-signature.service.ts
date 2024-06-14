@@ -190,6 +190,13 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 			result.signatures = uniq(result.signatures);
 		}
 
+		// Ensure multipayment amounts are big numbers.
+		if(Array.isArray(result.asset?.payments)) {
+			for (const payment of result.asset.payments) {
+				payment.amount = BigNumber.make(payment.amount)
+			}
+		}
+
 		return result;
 	}
 
