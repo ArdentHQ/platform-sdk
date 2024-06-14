@@ -191,9 +191,9 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		}
 
 		// Ensure multipayment amounts are big numbers.
-		if(Array.isArray(result.asset?.payments)) {
+		if (Array.isArray(result.asset?.payments)) {
 			for (const payment of result.asset.payments) {
-				payment.amount = BigNumber.make(payment.amount)
+				payment.amount = BigNumber.make(payment.amount);
 			}
 		}
 
