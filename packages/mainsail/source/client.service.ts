@@ -108,7 +108,7 @@ export class ClientService extends Services.AbstractClientService {
 
 		try {
 			response = await this.#request.post(
-				"transaction-pool",
+				"transactions",
 				{
 					body: {
 						transactions: transactionToBroadcast,
