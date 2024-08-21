@@ -1,6 +1,6 @@
-import { explorer, featureFlags, importMethods, transactions } from "./shared.js";
-
 import { Networks } from "@ardenthq/sdk";
+
+import { explorer, featureFlags, importMethods, transactions } from "./shared.js";
 
 const network: Networks.NetworkManifest = {
 	coin: "Mainsail",
@@ -22,11 +22,11 @@ const network: Networks.NetworkManifest = {
 	},
 	hosts: [
 		{
-			host: "https://dwallets.mainsailhq.com/api",
+			host: "https://dwallets-evm.mainsailhq.com/api",
 			type: "full",
 		},
 		{
-			host: "https://dwallets.mainsailhq.com/tx/api",
+			host: "https://dwallets-evm.mainsailhq.com/tx/api",
 			type: "tx",
 		},
 		{
