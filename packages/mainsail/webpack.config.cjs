@@ -10,6 +10,10 @@ module.exports = {
 		// Critical dependency: the request of a dependency is an expression
 		exprContextCritical: false,
 	},
+	output: {
+		...baseConfig.output,
+		chunkFormat: false,
+	},
 	plugins: [
 		...baseConfig.plugins,
 		new IgnorePlugin({
@@ -34,12 +38,9 @@ module.exports = {
 		fallback: {
 			child_process: false,
 			fs: false,
-			perf_hooks: false,
 			module: false,
+			perf_hooks: false,
+			worker_threads: false,
 		},
-	},
-	output: {
-		...baseConfig.output,
-		chunkFormat: false,
 	},
 };
