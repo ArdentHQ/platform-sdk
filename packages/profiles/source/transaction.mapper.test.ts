@@ -45,7 +45,7 @@ describeWithContext(
 			normalizeData: async () => { }
 		},
 	},
-	({ assert, beforeAll, it, nock, loader stub }) => {
+	({ assert, beforeAll, it, nock, loader, stub }) => {
 		beforeAll(async (context) => {
 			bootContainer();
 
