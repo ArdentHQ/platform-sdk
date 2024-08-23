@@ -8,28 +8,28 @@ import { BindingType } from "./coin.contract.js";
 
 export class AddressService extends Services.AbstractAddressService {
 	readonly #app: Application;
-	readonly addressFactory: Contracts.Crypto.AddressFactory;
-	readonly publicKeyFactory: Contracts.Crypto.PublicKeyFactory;
-	readonly keyPairFactory: Contracts.Crypto.KeyPairFactory;
+	readonly #addressFactory: Contracts.Crypto.AddressFactory;
+	readonly #publicKeyFactory: Contracts.Crypto.PublicKeyFactory;
+	readonly #keyPairFactory: Contracts.Crypto.KeyPairFactory;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
 		this.#app = container.get(BindingType.Application);
 
-		this.addressFactory = this.#app.getTagged<Contracts.Crypto.AddressFactory>(
+		this.#addressFactory = this.#app.getTagged<Contracts.Crypto.AddressFactory>(
 			Identifiers.Cryptography.Identity.Address.Factory,
 			"type",
 			"wallet",
 		);
 
-		this.publicKeyFactory = this.#app.getTagged<Contracts.Crypto.PublicKeyFactory>(
+		this.#publicKeyFactory = this.#app.getTagged<Contracts.Crypto.PublicKeyFactory>(
 			Identifiers.Cryptography.Identity.PublicKey.Factory,
 			"type",
 			"wallet",
 		);
 
-		this.keyPairFactory = this.#app.getTagged<Contracts.Crypto.KeyPairFactory>(
+		this.#keyPairFactory = this.#app.getTagged<Contracts.Crypto.KeyPairFactory>(
 			Identifiers.Cryptography.Identity.KeyPair.Factory,
 			"type",
 			"wallet",
@@ -43,7 +43,7 @@ export class AddressService extends Services.AbstractAddressService {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
-			address: await this.addressFactory.fromMnemonic(mnemonic),
+			address: await this.#addressFactory.fromMnemonic(mnemonic),
 			type: "bip39",
 		};
 	}
@@ -56,7 +56,7 @@ export class AddressService extends Services.AbstractAddressService {
 		assert.ok(min);
 
 		return {
-			address: await this.addressFactory.fromMultiSignatureAsset({ min, publicKeys }),
+			address: await this.#addressFactory.fromMultiSignatureAsset({ min, publicKeys }),
 			type: "bip39",
 		};
 	}
@@ -66,7 +66,7 @@ export class AddressService extends Services.AbstractAddressService {
 		options?: Services.IdentityOptions,
 	): Promise<Services.AddressDataTransferObject> {
 		return {
-			address: await this.addressFactory.fromPublicKey(publicKey),
+			address: await this.#addressFactory.fromPublicKey(publicKey),
 			type: "bip39",
 		};
 	}
@@ -75,10 +75,10 @@ export class AddressService extends Services.AbstractAddressService {
 		privateKey: string,
 		options?: Services.IdentityOptions,
 	): Promise<Services.AddressDataTransferObject> {
-		const keyPair = await this.keyPairFactory.fromPrivateKey(Buffer.from(privateKey));
+		const keyPair = await this.#keyPairFactory.fromPrivateKey(Buffer.from(privateKey));
 
 		return {
-			address: await this.addressFactory.fromPrivateKey(keyPair),
+			address: await this.#addressFactory.fromPrivateKey(keyPair),
 			type: "bip39",
 		};
 	}
@@ -86,22 +86,22 @@ export class AddressService extends Services.AbstractAddressService {
 	public override async fromSecret(secret: string): Promise<Services.AddressDataTransferObject> {
 		abort_if(BIP39.compatible(secret), "The given value is BIP39 compliant. Please use [fromMnemonic] instead.");
 
-		const publicKey = await this.publicKeyFactory.fromMnemonic(secret);
+		const publicKey = await this.#publicKeyFactory.fromMnemonic(secret);
 
 		return {
-			address: await this.addressFactory.fromPublicKey(publicKey),
+			address: await this.#addressFactory.fromPublicKey(publicKey),
 			type: "bip39",
 		};
 	}
 
 	public override async fromWIF(wif: string): Promise<Services.AddressDataTransferObject> {
 		return {
-			address: await this.addressFactory.fromWIF(wif),
+			address: await this.#addressFactory.fromWIF(wif),
 			type: "bip39",
 		};
 	}
 
 	public override async validate(address: string): Promise<boolean> {
-		return await this.addressFactory.validate(address);
+		return await this.#addressFactory.validate(address);
 	}
 }
