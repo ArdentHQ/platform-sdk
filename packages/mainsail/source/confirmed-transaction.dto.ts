@@ -1,4 +1,4 @@
-import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
@@ -6,7 +6,7 @@ import { BindingType } from "./coin.contract.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
-	readonly #addressService: BindingType.AddressService;
+	readonly #addressService: Services.AddressService;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
