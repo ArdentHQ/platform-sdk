@@ -76,7 +76,7 @@ describeWithContext(
 		// 	);
 		// });
 
-		it("should map collection correctly", (context) => {
+		it("should map collection correctly", async (context) => {
 			const pagination = {
 				last: "last",
 				next: "after",
@@ -90,7 +90,7 @@ describeWithContext(
 
 			const collection = new Collections.ConfirmedTransactionDataCollection([transactionData], pagination);
 
-			const transformedCollection = transformConfirmedTransactionDataCollection(context.wallet, collection);
+			const transformedCollection = await transformConfirmedTransactionDataCollection(context.wallet, collection);
 			assert.instance(transformedCollection, ExtendedConfirmedTransactionDataCollection);
 			assert.is(transformedCollection.getPagination(), pagination);
 		});
