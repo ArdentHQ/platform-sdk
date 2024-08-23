@@ -88,6 +88,7 @@ describeWithContext(
 
 			const transactionData = new ExtendedConfirmedTransactionData(context.wallet, {
 				isMagistrate: () => true,
+				normalizeData: async () => { }
 			});
 
 			const collection = new Collections.ConfirmedTransactionDataCollection([transactionData], pagination);
