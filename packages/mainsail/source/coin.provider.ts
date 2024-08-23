@@ -1,7 +1,7 @@
 import { Coins, IoC } from "@ardenthq/sdk";
 import { Container } from "@mainsail/container";
 import { Identifiers } from "@mainsail/contracts";
-import { ServiceProvider as CoreCryptoAddressBase58 } from "@mainsail/crypto-address-base58";
+import { ServiceProvider as CoreCryptoAddressKeccak } from "@mainsail/crypto-address-keccak256";
 import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
 import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
 import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
@@ -84,7 +84,7 @@ export class ServiceProvider extends IoC.AbstractServiceProvider {
 		await app.resolve(CoreCryptoValidation).register();
 
 		await app.resolve(CoreCryptoKeyPairEcdsa).register();
-		await app.resolve(CoreCryptoAddressBase58).register();
+		await app.resolve(CoreCryptoAddressKeccak).register();
 		await app.resolve(CoreCryptoSignatureSchnorr).register();
 		await app.resolve(CoreCryptoHashBcrypto).register();
 		await app.resolve(CoreFees).register();

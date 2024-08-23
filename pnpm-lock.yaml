@@ -419,6 +419,9 @@ importers:
       '@mainsail/crypto-address-base58':
         specifier: 0.0.1-alpha.20
         version: 0.0.1-alpha.20
+      '@mainsail/crypto-address-keccak256':
+        specifier: 0.0.1-alpha.20
+        version: 0.0.1-alpha.20
       '@mainsail/crypto-config':
         specifier: 0.0.1-alpha.20
         version: 0.0.1-alpha.20
@@ -727,6 +730,9 @@ importers:
         version: 10.0.6
 
 packages:
+
+  '@adraffy/ens-normalize@1.10.1':
+    resolution: {integrity: sha512-96Z2IP3mYmF1Xg2cDm8f1gWGf/HUVedQ3FMifV4kG/PQ4yEP51xDtRAEfhVNt5f/uzpNkZHwWQuUcu6D6K+Ekw==}
 
   '@arkecosystem/ledger-transport@2.0.0':
     resolution: {integrity: sha512-PeqzDwebeWvQf+j6/p84wO8aTdIP+YvBoGcJlFWibErxMf2v1AYSNu+yHSRCZPxF+Fz9SOHetnrrebWbHph8zg==}
@@ -1520,6 +1526,10 @@ packages:
     resolution: {integrity: sha512-VwCtFHtRzWsx1cRsdqABcGLJOY3vxSgeGtMoglKBDN/DMdJswCMGjyV7WObXseADfsPdoYlY4TxNfTd19AT5tQ==}
     engines: {node: '>=20.x'}
 
+  '@mainsail/crypto-address-keccak256@0.0.1-alpha.20':
+    resolution: {integrity: sha512-LES00OijwBd+RPLOBX7MFnfQbvLXKJW9KD29vDQ9WC53dDTuKYGo7mQJh4ffLOH8FlApiJDojRLqNK/nP7EaJw==}
+    engines: {node: '>=20.x'}
+
   '@mainsail/crypto-config@0.0.1-alpha.20':
     resolution: {integrity: sha512-v6pZMr55jtf2biUlNXO2hMnmgQujuIqTlPp6SvbzoVUffsuEALHfsWUo6Gf2CVhgWAtkMhY7D+SY7WES6fPFIw==}
     engines: {node: '>=20.x'}
@@ -1612,9 +1622,16 @@ packages:
     resolution: {integrity: sha512-9UbUJU/MWHF2JZYjpkURpnHKWc7XqwPBwHfRx+I72mgb4AAqrRuO9cbXsj7QKC6IwtirAqgZay6D5E0m+iM0KA==}
     engines: {node: '>=20.x'}
 
+  '@noble/curves@1.2.0':
+    resolution: {integrity: sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==}
+
   '@noble/hashes@0.5.9':
     resolution: {integrity: sha512-7lN1Qh6d8DUGmfN36XRsbN/WcGIPNtTGhkw26vWId/DlCIGsYJJootTtPGghTLcn/AaXPx2Q0b3cacrwXa7OVw==}
     deprecated: Upgrade to v1.0.0 or higher for audited package
+
+  '@noble/hashes@1.3.2':
+    resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
+    engines: {node: '>= 16'}
 
   '@noble/hashes@1.4.0':
     resolution: {integrity: sha512-V1JJ1WTRUqHHrOSh597hURcMqVKVGL/ea3kv0gSnEdsEZ0/+VyPghM1lMNGc00z7CIQorSvbKpuJkxvuHbvdbg==}
@@ -1758,6 +1775,9 @@ packages:
 
   '@types/node@17.0.8':
     resolution: {integrity: sha512-YofkM6fGv4gDJq78g4j0mMuGMkZVxZDgtU0JRdx6FgiJDG+0fY0GKVolOV8WqVmEhLCXkQRjwDdKyPxJp/uucg==}
+
+  '@types/node@18.15.13':
+    resolution: {integrity: sha512-N+0kuo9KgrUQ1Sn/ifDXsvg0TTleP7rIy4zOBGECxAljqvqfqpTfzx0Q1NUedOixRMBfe2Whhb056a42cWs26Q==}
 
   '@types/normalize-package-data@2.4.1':
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -1934,6 +1954,9 @@ packages:
     resolution: {integrity: sha512-U1riIR+lBSNi3IbxtaHOIKdH8sLFv3NYfNv8sg7ZsNhcfl4HF2++BfqqrNAxoCLQW1iiylOj76ecnaUxz+z9yw==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  aes-js@4.0.0-beta.5:
+    resolution: {integrity: sha512-G965FqalsNyrPqgEGON7nIx1e/OVENSgiEIzyC63haUMuvNnwIgIjMs52hlTCKhkBny7A2ORNlfY9Zu+jmGk1Q==}
 
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
@@ -2924,6 +2947,10 @@ packages:
   esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
+
+  ethers@6.13.2:
+    resolution: {integrity: sha512-9VkriTTed+/27BGuY1s0hf441kqwHJ1wtN2edksEtiRvXx+soxRX3iSXTfFqq2+YwrOqbDoTHjIhQnjJRlzKmg==}
+    engines: {node: '>=14.0.0'}
 
   eventemitter3@4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
@@ -4664,6 +4691,9 @@ packages:
   tslib@2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
 
+  tslib@2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+
   tsm@2.1.4:
     resolution: {integrity: sha512-gz1zckplzOzHdiY1HVVUoH8bl2eWxbU6uJraB31w1NQ+/kQkjix3ldYHBnWaoNnOL9q8ruS+E2Wckdcw56DzrA==}
     engines: {node: '>=12'}
@@ -4937,6 +4967,18 @@ packages:
       utf-8-validate:
         optional: true
 
+  ws@8.17.1:
+    resolution: {integrity: sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   xml2js@0.4.23:
     resolution: {integrity: sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==}
     engines: {node: '>=4.0.0'}
@@ -4987,6 +5029,8 @@ packages:
     resolution: {integrity: sha512-daZ80A81I3/9lIydI44motWe6n59kRBfNzTuS2bfzVh1nAXi667TOTWWtatxyG+fwgNUiagSj/CWZwRRbevJIg==}
 
 snapshots:
+
+  '@adraffy/ens-normalize@1.10.1': {}
 
   '@arkecosystem/ledger-transport@2.0.0':
     dependencies:
@@ -6073,6 +6117,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@mainsail/crypto-address-keccak256@0.0.1-alpha.20':
+    dependencies:
+      '@mainsail/container': 0.0.1-alpha.20
+      '@mainsail/contracts': 0.0.1-alpha.20
+      '@mainsail/kernel': 0.0.1-alpha.20
+      '@mainsail/utils': 0.0.1-alpha.20
+      ethers: 6.13.2
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   '@mainsail/crypto-config@0.0.1-alpha.20':
     dependencies:
       '@mainsail/container': 0.0.1-alpha.20
@@ -6334,7 +6390,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@noble/curves@1.2.0':
+    dependencies:
+      '@noble/hashes': 1.3.2
+
   '@noble/hashes@0.5.9': {}
+
+  '@noble/hashes@1.3.2': {}
 
   '@noble/hashes@1.4.0': {}
 
@@ -6480,6 +6542,8 @@ snapshots:
   '@types/node@11.11.6': {}
 
   '@types/node@17.0.8': {}
+
+  '@types/node@18.15.13': {}
 
   '@types/normalize-package-data@2.4.1': {}
 
@@ -6693,6 +6757,8 @@ snapshots:
   acorn@7.4.1: {}
 
   acorn@8.6.0: {}
+
+  aes-js@4.0.0-beta.5: {}
 
   agent-base@6.0.2:
     dependencies:
@@ -7791,6 +7857,19 @@ snapshots:
   estraverse@5.3.0: {}
 
   esutils@2.0.3: {}
+
+  ethers@6.13.2:
+    dependencies:
+      '@adraffy/ens-normalize': 1.10.1
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
+      '@types/node': 18.15.13
+      aes-js: 4.0.0-beta.5
+      tslib: 2.4.0
+      ws: 8.17.1
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   eventemitter3@4.0.7: {}
 
@@ -9544,6 +9623,8 @@ snapshots:
 
   tslib@2.3.1: {}
 
+  tslib@2.4.0: {}
+
   tsm@2.1.4:
     dependencies:
       esbuild: 0.13.15
@@ -9848,6 +9929,8 @@ snapshots:
   wrappy@1.0.2: {}
 
   ws@7.5.6: {}
+
+  ws@8.17.1: {}
 
   xml2js@0.4.23:
     dependencies:
