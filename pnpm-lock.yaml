@@ -416,9 +416,6 @@ importers:
       '@mainsail/contracts':
         specifier: 0.0.1-alpha.20
         version: 0.0.1-alpha.20
-      '@mainsail/crypto-address-base58':
-        specifier: 0.0.1-alpha.20
-        version: 0.0.1-alpha.20
       '@mainsail/crypto-address-keccak256':
         specifier: 0.0.1-alpha.20
         version: 0.0.1-alpha.20
@@ -1522,10 +1519,6 @@ packages:
     resolution: {integrity: sha512-bl+E35qUI4F0XaAfkAIrrTL0twqm8Ftw4T6Lm/xJEk/PtHGD31tyxAldBu0jojAo4oKET8dg9CsPbQfd2PJSOw==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-address-base58@0.0.1-alpha.20':
-    resolution: {integrity: sha512-VwCtFHtRzWsx1cRsdqABcGLJOY3vxSgeGtMoglKBDN/DMdJswCMGjyV7WObXseADfsPdoYlY4TxNfTd19AT5tQ==}
-    engines: {node: '>=20.x'}
-
   '@mainsail/crypto-address-keccak256@0.0.1-alpha.20':
     resolution: {integrity: sha512-LES00OijwBd+RPLOBX7MFnfQbvLXKJW9KD29vDQ9WC53dDTuKYGo7mQJh4ffLOH8FlApiJDojRLqNK/nP7EaJw==}
     engines: {node: '>=20.x'}
@@ -2244,16 +2237,8 @@ packages:
   bs58check@3.0.1:
     resolution: {integrity: sha512-hjuuJvoWEybo7Hn/0xOrczQKKEKD63WguEjlhLExYs2wUBcebDC1jDNK17eEAD2lYfw82d5ASC1d7K3SWszjaQ==}
 
-  bsert@0.0.13:
-    resolution: {integrity: sha512-gYzSj8I2lDTKvl4aRSYs2CZIpeJugq7RjGhLRG+Jl//gEW5B2u1MKB6exVCL09FqYj6JRQAAgRwQHMOWvr7A8A==}
-    engines: {node: '>=8.0.0'}
-
   bson-objectid@1.3.1:
     resolution: {integrity: sha512-eQBNQXsisEAXlwiSy8zRNZdW2xDBJaEVkTPbodYR9hGxxtE548Qq7ilYOd8WAQ86xF7NRUdiWSQ1pa/TkKiE2A==}
-
-  bstring@0.3.9:
-    resolution: {integrity: sha512-D95flI7SXL+UsQi9mW+hH+AK2AFfafIJi+3GbbyTAWMe2FqwR9keBxsjGiGd/JM+77Y9WsC+M4EhZVNVcym9jw==}
-    engines: {node: '>=8.0.0'}
 
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -3846,9 +3831,6 @@ packages:
 
   multimap@1.1.0:
     resolution: {integrity: sha512-0ZIR9PasPxGXmRsEF8jsDzndzHDj7tIav+JUmvIFB/WHswliFnquxECT/De7GR4yg99ky/NlRKJT82G1y271bw==}
-
-  nan@2.19.0:
-    resolution: {integrity: sha512-nO1xXxfh/RWNxfd/XPfbIfFk5vgLsAxUR9y5O0cHMJu/AW9U95JLXqthYHjEp+8gQ5p96K9jUp8nbVOxCdRbtw==}
 
   nanomatch@1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
@@ -6106,17 +6088,6 @@ snapshots:
       reflect-metadata: 0.2.1
       type-fest: 4.12.0
 
-  '@mainsail/crypto-address-base58@0.0.1-alpha.20':
-    dependencies:
-      '@mainsail/container': 0.0.1-alpha.20
-      '@mainsail/contracts': 0.0.1-alpha.20
-      '@mainsail/kernel': 0.0.1-alpha.20
-      '@mainsail/utils': 0.0.1-alpha.20
-      bcrypto: 5.5.2
-      bstring: 0.3.9
-    transitivePeerDependencies:
-      - supports-color
-
   '@mainsail/crypto-address-keccak256@0.0.1-alpha.20':
     dependencies:
       '@mainsail/container': 0.0.1-alpha.20
@@ -7090,15 +7061,7 @@ snapshots:
       '@noble/hashes': 1.4.0
       bs58: 5.0.0
 
-  bsert@0.0.13: {}
-
   bson-objectid@1.3.1: {}
-
-  bstring@0.3.9:
-    dependencies:
-      bsert: 0.0.13
-      loady: 0.0.5
-      nan: 2.19.0
 
   buffer-from@1.1.2: {}
 
@@ -8747,8 +8710,6 @@ snapshots:
   ms@2.1.3: {}
 
   multimap@1.1.0: {}
-
-  nan@2.19.0: {}
 
   nanomatch@1.2.13:
     dependencies:
