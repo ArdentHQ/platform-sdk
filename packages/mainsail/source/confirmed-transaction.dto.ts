@@ -203,7 +203,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.data.asset.lock.expiration.value;
 	}
 
-	public async normalizeData(): Promise<void> {
+	public override async normalizeData(): Promise<void> {
 		this.data.sender = (await this.#addressService.fromPublicKey(this.data.senderPublicKey)).address
 	}
 }
