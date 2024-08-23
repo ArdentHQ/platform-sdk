@@ -5,7 +5,6 @@ import { IoC, Services } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { abort_if, abort_unless } from "@ardenthq/sdk-helpers";
 import { BindingType } from "./coin.contract.js";
-import { Keys } from "./crypto/identities/keys.js";
 
 export class AddressService extends Services.AbstractAddressService {
 	readonly #app: Application;
@@ -87,7 +86,6 @@ export class AddressService extends Services.AbstractAddressService {
 	public override async fromSecret(secret: string): Promise<Services.AddressDataTransferObject> {
 		abort_if(BIP39.compatible(secret), "The given value is BIP39 compliant. Please use [fromMnemonic] instead.");
 
-		// TODO: passphrase -> publickey.
 		const publicKey = await this.publicKeyFactory.fromMnemonic(secret);
 
 		return {
