@@ -45,7 +45,7 @@ describeWithContext(
 			normalizeData: async () => { }
 		},
 	},
-	({ assert, beforeAll, it, nock, loader }) => {
+	({ assert, beforeAll, it, nock, loader stub }) => {
 		beforeAll(async (context) => {
 			bootContainer();
 
@@ -88,9 +88,9 @@ describeWithContext(
 
 			const transactionData = new ExtendedConfirmedTransactionData(context.wallet, {
 				isMagistrate: () => true,
-				normalizeData: async () => { }
 			});
 
+			stub(transactionData, "normalizeData").returnValue(undefined);
 			const collection = new Collections.ConfirmedTransactionDataCollection([transactionData], pagination);
 
 			const transformedCollection = await transformConfirmedTransactionDataCollection(context.wallet, collection);
