@@ -26,7 +26,6 @@ describeWithContext(
 			[ExtendedConfirmedTransactionData, "isVote"],
 			[ExtendedConfirmedTransactionData, "isUnvote"],
 			[ExtendedConfirmedTransactionData, "isOther"],
-			[ExtendedConfirmedTransactionData, "normalizeData"],
 		],
 		dummyTransactionData: {
 			isDelegateRegistration: () => false,
@@ -42,10 +41,9 @@ describeWithContext(
 			isTransfer: () => false,
 			isUnvote: () => false,
 			isVote: () => false,
-			normalizeData: async () => { }
 		},
 	},
-	({ assert, beforeAll, it, nock, loader, stub }) => {
+	({ assert, beforeAll, it, nock, loader }) => {
 		beforeAll(async (context) => {
 			bootContainer();
 
@@ -90,7 +88,6 @@ describeWithContext(
 				isMagistrate: () => true,
 			});
 
-			stub(transactionData, "normalizeData").returnValue(undefined);
 			const collection = new Collections.ConfirmedTransactionDataCollection([transactionData], pagination);
 
 			const transformedCollection = await transformConfirmedTransactionDataCollection(context.wallet, collection);

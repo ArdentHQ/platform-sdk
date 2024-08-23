@@ -320,4 +320,8 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 			.get<IExchangeRateService>(Identifiers.ExchangeRateService)
 			.exchange(this.wallet().currency(), this.wallet().exchangeCurrency(), timestamp, value);
 	}
+
+	public normalizeData(): Promise<void> {
+		return this.#data.normalizeData()
+	}
 }
