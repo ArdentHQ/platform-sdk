@@ -1,5 +1,3 @@
-import { ServiceProvider } from "@mainsail/crypto-address-base58";
-
 export interface CryptoConfig {
 	pubKeyHash: number;
 	wif: number;

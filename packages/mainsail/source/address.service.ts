@@ -1,20 +1,39 @@
+import { Application } from "@mainsail/kernel";
 import { strict as assert } from "assert";
+import { Contracts, Identifiers } from "@mainsail/contracts";
 import { IoC, Services } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
 import { abort_if, abort_unless } from "@ardenthq/sdk-helpers";
-
 import { BindingType } from "./coin.contract.js";
-import { Address as BaseAddress } from "./crypto/identities/address.js";
-import { Keys } from "./crypto/identities/keys.js";
-import { Interfaces } from "./crypto/index.js";
 
 export class AddressService extends Services.AbstractAddressService {
-	readonly #config!: Interfaces.NetworkConfig;
+	readonly #app: Application;
+	readonly #addressFactory: Contracts.Crypto.AddressFactory;
+	readonly #publicKeyFactory: Contracts.Crypto.PublicKeyFactory;
+	readonly #keyPairFactory: Contracts.Crypto.KeyPairFactory;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
-		this.#config = container.get(BindingType.Crypto);
+		this.#app = container.get(BindingType.Application);
+
+		this.#addressFactory = this.#app.getTagged<Contracts.Crypto.AddressFactory>(
+			Identifiers.Cryptography.Identity.Address.Factory,
+			"type",
+			"wallet",
+		);
+
+		this.#publicKeyFactory = this.#app.getTagged<Contracts.Crypto.PublicKeyFactory>(
+			Identifiers.Cryptography.Identity.PublicKey.Factory,
+			"type",
+			"wallet",
+		);
+
+		this.#keyPairFactory = this.#app.getTagged<Contracts.Crypto.KeyPairFactory>(
+			Identifiers.Cryptography.Identity.KeyPair.Factory,
+			"type",
+			"wallet",
+		);
 	}
 
 	public override async fromMnemonic(
@@ -24,7 +43,7 @@ export class AddressService extends Services.AbstractAddressService {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
-			address: BaseAddress.fromPassphrase(mnemonic, this.#config.network),
+			address: await this.#addressFactory.fromMnemonic(mnemonic),
 			type: "bip39",
 		};
 	}
@@ -37,7 +56,7 @@ export class AddressService extends Services.AbstractAddressService {
 		assert.ok(min);
 
 		return {
-			address: BaseAddress.fromMultiSignatureAsset({ min, publicKeys }, this.#config.network),
+			address: await this.#addressFactory.fromMultiSignatureAsset({ min, publicKeys }),
 			type: "bip39",
 		};
 	}
@@ -47,7 +66,7 @@ export class AddressService extends Services.AbstractAddressService {
 		options?: Services.IdentityOptions,
 	): Promise<Services.AddressDataTransferObject> {
 		return {
-			address: BaseAddress.fromPublicKey(publicKey, this.#config.network),
+			address: await this.#addressFactory.fromPublicKey(publicKey),
 			type: "bip39",
 		};
 	}
@@ -56,8 +75,10 @@ export class AddressService extends Services.AbstractAddressService {
 		privateKey: string,
 		options?: Services.IdentityOptions,
 	): Promise<Services.AddressDataTransferObject> {
+		const keyPair = await this.#keyPairFactory.fromPrivateKey(Buffer.from(privateKey));
+
 		return {
-			address: BaseAddress.fromPrivateKey(Keys.fromPrivateKey(privateKey), this.#config.network),
+			address: await this.#addressFactory.fromPrivateKey(keyPair),
 			type: "bip39",
 		};
 	}
@@ -65,20 +86,22 @@ export class AddressService extends Services.AbstractAddressService {
 	public override async fromSecret(secret: string): Promise<Services.AddressDataTransferObject> {
 		abort_if(BIP39.compatible(secret), "The given value is BIP39 compliant. Please use [fromMnemonic] instead.");
 
+		const publicKey = await this.#publicKeyFactory.fromMnemonic(secret);
+
 		return {
-			address: BaseAddress.fromPassphrase(secret, this.#config.network),
+			address: await this.#addressFactory.fromPublicKey(publicKey),
 			type: "bip39",
 		};
 	}
 
 	public override async fromWIF(wif: string): Promise<Services.AddressDataTransferObject> {
 		return {
-			address: BaseAddress.fromWIF(wif, this.#config.network),
+			address: await this.#addressFactory.fromWIF(wif),
 			type: "bip39",
 		};
 	}
 
 	public override async validate(address: string): Promise<boolean> {
-		return BaseAddress.validate(address, this.#config.network);
+		return await this.#addressFactory.validate(address);
 	}
 }
