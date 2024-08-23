@@ -26,6 +26,7 @@ describeWithContext(
 			[ExtendedConfirmedTransactionData, "isVote"],
 			[ExtendedConfirmedTransactionData, "isUnvote"],
 			[ExtendedConfirmedTransactionData, "isOther"],
+			[ExtendedConfirmedTransactionData, "normalizeData"],
 		],
 		dummyTransactionData: {
 			isDelegateRegistration: () => false,
@@ -41,6 +42,7 @@ describeWithContext(
 			isTransfer: () => false,
 			isUnvote: () => false,
 			isVote: () => false,
+			normalizeData: async () => { }
 		},
 	},
 	({ assert, beforeAll, it, nock, loader }) => {
