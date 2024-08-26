@@ -13,7 +13,7 @@ export const transformConfirmedTransactionDataCollection = async (
 	wallet: IReadWriteWallet,
 	transactions: Collections.ConfirmedTransactionDataCollection,
 ): Promise<ExtendedConfirmedTransactionDataCollection> => {
-	await Promise.allSettled(transactions.items().map(transaction => transaction.normalizeData()));
+	await Promise.allSettled(transactions.items().map((transaction) => transaction.normalizeData()));
 
 	return new ExtendedConfirmedTransactionDataCollection(
 		transactions
@@ -21,4 +21,4 @@ export const transformConfirmedTransactionDataCollection = async (
 			.map((transaction: Contracts.ConfirmedTransactionData) => transformTransactionData(wallet, transaction)),
 		transactions.getPagination(),
 	);
-}
+};

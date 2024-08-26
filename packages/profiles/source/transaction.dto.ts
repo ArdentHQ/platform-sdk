@@ -322,6 +322,6 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 	}
 
 	public normalizeData(): Promise<void> {
-		return this.#data.normalizeData()
+		return this.#data.normalizeData();
 	}
 }
