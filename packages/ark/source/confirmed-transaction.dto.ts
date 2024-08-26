@@ -1,4 +1,4 @@
-import { Contracts, DTO } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
@@ -209,4 +209,6 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	public override expirationValue(): number {
 		return this.data.asset.lock.expiration.value;
 	}
+
+	public override async normalizeData(): Promise<void> {}
 }

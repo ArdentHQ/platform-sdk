@@ -15,6 +15,7 @@ import {
 	UnspentTransactionData,
 } from "./confirmed-transaction.dto.contract.js";
 import { IContainer } from "./container.contracts.js";
+import { Exceptions } from "./index.js";
 
 export abstract class AbstractConfirmedTransactionData implements ConfirmedTransactionData {
 	/**
@@ -352,5 +353,9 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		}
 
 		return processor.process(emoji.emojify(memo));
+	}
+
+	public async normalizeData(): Promise<void> {
+		throw new Exceptions.NotImplemented(this.constructor.name, this.normalizeData.name);
 	}
 }

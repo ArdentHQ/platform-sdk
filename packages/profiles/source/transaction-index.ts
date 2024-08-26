@@ -70,6 +70,6 @@ export class TransactionIndex implements ITransactionIndex {
 			this.#wallet.data().set(WalletData.Status, WalletFlag.Hot);
 		}
 
-		return transformConfirmedTransactionDataCollection(this.#wallet, result);
+		return await transformConfirmedTransactionDataCollection(this.#wallet, result);
 	}
 }

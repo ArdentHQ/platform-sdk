@@ -1,20 +1,17 @@
-import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
+import { Contracts, DTO, Exceptions, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
-import { TransactionTypeService } from "./transaction-type.service.js";
-import { Identities, Interfaces } from "./crypto/index.js";
 import { BindingType } from "./coin.contract.js";
+import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
-	readonly #config!: Interfaces.NetworkConfig;
+	readonly #addressService: Services.AddressService;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
-		// @TODO: temporary workaround to get the right sender address
-		// from a public key. Will be removed down the line.
-		this.#config = container.get(BindingType.Crypto);
+		this.#addressService = container.get(BindingType.AddressService);
 	}
 
 	public override id(): string {
@@ -34,7 +31,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override sender(): string {
-		return Identities.Address.fromPublicKey(this.data.senderPublicKey, this.#config.network);
+		return this.data.sender;
 	}
 
 	public override recipient(): string {
@@ -204,5 +201,9 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	public override expirationValue(): number {
 		return this.data.asset.lock.expiration.value;
+	}
+
+	public override async normalizeData(): Promise<void> {
+		this.data.sender = (await this.#addressService.fromPublicKey(this.data.senderPublicKey)).address;
 	}
 }
