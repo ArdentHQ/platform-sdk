@@ -41,6 +41,7 @@ describeWithContext(
 			isTransfer: () => false,
 			isUnvote: () => false,
 			isVote: () => false,
+			normalizeData: async () => ({}),
 		},
 	},
 	({ assert, beforeAll, it, nock, loader }) => {
@@ -86,6 +87,7 @@ describeWithContext(
 
 			const transactionData = new ExtendedConfirmedTransactionData(context.wallet, {
 				isMagistrate: () => true,
+				normalizeData: async () => ({}),
 			});
 
 			const collection = new Collections.ConfirmedTransactionDataCollection([transactionData], pagination);
