@@ -459,7 +459,10 @@ export class TransactionService implements ITransactionService {
 		this.#pending = {};
 
 		for (const transaction of transactions) {
-			const signedTransactionData = this.#wallet.coin().dataTransferObject().signedTransaction(transaction.id, transaction)
+			const signedTransactionData = this.#wallet
+				.coin()
+				.dataTransferObject()
+				.signedTransaction(transaction.id, transaction);
 			await signedTransactionData.sanitizeSignatures();
 			this.#pending[transaction.id] = this.#createExtendedSignedTransactionData(signedTransactionData);
 		}
@@ -474,16 +477,17 @@ export class TransactionService implements ITransactionService {
 		this.#signed = {};
 
 		for (const transaction of transactions) {
-			const signedTransactionData = this.#wallet.coin().dataTransferObject().signedTransaction(transaction.id, transaction)
+			const signedTransactionData = this.#wallet
+				.coin()
+				.dataTransferObject()
+				.signedTransaction(transaction.id, transaction);
 			await signedTransactionData.sanitizeSignatures();
 
 			this.#signed[transaction.id] = this.#createExtendedSignedTransactionData(signedTransactionData);
 		}
 	}
 
-	#createExtendedSignedTransactionData(
-		transaction: Contracts.SignedTransactionData
-	): ExtendedSignedTransactionData {
+	#createExtendedSignedTransactionData(transaction: Contracts.SignedTransactionData): ExtendedSignedTransactionData {
 		return new ExtendedSignedTransactionData(transaction, this.#wallet);
 	}
 }

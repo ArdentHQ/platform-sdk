@@ -21,7 +21,7 @@ export class SignedTransactionData
 	}
 
 	public override sender(): string {
-		return this.signedData.sender
+		return this.signedData.sender;
 	}
 
 	public override recipient(): string {
