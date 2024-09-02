@@ -29,7 +29,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
-			publicKey: await this.#publicKeyFactory.fromMnemonic(mnemonic)
+			publicKey: await this.#publicKeyFactory.fromMnemonic(mnemonic),
 		};
 	}
 
@@ -38,7 +38,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		publicKeys: string[],
 	): Promise<Services.PublicKeyDataTransferObject> {
 		return {
-			publicKey: await this.#publicKeyFactory.fromMultiSignatureAsset({ min, publicKeys })
+			publicKey: await this.#publicKeyFactory.fromMultiSignatureAsset({ min, publicKeys }),
 		};
 	}
 
@@ -46,13 +46,13 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		abort_if(BIP39.compatible(secret), "The given value is BIP39 compliant. Please use [fromMnemonic] instead.");
 
 		return {
-			publicKey: await this.#publicKeyFactory.fromMnemonic(secret)
+			publicKey: await this.#publicKeyFactory.fromMnemonic(secret),
 		};
 	}
 
 	public override async fromWIF(wif: string): Promise<Services.PublicKeyDataTransferObject> {
 		return {
-			publicKey: await this.#publicKeyFactory.fromWIF(wif)
+			publicKey: await this.#publicKeyFactory.fromWIF(wif),
 		};
 	}
 
