@@ -5,18 +5,21 @@ import { Contracts, Identifiers } from "@mainsail/contracts";
 import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "./coin.contract.js";
-import { PublicKey as BasePublicKey } from "./crypto/identities/public-key.js";
-import { Interfaces } from "./crypto/index.js";
 
 export class PublicKeyService extends Services.AbstractPublicKeyService {
-	readonly #config!: Interfaces.NetworkConfig;
 	readonly #app: Application;
+	readonly #publicKeyFactory: Contracts.Crypto.PublicKeyFactory;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
-		this.#config = container.get(BindingType.Crypto);
 		this.#app = container.get(BindingType.Application);
+
+		this.#publicKeyFactory = this.#app.getTagged<Contracts.Crypto.PublicKeyFactory>(
+			Identifiers.Cryptography.Identity.PublicKey.Factory,
+			"type",
+			"wallet",
+		);
 	}
 
 	public override async fromMnemonic(
@@ -26,7 +29,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
-			publicKey: BasePublicKey.fromPassphrase(mnemonic),
+			publicKey: await this.#publicKeyFactory.fromMnemonic(mnemonic),
 		};
 	}
 
@@ -35,7 +38,7 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		publicKeys: string[],
 	): Promise<Services.PublicKeyDataTransferObject> {
 		return {
-			publicKey: BasePublicKey.fromMultiSignatureAsset({ min, publicKeys }),
+			publicKey: await this.#publicKeyFactory.fromMultiSignatureAsset({ min, publicKeys }),
 		};
 	}
 
@@ -43,13 +46,13 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		abort_if(BIP39.compatible(secret), "The given value is BIP39 compliant. Please use [fromMnemonic] instead.");
 
 		return {
-			publicKey: BasePublicKey.fromPassphrase(secret),
+			publicKey: await this.#publicKeyFactory.fromMnemonic(secret),
 		};
 	}
 
 	public override async fromWIF(wif: string): Promise<Services.PublicKeyDataTransferObject> {
 		return {
-			publicKey: BasePublicKey.fromWIF(wif),
+			publicKey: await this.#publicKeyFactory.fromWIF(wif),
 		};
 	}
 
