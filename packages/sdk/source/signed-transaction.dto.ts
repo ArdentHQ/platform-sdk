@@ -210,14 +210,14 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	public votes(): string[] {
-		return this.extractVotingData()['votes'];
+		return this.extractVotingData()["votes"];
 	}
 
 	public unvotes(): string[] {
-		return this.extractVotingData()['unvotes'];
+		return this.extractVotingData()["unvotes"];
 	}
 
-	private extractVotingData(): Record<'votes'|'unvotes', string[]>{
+	private extractVotingData(): Record<"votes" | "unvotes", string[]> {
 		const data = this.data();
 		const votes: string[] = [];
 		const unvotes: string[] = [];
