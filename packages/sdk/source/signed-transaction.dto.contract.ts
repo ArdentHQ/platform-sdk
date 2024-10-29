@@ -14,6 +14,8 @@ export interface SignedTransactionObject {
 	timestamp: string;
 	data: RawTransactionData;
 	broadcast: any;
+	votes: string[];
+	unvotes: string[];
 }
 
 export interface SignedTransactionData {
@@ -58,6 +60,9 @@ export interface SignedTransactionData {
 	toSignedData(): any;
 	toObject(): SignedTransactionObject;
 	type(): string;
+
+	votes(): string[];
+	unvotes(): string[];
 
 	// @TODO: remove those after introducing proper signed tx DTOs
 	username(): string;

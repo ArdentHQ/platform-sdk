@@ -203,8 +203,34 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 			id: this.id(),
 			recipient: this.recipient(),
 			sender: this.sender(),
+			votes: this.votes(),
+			unvotes: this.unvotes(),
 			timestamp: this.timestamp().toISOString(),
 		};
+	}
+
+	public votes(): string[] {
+		return this.extractVotingData()['votes'];
+	}
+
+	public unvotes(): string[] {
+		return this.extractVotingData()['unvotes'];
+	}
+
+	private extractVotingData(): Record<'votes'|'unvotes', string[]>{
+		const data = this.data();
+		const votes: string[] = [];
+		const unvotes: string[] = [];
+
+		// array of publicKeys
+		const rawVotes: string[] = [data?.asset?.votes ?? [], data?.asset?.unvotes ?? []].flat();
+
+		for (const publicKey of rawVotes) {
+			const destination = publicKey.startsWith("-") ? unvotes : votes;
+			destination.push(publicKey.replace(/^[+-]+/, ""));
+		}
+
+		return { votes, unvotes };
 	}
 
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)
