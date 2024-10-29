@@ -7,8 +7,14 @@ export class ExtendedConfirmedTransactionDataCollection extends Collections.Pagi
 		return this.#find("id", id);
 	}
 
-	public findByType(type: string): ExtendedConfirmedTransactionData | undefined {
-		return this.#find("type", type);
+	public findByType(types: string | string[]): ExtendedConfirmedTransactionData[] {
+		// Ensure types is an array
+		const typesArray = Array.isArray(types) ? types : [types];
+
+		// Filter items that match any type in typesArray
+		return this.items().filter((transaction: ExtendedConfirmedTransactionData) =>
+			typesArray.includes(transaction["type"]())
+		);
 	}
 
 	public findByTimestamp(timestamp: string): ExtendedConfirmedTransactionData | undefined {
