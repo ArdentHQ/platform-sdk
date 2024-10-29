@@ -167,7 +167,7 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public unvotes(): string[] {
-		return this.#data.votes();
+		return this.#data.unvotes();
 	}
 
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)

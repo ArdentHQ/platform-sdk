@@ -218,12 +218,11 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	private extractVotingData(): Record<"votes" | "unvotes", string[]> {
-		const data = this.data();
 		const votes: string[] = [];
 		const unvotes: string[] = [];
 
 		// array of publicKeys
-		const rawVotes: string[] = data?.asset?.votes ?? [];
+		const rawVotes: string[] = this.data()?.asset?.votes ?? [];
 
 		for (const publicKey of rawVotes) {
 			const destination = publicKey.startsWith("-") ? unvotes : votes;
