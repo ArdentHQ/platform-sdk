@@ -227,77 +227,76 @@ export class ClientService extends Services.AbstractClientService {
 
 		// @ts-ignore
 		if (body.type) {
-			const { type, typeGroup } = {
-				delegateRegistration: {
-					type: Enums.TransactionType.DelegateRegistration,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				delegateResignation: {
-					type: Enums.TransactionType.DelegateResignation,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				htlcClaim: {
-					type: Enums.TransactionType.HtlcClaim,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				htlcLock: {
-					type: Enums.TransactionType.HtlcLock,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				htlcRefund: {
-					type: Enums.TransactionType.HtlcRefund,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				ipfs: {
-					type: Enums.TransactionType.Ipfs,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				magistrate: {
-					typeGroup: 2,
-				},
-				multiPayment: {
-					type: Enums.TransactionType.MultiPayment,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				multiSignature: {
-					type: Enums.TransactionType.MultiSignature,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				secondSignature: {
-					type: Enums.TransactionType.SecondSignature,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				transfer: {
-					type: Enums.TransactionType.Transfer,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				vote: {
-					type: Enums.TransactionType.Vote,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				// @ts-ignore
-			}[body.type];
-
-			if (type !== undefined) {
-				if (isLegacy) {
-					result.body!.type = type;
-				} else {
-					result.searchParams.type = type;
+			const types = Array.isArray(body.type) ? body.type : [body.type];
+		
+			const mappedTypes = types.map((singleType) => {
+				const { type, typeGroup } = {
+					delegateRegistration: {
+						type: Enums.TransactionType.DelegateRegistration,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					delegateResignation: {
+						type: Enums.TransactionType.DelegateResignation,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					htlcClaim: {
+						type: Enums.TransactionType.HtlcClaim,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					htlcLock: {
+						type: Enums.TransactionType.HtlcLock,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					htlcRefund: {
+						type: Enums.TransactionType.HtlcRefund,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					ipfs: {
+						type: Enums.TransactionType.Ipfs,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					magistrate: {
+						typeGroup: 2,
+					},
+					multiPayment: {
+						type: Enums.TransactionType.MultiPayment,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					multiSignature: {
+						type: Enums.TransactionType.MultiSignature,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					secondSignature: {
+						type: Enums.TransactionType.SecondSignature,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					transfer: {
+						type: Enums.TransactionType.Transfer,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+					vote: {
+						type: Enums.TransactionType.Vote,
+						typeGroup: Enums.TransactionTypeGroup.Core,
+					},
+				}[singleType];
+		
+				return { type, typeGroup };
+			});
+		
+			if (isLegacy) {
+				result.body!.type = mappedTypes[0].type;
+				if (mappedTypes[0].typeGroup !== undefined) {
+					result.body!.typeGroup = mappedTypes[0].typeGroup;
 				}
+			} else {
+				result.searchParams.type = mappedTypes.map((entry) => entry.type).join(",");
+				result.searchParams.typeGroup = mappedTypes
+					.map((entry) => entry.typeGroup)
+					.filter((group) => group !== undefined)
+					.join(",");
 			}
-
-			if (typeGroup !== undefined) {
-				if (isLegacy) {
-					result.body!.typeGroup = typeGroup;
-				} else {
-					result.searchParams.typeGroup = typeGroup;
-				}
-			}
-
-			if (!isLegacy) {
-				// @ts-ignore
-				delete body.type;
-			}
+		
+			delete body.type;
 		}
 
 		if (body.timestamp) {

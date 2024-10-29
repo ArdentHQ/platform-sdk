@@ -16,6 +16,15 @@ describe("ConfirmedTransactionDataCollection", ({ assert, beforeEach, it, nock, 
 						timestamp: () => "timestamp",
 						type: () => "type",
 					},
+					{
+						id: (context) => "oherId",
+
+						recipient: () => "otherRecipient",
+
+						sender: () => "otherSender",
+						timestamp: () => "otherTimestamp",
+						type: () => "other",
+					},
 				],
 				{ next: "", prev: "", self: "" },
 			)),
@@ -27,6 +36,10 @@ describe("ConfirmedTransactionDataCollection", ({ assert, beforeEach, it, nock, 
 
 	it("should find transactions by type", (context) => {
 		assert.object(context.subject.findByType("type"));
+	});
+
+	it("should find transactions by type (array)", (context) => {
+		assert.object(context.subject.findByType(["type", "other"]));
 	});
 
 	it("should find transactions by timestamp", (context) => {

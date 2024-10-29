@@ -6,7 +6,7 @@ export class ConfirmedTransactionDataCollection extends Paginator<ConfirmedTrans
 		return this.#find("id", id);
 	}
 
-	public findByType(type: string): ConfirmedTransactionData | undefined {
+	public findByType(type: string | string[]): ConfirmedTransactionData | undefined {
 		return this.#find("type", type);
 	}
 
@@ -22,7 +22,14 @@ export class ConfirmedTransactionDataCollection extends Paginator<ConfirmedTrans
 		return this.#find("recipient", recipient);
 	}
 
-	#find(key: string, value: string): ConfirmedTransactionData | undefined {
+	#find(key: string, value: string | string[]): ConfirmedTransactionData | undefined {
+		if (Array.isArray(value)) {
+			// If value is an array, check if any of the types match
+			return this.items().find((transaction: ConfirmedTransactionData) =>
+				value.includes(transaction[key]())
+			);
+		}
+		// Otherwise, search for a single match
 		return this.items().find((transaction: ConfirmedTransactionData) => transaction[key]() === value);
 	}
 }

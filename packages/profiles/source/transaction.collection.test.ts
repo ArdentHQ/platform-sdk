@@ -28,6 +28,14 @@ describe("ExtendedConfirmedTransactionDataCollection", ({ beforeAll, beforeEach,
 		assert.is(context.subject.findByType("type"), dummy);
 	});
 
+	it("#findByType (array)", (context) => {
+		assert.is(context.subject.findByType(["type"]), dummy);
+	});
+
+	it("#findByType (array, multiple)", (context) => {
+		assert.is(context.subject.findByType(["type", "other"]), dummy);
+	});
+
 	it("#findByTimestamp", (context) => {
 		assert.is(context.subject.findByTimestamp("timestamp"), dummy);
 	});
