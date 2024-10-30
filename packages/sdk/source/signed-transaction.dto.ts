@@ -203,8 +203,6 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 			id: this.id(),
 			recipient: this.recipient(),
 			sender: this.sender(),
-			votes: this.votes(),
-			unvotes: this.unvotes(),
 			timestamp: this.timestamp().toISOString(),
 		};
 	}

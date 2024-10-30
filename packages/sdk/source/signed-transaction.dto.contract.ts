@@ -14,8 +14,6 @@ export interface SignedTransactionObject {
 	timestamp: string;
 	data: RawTransactionData;
 	broadcast: any;
-	votes: string[];
-	unvotes: string[];
 }
 
 export interface SignedTransactionData {
