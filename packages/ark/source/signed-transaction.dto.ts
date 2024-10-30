@@ -104,13 +104,13 @@ export class SignedTransactionData
 	}
 
 	public override votes(): string[] {
-		return this.data().asset.votes
+		return this.signedData.asset.votes
 			.filter((vote: string) => vote.startsWith("+"))
 			.map((publicKey: string) => publicKey.slice(1));
 	}
 
 	public override unvotes(): string[] {
-		return this.data().asset.votes
+		return this.signedData.asset.votes
 			.filter((vote: string) => vote.startsWith("-"))
 			.map((publicKey: string) => publicKey.slice(1));
 	}
