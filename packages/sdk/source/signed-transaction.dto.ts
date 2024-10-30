@@ -210,11 +210,11 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	public votes(): string[] {
-		return [];
+		throw new NotImplemented(this.constructor.name, this.votes.name);
 	}
 
 	public unvotes(): string[] {
-		return [];
+		throw new NotImplemented(this.constructor.name, this.unvotes.name);
 	}
 
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)
