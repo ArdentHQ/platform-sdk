@@ -68,6 +68,30 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 		assert.equal(context.subject.amount(), BigNumber.make("25000000000000000"));
 	});
 
+	it("should have votes/unvotes", (context) => {
+		context.subject.configure(
+			"3e3817fd0c35bc36674f3874c2953fa3e35877cbcdb44a08bdc6083dbd39d572",
+			{
+				asset: {
+					votes: [
+						"-unvoted-public-key",
+						"+voted-public-key"
+					],
+				},
+				fee: "0",
+				id: "3e3817fd0c35bc36674f3874c2953fa3e35877cbcdb44a08bdc6083dbd39d572",
+				recipientId: "D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax",
+				senderPublicKey: "0208e6835a8f020cfad439c059b89addc1ce21f8cab0af6e6957e22d3720bff8a4",
+				timestamp: "1970-01-01T00:00:00.000Z",
+				type: 3,
+			},
+			"",
+		);
+
+		assert.equal(context.subject.votes(), ["voted-public-key"]);
+		assert.equal(context.subject.unvotes(), ["unvoted-public-key"]);
+	});
+
 	it("should have a fee", (context) => {
 		assert.equal(context.subject.fee(), BigNumber.ZERO);
 	});
