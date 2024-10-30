@@ -15,7 +15,6 @@ export interface SignedTransactionObject {
 	data: RawTransactionData;
 	broadcast: any;
 }
-
 export interface SignedTransactionData {
 	setAttributes(attributes: { identifier: string }): void;
 
