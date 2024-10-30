@@ -103,6 +103,29 @@ export class SignedTransactionData
 		return !!this.signedData.multiSignature;
 	}
 
+	public votes(): string[] {
+		return this.extractVotingData()["votes"];
+	}
+
+	public unvotes(): string[] {
+		return this.extractVotingData()["unvotes"];
+	}
+
+	private extractVotingData(): Record<"votes" | "unvotes", string[]> {
+		const votes: string[] = [];
+		const unvotes: string[] = [];
+
+		// array of publicKeys
+		const rawVotes: string[] = this.data()?.asset?.votes ?? [];
+
+		for (const publicKey of rawVotes) {
+			const destination = publicKey.startsWith("-") ? unvotes : votes;
+			destination.push(publicKey.replace(/^[+-]+/, ""));
+		}
+
+		return { votes, unvotes };
+	}
+
 	public override toBroadcast() {
 		const broadcastData = super.normalizeTransactionData<Contracts.RawTransactionData>(this.broadcastData);
 		delete broadcastData.timestamp;
