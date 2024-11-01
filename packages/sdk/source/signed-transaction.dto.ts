@@ -174,6 +174,10 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 		return false;
 	}
 
+	public isReturn(): boolean {
+		return false;
+	}
+
 	public get<T = string>(key: string): T {
 		return this.signedData[key];
 	}
