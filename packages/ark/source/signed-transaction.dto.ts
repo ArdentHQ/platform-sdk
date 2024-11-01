@@ -43,6 +43,18 @@ export class SignedTransactionData
 		return DateTime.make();
 	}
 
+	public override isReturn(): boolean {
+		if (this.isTransfer()) {
+			return this.signedData.isSent() && this.signedData.isReceived();
+		}
+
+		if (this.isMultiPayment()) {
+			return this.signedData.recipients().some(({ address }: Contracts.MultiPaymentRecipient) => address === this.sender());
+		}
+
+		return false;
+	}
+
 	public override isTransfer(): boolean {
 		return TransactionTypeService.isTransfer(this.signedData);
 	}
