@@ -59,6 +59,9 @@ export interface SignedTransactionData {
 	toObject(): SignedTransactionObject;
 	type(): string;
 
+	votes(): string[];
+	unvotes(): string[];
+
 	// @TODO: remove those after introducing proper signed tx DTOs
 	username(): string;
 	hash(): string;

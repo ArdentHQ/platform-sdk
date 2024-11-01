@@ -103,6 +103,18 @@ export class SignedTransactionData
 		return !!this.signedData.multiSignature;
 	}
 
+	public override votes(): string[] {
+		return this.signedData.asset.votes
+			.filter((vote: string) => vote.startsWith("+"))
+			.map((publicKey: string) => publicKey.slice(1));
+	}
+
+	public override unvotes(): string[] {
+		return this.signedData.asset.votes
+			.filter((vote: string) => vote.startsWith("-"))
+			.map((publicKey: string) => publicKey.slice(1));
+	}
+
 	public override toBroadcast() {
 		const broadcastData = super.normalizeTransactionData<Contracts.RawTransactionData>(this.broadcastData);
 		delete broadcastData.timestamp;

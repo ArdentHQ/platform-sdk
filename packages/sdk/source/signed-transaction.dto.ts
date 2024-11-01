@@ -207,6 +207,14 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 		};
 	}
 
+	public votes(): string[] {
+		throw new NotImplemented(this.constructor.name, this.votes.name);
+	}
+
+	public unvotes(): string[] {
+		throw new NotImplemented(this.constructor.name, this.unvotes.name);
+	}
+
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)
 	public username(): string {
 		return this.signedData.asset.delegate.username;

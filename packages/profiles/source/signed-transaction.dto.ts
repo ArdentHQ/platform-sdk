@@ -162,6 +162,14 @@ export class ExtendedSignedTransactionData {
 		return this.#wallet;
 	}
 
+	public votes(): string[] {
+		return this.#data.votes();
+	}
+
+	public unvotes(): string[] {
+		return this.#data.unvotes();
+	}
+
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)
 	public username(): string {
 		return this.#data.username();
