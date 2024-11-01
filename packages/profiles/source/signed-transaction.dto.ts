@@ -59,7 +59,25 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public isReturn(): boolean {
-		return this.isSent() && this.isReceived();
+		if (this.isTransfer()) {
+			return this.isSent() && this.isReceived();
+		}
+
+		if (this.isMultiPayment()) {
+			let isReturn = true;
+
+			for (const recipient of this.recipients().values()) {
+				if (recipient.address !== this.sender()) {
+					isReturn = false;
+					break;
+				}
+			}
+
+			return isReturn;
+
+		}
+
+		return false;
 	}
 
 	public isSent(): boolean {
