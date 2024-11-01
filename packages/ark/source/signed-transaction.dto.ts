@@ -49,7 +49,9 @@ export class SignedTransactionData
 		}
 
 		if (this.isMultiPayment()) {
-			return this.signedData.recipients().some(({ address }: Contracts.MultiPaymentRecipient) => address === this.sender());
+			return this.signedData
+				.recipients()
+				.some(({ address }: Contracts.MultiPaymentRecipient) => address === this.sender());
 		}
 
 		return false;
