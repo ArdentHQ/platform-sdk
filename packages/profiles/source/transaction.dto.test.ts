@@ -24,6 +24,7 @@ const createSubject = (wallet, properties, klass) => {
 		confirmations: () => BigNumber.make(20),
 		fee: () => BigNumber.make(2e8, 8),
 		getMeta: () => meta,
+		isReturn: () => false,
 		id: () => "transactionId",
 		inputs: () => [],
 		isSent: () => true,
