@@ -149,11 +149,21 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public total(): number {
-		if (this.isSent()) {
+		if (this.isSent() || this.isReturn()) {
 			return this.amount() + this.fee();
 		}
 
-		return this.amount();
+		let total = this.amount();
+
+		if (this.isMultiPayment()) {
+			for (const recipient of this.recipients()) {
+				if (recipient.address !== this.wallet().address()) {
+					total -= recipient.amount;
+				}
+			}
+		}
+
+		return total;
 	}
 
 	public convertedTotal(): number {
