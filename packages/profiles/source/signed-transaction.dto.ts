@@ -149,7 +149,11 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public total(): number {
-		if (this.isSent() || this.isReturn()) {
+		if(this.isReturn()) {
+			return this.amount() - this.fee();
+		}
+		
+		if (this.isSent()) {
 			return this.amount() + this.fee();
 		}
 
