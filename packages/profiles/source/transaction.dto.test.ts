@@ -24,9 +24,9 @@ const createSubject = (wallet, properties, klass) => {
 		confirmations: () => BigNumber.make(20),
 		fee: () => BigNumber.make(2e8, 8),
 		getMeta: () => meta,
-		isReturn: () => false,
 		id: () => "transactionId",
 		inputs: () => [],
+		isReturn: () => false,
 		isSent: () => true,
 		memo: () => "memo",
 		outputs: () => [],
@@ -314,8 +314,8 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 			amount: () => BigNumber.make(18e8, 8),
 			fee: () => BigNumber.make(2e8, 8),
 			isMultiPayment: () => false,
-			isSent: () => false,
 			isReturn: () => false,
+			isSent: () => false,
 		});
 
 		assert.equal(subject.total(), 18);
@@ -326,8 +326,8 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 			amount: () => BigNumber.make(18e8, 8),
 			fee: () => BigNumber.make(2e8, 8),
 			isMultiPayment: () => true,
-			isSent: () => false,
 			isReturn: () => false,
+			isSent: () => false,
 			recipients: () => [
 				{
 					address: context.wallet.address(),
