@@ -148,15 +148,15 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public total(): number {
-		if (this.isReturn()) {
-			return this.amount() - this.fee();
-		}
-
 		// We want to return amount + fee for the transactions using multi-signature
 		// because the total should be calculated from the sender perspective.
 		// This is specific for signed - unconfirmed transactions only.
 		if (this.isSent() || this.usesMultiSignature()) {
 			return this.amount() + this.fee();
+		}
+
+		if (this.isReturn()) {
+			return this.amount() - this.fee();
 		}
 
 		let total = this.amount();
