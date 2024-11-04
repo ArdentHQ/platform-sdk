@@ -315,6 +315,7 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 			fee: () => BigNumber.make(2e8, 8),
 			isMultiPayment: () => false,
 			isSent: () => false,
+			isReturn: () => false,
 		});
 
 		assert.equal(subject.total(), 18);
@@ -326,6 +327,7 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 			fee: () => BigNumber.make(2e8, 8),
 			isMultiPayment: () => true,
 			isSent: () => false,
+			isReturn: () => false,
 			recipients: () => [
 				{
 					address: context.wallet.address(),
