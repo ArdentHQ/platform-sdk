@@ -59,6 +59,10 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public isReturn(): boolean {
+		if (this.isTransfer() && this.usesMultiSignature()) {
+			return this.sender() === this.recipient();
+		}
+
 		if (this.isTransfer()) {
 			return this.isSent() && this.isReceived();
 		}
@@ -148,17 +152,20 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public total(): number {
+		if (this.isReturn()) {
+			// console.log("is return", this.id());
+			return this.amount() - this.fee();
+		}
+
 		// We want to return amount + fee for the transactions using multi-signature
 		// because the total should be calculated from the sender perspective.
 		// This is specific for signed - unconfirmed transactions only.
 		if (this.isSent() || this.usesMultiSignature()) {
+			// console.log("is sent or usesmusig", this.id(), this.isSent(), this.usesMultiSignature());
 			return this.amount() + this.fee();
 		}
 
-		if (this.isReturn()) {
-			return this.amount() - this.fee();
-		}
-
+		// console.log("something else", this.id());
 		let total = this.amount();
 
 		if (this.isMultiPayment()) {
