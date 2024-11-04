@@ -73,7 +73,6 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 			}
 
 			return isReturn;
-
 		}
 
 		return false;

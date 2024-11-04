@@ -261,7 +261,7 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 	 */
 
 	public total(): number {
-		if(this.isReturn()) {
+		if (this.isReturn()) {
 			return this.amount() - this.fee();
 		}
 

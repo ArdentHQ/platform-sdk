@@ -74,7 +74,6 @@ export class ExtendedSignedTransactionData {
 			}
 
 			return isReturn;
-
 		}
 
 		return false;
@@ -149,7 +148,7 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public total(): number {
-		if(this.isReturn()) {
+		if (this.isReturn()) {
 			return this.amount() - this.fee();
 		}
 
