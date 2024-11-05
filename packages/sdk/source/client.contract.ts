@@ -72,6 +72,7 @@ export interface ClientTransactionsInput extends ClientPagination {
 	timestamp?: RangeCriteria;
 	// Transaction Types
 	type?: TransactionType;
+	types?: TransactionType[];
 }
 
 export interface ClientWalletsInput extends ClientPagination {
