@@ -5,7 +5,7 @@ import dotify from "node-dotify";
 import { Enums } from "./crypto/index.js";
 import { Request } from "./request.js";
 
-const transactionTypeByName = (type: string) => ({
+const transactionTypeByName = (type?: string): { type: Enums.TransactionType, typeGroup: Enums.TransactionTypeGroup } => ({
 	delegateRegistration: {
 		type: Enums.TransactionType.DelegateRegistration,
 		typeGroup: Enums.TransactionTypeGroup.Core,
