@@ -5,56 +5,57 @@ import dotify from "node-dotify";
 import { Enums } from "./crypto/index.js";
 import { Request } from "./request.js";
 
-const transactionTypeByName = (type?: string): { type: Enums.TransactionType, typeGroup: Enums.TransactionTypeGroup } => ({
-	delegateRegistration: {
-		type: Enums.TransactionType.DelegateRegistration,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	delegateResignation: {
-		type: Enums.TransactionType.DelegateResignation,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	htlcClaim: {
-		type: Enums.TransactionType.HtlcClaim,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	htlcLock: {
-		type: Enums.TransactionType.HtlcLock,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	htlcRefund: {
-		type: Enums.TransactionType.HtlcRefund,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	ipfs: {
-		type: Enums.TransactionType.Ipfs,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	magistrate: {
-		typeGroup: 2,
-	},
-	multiPayment: {
-		type: Enums.TransactionType.MultiPayment,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	multiSignature: {
-		type: Enums.TransactionType.MultiSignature,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	secondSignature: {
-		type: Enums.TransactionType.SecondSignature,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	transfer: {
-		type: Enums.TransactionType.Transfer,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	vote: {
-		type: Enums.TransactionType.Vote,
-		typeGroup: Enums.TransactionTypeGroup.Core,
-	},
-	// @ts-ignore
-}[type])
+const transactionTypeByName = (type?: string): { type: Enums.TransactionType; typeGroup: Enums.TransactionTypeGroup } =>
+	({
+		delegateRegistration: {
+			type: Enums.TransactionType.DelegateRegistration,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		delegateResignation: {
+			type: Enums.TransactionType.DelegateResignation,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		htlcClaim: {
+			type: Enums.TransactionType.HtlcClaim,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		htlcLock: {
+			type: Enums.TransactionType.HtlcLock,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		htlcRefund: {
+			type: Enums.TransactionType.HtlcRefund,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		ipfs: {
+			type: Enums.TransactionType.Ipfs,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		magistrate: {
+			typeGroup: 2,
+		},
+		multiPayment: {
+			type: Enums.TransactionType.MultiPayment,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		multiSignature: {
+			type: Enums.TransactionType.MultiSignature,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		secondSignature: {
+			type: Enums.TransactionType.SecondSignature,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		transfer: {
+			type: Enums.TransactionType.Transfer,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		vote: {
+			type: Enums.TransactionType.Vote,
+			typeGroup: Enums.TransactionTypeGroup.Core,
+		},
+		// @ts-ignore
+	}[type]);
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -143,11 +144,11 @@ export class ClientService extends Services.AbstractClientService {
 			used: hasVoted ? 1 : 0,
 			votes: hasVoted
 				? [
-					{
-						amount: 0,
-						id: vote,
-					},
-				]
+						{
+							amount: 0,
+							id: vote,
+						},
+				  ]
 				: [],
 		};
 	}
@@ -278,7 +279,7 @@ export class ClientService extends Services.AbstractClientService {
 
 		// @ts-ignore
 		if (body.type) {
-			const { type, typeGroup } = transactionTypeByName(body.type)
+			const { type, typeGroup } = transactionTypeByName(body.type);
 
 			if (type !== undefined) {
 				if (isLegacy) {
@@ -305,10 +306,12 @@ export class ClientService extends Services.AbstractClientService {
 		if (Array.isArray(body.types)) {
 			const { typeGroup } = transactionTypeByName(body.types.at(0));
 
-			const types = body.types.map((transactionType: string) => {
-				const { type } = transactionTypeByName(transactionType);
-				return type
-			}).join(",")
+			const types = body.types
+				.map((transactionType: string) => {
+					const { type } = transactionTypeByName(transactionType);
+					return type;
+				})
+				.join(",");
 
 			if (types !== undefined) {
 				if (isLegacy) {
