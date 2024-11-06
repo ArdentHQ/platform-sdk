@@ -35,6 +35,10 @@ export class SignedTransactionData
 		return this.signedData.vendorField;
 	}
 
+	public override nonce(): string {
+		return this.signedData.nonce;
+	}
+
 	public override timestamp(): DateTime {
 		if (this.signedData.timestamp) {
 			return DateTime.make(this.signedData.timestamp);

@@ -54,6 +54,10 @@ export class ExtendedSignedTransactionData {
 		return this.#convertAmount(this.fee());
 	}
 
+	public nonce(): string {
+		return this.#data.nonce();
+	}
+
 	public timestamp(): DateTime {
 		return this.#data.timestamp();
 	}
