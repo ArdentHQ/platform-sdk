@@ -59,7 +59,24 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public isReturn(): boolean {
-		return this.isSent() && this.isReceived();
+		if (this.isTransfer()) {
+			return this.isSent() && this.isReceived();
+		}
+
+		if (this.isMultiPayment()) {
+			let isReturn = true;
+
+			for (const recipient of this.recipients().values()) {
+				if (recipient.address !== this.sender()) {
+					isReturn = false;
+					break;
+				}
+			}
+
+			return isReturn;
+		}
+
+		return false;
 	}
 
 	public isSent(): boolean {
@@ -131,11 +148,25 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public total(): number {
+		if (this.isReturn()) {
+			return this.amount() - this.fee();
+		}
+
 		if (this.isSent()) {
 			return this.amount() + this.fee();
 		}
 
-		return this.amount();
+		let total = this.amount();
+
+		if (this.isMultiPayment()) {
+			for (const recipient of this.recipients()) {
+				if (recipient.address !== this.wallet().address()) {
+					total -= recipient.amount;
+				}
+			}
+		}
+
+		return total;
 	}
 
 	public convertedTotal(): number {
