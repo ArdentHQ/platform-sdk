@@ -48,6 +48,8 @@ export interface ConfirmedTransactionData {
 
 	memo(): string | undefined;
 
+	nonce(): string;
+
 	asset(): Record<string, unknown>;
 
 	inputs(): UnspentTransactionData[];
