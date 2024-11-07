@@ -1,5 +1,5 @@
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
-import { uniq } from "@ardenthq/sdk-helpers";
+import { isNil, uniq } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
 
@@ -305,13 +305,11 @@ export class ClientService extends Services.AbstractClientService {
 		}
 
 		if (Array.isArray(body.types)) {
-			const typeParameters = body.types
-				.map((transactionType: string) => transactionTypeByName(transactionType))
-				.filter(({ type }) => !!type);
-			const types = typeParameters.map(({ type }) => type).join(",");
-			const typeGroup = uniq(typeParameters.map(({ typeGroup }) => typeGroup)).join(",");
+			const typeParameters = body.types.map((transactionType: string) => transactionTypeByName(transactionType)).filter(({ type }) => !isNil(type))
+			const types = typeParameters.map(({ type }) => type).join(",")
+			const typeGroup = uniq(typeParameters.map(({ typeGroup }) => typeGroup)).join(",")
 
-			if (types !== undefined) {
+			if (types.length > 0) {
 				if (isLegacy) {
 					result.body!.type = types;
 				} else {
@@ -319,7 +317,7 @@ export class ClientService extends Services.AbstractClientService {
 				}
 			}
 
-			if (typeGroup !== undefined) {
+			if (typeGroup.length > 0) {
 				if (isLegacy) {
 					result.body!.typeGroup = typeGroup;
 				} else {
