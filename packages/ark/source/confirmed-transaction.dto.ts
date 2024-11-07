@@ -53,7 +53,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.bigNumberService.make(this.data.fee);
 	}
 
-	public override nonce(): string {
+	public override nonce(): BigNumber {
 		return this.data.nonce;
 	}
 

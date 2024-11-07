@@ -81,7 +81,7 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return this.#data.memo?.();
 	}
 
-	public nonce(): number {
+	public nonce(): BigNumber {
 		return this.#data.nonce();
 	}
 

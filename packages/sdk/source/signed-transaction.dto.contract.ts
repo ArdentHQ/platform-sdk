@@ -29,7 +29,7 @@ export interface SignedTransactionData {
 	amount(): BigNumber;
 	fee(): BigNumber;
 	memo(): string | undefined;
-	nonce(): string;
+	nonce(): BigNumber;
 	timestamp(): DateTime;
 
 	// Types

@@ -48,7 +48,7 @@ export interface ConfirmedTransactionData {
 
 	memo(): string | undefined;
 
-	nonce(): string;
+	nonce(): BigNumber;
 
 	asset(): Record<string, unknown>;
 

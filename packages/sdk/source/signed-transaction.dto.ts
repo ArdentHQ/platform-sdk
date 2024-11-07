@@ -106,7 +106,7 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 		return undefined;
 	}
 
-	public nonce(): string {
+	public nonce(): BigNumber {
 		throw new NotImplemented(this.constructor.name, this.nonce.name);
 	}
 

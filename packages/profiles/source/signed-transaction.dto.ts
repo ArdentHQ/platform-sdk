@@ -54,7 +54,7 @@ export class ExtendedSignedTransactionData {
 		return this.#convertAmount(this.fee());
 	}
 
-	public nonce(): string {
+	public nonce(): BigNumber {
 		return this.#data.nonce();
 	}
 
