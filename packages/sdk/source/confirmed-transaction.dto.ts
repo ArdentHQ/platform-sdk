@@ -127,6 +127,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		return undefined;
 	}
 
+	public nonce(): BigNumber {
+		throw new NotImplemented(this.constructor.name, this.nonce.name);
+	}
+
 	public asset(): Record<string, unknown> {
 		return {};
 	}
