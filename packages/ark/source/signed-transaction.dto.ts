@@ -35,6 +35,10 @@ export class SignedTransactionData
 		return this.signedData.vendorField;
 	}
 
+	public override nonce(): BigNumber {
+		return this.signedData.nonce;
+	}
+
 	public override timestamp(): DateTime {
 		if (this.signedData.timestamp) {
 			return DateTime.make(this.signedData.timestamp);
@@ -101,6 +105,18 @@ export class SignedTransactionData
 
 	public override usesMultiSignature(): boolean {
 		return !!this.signedData.multiSignature;
+	}
+
+	public override votes(): string[] {
+		return this.signedData.asset.votes
+			.filter((vote: string) => vote.startsWith("+"))
+			.map((publicKey: string) => publicKey.slice(1));
+	}
+
+	public override unvotes(): string[] {
+		return this.signedData.asset.votes
+			.filter((vote: string) => vote.startsWith("-"))
+			.map((publicKey: string) => publicKey.slice(1));
 	}
 
 	public override toBroadcast() {

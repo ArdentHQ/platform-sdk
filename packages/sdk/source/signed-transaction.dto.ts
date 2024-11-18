@@ -108,6 +108,10 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 		return undefined;
 	}
 
+	public nonce(): BigNumber {
+		throw new NotImplemented(this.constructor.name, this.nonce.name);
+	}
+
 	public timestamp(): DateTime {
 		throw new NotImplemented(this.constructor.name, this.timestamp.name);
 	}
@@ -215,6 +219,14 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 			sender: this.sender(),
 			timestamp: this.timestamp().toISOString(),
 		};
+	}
+
+	public votes(): string[] {
+		throw new NotImplemented(this.constructor.name, this.votes.name);
+	}
+
+	public unvotes(): string[] {
+		throw new NotImplemented(this.constructor.name, this.unvotes.name);
 	}
 
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)
