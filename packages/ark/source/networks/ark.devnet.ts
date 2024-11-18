@@ -9,7 +9,7 @@ const network: Networks.NetworkManifest = {
 		slip44: 1,
 	},
 	currency: {
-		decimals: 8,
+		decimals: 18,
 		symbol: "DѦ",
 		ticker: "DARK",
 	},
