@@ -56,7 +56,6 @@
 		"ajv": "6.12.6",
 		"ajv-keywords": "3.4.1",
 		"bip39": "3.0.4",
-		"crypto-address-keccak256@evm": "link:@@mainsail/crypto-address-keccak256@evm",
 		"dayjs": "1.10.7",
 		"deepmerge": "4.2.2",
 		"get-random-values": "^1.2.2",

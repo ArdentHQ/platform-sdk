@@ -488,9 +488,6 @@ importers:
       bip39:
         specifier: 3.0.4
         version: 3.0.4
-      crypto-address-keccak256@evm:
-        specifier: link:@@mainsail/crypto-address-keccak256@evm
-        version: link:@@mainsail/crypto-address-keccak256@evm
       dayjs:
         specifier: 1.10.7
         version: 1.10.7
