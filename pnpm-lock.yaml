@@ -477,8 +477,8 @@ importers:
         specifier: 0.0.1-evm.6
         version: 0.0.1-evm.6
       '@mainsail/validation':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       ajv:
         specifier: 6.12.6
         version: 6.12.6
@@ -1631,8 +1631,8 @@ packages:
     resolution: {integrity: sha512-NV8ueioOyaZwZ2vHaD7r4sPj5H5hMDOhweD5KFBslou/x5gCPk6zVamJaMFWEl7ZXrrt7TLuUB6p4NE6dNEkGQ==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/validation@0.0.1-evm.2':
-    resolution: {integrity: sha512-Unp0DdIkbO90TC17LXq73AUH8qpt3p+/kvhzVmlzXZtkQIYf0SLR8Cz9LAPsaVMtqn5K86jV9koyquabNHzdhQ==}
+  '@mainsail/validation@0.0.1-evm.6':
+    resolution: {integrity: sha512-jhTIbbwQF683vSgQulK1EeDjYmOpuI1lfARt10cJgqOnknfwgEF3gw+f8SCBXlhl/3WKOsVZPs7yMkDtz8d4nQ==}
     engines: {node: '>=20.x'}
 
   '@noble/curves@1.2.0':
@@ -6485,11 +6485,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@mainsail/validation@0.0.1-evm.2':
+  '@mainsail/validation@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
       ajv: 8.12.0
       ajv-formats: 2.1.1(ajv@8.12.0)
       ajv-keywords: 5.1.0(ajv@8.12.0)

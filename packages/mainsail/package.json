@@ -52,7 +52,7 @@
 		"@mainsail/fees": "0.0.1-evm.2",
 		"@mainsail/fees-static": "0.0.1-evm.2",
 		"@mainsail/kernel": "0.0.1-evm.6",
-		"@mainsail/validation": "0.0.1-evm.2",
+		"@mainsail/validation": "0.0.1-evm.6",
 		"ajv": "6.12.6",
 		"ajv-keywords": "3.4.1",
 		"bip39": "3.0.4",
