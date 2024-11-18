@@ -53,6 +53,10 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.bigNumberService.make(this.data.fee);
 	}
 
+	public override nonce(): BigNumber {
+		return this.data.nonce;
+	}
+
 	public override asset(): Record<string, unknown> {
 		return this.data.asset || {};
 	}
@@ -63,7 +67,16 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		}
 
 		if (this.isMultiPayment()) {
-			return this.recipients().some(({ address }: Contracts.MultiPaymentRecipient) => address === this.sender());
+			let isReturn = true;
+
+			for (const recipient of this.recipients().values()) {
+				if (recipient.address !== this.sender()) {
+					isReturn = false;
+					break;
+				}
+			}
+
+			return isReturn;
 		}
 
 		return false;

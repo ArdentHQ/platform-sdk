@@ -29,6 +29,7 @@ export interface SignedTransactionData {
 	amount(): BigNumber;
 	fee(): BigNumber;
 	memo(): string | undefined;
+	nonce(): BigNumber;
 	timestamp(): DateTime;
 
 	// Types
@@ -60,6 +61,9 @@ export interface SignedTransactionData {
 	toSignedData(): any;
 	toObject(): SignedTransactionObject;
 	type(): string;
+
+	votes(): string[];
+	unvotes(): string[];
 
 	// @TODO: remove those after introducing proper signed tx DTOs
 	username(): string;

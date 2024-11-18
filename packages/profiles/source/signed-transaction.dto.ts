@@ -54,12 +54,33 @@ export class ExtendedSignedTransactionData {
 		return this.#convertAmount(this.fee());
 	}
 
+	public nonce(): BigNumber {
+		return this.#data.nonce();
+	}
+
 	public timestamp(): DateTime {
 		return this.#data.timestamp();
 	}
 
 	public isReturn(): boolean {
-		return this.isSent() && this.isReceived();
+		if (this.isTransfer()) {
+			return this.isSent() && this.isReceived();
+		}
+
+		if (this.isMultiPayment()) {
+			let isReturn = true;
+
+			for (const recipient of this.recipients().values()) {
+				if (recipient.address !== this.sender()) {
+					isReturn = false;
+					break;
+				}
+			}
+
+			return isReturn;
+		}
+
+		return false;
 	}
 
 	public isSent(): boolean {
@@ -139,11 +160,28 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public total(): number {
-		if (this.isSent()) {
+		if (this.isReturn()) {
+			return this.amount() - this.fee();
+		}
+
+		// We want to return amount + fee for the transactions using multi-signature
+		// because the total should be calculated from the sender perspective.
+		// This is specific for signed - unconfirmed transactions only.
+		if (this.isSent() || this.usesMultiSignature()) {
 			return this.amount() + this.fee();
 		}
 
-		return this.amount();
+		let total = this.amount();
+
+		if (this.isMultiPayment()) {
+			for (const recipient of this.recipients()) {
+				if (recipient.address !== this.wallet().address()) {
+					total -= recipient.amount;
+				}
+			}
+		}
+
+		return total;
 	}
 
 	public convertedTotal(): number {
@@ -168,6 +206,14 @@ export class ExtendedSignedTransactionData {
 
 	public wallet(): IReadWriteWallet {
 		return this.#wallet;
+	}
+
+	public votes(): string[] {
+		return this.#data.votes();
+	}
+
+	public unvotes(): string[] {
+		return this.#data.unvotes();
 	}
 
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)

@@ -81,6 +81,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return this.#data.memo?.();
 	}
 
+	public nonce(): BigNumber {
+		return this.#data.nonce();
+	}
+
 	public asset(): Record<string, unknown> {
 		return this.#data.asset();
 	}
@@ -269,6 +273,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 	 */
 
 	public total(): number {
+		if (this.isReturn()) {
+			return this.amount() - this.fee();
+		}
+
 		if (this.isSent()) {
 			return this.amount() + this.fee();
 		}
