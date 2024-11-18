@@ -1,1 +1,1 @@
-export const SATOSHI = 1e18;
+export const SATOSHI = 1e8;

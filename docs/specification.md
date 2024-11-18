@@ -29,7 +29,7 @@ const network: Networks.NetworkManifest = {
 	currency: {
 		ticker: "ARK",
 		symbol: "Ѧ",
-		decimals: 18,
+		decimals: 8,
 	},
 	constants: {
 		slip44: 111,
