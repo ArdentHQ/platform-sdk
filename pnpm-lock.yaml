@@ -411,35 +411,35 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@mainsail/container':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/contracts':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-address-keccak256':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-config':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-consensus-bls12-381':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-hash-bcrypto':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-key-pair-bls12-381':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-key-pair-ecdsa':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-signature-schnorr':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-transaction':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/crypto-transaction-multi-payment':
         specifier: 0.0.1-evm.2
         version: 0.0.1-evm.2
@@ -465,8 +465,8 @@ importers:
         specifier: 0.0.1-evm.2
         version: 0.0.1-evm.2
       '@mainsail/crypto-validation':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/fees':
         specifier: 0.0.1-evm.2
         version: 0.0.1-evm.2
@@ -474,8 +474,8 @@ importers:
         specifier: 0.0.1-evm.2
         version: 0.0.1-evm.2
       '@mainsail/kernel':
-        specifier: 0.0.1-evm.2
-        version: 0.0.1-evm.2
+        specifier: 0.0.1-evm.6
+        version: 0.0.1-evm.6
       '@mainsail/validation':
         specifier: 0.0.1-evm.2
         version: 0.0.1-evm.2
@@ -1515,40 +1515,48 @@ packages:
     resolution: {integrity: sha512-HzSqP3JUAdRGkRX6u9HG1hxtPQOOJ9iFJC1RLRSII+C3eMM3ZA/mlvmwJ7QXwjhlnv3yWzZkzrRSpsvA7GRd+w==}
     engines: {node: '>=20.x'}
 
+  '@mainsail/container@0.0.1-evm.6':
+    resolution: {integrity: sha512-8yI1q0rAElyaK1wmvX4itMDHEHjXepfUurEvRLObcR5MqgNP2CW0JE64wy68gpTXyUdMiAqsuNmRHidVXMbKHg==}
+    engines: {node: '>=20.x'}
+
   '@mainsail/contracts@0.0.1-evm.2':
     resolution: {integrity: sha512-XKYFU+Z+db+NwpXqD3JoFbXXnDq2588J+GygjwJuKk4Mxm2p1cqFVO+990PSFrv1srCCY4KxH1QtQnr5n7/e7w==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-address-keccak256@0.0.1-evm.2':
-    resolution: {integrity: sha512-ELVBp4/WU2dbvgc6mXHROG+rz13YILMJsmlZhklluA76qvIUmx/kRqX3xOLv8QfJEfybcmMWo4JlcviT0ApFaw==}
+  '@mainsail/contracts@0.0.1-evm.6':
+    resolution: {integrity: sha512-gF2o8+PGiDcwGje/u6pB5jn6e5ZqQyvHO2qMJgnix+m2jIiLYDir7We7s36xhQ0VBspEYI5e7XHYJy7zARGm2g==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-config@0.0.1-evm.2':
-    resolution: {integrity: sha512-g2qfI7zN8fREErpd82qFTnn+zBLw7HQsDts1hc7FuRKxVcnXsj+v0tcOkGGhbI1XFjOUU8UixqdbLgG+vnR9Ig==}
+  '@mainsail/crypto-address-keccak256@0.0.1-evm.6':
+    resolution: {integrity: sha512-rHAc68rYQNbePHfKMozd380FBvjW8DmqGplxMJb8ZNFwSdmRW7hl2UEkwJKIQHyVCN6q7CQzT+TkPxcABPrK3A==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-consensus-bls12-381@0.0.1-evm.2':
-    resolution: {integrity: sha512-oYZtQc3Pl7UF/S6baLhnQu8yBL+oOZeCoDggDexOvY6pHAauYtCO+h9OR2nY2OJyKV7/kJgrVQokZYkWwRjOeg==}
+  '@mainsail/crypto-config@0.0.1-evm.6':
+    resolution: {integrity: sha512-yxQGJzfu5j5nIPHDa8wJAmswn5RZWO3dEC8NZ+/LXUzYwGrma8xJfvDA+9FCF0zMZn1pqkByh3eMPJs6v3Jo5w==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-hash-bcrypto@0.0.1-evm.2':
-    resolution: {integrity: sha512-GBsm4/HwUbgkY6ChztMCUR72k0Pe55Sxd7m49gnCaSmfK0IYirfPtxEj0+bEdJOzxLNZidAQ7Zea8veGIe0TZg==}
+  '@mainsail/crypto-consensus-bls12-381@0.0.1-evm.6':
+    resolution: {integrity: sha512-lz8kyun0+POWpqdh7N7MpMTfMFBWBNx2KItOS/iJ85AOS/OF6Ep02GzQ1ZuDDeAkxzzYpDYJqzxcuI6XxcS9Kg==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-key-pair-bls12-381@0.0.1-evm.2':
-    resolution: {integrity: sha512-C+NK/JFnaXDv/UOxVDhGlPSXj0RagBhS5XmXPhpGQ0v/3LWcaBsJa/imLCGG3BYH5Bgf245GOfopX5EbPy2X1A==}
+  '@mainsail/crypto-hash-bcrypto@0.0.1-evm.6':
+    resolution: {integrity: sha512-6zSY4F52KX7PS9QGU26FkUHSbNrJGD/FTqhgy78yGNdLMEoTbZ4t9RkGr8RVXk25MU1/G/mVKHLGad598P+i1w==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-key-pair-ecdsa@0.0.1-evm.2':
-    resolution: {integrity: sha512-KEE5XifmTUjg5Ds6pJOfdLtMDJqpHxtVTfj3csGM52CkKK0Kp1cEw/t1vUDVIM7k0XYFlOy9SE8x2A13Dfl3kQ==}
+  '@mainsail/crypto-key-pair-bls12-381@0.0.1-evm.6':
+    resolution: {integrity: sha512-DdcJ3pLsAYR+ISbVlb9BWXlyTWv4dwtE32t6x9z/nmbB5zLJ4rZB27Qh6wiaFR5rCQ0Se9Y/zQKy+eu5NpB1ow==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-signature-bls12-381@0.0.1-evm.2':
-    resolution: {integrity: sha512-Rc1fCkCFBvBINZZmfdEHG8XPtmOKyn1gF+kJDSiD7gbp6tQnNQqyECCwKjFcLQz2ssFQwL2pOpKF0MEUn5IH2w==}
+  '@mainsail/crypto-key-pair-ecdsa@0.0.1-evm.6':
+    resolution: {integrity: sha512-ph9ZmdI4pX0KonNzflutcPA30ZlVcfBMAdraTVzSx651FSajAQhNQamFVjRx0uDbZvi+RnKtCdZbjh0clZaQvQ==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-signature-schnorr@0.0.1-evm.2':
-    resolution: {integrity: sha512-3culGgmyAQl+4ODM7LFud3Ha+O5FiuoTXIi5WWCqTmaN0cSw/zY0SDtYp/I71lvQFOzXfKF3Bch4mt4IeNhbbA==}
+  '@mainsail/crypto-signature-bls12-381@0.0.1-evm.6':
+    resolution: {integrity: sha512-iqx3bcCTwTctfmrNkmW45BpKcTG8a7uPNtQwGB6wRHlZb4IvZ0EfbmtkBGwVvpukFVTftroBFz/NsQQHH7H7Og==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/crypto-signature-schnorr@0.0.1-evm.6':
+    resolution: {integrity: sha512-JHdASjDUt/er5+IA9GAwSJIoftive1Ae2+BrEHH9bvTg0+S6thzo/aqBqpBqrDaP6+Hn+MJnAL9tiqd5BwCgPA==}
     engines: {node: '>=20.x'}
 
   '@mainsail/crypto-transaction-multi-payment@0.0.1-evm.2':
@@ -1587,8 +1595,12 @@ packages:
     resolution: {integrity: sha512-CxjaAlkCcb0E3DuMHoEwFzTjQoVnWGrjXkYHu2vYX3NsabSmsM9LdTyrHSL4uf6+VH5gR3QU9S8ym1fGD0g38Q==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/crypto-validation@0.0.1-evm.2':
-    resolution: {integrity: sha512-dtC1ZUdfIQEX4ieoM4bov90wAHXXa3YUIfdI2MLQTVxQXCVhYYym8oxo8cByetVuEZjeaCuKG6mZmEBWax9ZFg==}
+  '@mainsail/crypto-transaction@0.0.1-evm.6':
+    resolution: {integrity: sha512-3v17H/RbV34JDlA0lOoCzBOBFP8I8zOGOTdRJDDsC6FDL3rtg7Tu9koObfISf2ubWMwKD/iuASPrUekTxqE3AA==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/crypto-validation@0.0.1-evm.6':
+    resolution: {integrity: sha512-JkspUa84dgMhwFvnpVUblqdgv66FhBRCpU/pNFQqBZK5RwvoGPicrMHxa5FcZRav5BX92DUyb+0EsD4lp/dLPg==}
     engines: {node: '>=20.x'}
 
   '@mainsail/fees-static@0.0.1-evm.2':
@@ -1603,12 +1615,20 @@ packages:
     resolution: {integrity: sha512-pvTQdSjqjF3ZZOL18ELI9suNESlFLvJxj1C0qLVz6AkLIBcs/S1ZAn/AfaAIsef66lUIPwQGX7rmPS6XXBJG0g==}
     engines: {node: '>=20.x'}
 
+  '@mainsail/kernel@0.0.1-evm.6':
+    resolution: {integrity: sha512-mq+mtaXJazPLy0yeYg/I1Jw9Tof3QeIwbil03nSQ/uHtLI+eJJ7MzYHGvgRPXHP4bF9OqujUsoesEWN0yGvoMg==}
+    engines: {node: '>=20.x'}
+
   '@mainsail/transactions@0.0.1-evm.2':
     resolution: {integrity: sha512-Dd6NewMqWO1ujaDdnk58OHL13XuOrpfdpfmy3DJTEsRRPmAkwd5neX3fFQWsEZab92YAxq+lPDBgLlfKlgcz7g==}
     engines: {node: '>=20.x'}
 
   '@mainsail/utils@0.0.1-evm.2':
     resolution: {integrity: sha512-/hH3xL3twpOUSIw0qg4MtpYxoPwtGVYzaifyFPIFwlSsRAiKmzNnfNfqnPB6fXaCDM8kAjClpQvfq6npYEA35w==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/utils@0.0.1-evm.6':
+    resolution: {integrity: sha512-NV8ueioOyaZwZ2vHaD7r4sPj5H5hMDOhweD5KFBslou/x5gCPk6zVamJaMFWEl7ZXrrt7TLuUB6p4NE6dNEkGQ==}
     engines: {node: '>=20.x'}
 
   '@mainsail/validation@0.0.1-evm.2':
@@ -6078,6 +6098,11 @@ snapshots:
       inversify: 6.0.2
       reflect-metadata: 0.2.1
 
+  '@mainsail/container@0.0.1-evm.6':
+    dependencies:
+      inversify: 6.0.2
+      reflect-metadata: 0.2.1
+
   '@mainsail/contracts@0.0.1-evm.2':
     dependencies:
       '@hapi/hapi': 21.3.6
@@ -6091,23 +6116,36 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@mainsail/crypto-address-keccak256@0.0.1-evm.2':
+  '@mainsail/contracts@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
-      '@mainsail/utils': 0.0.1-evm.2
+      '@hapi/hapi': 21.3.6
+      '@mainsail/utils': 0.0.1-evm.6
+      ajv: 8.12.0
+      dayjs: 1.11.10
+      inversify: 6.0.2
+      reflect-metadata: 0.2.1
+      type-fest: 4.12.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@mainsail/crypto-address-keccak256@0.0.1-evm.6':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
       ethers: 6.13.2
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-config@0.0.1-evm.2':
+  '@mainsail/crypto-config@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
       deepmerge: 4.3.1
       lodash.clone: 4.5.0
       lodash.get: 4.4.2
@@ -6117,38 +6155,38 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-consensus-bls12-381@0.0.1-evm.2':
+  '@mainsail/crypto-consensus-bls12-381@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-evm.2
-      '@mainsail/crypto-signature-bls12-381': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-evm.6
+      '@mainsail/crypto-signature-bls12-381': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
     transitivePeerDependencies:
       - bluebird
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-hash-bcrypto@0.0.1-evm.2':
+  '@mainsail/crypto-hash-bcrypto@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
       bcrypto: 5.5.2
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-key-pair-bls12-381@0.0.1-evm.2':
+  '@mainsail/crypto-key-pair-bls12-381@0.0.1-evm.6':
     dependencies:
       '@chainsafe/bls': 7.1.3(@chainsafe/blst@0.2.10)
       '@chainsafe/blst': 0.2.10
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
-      '@mainsail/utils': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
       '@scure/bip39': 1.3.0
       bls12-381-keygen: 0.2.4
       wif: 4.0.0
@@ -6158,12 +6196,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-key-pair-ecdsa@0.0.1-evm.2':
+  '@mainsail/crypto-key-pair-ecdsa@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
-      '@mainsail/utils': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
       bcrypto: 5.5.2
       wif: 4.0.0
     transitivePeerDependencies:
@@ -6171,25 +6209,25 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-signature-bls12-381@0.0.1-evm.2':
+  '@mainsail/crypto-signature-bls12-381@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
-      '@mainsail/utils': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/crypto-key-pair-bls12-381': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
     transitivePeerDependencies:
       - bluebird
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-signature-schnorr@0.0.1-evm.2':
+  '@mainsail/crypto-signature-schnorr@0.0.1-evm.6':
     dependencies:
-      '@mainsail/container': 0.0.1-evm.2
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
-      '@mainsail/utils': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
       bcrypto: 5.5.2
     transitivePeerDependencies:
       - bufferutil
@@ -6317,11 +6355,23 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@mainsail/crypto-validation@0.0.1-evm.2':
+  '@mainsail/crypto-transaction@0.0.1-evm.6':
     dependencies:
-      '@mainsail/contracts': 0.0.1-evm.2
-      '@mainsail/kernel': 0.0.1-evm.2
-      '@mainsail/utils': 0.0.1-evm.2
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
+      ajv: 8.12.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  '@mainsail/crypto-validation@0.0.1-evm.6':
+    dependencies:
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/kernel': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
       ajv: 8.12.0
     transitivePeerDependencies:
       - bufferutil
@@ -6374,6 +6424,29 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@mainsail/kernel@0.0.1-evm.6':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.6
+      '@mainsail/contracts': 0.0.1-evm.6
+      '@mainsail/utils': 0.0.1-evm.6
+      chalk: 5.3.0
+      cron: 3.1.6
+      date-fns: 3.4.0
+      deepmerge: 4.3.1
+      env-paths: 3.0.0
+      fs-extra: 11.2.0
+      glob: 10.3.10
+      ipaddr.js: 2.1.0
+      joi: 17.12.2
+      log-process-errors: 12.0.0
+      nanomatch: 1.2.13
+      nsfw: 2.2.4
+      semver: 7.6.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   '@mainsail/transactions@0.0.1-evm.2':
     dependencies:
       '@mainsail/container': 0.0.1-evm.2
@@ -6387,6 +6460,19 @@ snapshots:
       - utf-8-validate
 
   '@mainsail/utils@0.0.1-evm.2':
+    dependencies:
+      '@hapi/bourne': 3.0.0
+      deepmerge: 4.3.1
+      ethers: 6.13.2
+      fast-copy: 3.0.2
+      fast-deep-equal: 3.1.3
+      fast-sort: 3.4.0
+      type-fest: 4.12.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@mainsail/utils@0.0.1-evm.6':
     dependencies:
       '@hapi/bourne': 3.0.0
       deepmerge: 4.3.1
