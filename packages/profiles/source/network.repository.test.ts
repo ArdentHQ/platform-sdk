@@ -10,7 +10,7 @@ describeWithContext(
 	{
 		coin: "ARK",
 		constants: { slip44: 111 },
-		currency: { decimals: 8, symbol: "Ѧ", ticker: "ARK" },
+		currency: { decimals: 18, symbol: "Ѧ", ticker: "ARK" },
 		explorer: {
 			block: "block/{0}",
 			transaction: "transaction/{0}",
