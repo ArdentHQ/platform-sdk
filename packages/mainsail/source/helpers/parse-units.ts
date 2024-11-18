@@ -1,4 +1,4 @@
-import { ARK_MULTIPLIER, GWEI_MULTIPLIER, WEI_MULTIPLIER } from '../../mainsail/source/crypto/constants';
+import { ARK_MULTIPLIER, GWEI_MULTIPLIER, WEI_MULTIPLIER } from "../crypto/constants";
 
 export const parseUnits = (value: number | string, unit = 'ark'): string => {
     switch (unit.toLowerCase()) {
