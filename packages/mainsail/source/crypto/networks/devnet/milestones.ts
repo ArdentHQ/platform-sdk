@@ -5,7 +5,7 @@ export const milestones = [
 			base58: 30,
 		},
 		block: {
-			maxPayload: 2097152,
+			maxPayload: 2_097_152,
 			maxTransactions: 150,
 			version: 1,
 		},
@@ -15,19 +15,19 @@ export const milestones = [
 		multiPaymentLimit: 256,
 		reward: "0",
 		satoshi: {
-			decimals: 8,
-			denomination: 100000000,
+			decimals: 18,
+			denomination: 1_000_000_000_000_000_000,
 		},
 		stageTimeout: 2000,
 		stageTimeoutIncrease: 2000,
 		vendorFieldLength: 255,
 	},
 	{
-		height: 1,
 		activeValidators: 53,
+		height: 1,
 	},
 	{
-		height: 75600,
+		height: 75_600,
 		reward: "200000000",
 	},
 ];
