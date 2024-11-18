@@ -1,4 +1,3 @@
-
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
 
 import { Hash } from "../hash.js";
