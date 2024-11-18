@@ -1,9 +1,9 @@
-import { numberToHex } from "@ardenthq/sdk-helpers";
+
+import { Contracts as MainsailContracts } from "@mainsail/contracts";
 
 import { Hash } from "../hash.js";
 import { IKeyPair, ISerializeOptions, ITransactionData } from "../interfaces/index.js";
 import { Utils } from "./utils.js";
-import { Contracts as MainsailContracts } from "@mainsail/contracts";
 
 export class Signer {
 	public static sign(transaction: ITransactionData, keys: IKeyPair, options?: ISerializeOptions): string {
@@ -38,16 +38,6 @@ export class Signer {
 		index = -1,
 		hash: Buffer,
 	): Promise<string> {
-		if (!transaction.signatures) {
-			transaction.signatures = [];
-		}
-
-		index = index === -1 ? transaction.signatures.length : index;
-
-		const signature: string = Hash.signSchnorr(hash, keys);
-		const indexedSignature = `${numberToHex(index)}${signature}`;
-		transaction.signatures.push(indexedSignature);
-
-		return indexedSignature;
+		throw new Error("Not implemented.");
 	}
 }
