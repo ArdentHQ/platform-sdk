@@ -1,4 +1,4 @@
-import { parseUnits } from './parse-units';
+import { parseUnits } from "./parse-units";
 
 describe("parseUnits", async ({ assert, it, loader }) => {
     it("should parse the value to wei", () => {
@@ -7,7 +7,10 @@ describe("parseUnits", async ({ assert, it, loader }) => {
         assert.equal(parseUnits(1, "ark"), "100000000000000000000");
     });
 
-    it("should throw an error for unsupported units", () => {
-        assert.throws(() => parseUnits(1, "btc"), "Unsupported unit: btc. Supported units are 'wei', 'gwei', and 'ark'.");
-    });
+	it("should throw an error for unsupported units", () => {
+		assert.throws(
+			() => parseUnits(1, "btc"),
+			"Unsupported unit: btc. Supported units are 'wei', 'gwei', and 'ark'.",
+		);
+	});
 });
