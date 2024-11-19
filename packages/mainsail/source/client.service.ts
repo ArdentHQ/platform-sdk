@@ -181,11 +181,11 @@ export class ClientService extends Services.AbstractClientService {
 		};
 
 		const mappings: Record<string, string> = {
+			address: "address",
 			cursor: "page",
 			limit: "limit",
 			memo: "vendorField",
 			orderBy: "orderBy",
-			address: "address",
 			recipientId: "recipientId",
 			senderId: "senderId",
 			senderPublicKey: "senderPublicKey",
@@ -219,14 +219,6 @@ export class ClientService extends Services.AbstractClientService {
 					type: Enums.TransactionType.DelegateResignation,
 					typeGroup: Enums.TransactionTypeGroup.Core,
 				},
-				usernameRegistration: {
-					type: Enums.TransactionType.UsernameRegistration,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				usernameResignation: {
-					type: Enums.TransactionType.UsernameResignation,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
 				multiPayment: {
 					type: Enums.TransactionType.MultiPayment,
 					typeGroup: Enums.TransactionTypeGroup.Core,
@@ -235,12 +227,16 @@ export class ClientService extends Services.AbstractClientService {
 					type: Enums.TransactionType.MultiSignature,
 					typeGroup: Enums.TransactionTypeGroup.Core,
 				},
-				secondSignature: {
-					type: Enums.TransactionType.SecondSignature,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
 				transfer: {
 					type: Enums.TransactionType.Transfer,
+					typeGroup: Enums.TransactionTypeGroup.Core,
+				},
+				usernameRegistration: {
+					type: Enums.TransactionType.UsernameRegistration,
+					typeGroup: Enums.TransactionTypeGroup.Core,
+				},
+				usernameResignation: {
+					type: Enums.TransactionType.UsernameResignation,
 					typeGroup: Enums.TransactionTypeGroup.Core,
 				},
 				vote: {
