@@ -1,19 +1,15 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
-import { TransactionBuilder, Utils } from "@mainsail/crypto-transaction";
-import { MultiSignatureBuilder } from "@mainsail/crypto-transaction-multi-signature-registration";
-import { UsernameRegistrationBuilder } from "@mainsail/crypto-transaction-username-registration";
-import { ValidatorRegistrationBuilder } from "@mainsail/crypto-transaction-validator-registration";
-import { VoteBuilder } from "@mainsail/crypto-transaction-vote";
+import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
+import { BuilderFactory } from "./crypto/transactions/index.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
-import { BuilderFactory } from "./crypto/transactions/index.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -81,13 +77,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.#createFromData(
 			"delegateRegistration",
 			input,
-			({
-				transaction,
-				data,
-			}: {
-				transaction: ValidatorRegistrationBuilder;
-				data: { validatorPublicKey: string };
-			}) => {
+			({ transaction, data }: { transaction: any; data: { validatorPublicKey: string } }) => {
 				transaction.publicKeyAsset(data.validatorPublicKey);
 			},
 		);
@@ -104,7 +94,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 				transaction,
 				data,
 			}: {
-				transaction: VoteBuilder;
+				transaction: any;
 				data: {
 					votes: {
 						id: string;
@@ -156,7 +146,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.#createFromData(
 			"usernameRegistration",
 			input,
-			({ transaction, data }: { transaction: UsernameRegistrationBuilder; data: { username: string } }) => {
+			({ transaction, data }: { transaction: any; data: { username: string } }) => {
 				transaction.usernameAsset(data.username);
 			},
 		);
@@ -192,7 +182,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	// 	return this.#createFromData(
 	// 		"multiSignature",
 	// 		input,
-	// 		({ transaction, data }: { transaction: MultiSignatureBuilder; data: any }) => {
+	// 		({ transaction, data }: { transaction: any; data: any }) => {
 	// 			if (data.senderPublicKey) {
 	// 				transaction.senderPublicKey(data.senderPublicKey);
 	// 			}
@@ -335,7 +325,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.data.signature = await this.#ledgerService.signTransaction(
 				input.signatory.signingKey(),
 				Transactions.Serializer.getBytes(transaction.data, {
-					excludeSecondSignature: true,
 					excludeSignature: true,
 				}),
 			);

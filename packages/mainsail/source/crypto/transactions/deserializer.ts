@@ -80,12 +80,6 @@ export class Deserializer {
 			return marker === 255;
 		};
 
-		// Second Signature
-		if (buf.getRemainderLength() && !beginningMultiSignature()) {
-			const secondSignatureLength: number = currentSignatureLength();
-			transaction.secondSignature = buf.readBuffer(secondSignatureLength).toString("hex");
-		}
-
 		// Multi Signatures
 		if (buf.getRemainderLength() && beginningMultiSignature()) {
 			buf.jump(1);
@@ -106,17 +100,13 @@ export class Deserializer {
 			transaction.signature = buf.readBuffer(64).toString("hex");
 		}
 
-		if (canReadNonMultiSignature()) {
-			transaction.secondSignature = buf.readBuffer(64).toString("hex");
-		}
-
 		if (buf.getRemainderLength()) {
 			if (buf.getRemainderLength() % 65 === 0) {
 				transaction.signatures = [];
 
 				const count: number = buf.getRemainderLength() / 65;
 				const publicKeyIndexes: { [index: number]: boolean } = {};
-				for (let i = 0; i < count; i++) {
+				for (let index = 0; index < count; index++) {
 					const multiSignaturePart: string = buf.readBuffer(65).toString("hex");
 					const publicKeyIndex: number = Number.parseInt(multiSignaturePart.slice(0, 2), 16);
 
