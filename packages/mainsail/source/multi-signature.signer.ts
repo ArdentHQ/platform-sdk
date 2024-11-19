@@ -93,10 +93,6 @@ export class MultiSignatureSigner {
 				Transactions.Signer.sign(transaction, signingKeys);
 			}
 
-			if (confirmKeys) {
-				Transactions.Signer.secondSign(transaction, confirmKeys);
-			}
-
 			if (signatory.actsWithLedger()) {
 				transaction.signature = await this.#signWithLedger(transaction, signatory);
 			}
@@ -170,7 +166,6 @@ export class MultiSignatureSigner {
 			// @ts-ignore
 			Transactions.Serializer.getBytes(transaction, {
 				excludeMultiSignature,
-				excludeSecondSignature: true,
 				excludeSignature: true,
 			}),
 		);

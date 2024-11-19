@@ -1,17 +1,17 @@
+import { DateTime } from "@ardenthq/sdk-intl";
+
 import { DuplicateParticipantInMultiSignatureError, InvalidMultiSignatureAssetError } from "../errors.js";
+import { Hash } from "../hash.js";
 import {
 	IMultiSignatureAsset,
 	ISchemaValidationResult,
 	ITransactionData,
 	IVerifyOptions,
 } from "../interfaces/index.js";
-
-import { DateTime } from "@ardenthq/sdk-intl";
-import { Hash } from "../hash.js";
-import { TransactionTypeFactory } from "./types/factory.js";
-import { Utils } from "./utils.js";
 import { configManager } from "../managers/index.js";
 import { validator } from "../validation/index.js";
+import { TransactionTypeFactory } from "./types/factory.js";
+import { Utils } from "./utils.js";
 
 export class Verifier {
 	public static verify(data: ITransactionData, options?: IVerifyOptions): boolean {
@@ -20,24 +20,6 @@ export class Verifier {
 		}
 
 		return Verifier.verifyHash(data, options?.disableVersionCheck);
-	}
-
-	public static verifySecondSignature(
-		transaction: ITransactionData,
-		publicKey: string,
-		options?: IVerifyOptions,
-	): boolean {
-		const secondSignature: string | undefined = transaction.secondSignature || transaction.signSignature;
-
-		if (!secondSignature) {
-			return false;
-		}
-
-		const hash: Buffer = Utils.toHash(transaction, {
-			disableVersionCheck: options?.disableVersionCheck,
-			excludeSecondSignature: true,
-		});
-		return this.internalVerifySignature(hash, secondSignature, publicKey);
 	}
 
 	public static verifySignatures(transaction: ITransactionData, multiSignature: IMultiSignatureAsset): boolean {
@@ -50,7 +32,6 @@ export class Verifier {
 
 		const hash: Buffer = Utils.toHash(transaction, {
 			excludeMultiSignature: true,
-			excludeSecondSignature: true,
 			excludeSignature: true,
 		});
 
@@ -97,7 +78,6 @@ export class Verifier {
 
 		const hash: Buffer = Utils.toHash(data, {
 			disableVersionCheck,
-			excludeSecondSignature: true,
 			excludeSignature: true,
 		});
 

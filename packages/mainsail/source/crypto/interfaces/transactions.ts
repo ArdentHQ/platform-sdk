@@ -38,7 +38,6 @@ export interface ITransactionAsset {
 	votes?: string[];
 	multiSignatureLegacy?: IMultiSignatureLegacyAsset;
 	multiSignature?: IMultiSignatureAsset;
-	ipfs?: string;
 	payments?: IMultiPaymentItem[];
 }
 
@@ -63,7 +62,6 @@ export interface ITransactionData {
 
 	id?: string;
 	signature?: string;
-	secondSignature?: string;
 	signSignature?: string;
 	signatures?: string[];
 
@@ -94,14 +92,11 @@ export interface ITransactionJson {
 
 	id?: string;
 	signature?: string;
-	secondSignature?: string;
 	signSignature?: string;
 	signatures?: string[];
 
 	blockId?: string;
 	sequence?: number;
-
-	ipfsHash?: string;
 }
 
 export interface ISchemaValidationResult<T = any> {
@@ -139,6 +134,5 @@ export interface ISerializeOptions {
 	acceptLegacyVersion?: boolean;
 	disableVersionCheck?: boolean;
 	excludeSignature?: boolean;
-	excludeSecondSignature?: boolean;
 	excludeMultiSignature?: boolean;
 }

@@ -1,5 +1,6 @@
-import { TransactionType } from "../../enums.js";
 import deepmerge from "deepmerge";
+
+import { TransactionType } from "../../enums.js";
 
 const signedTransaction = {
 	anyOf: [
@@ -23,11 +24,9 @@ export const transactionBaseSchema: Record<string, any> = {
 		id: { anyOf: [{ $ref: "transactionId" }, { type: "null" }] },
 		network: { $ref: "networkByte" },
 		nonce: { bignumber: { minimum: 0 } },
-		secondSignature: { $ref: "alphanumeric" },
 		senderPublicKey: { $ref: "publicKey" },
 		signSignature: { $ref: "alphanumeric" },
 		signature: { $ref: "alphanumeric" },
-		version: { enum: [1, 2] },
 		signatures: {
 			additionalItems: false,
 			items: { allOf: [{ maxLength: 130, minLength: 130 }, { $ref: "alphanumeric" }] },
@@ -36,8 +35,9 @@ export const transactionBaseSchema: Record<string, any> = {
 			type: "array",
 			uniqueItems: true,
 		},
-		timestamp: { type: "integer", minimum: 0 },
+		timestamp: { minimum: 0, type: "integer" },
 		typeGroup: { minimum: 0, type: "integer" },
+		version: { enum: [1, 2] },
 	},
 	then: { required: ["type", "senderPublicKey", "fee", "amount", "timestamp"] },
 	type: "object",
@@ -68,32 +68,6 @@ export const transfer = extend(transactionBaseSchema, {
 		vendorField: { anyOf: [{ type: "null" }, { format: "vendorField", type: "string" }] },
 	},
 	required: ["recipientId"],
-});
-
-export const secondSignature = extend(transactionBaseSchema, {
-	$id: "secondSignature",
-	properties: {
-		amount: { bignumber: { maximum: 0, minimum: 0 } },
-		asset: {
-			properties: {
-				signature: {
-					properties: {
-						publicKey: {
-							$ref: "publicKey",
-						},
-					},
-					required: ["publicKey"],
-					type: "object",
-				},
-			},
-			required: ["signature"],
-			type: "object",
-		},
-		fee: { bignumber: { minimum: 1 } },
-		secondSignature: { type: "null" },
-		type: { transactionType: TransactionType.SecondSignature },
-	},
-	required: ["asset"],
 });
 
 export const delegateRegistration = extend(transactionBaseSchema, {
@@ -150,8 +124,8 @@ export const vote = extend(transactionBaseSchema, {
 				votes: {
 					additionalItems: false,
 					items: { $ref: "walletVote" },
-					minItems: 1,
 					maxItems: 2,
+					minItems: 1,
 					type: "array",
 				},
 			},
@@ -180,10 +154,10 @@ export const multiSignature = extend(transactionBaseSchema, {
 						},
 						publicKeys: {
 							additionalItems: false,
-							minItems: 1,
 							items: { $ref: "publicKey" },
-							type: "array",
 							maxItems: 16,
+							minItems: 1,
+							type: "array",
 							uniqueItems: true,
 						},
 					},
@@ -220,24 +194,24 @@ export const multiSignatureLegacy = extend(transactionBaseSchemaNoSignatures, {
 			properties: {
 				multiSignatureLegacy: {
 					properties: {
-						lifetime: {
-							minimum: 1,
-							type: "integer",
-							maximum: 72,
-						},
 						keysgroup: {
+							additionalItems: false,
+							items: {
+								allOf: [{ maximum: 67, minimum: 67, transform: ["toLowerCase"], type: "string" }],
+							},
+							maxItems: 16,
 							minItems: 1,
 							type: "array",
-							additionalItems: false,
-							maxItems: 16,
-							items: {
-								allOf: [{ minimum: 67, type: "string", maximum: 67, transform: ["toLowerCase"] }],
-							},
+						},
+						lifetime: {
+							maximum: 72,
+							minimum: 1,
+							type: "integer",
 						},
 						min: {
-							type: "integer",
-							minimum: 1,
 							maximum: { $data: "1/keysgroup/length" },
+							minimum: 1,
+							type: "integer",
 						},
 					},
 					required: ["keysgroup", "min", "lifetime"],
@@ -270,11 +244,11 @@ export const multiPayment = extend(transactionBaseSchema, {
 				payments: {
 					additionalItems: false,
 					items: {
-						required: ["amount", "recipientId"],
 						properties: {
 							amount: { bignumber: { minimum: 1 } },
 							recipientId: { $ref: "address" },
 						},
+						required: ["amount", "recipientId"],
 						type: "object",
 					},
 					minItems: 2,
