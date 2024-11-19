@@ -26,10 +26,8 @@ export class FeeService extends Services.AbstractFeeService {
 		return {
 			delegateRegistration: this.#transform("validatorRegistration", 1, staticFees, dynamicFees),
 			delegateResignation: this.#transform("validatorResignation", 1, staticFees, dynamicFees),
-			ipfs: this.#transform("ipfs", 1, staticFees, dynamicFees),
 			multiPayment: this.#transform("multiPayment", 1, staticFees, dynamicFees),
 			multiSignature: this.#transform("multiSignature", 1, staticFees, dynamicFees),
-			secondSignature: this.#transform("secondSignature", 1, staticFees, dynamicFees),
 			transfer: this.#transform("transfer", 1, staticFees, dynamicFees),
 			usernameRegistration: this.#transform("usernameRegistration", 1, staticFees, dynamicFees),
 			usernameResignation: this.#transform("usernameResignation", 1, staticFees, dynamicFees),

@@ -20,17 +20,6 @@ export class Signer {
 		return signature;
 	}
 
-	public static secondSign(transaction: ITransactionData, keys: IKeyPair): string {
-		const hash: Buffer = Utils.toHash(transaction, { excludeSecondSignature: true });
-		const signature: string = Hash.signSchnorr(hash, keys);
-
-		if (!transaction.secondSignature) {
-			transaction.secondSignature = signature;
-		}
-
-		return signature;
-	}
-
 	public static async multiSign(
 		transaction: MainsailContracts.Crypto.TransactionData,
 		keys: IKeyPair,
