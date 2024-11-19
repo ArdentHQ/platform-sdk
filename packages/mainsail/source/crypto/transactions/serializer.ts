@@ -89,7 +89,7 @@ export class Serializer {
 		if (transaction.signature && !options.excludeSignature) {
 			buf.writeBuffer(Buffer.from(transaction.signature, "hex"));
 		}
-		
+
 		if (transaction.signatures && !options.excludeMultiSignature) {
 			buf.writeBuffer(Buffer.from(transaction.signatures.join(""), "hex"));
 		}
