@@ -6,8 +6,8 @@ import { Utils } from "./utils.js";
 
 export class Signer {
 	public static sign(transaction: ITransactionData, keys: IKeyPair, options?: ISerializeOptions): string {
-		if (!options || (options.excludeSignature === undefined && options.excludeSecondSignature === undefined)) {
-			options = { excludeSecondSignature: true, excludeSignature: true, ...options };
+		if (!options || options.excludeSignature === undefined) {
+			options = { excludeSignature: true, ...options };
 		}
 
 		const hash: Buffer = Utils.toHash(transaction, options);
