@@ -79,13 +79,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.#createFromData(
 			"delegateRegistration",
 			input,
-			({
-				transaction,
-				data,
-			}: {
-				transaction: any;
-				data: { validatorPublicKey: string };
-			}) => {
+			({ transaction, data }: { transaction: any; data: { validatorPublicKey: string } }) => {
 				transaction.publicKeyAsset(data.validatorPublicKey);
 			},
 		);
