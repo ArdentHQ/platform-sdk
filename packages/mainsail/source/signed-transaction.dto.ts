@@ -2,8 +2,8 @@ import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
-
 import { Application } from "@mainsail/kernel";
+
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
@@ -59,7 +59,7 @@ export class SignedTransactionData
 	}
 
 	public override isSecondSignature(): boolean {
-		return TransactionTypeService.isSecondSignature(this.signedData);
+		return false;
 	}
 
 	public override isUsernameRegistration(): boolean {
@@ -145,7 +145,7 @@ export class SignedTransactionData
 		const signatures: string[] = this.signedData.signatures ?? ([] as string[]);
 
 		for (const signature of signatures) {
-			const publicKeyIndex: number = parseInt(signature.slice(0, 2), 16);
+			const publicKeyIndex: number = Number.parseInt(signature.slice(0, 2), 16);
 			const partialSignature: string = signature.slice(2, 130);
 			const publicKey: string = transaction.multiSignature.publicKeys[publicKeyIndex];
 
