@@ -1,7 +1,7 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
-import { TransactionBuilder, Utils } from "@mainsail/crypto-transaction";
+import { Utils } from "@mainsail/crypto-transaction";
 import { MultiSignatureBuilder } from "@mainsail/crypto-transaction-multi-signature-registration";
 import { UsernameRegistrationBuilder } from "@mainsail/crypto-transaction-username-registration";
 import { ValidatorRegistrationBuilder } from "@mainsail/crypto-transaction-validator-registration";
@@ -11,9 +11,9 @@ import { Application } from "@mainsail/kernel";
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Identities, Interfaces, Transactions } from "./crypto/index.js";
+import { BuilderFactory } from "./crypto/transactions/index.js";
 import { MultiSignatureSigner } from "./multi-signature.signer.js";
 import { Request } from "./request.js";
-import { BuilderFactory } from "./crypto/transactions/index.js";
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -343,7 +343,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			transaction.data.signature = await this.#ledgerService.signTransaction(
 				input.signatory.signingKey(),
 				Transactions.Serializer.getBytes(transaction.data, {
-					excludeSecondSignature: true,
 					excludeSignature: true,
 				}),
 			);
