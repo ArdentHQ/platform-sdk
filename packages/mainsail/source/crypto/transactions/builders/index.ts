@@ -10,35 +10,35 @@ export class BuilderFactory {
 		this.#app = container.get(BindingType.Application);
 	}
 
-	public transfer(): TransferBuilder {
+	public transfer(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.transfer.name);
 	}
 
-	public delegateRegistration(): ValidatorRegistrationBuilder {
+	public delegateRegistration(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateRegistration.name);
 	}
 
-	public usernameRegistration(): UsernameRegistrationBuilder {
+	public usernameRegistration(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameRegistration.name);
 	}
 
-	public usernameResignation(): UsernameResignationBuilder {
+	public usernameResignation(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameResignation.name);
 	}
 
-	public vote(): VoteBuilder {
+	public vote(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.vote.name);
 	}
 
-	public multiSignature(): MultiSignatureBuilder {
+	public multiSignature(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.multiSignature.name);
 	}
 
-	public multiPayment(): MultiPaymentBuilder {
+	public multiPayment(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.multiPayment.name);
 	}
 
-	public delegateResignation(): ValidatorResignationBuilder {
+	public delegateResignation(): void {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateResignation.name);
 	}
 }
