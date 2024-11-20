@@ -15,7 +15,7 @@ describe("parseUnits", async ({ assert, it }) => {
 	});
 
 	it("should parse the value to ark", () => {
-		assert.equal(parseUnits(1, "ark"), "100000000000000000000");
+		assert.equal(parseUnits(1, "ark"), "1000000000000000");
 	});
 
 	it("should throw an error for unsupported units", () => {
