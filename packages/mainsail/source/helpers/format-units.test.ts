@@ -8,7 +8,13 @@ import { formatUnits } from "./format-units";
 describe("formatUnits", async ({ assert, it }) => {
 	it("should format the value to wei", () => {
 		assert.equal(formatUnits("1", "wei"), "1");
+	});
+
+	it("should format the value to gwei", () => {
 		assert.equal(formatUnits("1000000000", "gwei"), "1");
+	});
+
+	it("should format the value to ark", () => {
 		assert.equal(formatUnits("100000000000000000000", "ark"), "1");
 	});
 
