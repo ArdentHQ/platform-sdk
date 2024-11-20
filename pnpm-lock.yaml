@@ -440,6 +440,9 @@ importers:
       '@mainsail/crypto-transaction':
         specifier: 0.0.1-evm.8
         version: 0.0.1-evm.8
+      '@mainsail/crypto-transaction-evm-call':
+        specifier: 0.0.1-evm.8
+        version: 0.0.1-evm.8
       '@mainsail/crypto-validation':
         specifier: 0.0.1-evm.8
         version: 0.0.1-evm.8
@@ -1521,6 +1524,10 @@ packages:
     resolution: {integrity: sha512-n8n/1gRJNco/Badvf/GQh0H/6rsOIEqlreel3L8PfA01I2t5BPuUOYXn3C7ghg+LVRSmGiHz7EgfV8kDEcqMew==}
     engines: {node: '>=20.x'}
 
+  '@mainsail/crypto-transaction-evm-call@0.0.1-evm.8':
+    resolution: {integrity: sha512-h0rXOXnblZlAqqgnKYPtj8VzcpR97C5RQyC9udljCYPWIQY1/s7ZNiZ1sQuas1cyBcdRc3QcjvWJxNgzeBlX9Q==}
+    engines: {node: '>=20.x'}
+
   '@mainsail/crypto-transaction@0.0.1-evm.8':
     resolution: {integrity: sha512-BIUsSCE/8i6F7YwL+F+Z3LOqMwTbKu3oOvOtPwX2QkzDaGwzVt0lQejmN8+lilOVoy8B2edE/u+KUYO+Tw2AOg==}
     engines: {node: '>=20.x'}
@@ -1531,6 +1538,10 @@ packages:
 
   '@mainsail/kernel@0.0.1-evm.8':
     resolution: {integrity: sha512-DxJkBNZNM9wBvv6YjSJ/ZpP/0Ozc2B4/jIZv/RZbtfwDYxlr43Gl2kHF9VkokWTYlzATvFCZvX8rl32ziPXXXA==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/transactions@0.0.1-evm.8':
+    resolution: {integrity: sha512-5WLD9Rod3r/PZdMFdUFtW67N/4hKGrrtLl+9pwXRfYFtZ8fXzI1+WUyLvddAWvxpdRH0f+khle61oPLVAm1ybg==}
     engines: {node: '>=20.x'}
 
   '@mainsail/utils@0.0.1-evm.8':
@@ -6139,6 +6150,19 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@mainsail/crypto-transaction-evm-call@0.0.1-evm.8':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.8
+      '@mainsail/contracts': 0.0.1-evm.8
+      '@mainsail/crypto-transaction': 0.0.1-evm.8
+      '@mainsail/kernel': 0.0.1-evm.8
+      '@mainsail/transactions': 0.0.1-evm.8
+      '@mainsail/utils': 0.0.1-evm.8
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   '@mainsail/crypto-transaction@0.0.1-evm.8':
     dependencies:
       '@mainsail/container': 0.0.1-evm.8
@@ -6181,6 +6205,17 @@ snapshots:
       nanomatch: 1.2.13
       nsfw: 2.2.4
       semver: 7.6.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  '@mainsail/transactions@0.0.1-evm.8':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.8
+      '@mainsail/contracts': 0.0.1-evm.8
+      '@mainsail/crypto-transaction': 0.0.1-evm.8
+      '@mainsail/kernel': 0.0.1-evm.8
     transitivePeerDependencies:
       - bufferutil
       - supports-color

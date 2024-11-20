@@ -2,6 +2,7 @@ import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
 import { TransactionBuilder, Utils } from "@mainsail/crypto-transaction";
+import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
 import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "./coin.contract.js";
@@ -203,31 +204,31 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	async #createFromData(
-		type: string,
-		input: Services.TransactionInputs,
-		callback?: Function,
-	): Promise<Contracts.SignedTransactionData> {
-		applyCryptoConfiguration(this.#configCrypto);
-
+	async #signerData(input: Services.TransactionInputs): Promise<{ address?: string, publicKey?: string }> {
 		let address: string | undefined;
-		let senderPublicKey: string | undefined;
+		let publicKey: string | undefined;
 
-		const transaction = this.#transactionBuilder()[type]();
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
-			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
+			publicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
 			address = (await this.#addressService.fromSecret(input.signatory.signingKey())).address;
-			senderPublicKey = (await this.#publicKeyService.fromSecret(input.signatory.signingKey())).publicKey;
+			publicKey = (await this.#publicKeyService.fromSecret(input.signatory.signingKey())).publicKey;
 		}
 
 		if (input.signatory.actsWithWIF() || input.signatory.actsWithConfirmationWIF()) {
 			address = (await this.#addressService.fromWIF(input.signatory.signingKey())).address;
-			senderPublicKey = (await this.#publicKeyService.fromWIF(input.signatory.signingKey())).publicKey;
+			publicKey = (await this.#publicKeyService.fromWIF(input.signatory.signingKey())).publicKey;
+		}
+
+		if (input.signatory.actsWithLedger()) {
+			await this.#ledgerService.connect();
+
+			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
+			address = (await this.#addressService.fromPublicKey(publicKey)).address;
 		}
 
 		if (input.signatory.actsWithMultiSignature()) {
@@ -239,16 +240,22 @@ export class TransactionService extends Services.AbstractTransactionService {
 			).address;
 		}
 
-		if (input.signatory.actsWithLedger()) {
-			await this.#ledgerService.connect();
+		return { address, publicKey }
+	}
 
-			senderPublicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
-			address = (await this.#addressService.fromPublicKey(senderPublicKey)).address;
-		}
+	async #createFromData(
+		type: string,
+		input: Services.TransactionInputs,
+		callback?: Function,
+	): Promise<Contracts.SignedTransactionData> {
+		applyCryptoConfiguration(this.#configCrypto);
 
-		if (senderPublicKey) {
-			transaction.senderPublicKey(senderPublicKey);
-		}
+		const { address, publicKey } = await this.#signerData(input)
+		const transaction = this.#app.resolve(EvmCallBuilder)
+
+		// if (publicKey) {
+		// 	transaction.senderPublicKey(publicKey);
+		// }
 
 		if (input.nonce) {
 			transaction.nonce(input.nonce);
@@ -259,42 +266,42 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.data && input.data.amount) {
-			transaction.amount(this.toSatoshi(input.data.amount).toString());
+			transaction.value(this.toSatoshi(input.data.amount).toString());
 		}
 
-		if (input.data && Array.isArray(input.data.payments)) {
-			for (const { amount, to } of input.data.payments) {
-				transaction.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
-			}
-		}
+		// if (input.data && Array.isArray(input.data.payments)) {
+		// 	for (const { amount, to } of input.data.payments) {
+		// 		transaction.addPayment(to, BigNumber.make(this.toSatoshi(amount)).toString());
+		// 	}
+		// }
 
 		if (input.fee) {
-			transaction.fee(this.toSatoshi(input.fee).toString());
+			transaction.gasPrice(this.toSatoshi(input.fee).toNumber());
 		}
 
-		try {
-			if (input.data && input.data.expiration) {
-				transaction.expiration(input.data.expiration);
-			} else {
-				let estimatedExpiration: string | undefined;
-
-				if (
-					input.signatory.actsWithMultiSignature() ||
-					input.signatory.hasMultiSignature() ||
-					type === "multiSignature"
-				) {
-					estimatedExpiration = await this.estimateExpiration("211");
-				} else {
-					estimatedExpiration = await this.estimateExpiration("5");
-				}
-
-				if (estimatedExpiration) {
-					transaction.expiration(Number.parseInt(estimatedExpiration));
-				}
-			}
-		} catch {
-			// If we fail to set the expiration we'll still continue.
-		}
+		// try {
+		// 	if (input.data && input.data.expiration) {
+		// 		transaction.expiration(input.data.expiration);
+		// 	} else {
+		// 		let estimatedExpiration: string | undefined;
+		//
+		// 		if (
+		// 			input.signatory.actsWithMultiSignature() ||
+		// 			input.signatory.hasMultiSignature() ||
+		// 			type === "multiSignature"
+		// 		) {
+		// 			estimatedExpiration = await this.estimateExpiration("211");
+		// 		} else {
+		// 			estimatedExpiration = await this.estimateExpiration("5");
+		// 		}
+		//
+		// 		if (estimatedExpiration) {
+		// 			transaction.expiration(Number.parseInt(estimatedExpiration));
+		// 		}
+		// 	}
+		// } catch {
+		// If we fail to set the expiration we'll still continue.
+		// }
 
 		if (callback) {
 			callback({ data: input.data, transaction });

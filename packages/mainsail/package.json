@@ -40,6 +40,7 @@
 		"@mainsail/crypto-key-pair-ecdsa": "0.0.1-evm.8",
 		"@mainsail/crypto-signature-schnorr": "0.0.1-evm.8",
 		"@mainsail/crypto-transaction": "0.0.1-evm.8",
+		"@mainsail/crypto-transaction-evm-call": "0.0.1-evm.8",
 		"@mainsail/crypto-validation": "0.0.1-evm.8",
 		"@mainsail/kernel": "0.0.1-evm.8",
 		"@mainsail/validation": "0.0.1-evm.8",
