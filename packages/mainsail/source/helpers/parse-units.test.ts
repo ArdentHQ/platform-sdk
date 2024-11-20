@@ -8,7 +8,13 @@ import { parseUnits } from "./parse-units";
 describe("parseUnits", async ({ assert, it }) => {
 	it("should parse the value to wei", () => {
 		assert.equal(parseUnits(1, "wei"), "1");
+	});
+
+	it("should parse the value to gwei", () => {
 		assert.equal(parseUnits(1, "gwei"), "1000000000");
+	});
+
+	it("should parse the value to ark", () => {
 		assert.equal(parseUnits(1, "ark"), "100000000000000000000");
 	});
 
