@@ -6,11 +6,11 @@ import { ARK_MULTIPLIER, GWEI_MULTIPLIER, WEI_MULTIPLIER } from "../crypto/const
 export const formatUnits = (value: string, unit = "ark"): string => {
 	switch (unit.toLowerCase()) {
 		case "wei":
-			return BigNumber.make(value).dividedBy(WEI_MULTIPLIER).toFixed();
+			return BigNumber.make(value).dividedBy(WEI_MULTIPLIER).toString();
 		case "gwei":
-			return BigNumber.make(value).dividedBy(GWEI_MULTIPLIER).toFixed();
+			return BigNumber.make(value).dividedBy(GWEI_MULTIPLIER).toString();
 		case "ark":
-			return BigNumber.make(value).dividedBy(ARK_MULTIPLIER).toFixed();
+			return BigNumber.make(value).dividedBy(ARK_MULTIPLIER).toString();
 		default:
 			throw new Error(`Unsupported unit: ${unit}. Supported units are 'wei', 'gwei', and 'ark'.`);
 	}
