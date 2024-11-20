@@ -1,9 +1,6 @@
-
-
-import { describe } from '@ardenthq/sdk-test';
+import { describe } from "@ardenthq/sdk-test";
 
 import { formatUnits } from "./format-units";
-
 
 describe("formatUnits", async ({ assert, it }) => {
 	it("should format the value to wei", () => {

@@ -1,9 +1,6 @@
-
-
-import { describe } from '@ardenthq/sdk-test';
+import { describe } from "@ardenthq/sdk-test";
 
 import { parseUnits } from "./parse-units";
-
 
 describe("parseUnits", async ({ assert, it }) => {
 	it("should parse the value to wei", () => {
