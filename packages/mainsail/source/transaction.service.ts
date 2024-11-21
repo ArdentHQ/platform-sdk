@@ -1,7 +1,7 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Contracts as MainsailContracts } from "@mainsail/contracts";
-import { TransactionBuilder, Utils } from "@mainsail/crypto-transaction";
+import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "./coin.contract.js";
@@ -48,8 +48,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 	/**
 	 * @inheritDoc
-	 *
-	 * @musig
 	 */
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		if (!input.data.amount) {
@@ -87,8 +85,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 	/**
 	 * @inheritDoc
-	 *
-	 * @musig
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData(
@@ -135,8 +131,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 	/**
 	 * @inheritDoc
-	 *
-	 * @musig
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
@@ -181,27 +175,25 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 	/**
 	 * @inheritDoc
-	 *
-	 * @musig
 	 */
-	public override async multiSignature(
-		input: Services.MultiSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		return this.#createFromData(
-			"multiSignature",
-			input,
-			({ transaction, data }: { transaction: any; data: any }) => {
-				if (data.senderPublicKey) {
-					transaction.senderPublicKey(data.senderPublicKey);
-				}
-
-				transaction.multiSignatureAsset({
-					min: data.min,
-					publicKeys: data.publicKeys,
-				});
-			},
-		);
-	}
+	// public override async multiSignature(
+	// 	input: Services.MultiSignatureInput,
+	// ): Promise<Contracts.SignedTransactionData> {
+	// 	return this.#createFromData(
+	// 		"multiSignature",
+	// 		input,
+	// 		({ transaction, data }: { transaction: any; data: any }) => {
+	// 			if (data.senderPublicKey) {
+	// 				transaction.senderPublicKey(data.senderPublicKey);
+	// 			}
+	//
+	// 			transaction.multiSignatureAsset({
+	// 				min: data.min,
+	// 				publicKeys: data.publicKeys,
+	// 			});
+	// 		},
+	// 	);
+	// }
 
 	async #createFromData(
 		type: string,
