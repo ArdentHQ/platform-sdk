@@ -9,8 +9,12 @@ import { Interfaces, Transactions } from "./crypto/index.js";
 import { BuilderFactory } from "./crypto/transactions/index.js";
 import { Request } from "./request.js";
 
-export enum GasLimit {
+enum GasLimit {
 	Transfer = 21_000
+}
+
+interface ValidatedTransferInput extends Services.TransferInput {
+	fee: number;
 }
 
 export class TransactionService extends Services.AbstractTransactionService {
@@ -44,7 +48,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	public override async #validateInput(input: Services.TransferInput): void {
+	#validateInput(input: Services.TransferInput): asserts input is ValidatedTransferInput {
 		if (!input.data.amount) {
 			throw new Error(
 				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
@@ -154,7 +158,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			return input.nonce
 		}
 
-		const wallet = await this.clientService.wallet({ type: "address", value: address });
+		const wallet = await this.clientService.wallet({ type: "address", value: address! });
 
 		return wallet.nonce().plus(1).toFixed(0);
 	}
