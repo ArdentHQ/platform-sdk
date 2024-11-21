@@ -50,6 +50,8 @@ jobs:
               run: cd "$GITHUB_WORKSPACE/packages/sdk/" && pnpm run test:coverage
             - name: Test TEST
               run: cd "$GITHUB_WORKSPACE/packages/test/" && pnpm run test:coverage
+            - name: Test MAINSAIL
+              run: cd "$GITHUB_WORKSPACE/packages/mainsail/" && pnpm run test:coverage
             - name: Lint
               run: |
                   cd $GITHUB_WORKSPACE
