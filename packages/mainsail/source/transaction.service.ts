@@ -10,7 +10,7 @@ import { BuilderFactory } from "./crypto/transactions/index.js";
 import { Request } from "./request.js";
 
 enum GasLimit {
-	Transfer = 21_000
+	Transfer = 21_000,
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
@@ -66,10 +66,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		applyCryptoConfiguration(this.#configCrypto);
 		this.#validateInput(input);
 
-		const transaction = this.#app.resolve(EvmCallBuilder)
+		const transaction = this.#app.resolve(EvmCallBuilder);
 
-		const { address } = await this.#signerData(input)
-		const nonce = await this.#generateNonce(address, input)
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
 
 		transaction
 			.network(Number(this.#configCrypto.crypto.network.nethash))
@@ -78,10 +78,9 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.payload("")
 			.nonce(nonce)
 			.value(this.toSatoshi(input.data.amount).toString()) // revisit
-			.gasPrice(this.toSatoshi(input.fee).toNumber()) // revisit
+			.gasPrice(this.toSatoshi(input.fee).toNumber()); // revisit
 
-		return this.#buildTransaction(input, transaction)
-
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async delegateRegistration(
@@ -98,26 +97,33 @@ export class TransactionService extends Services.AbstractTransactionService {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.multiPayment.name);
 	}
 
-	public override async usernameRegistration(input: Services.UsernameRegistrationInput,): Promise<Contracts.SignedTransactionData> {
+	public override async usernameRegistration(
+		input: Services.UsernameRegistrationInput,
+	): Promise<Contracts.SignedTransactionData> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameRegistration.name);
 	}
 
-	public override async usernameResignation(input: Services.UsernameResignationInput,): Promise<Contracts.SignedTransactionData> {
+	public override async usernameResignation(
+		input: Services.UsernameResignationInput,
+	): Promise<Contracts.SignedTransactionData> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameResignation.name);
 	}
 
-	public override async delegateResignation(input: Services.DelegateResignationInput,): Promise<Contracts.SignedTransactionData> {
+	public override async delegateResignation(
+		input: Services.DelegateResignationInput,
+	): Promise<Contracts.SignedTransactionData> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateResignation.name);
 	}
 
-	public override async multiSignature(input: Services.MultiSignatureInput,): Promise<Contracts.SignedTransactionData> {
+	public override async multiSignature(
+		input: Services.MultiSignatureInput,
+	): Promise<Contracts.SignedTransactionData> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.multiSignature.name);
 	}
 
-	async #signerData(input: Services.TransactionInputs): Promise<{ address?: string, publicKey?: string }> {
+	async #signerData(input: Services.TransactionInputs): Promise<{ address?: string; publicKey?: string }> {
 		let address: string | undefined;
 		let publicKey: string | undefined;
-
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
@@ -150,12 +156,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 			).address;
 		}
 
-		return { address, publicKey }
+		return { address, publicKey };
 	}
 
 	async #generateNonce(address?: string, input?: Services.TransactionInputs): Promise<string> {
 		if (input?.nonce) {
-			return input.nonce
+			return input.nonce;
 		}
 
 		const wallet = await this.clientService.wallet({ type: "address", value: address! });
@@ -163,8 +169,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return wallet.nonce().plus(1).toFixed(0);
 	}
 
-	async #buildTransaction(input: Services.TransactionInputs, transaction: any): Promise<Contracts.SignedTransactionData> {
-
+	async #buildTransaction(
+		input: Services.TransactionInputs,
+		transaction: any,
+	): Promise<Contracts.SignedTransactionData> {
 		let signedTransactionBuilder;
 
 		if (input.signatory.actsWithMnemonic()) {
