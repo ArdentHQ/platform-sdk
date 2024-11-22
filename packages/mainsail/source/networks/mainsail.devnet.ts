@@ -43,7 +43,10 @@ const network: Networks.NetworkManifest = {
 	knownWallets: "https://raw.githubusercontent.com/ArkEcosystem/common/master/devnet/known-wallets-extended.json",
 	meta: {
 		// fastDelegateSync: true,
-		nethash: "7b9a7c6a14d3f8fb3f47c434b8c6ef0843d5622f6c209ffeec5411aabbf4bf1c",
+		nethash: "c481dea3dcc13708364e576dff94dd499692b56cbc646d5acd22a3902297dd51",
+		pubKeyHash: 30,
+		slip44: 1,
+		wif: 186
 	},
 	name: "Devnet",
 	transactions: {
