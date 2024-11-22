@@ -72,7 +72,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const nonce = await this.#generateNonce(address, input);
 
 		transaction
-			.network(Number(this.#configCrypto.crypto.network.nethash))
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
 			.gasLimit(GasLimit.Transfer)
 			.recipientAddress(input.data.to)
 			.payload("")
