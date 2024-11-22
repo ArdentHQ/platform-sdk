@@ -6,10 +6,13 @@ import { ServiceProvider as CoreCryptoConfig } from "@mainsail/crypto-config";
 import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
 import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
+import { ServiceProvider as CoreCryptoSignatureEcdsa } from "@mainsail/crypto-signature-ecdsa";
 import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
+import { ServiceProvider as CoreCryptoWif } from "@mainsail/crypto-wif";
 import { Application } from "@mainsail/kernel";
+import { ServiceProvider as CoreCryptoSerializer } from "@mainsail/serializer";
 import { ServiceProvider as CoreValidation } from "@mainsail/validation";
 
 import { BindingType } from "./coin.contract.js";
@@ -73,6 +76,9 @@ export class ServiceProvider extends IoC.AbstractServiceProvider {
 		await app.resolve(CoreCryptoHashBcrypto).register();
 		await app.resolve(CoreCryptoTransaction).register();
 		await app.resolve(CoreCryptoConsensusBls12381).register();
+		await app.resolve(CoreCryptoSignatureEcdsa).register();
+		await app.resolve(CoreCryptoWif).register();
+		await app.resolve(CoreCryptoSerializer).register();
 
 		app.get<{ setConfig: Function }>(Identifiers.Cryptography.Configuration).setConfig({ milestones, network });
 
