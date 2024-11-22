@@ -166,7 +166,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const wallet = await this.clientService.wallet({ type: "address", value: address! });
 
-		return wallet.nonce().plus(1).toFixed(0);
+		return wallet.nonce().toFixed(0);
 	}
 
 	async #buildTransaction(
