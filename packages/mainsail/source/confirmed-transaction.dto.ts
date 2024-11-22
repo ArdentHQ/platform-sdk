@@ -59,7 +59,9 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override fee(): BigNumber {
-		return this.bigNumberService.make(this.data.fee);
+		const gasLimit = this.bigNumberService.make(this.data.gasLimit);
+		const gasPrice = this.bigNumberService.make(this.data.gasPrice);
+		return gasLimit.times(gasPrice);
 	}
 
 	public override asset(): Record<string, unknown> {
@@ -91,7 +93,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isSecondSignature(): boolean {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.isSecondSignature.name);
+		return false;
 	}
 
 	public override isUsernameRegistration(): boolean {
