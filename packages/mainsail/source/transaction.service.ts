@@ -1,6 +1,9 @@
-import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { Exceptions } from "@mainsail/contracts";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
+import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
+import { BigNumber } from "@ardenthq/sdk-helpers";
+import { Contracts as MainsailContracts } from "@mainsail/contracts";
+import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "./coin.contract.js";
@@ -71,7 +74,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
 
-		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce })
+		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
 
 		const signed = await transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash) // 30
@@ -81,12 +84,14 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.nonce(nonce)
 			.value("100000000") // revisit
 			.gasPrice(5) // revisit
-			.sign(input.signatory.signingKey())
+			.sign(input.signatory.signingKey());
 
-		console.log({ signed })
+		console.log({ signed });
 
-		const build = await signed.build()
-		console.log({ build })
+		const build = await signed.build();
+		console.log({ build });
+
+		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateRegistration.name);
 	}
 
 	public override async delegateRegistration(
@@ -95,10 +100,16 @@ export class TransactionService extends Services.AbstractTransactionService {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateRegistration.name);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.vote.name);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.multiPayment.name);
 	}
@@ -121,11 +132,36 @@ export class TransactionService extends Services.AbstractTransactionService {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateResignation.name);
 	}
 
-	public override async multiSignature(
-		input: Services.MultiSignatureInput,
-	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.multiSignature.name);
+	public override async estimateExpiration(value?: string): Promise<string | undefined> {
+		const { data: blockchain } = await this.#request.get("blockchain");
+		const { data: configuration } = await this.#request.get("node/configuration");
+
+		return BigNumber.make(blockchain.block.height)
+			.plus((value ? Number(value) : 5) * configuration.constants.activeValidators)
+			.toString();
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	// public override async multiSignature(
+	// 	input: Services.MultiSignatureInput,
+	// ): Promise<Contracts.SignedTransactionData> {
+	// 	return this.#createFromData(
+	// 		"multiSignature",
+	// 		input,
+	// 		({ transaction, data }: { transaction: any; data: any }) => {
+	// 			if (data.senderPublicKey) {
+	// 				transaction.senderPublicKey(data.senderPublicKey);
+	// 			}
+	//
+	// 			transaction.multiSignatureAsset({
+	// 				min: data.min,
+	// 				publicKeys: data.publicKeys,
+	// 			});
+	// 		},
+	// 	);
+	// }
 
 	async #signerData(input: Services.TransactionInputs): Promise<{ address?: string; publicKey?: string }> {
 		let address: string | undefined;
