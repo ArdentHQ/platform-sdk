@@ -90,8 +90,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const build = await signed.build();
 		console.log({ build });
-
-		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateRegistration.name);
 	}
 
 	public override async delegateRegistration(
