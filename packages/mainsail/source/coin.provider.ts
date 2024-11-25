@@ -7,8 +7,8 @@ import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto
 import { ServiceProvider as CoreCryptoHashBcrypto } from "@mainsail/crypto-hash-bcrypto";
 import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-pair-ecdsa";
 import { ServiceProvider as CoreCryptoSignatureEcdsa } from "@mainsail/crypto-signature-ecdsa";
-import { ServiceProvider as CoreCryptoSignatureSchnorr } from "@mainsail/crypto-signature-schnorr";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
+import { ServiceProvider as EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
 import { ServiceProvider as CoreCryptoWif } from "@mainsail/crypto-wif";
 import { Application } from "@mainsail/kernel";
@@ -78,6 +78,7 @@ export class ServiceProvider extends IoC.AbstractServiceProvider {
 		await app.resolve(CoreCryptoConsensusBls12381).register();
 		await app.resolve(CoreCryptoWif).register();
 		await app.resolve(CoreCryptoSerializer).register();
+		await app.resolve(EvmCallBuilder).register();
 
 		app.get<{ setConfig: Function }>(Identifiers.Cryptography.Configuration).setConfig({ milestones, network });
 
