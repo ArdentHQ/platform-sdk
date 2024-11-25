@@ -76,7 +76,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
 
-		const signed = await transaction
+		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash) // 30
 			.gasLimit(GasLimit.Transfer)
 			.recipientAddress(input.data.to)
@@ -84,12 +84,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.nonce(nonce)
 			.value("100000000") // revisit
 			.gasPrice(5) // revisit
-			.sign(input.signatory.signingKey());
 
-		console.log({ signed });
-
-		const build = await signed.build();
-		console.log({ build });
+		return this.#buildTransaction(input, transaction)
 	}
 
 	public override async delegateRegistration(
