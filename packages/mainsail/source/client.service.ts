@@ -1,17 +1,8 @@
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
-
 import { Request } from "./request.js";
-
-enum PayloadSignature {
-	TRANSFER = "a9059cbb",
-	VALIDATOR_REGISTRATION = "602a9eee",
-	VALIDATOR_RESIGNATION = "b85f5da2",
-	VOTE = "6dd7d8ea",
-	UNVOTE = "3174b689",
-	MULTIPAYMENT = "88d695b2",
-}
+import { PayloadSignature } from "./transaction-type.service";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
