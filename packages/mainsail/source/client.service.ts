@@ -207,7 +207,7 @@ export class ClientService extends Services.AbstractClientService {
 			delete body.identifiers;
 		}
 
-		const transactionTypeMap: Record<string, string|undefined> = {
+		const transactionTypeMap: Record<string, string | undefined> = {
 			delegateRegistration: PayloadSignature.VALIDATOR_REGISTRATION,
 			delegateResignation: PayloadSignature.VALIDATOR_RESIGNATION,
 			multiPayment: PayloadSignature.MULTIPAYMENT,
