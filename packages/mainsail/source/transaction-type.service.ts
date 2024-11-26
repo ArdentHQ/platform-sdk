@@ -2,9 +2,13 @@ import { Exceptions } from "@ardenthq/sdk";
 
 type TransactionData = Record<string, any>;
 
+enum TransactionTypes {
+	Transfer = "0x"
+}
+
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
-		return ["", "0x"].includes(data.data) // @TODO: revisit type check.
+		return data.data === TransactionTypes.Transfer
 	}
 
 	public static isSecondSignature(data: TransactionData): boolean {
