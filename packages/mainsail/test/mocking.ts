@@ -57,14 +57,15 @@ export const createService = async <T = any>(
 				await application.resolve(CoreCryptoSerializer).register();
 				await application.resolve(EvmCallBuilder).register();
 
-				application.get<{ setConfig: Function }>(Identifiers.Cryptography.Configuration).setConfig({ milestones: crypto.milestones, network: crypto.network });
+				application
+					.get<{ setConfig: Function }>(Identifiers.Cryptography.Configuration)
+					.setConfig({ milestones: crypto.milestones, network: crypto.network });
 				container.constant(BindingType.Application, application);
 			}
 
 			if (predicate) {
 				predicate(container);
 			}
-
 		},
 		service,
 	});

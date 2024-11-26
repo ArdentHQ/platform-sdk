@@ -17,7 +17,6 @@ import { TransactionService } from "./transaction.service.js";
 import { WalletData } from "./wallet.dto.js";
 
 describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) => {
-
 	beforeAll(async (context) => {
 		context.subject = await createService(TransactionService, undefined, (container) => {
 			container.constant(IoC.BindingType.Container, container);
@@ -31,7 +30,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			container.singleton(IoC.BindingType.AddressService, AddressService);
 			container.singleton(IoC.BindingType.ClientService, ClientService);
 			container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
-			container.constant(IoC.BindingType.LedgerTransportFactory, async () => { });
+			container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
 			container.singleton(IoC.BindingType.LedgerService, LedgerService);
 			container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
 			container.singleton(IoC.BindingType.MultiSignatureService, MultiSignatureService);
@@ -52,9 +51,8 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 					publicKey: "publicKey",
 					signingKey: identity.mnemonic,
 				}),
-			)
-		}
-
+			),
+		};
 	});
 
 	it("should sign a transfer transaction", async (context) => {
@@ -84,14 +82,12 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				...context.defaultTransferInput,
 				data: {
 					...context.defaultTransferInput.data,
-					amount: null
+					amount: null,
 				},
 			});
 		} catch (error) {
 			assert.instance(error, Error);
 			assert.match(error.message, "Expected amount to be defined");
 		}
-
 	});
-
 });

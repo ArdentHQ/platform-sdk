@@ -76,7 +76,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const nonce = await this.#generateNonce(address, input);
 
 		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
-		console.log({ amount: parseUnits(input.data.amount, 'ark') })
+		console.log({ amount: parseUnits(input.data.amount, "ark") });
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
@@ -84,14 +84,14 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(input.data.to)
 			.payload("")
 			.nonce(nonce)
-			.value(parseUnits(input.data.amount, 'ark'))
-			.gasPrice(input.fee)
+			.value(parseUnits(input.data.amount, "ark"))
+			.gasPrice(input.fee);
 
 		if (input.data.memo) {
-			transaction.vendorField(input.data.memo)
+			transaction.vendorField(input.data.memo);
 		}
 
-		return this.#buildTransaction(input, transaction)
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async delegateRegistration(

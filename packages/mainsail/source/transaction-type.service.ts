@@ -11,7 +11,7 @@ enum TransactionTypes {
 
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
-		return data.data === TransactionTypes.Transfer
+		return data.data === TransactionTypes.Transfer;
 	}
 
 	public static isSecondSignature(data: TransactionData): boolean {

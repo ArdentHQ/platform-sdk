@@ -46,7 +46,7 @@ const network: Networks.NetworkManifest = {
 		nethash: "c481dea3dcc13708364e576dff94dd499692b56cbc646d5acd22a3902297dd51",
 		pubKeyHash: 30,
 		slip44: 1,
-		wif: 186
+		wif: 186,
 	},
 	name: "Devnet",
 	transactions: {

@@ -20,7 +20,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override nonce(): BigNumber {
-		return this.data.nonce
+		return this.data.nonce;
 	}
 
 	public override blockId(): string | undefined {
@@ -62,7 +62,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override fee(): BigNumber {
-		return this.bigNumberService.make(parseUnits(this.data.gasPrice, 'ark'));
+		return this.bigNumberService.make(parseUnits(this.data.gasPrice, "ark"));
 	}
 
 	public override asset(): Record<string, unknown> {
