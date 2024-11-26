@@ -11,6 +11,7 @@ import { applyCryptoConfiguration } from "./config.js";
 import { Interfaces, Transactions } from "./crypto/index.js";
 import { BuilderFactory } from "./crypto/transactions/index.js";
 import { Request } from "./request.js";
+import { parseUnits } from "./helpers/parse-units.js";
 
 enum GasLimit {
 	Transfer = 21_000,
@@ -75,15 +76,20 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const nonce = await this.#generateNonce(address, input);
 
 		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
+		console.log({ amount: parseUnits(input.data.amount, 'ark') })
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash) // 30
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
 			.gasLimit(GasLimit.Transfer)
 			.recipientAddress(input.data.to)
 			.payload("")
 			.nonce(nonce)
-			.value("100000000") // revisit
-			.gasPrice(5) // revisit
+			.value(parseUnits(input.data.amount, 'ark'))
+			.gasPrice(input.fee)
+
+		if (input.data.memo) {
+			transaction.vendorField(input.data.memo)
+		}
 
 		return this.#buildTransaction(input, transaction)
 	}
@@ -134,28 +140,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.plus((value ? Number(value) : 5) * configuration.constants.activeValidators)
 			.toString();
 	}
-
-	/**
-	 * @inheritDoc
-	 */
-	// public override async multiSignature(
-	// 	input: Services.MultiSignatureInput,
-	// ): Promise<Contracts.SignedTransactionData> {
-	// 	return this.#createFromData(
-	// 		"multiSignature",
-	// 		input,
-	// 		({ transaction, data }: { transaction: any; data: any }) => {
-	// 			if (data.senderPublicKey) {
-	// 				transaction.senderPublicKey(data.senderPublicKey);
-	// 			}
-	//
-	// 			transaction.multiSignatureAsset({
-	// 				min: data.min,
-	// 				publicKeys: data.publicKeys,
-	// 			});
-	// 		},
-	// 	);
-	// }
 
 	async #signerData(input: Services.TransactionInputs): Promise<{ address?: string; publicKey?: string }> {
 		let address: string | undefined;

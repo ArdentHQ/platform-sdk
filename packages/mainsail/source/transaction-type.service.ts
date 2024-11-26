@@ -4,7 +4,7 @@ type TransactionData = Record<string, any>;
 
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 0;
+		return ["", "0x"].includes(data.data) // @TODO: revisit type check.
 	}
 
 	public static isSecondSignature(data: TransactionData): boolean {

@@ -10,8 +10,7 @@ import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
-	implements Contracts.SignedTransactionData
-{
+	implements Contracts.SignedTransactionData {
 	#app: Application;
 
 	public constructor(container: IoC.Container) {
@@ -21,25 +20,26 @@ export class SignedTransactionData
 	}
 
 	public override sender(): string {
-		return this.signedData.sender;
+		return this.signedData.senderAddress;
+	}
+
+	public override nonce(): string {
+		return this.signedData.nonce;
 	}
 
 	public override recipient(): string {
-		return this.signedData.recipientId;
+		return this.signedData.recipientAddress;
 	}
 
 	public override amount(): BigNumber {
-		if (this.isMultiPayment()) {
-			return this.bigNumberService.make(
-				BigNumber.sum(this.signedData.asset.payments.map(({ amount }) => amount)),
-			);
-		}
+		// @TODO: Handle evm multipayment.
+		// if (this.isMultiPayment()) {}
 
-		return this.bigNumberService.make(this.signedData.amount);
+		return this.bigNumberService.make(this.signedData.value);
 	}
 
 	public override fee(): BigNumber {
-		return this.bigNumberService.make(this.signedData.fee);
+		return this.bigNumberService.make(this.signedData.gasPrice);
 	}
 
 	public override memo(): string | undefined {
