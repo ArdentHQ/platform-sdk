@@ -75,7 +75,7 @@ export class TransactionTypeService {
 	}
 
 	public static isMagistrate(data: TransactionData): boolean {
-		return false
+		return false;
 	}
 
 	static prependHex(signature: PayloadSignature): string {
