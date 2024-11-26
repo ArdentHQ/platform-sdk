@@ -1,11 +1,12 @@
 import { Exceptions } from "@ardenthq/sdk";
-import { FunctionSigs } from "@mainsail/evm-contracts";
 
 type TransactionData = Record<string, any>;
 
-export const TransactionTypes = {
-	Transfer: "0x",
-	...FunctionSigs.ConsensusV1,
+// @see https://github.com/ArkEcosystem/mainsail/pull/730/files#diff-c06d287b6a1e2fd442683a5f465288c48abfbab5e37884158a24e072c601c1e4R1
+enum TransactionTypes {
+	Transfer = "0x",
+	ValidatorRegistration = "0x602a9eee",
+	Vote = "0x6dd7d8ea",
 }
 
 export class TransactionTypeService {

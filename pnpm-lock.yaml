@@ -452,9 +452,6 @@ importers:
       '@mainsail/crypto-wif':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
-      '@mainsail/evm-contracts':
-        specifier: 0.0.1-evm.9
-        version: 0.0.1-evm.9
       '@mainsail/kernel':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
@@ -1554,10 +1551,6 @@ packages:
 
   '@mainsail/crypto-wif@0.0.1-evm.9':
     resolution: {integrity: sha512-QijOxwrW3S2+3OvHbcce1oO4csO9dwIZ7Euqa3Ql1Xctthbs5s39H7EAxFHm84f/Aq2f/IfP6IYWnSx9iMPN6A==}
-    engines: {node: '>=20.x'}
-
-  '@mainsail/evm-contracts@0.0.1-evm.9':
-    resolution: {integrity: sha512-kntBdQyt63z1PEerAc/DHMXWdm8W2wQW7MDtEShs5viDKojOYI2aCRpsmAFbB+PmJnS0dMObT9KIIjXSw2QDwQ==}
     engines: {node: '>=20.x'}
 
   '@mainsail/kernel@0.0.1-evm.9':
@@ -6237,8 +6230,6 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
-
-  '@mainsail/evm-contracts@0.0.1-evm.9': {}
 
   '@mainsail/kernel@0.0.1-evm.9':
     dependencies:
