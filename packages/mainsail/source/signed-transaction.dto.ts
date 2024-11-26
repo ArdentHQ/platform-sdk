@@ -23,7 +23,7 @@ export class SignedTransactionData
 		return this.signedData.senderAddress;
 	}
 
-	public override nonce(): string {
+	public override nonce(): BigNumber {
 		return this.signedData.nonce;
 	}
 
