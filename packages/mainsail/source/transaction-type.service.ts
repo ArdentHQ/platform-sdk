@@ -1,21 +1,23 @@
 import { Exceptions } from "@ardenthq/sdk";
+import { FunctionSigs } from "@mainsail/evm-contracts/distribution/function-sigs.js";
 
 type TransactionData = Record<string, any>;
 
-export enum PayloadSignature {
-	TRANSFER = "a9059cbb",
-	VALIDATOR_REGISTRATION = "602a9eee",
-	VALIDATOR_RESIGNATION = "b85f5da2",
-	VOTE = "6dd7d8ea",
-	UNVOTE = "3174b689",
-	MULTIPAYMENT = "88d695b2",
-	USERNAME_REGISTRATION = "username-registration",
-	USERNAME_RESIGNATION = "username-resignation",
+export const TransactionTypes= {
+	MultiPayment: "0x88d695b2",
+	RegisterUsername: '0xusernamereg',
+	ResignUsername: '0xusernameres',
+	Transfer: '0x',
+	...FunctionSigs.ConsensusV1
+}
+
+export const trimHexPrefix = (type: string): string => {
+	return type.replace(/^0x/, '');
 }
 
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.TRANSFER));
+		return data.data === TransactionTypes.Transfer;
 	}
 
 	public static isSecondSignature(data: TransactionData): boolean {
@@ -23,7 +25,7 @@ export class TransactionTypeService {
 	}
 
 	public static isDelegateRegistration(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.VALIDATOR_REGISTRATION));
+		return data.data.startsWith(TransactionTypes.RegisterValidator);
 	}
 
 	public static isVoteCombination(data: TransactionData): boolean {
@@ -31,11 +33,11 @@ export class TransactionTypeService {
 	}
 
 	public static isVote(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.VOTE));
+		return data.data.startsWith(TransactionTypes.Vote);
 	}
 
 	public static isUnvote(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.UNVOTE));
+		return data.data.startsWith(TransactionTypes.Unvote);
 	}
 
 	public static isMultiSignatureRegistration(data: TransactionData): boolean {
@@ -47,19 +49,19 @@ export class TransactionTypeService {
 	}
 
 	public static isMultiPayment(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.MULTIPAYMENT));
+		return data.data.startsWith(TransactionTypes.MultiPayment);
 	}
 
 	public static isUsernameRegistration(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.USERNAME_REGISTRATION));
+		return data.data.startsWith(TransactionTypes.RegisterUsername);
 	}
 
 	public static isUsernameResignation(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.USERNAME_RESIGNATION));
+		return data.data.startsWith(TransactionTypes.ResignUsername);
 	}
 
 	public static isDelegateResignation(data: TransactionData): boolean {
-		return data.data.startsWith(this.prependHex(PayloadSignature.VALIDATOR_RESIGNATION));
+		return data.data.startsWith(TransactionTypes.ResignValidator);
 	}
 
 	public static isHtlcLock(data: TransactionData): boolean {
@@ -76,9 +78,5 @@ export class TransactionTypeService {
 
 	public static isMagistrate(data: TransactionData): boolean {
 		return false;
-	}
-
-	static prependHex(signature: PayloadSignature): string {
-		return "0x" + signature;
 	}
 }

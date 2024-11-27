@@ -2,7 +2,7 @@ import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
 import { Request } from "./request.js";
-import { PayloadSignature } from "./transaction-type.service.js";
+import { trimHexPrefix, TransactionTypes } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -208,21 +208,24 @@ export class ClientService extends Services.AbstractClientService {
 		}
 
 		const transactionTypeMap: Record<string, string | undefined> = {
-			delegateRegistration: PayloadSignature.VALIDATOR_REGISTRATION,
-			delegateResignation: PayloadSignature.VALIDATOR_RESIGNATION,
-			multiPayment: PayloadSignature.MULTIPAYMENT,
+			delegateRegistration: TransactionTypes.RegisterValidator,
+			delegateResignation: TransactionTypes.ResignValidator,
+			multiPayment: TransactionTypes.MultiPayment,
 			multiSignature: undefined,
-			transfer: PayloadSignature.TRANSFER,
-			usernameRegistration: undefined,
-			usernameResignation: undefined,
-			vote: [PayloadSignature.VOTE, PayloadSignature.UNVOTE].join(","),
+			transfer: TransactionTypes.Transfer,
+			usernameRegistration: TransactionTypes.ResignUsername,
+			usernameResignation: TransactionTypes.ResignUsername,
+			vote: [
+				trimHexPrefix(TransactionTypes.Vote),
+				trimHexPrefix(TransactionTypes.Unvote)
+			].join(","),
 		};
 
 		// @ts-ignore
 		if (body.type) {
 			const data = transactionTypeMap[body.type];
 			if (data !== undefined) {
-				result.searchParams.data = data;
+				result.searchParams.data = trimHexPrefix(data);
 			}
 
 			delete body.type;
@@ -235,7 +238,7 @@ export class ClientService extends Services.AbstractClientService {
 				const datum = transactionTypeMap[type];
 
 				if (datum) {
-					data.push(datum);
+					data.push(trimHexPrefix(datum));
 				}
 			}
 
