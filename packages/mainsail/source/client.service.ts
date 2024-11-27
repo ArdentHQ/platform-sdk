@@ -2,7 +2,7 @@ import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
 import { Request } from "./request.js";
-import { PayloadSignature } from "./transaction-type.service";
+import { PayloadSignature } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
