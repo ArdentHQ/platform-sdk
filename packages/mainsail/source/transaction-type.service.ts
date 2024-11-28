@@ -9,7 +9,7 @@ export const TransactionTypes = {
 	ResignUsername: "0xusernameres",
 	Transfer: "0x",
 	...FunctionSigs.ConsensusV1,
-};
+} as const;
 
 export const trimHexPrefix = (type: string): string => {
 	return type.replace(/^0x/, "");
