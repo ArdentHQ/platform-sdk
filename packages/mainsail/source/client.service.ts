@@ -215,10 +215,7 @@ export class ClientService extends Services.AbstractClientService {
 			transfer: TransactionTypes.Transfer,
 			usernameRegistration: TransactionTypes.ResignUsername,
 			usernameResignation: TransactionTypes.ResignUsername,
-			vote: [
-				trimHexPrefix(TransactionTypes.Vote),
-				trimHexPrefix(TransactionTypes.Unvote)
-			].join(","),
+			vote: [trimHexPrefix(TransactionTypes.Vote), trimHexPrefix(TransactionTypes.Unvote)].join(","),
 		};
 
 		// @ts-ignore

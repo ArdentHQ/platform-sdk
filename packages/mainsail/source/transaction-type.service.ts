@@ -3,17 +3,17 @@ import { FunctionSigs } from "@mainsail/evm-contracts/distribution/function-sigs
 
 type TransactionData = Record<string, any>;
 
-export const TransactionTypes= {
+export const TransactionTypes = {
 	MultiPayment: "0x88d695b2",
-	RegisterUsername: '0xusernamereg',
-	ResignUsername: '0xusernameres',
-	Transfer: '0x',
-	...FunctionSigs.ConsensusV1
-}
+	RegisterUsername: "0xusernamereg",
+	ResignUsername: "0xusernameres",
+	Transfer: "0x",
+	...FunctionSigs.ConsensusV1,
+};
 
 export const trimHexPrefix = (type: string): string => {
-	return type.replace(/^0x/, '');
-}
+	return type.replace(/^0x/, "");
+};
 
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
