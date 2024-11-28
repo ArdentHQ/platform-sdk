@@ -1,11 +1,11 @@
 import { Exceptions } from "@mainsail/contracts";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
+import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Contracts as MainsailContracts } from "@mainsail/contracts";
-import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 
+import { ConsensusAbi } from "@mainsail/evm-contracts";
+import { encodeFunctionData } from "viem";
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Interfaces, Transactions } from "./crypto/index.js";
@@ -15,6 +15,7 @@ import { parseUnits } from "./helpers/parse-units.js";
 
 enum GasLimit {
 	Transfer = 21_000,
+	RegisterValidator = 500_000
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
@@ -97,7 +98,33 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async delegateRegistration(
 		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateRegistration.name);
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#validateInput(input);
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
+
+		const data = encodeFunctionData({
+			abi: ConsensusAbi.abi,
+			args: [""],
+			functionName: "registerValidator",
+		});
+
+		const consensusContractAddress = "0x522B3294E6d06aA25Ad0f1B8891242E335D3B459";
+
+		transaction
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(GasLimit.RegisterValidator)
+			.recipientAddress(consensusContractAddress)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.gasPrice(input.fee);
+
+		return this.#buildTransaction(input, transaction);
 	}
 
 	/**
