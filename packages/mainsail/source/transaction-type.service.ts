@@ -2,9 +2,14 @@ import { Exceptions } from "@ardenthq/sdk";
 
 type TransactionData = Record<string, any>;
 
+// @see https://github.com/ArkEcosystem/mainsail/pull/730/files#diff-c06d287b6a1e2fd442683a5f465288c48abfbab5e37884158a24e072c601c1e4R1
+enum TransactionTypes {
+	Transfer = "0x",
+}
+
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 0;
+		return data.data === TransactionTypes.Transfer;
 	}
 
 	public static isSecondSignature(data: TransactionData): boolean {
