@@ -3,6 +3,7 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { BindingType } from "./coin.contract.js";
+import { parseUnits } from "./helpers/parse-units.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
@@ -18,6 +19,10 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.data.id;
 	}
 
+	public override nonce(): BigNumber {
+		return this.data.nonce;
+	}
+
 	public override blockId(): string | undefined {
 		return this.data.blockId;
 	}
@@ -31,7 +36,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override sender(): string {
-		return this.data.sender;
+		return this.data.senderAddress;
 	}
 
 	public override recipient(): string {
@@ -50,18 +55,14 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override amount(): BigNumber {
-		if (this.isMultiPayment()) {
-			const amount = BigNumber.sum(this.data.asset.payments.map(({ amount }) => amount));
-			return this.bigNumberService.make(amount);
-		}
+		// @TODO: handle evm multipayments.
+		// if (this.isMultiPayment()) { }
 
 		return this.bigNumberService.make(this.data.amount);
 	}
 
 	public override fee(): BigNumber {
-		const gasLimit = this.bigNumberService.make(this.data.gasLimit);
-		const gasPrice = this.bigNumberService.make(this.data.gasPrice);
-		return gasLimit.times(gasPrice);
+		return this.bigNumberService.make(parseUnits(this.data.gasPrice, "ark"));
 	}
 
 	public override asset(): Record<string, unknown> {

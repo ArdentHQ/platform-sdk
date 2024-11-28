@@ -2,6 +2,7 @@ import { Exceptions, IoC } from "@ardenthq/sdk";
 import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "../../../coin.contract.js";
+import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
 
 export class BuilderFactory {
 	#app: Application;

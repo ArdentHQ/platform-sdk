@@ -40,7 +40,7 @@ importers:
         version: 5.4.0(eslint@8.3.0)(typescript@4.5.2)
       babel-loader:
         specifier: ^8.2.3
-        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4)
+        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1))
       big-integer:
         specifier: ^1.6.51
         version: 1.6.51
@@ -88,13 +88,13 @@ importers:
         version: 2.0.0(@typescript-eslint/eslint-plugin@5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)
       node-polyfill-webpack-plugin:
         specifier: ^1.1.4
-        version: 1.1.4(webpack@5.64.4)
+        version: 1.1.4(webpack@5.64.4(webpack-cli@4.9.1))
       prettier:
         specifier: ^2.4.1
         version: 2.4.1
       resolve-typescript-plugin:
         specifier: ^1.1.1
-        version: 1.1.1(webpack@5.64.4)
+        version: 1.1.1(webpack@5.64.4(webpack-cli@4.9.1))
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -103,7 +103,7 @@ importers:
         version: 1.53.1
       ts-loader:
         specifier: ^9.2.6
-        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4)
+        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1))
       ts-morph:
         specifier: ^12.0.0
         version: 12.0.0
@@ -434,19 +434,28 @@ importers:
       '@mainsail/crypto-key-pair-ecdsa':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
+      '@mainsail/crypto-signature-ecdsa':
+        specifier: 0.0.1-evm.9
+        version: 0.0.1-evm.9
       '@mainsail/crypto-signature-schnorr':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
       '@mainsail/crypto-transaction':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
+      '@mainsail/crypto-transaction-evm-call':
+        specifier: 0.0.1-evm.9
+        version: 0.0.1-evm.9
       '@mainsail/crypto-validation':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
-      '@mainsail/evm-contracts':
+      '@mainsail/crypto-wif':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
       '@mainsail/kernel':
+        specifier: 0.0.1-evm.9
+        version: 0.0.1-evm.9
+      '@mainsail/serializer':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
       '@mainsail/validation':
@@ -1520,8 +1529,16 @@ packages:
     resolution: {integrity: sha512-2+PUc+DXBi1uyTXiDTYSiCJz2qchRJIdv7hR36S/qSCuTJNBRky34NqKLVaPtSCr2/ukGQAu0WUF/rtyJ5+KtA==}
     engines: {node: '>=20.x'}
 
+  '@mainsail/crypto-signature-ecdsa@0.0.1-evm.9':
+    resolution: {integrity: sha512-PYH1onVabKeBT6PROpyhsaxdsSiNHUBKPvpW7BfkLj+L6iMdb8ZbgRS4KSLQpTnrrUwy3k3CEQUf6E++EvU8bQ==}
+    engines: {node: '>=20.x'}
+
   '@mainsail/crypto-signature-schnorr@0.0.1-evm.9':
     resolution: {integrity: sha512-YK7S0z+M7wrfT+Lz03gEasKc7oS0m7hZ5j7p+8x5JTHBKoFaLmphYccCo8auzDFlxs6ZDwUMzj8SpVu2iSdkAA==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/crypto-transaction-evm-call@0.0.1-evm.9':
+    resolution: {integrity: sha512-+ax+P3+qbYShlm/dRW/2lpCQkI/Wuhfh9o5nq05oRzHC+Q+6vBWKScW9vD/DxZiuSLxvWBM/YyH9SZC5aa0GTA==}
     engines: {node: '>=20.x'}
 
   '@mainsail/crypto-transaction@0.0.1-evm.9':
@@ -1532,12 +1549,20 @@ packages:
     resolution: {integrity: sha512-8UgOYWiS8AkhmeVBKXswUNMABnul84k3JIVm6UxPJAmYI/EC8Sirhp3mDgdJPeV7QC1aaunt9nd5Ul3OVXivMA==}
     engines: {node: '>=20.x'}
 
-  '@mainsail/evm-contracts@0.0.1-evm.9':
-    resolution: {integrity: sha512-kntBdQyt63z1PEerAc/DHMXWdm8W2wQW7MDtEShs5viDKojOYI2aCRpsmAFbB+PmJnS0dMObT9KIIjXSw2QDwQ==}
+  '@mainsail/crypto-wif@0.0.1-evm.9':
+    resolution: {integrity: sha512-QijOxwrW3S2+3OvHbcce1oO4csO9dwIZ7Euqa3Ql1Xctthbs5s39H7EAxFHm84f/Aq2f/IfP6IYWnSx9iMPN6A==}
     engines: {node: '>=20.x'}
 
   '@mainsail/kernel@0.0.1-evm.9':
     resolution: {integrity: sha512-jJEwz/XqbiPXiOP1Q26+YfWM+YP3XSiyW53dfz4SS+7LrYQU1OvaXmU8u/n2/4+2gIzIdXdaEQLuxYXE72YbFw==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/serializer@0.0.1-evm.9':
+    resolution: {integrity: sha512-aDywz1ys5GcCu17Jp+3eAqTYfTrV4pofpRChUWnBo+aGAJeC2FaybjvfPwB5KTbdovZgk5DZxZU7uUNzyER53Q==}
+    engines: {node: '>=20.x'}
+
+  '@mainsail/transactions@0.0.1-evm.9':
+    resolution: {integrity: sha512-B25PC4lTDri1F28i8ZTccKb3nfHRbBKCMC0ZjUF6Xe1wICPzrrc41ALKltK6YjBzHwXqhovcxoOOrkZOyVczKw==}
     engines: {node: '>=20.x'}
 
   '@mainsail/utils@0.0.1-evm.9':
@@ -6134,6 +6159,18 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@mainsail/crypto-signature-ecdsa@0.0.1-evm.9':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.9
+      '@mainsail/contracts': 0.0.1-evm.9
+      '@mainsail/kernel': 0.0.1-evm.9
+      '@mainsail/utils': 0.0.1-evm.9
+      bcrypto: 5.5.2
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   '@mainsail/crypto-signature-schnorr@0.0.1-evm.9':
     dependencies:
       '@mainsail/container': 0.0.1-evm.9
@@ -6141,6 +6178,19 @@ snapshots:
       '@mainsail/kernel': 0.0.1-evm.9
       '@mainsail/utils': 0.0.1-evm.9
       bcrypto: 5.5.2
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  '@mainsail/crypto-transaction-evm-call@0.0.1-evm.9':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.9
+      '@mainsail/contracts': 0.0.1-evm.9
+      '@mainsail/crypto-transaction': 0.0.1-evm.9
+      '@mainsail/kernel': 0.0.1-evm.9
+      '@mainsail/transactions': 0.0.1-evm.9
+      '@mainsail/utils': 0.0.1-evm.9
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -6170,7 +6220,16 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@mainsail/evm-contracts@0.0.1-evm.9': {}
+  '@mainsail/crypto-wif@0.0.1-evm.9':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.9
+      '@mainsail/contracts': 0.0.1-evm.9
+      '@mainsail/kernel': 0.0.1-evm.9
+      wif: 4.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@mainsail/kernel@0.0.1-evm.9':
     dependencies:
@@ -6190,6 +6249,28 @@ snapshots:
       nanomatch: 1.2.13
       nsfw: 2.2.4
       semver: 7.6.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  '@mainsail/serializer@0.0.1-evm.9':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.9
+      '@mainsail/contracts': 0.0.1-evm.9
+      '@mainsail/kernel': 0.0.1-evm.9
+      '@mainsail/utils': 0.0.1-evm.9
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  '@mainsail/transactions@0.0.1-evm.9':
+    dependencies:
+      '@mainsail/container': 0.0.1-evm.9
+      '@mainsail/contracts': 0.0.1-evm.9
+      '@mainsail/crypto-transaction': 0.0.1-evm.9
+      '@mainsail/kernel': 0.0.1-evm.9
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -6551,17 +6632,17 @@ snapshots:
       '@webassemblyjs/ast': 1.11.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)':
+  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))':
     dependencies:
       webpack: 5.64.4(webpack-cli@4.9.1)
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1)':
+  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
     dependencies:
       envinfo: 7.8.1
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1)':
+  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
     dependencies:
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
@@ -6725,7 +6806,7 @@ snapshots:
 
   axobject-query@2.2.0: {}
 
-  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4):
+  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       '@babel/core': 7.16.5
       find-cache-dir: 3.3.2
@@ -8659,7 +8740,7 @@ snapshots:
       - bluebird
       - supports-color
 
-  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4):
+  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       assert: 2.0.0
       browserify-zlib: 0.2.0
@@ -9041,7 +9122,7 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-typescript-plugin@1.1.1(webpack@5.64.4):
+  resolve-typescript-plugin@1.1.1(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       tslib: 2.3.1
       webpack: 5.64.4(webpack-cli@4.9.1)
@@ -9376,7 +9457,7 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4):
+  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       jest-worker: 27.3.1
       schema-utils: 3.1.1
@@ -9430,7 +9511,7 @@ snapshots:
 
   totalist@2.0.0: {}
 
-  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4):
+  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.8.3
@@ -9646,9 +9727,9 @@ snapshots:
   webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4):
     dependencies:
       '@discoveryjs/json-ext': 0.5.5
-      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)
-      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1)
-      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1)
+      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))
+      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
+      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
       colorette: 2.0.16
       commander: 7.2.0
       execa: 5.1.1
@@ -9691,7 +9772,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4)
+      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1))
       watchpack: 2.3.0
       webpack-sources: 3.2.2
     optionalDependencies:
