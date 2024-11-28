@@ -44,6 +44,7 @@
 		"@mainsail/crypto-transaction-evm-call": "0.0.1-evm.9",
 		"@mainsail/crypto-validation": "0.0.1-evm.9",
 		"@mainsail/crypto-wif": "0.0.1-evm.9",
+		"@mainsail/evm-contracts": "0.0.1-evm.9",
 		"@mainsail/kernel": "0.0.1-evm.9",
 		"@mainsail/serializer": "0.0.1-evm.9",
 		"@mainsail/validation": "0.0.1-evm.9",
