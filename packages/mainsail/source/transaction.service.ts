@@ -109,7 +109,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		if (!input.data.validatorPublicKey) {
 			throw new Error(
-				`[TransactionService#validatorRegistration] Expected validatorRegistration to be defined but received ${typeof input.data.validatorRegistration}`,
+				`[TransactionService#validatorRegistration] Expected validatorPublicKey to be defined but received ${typeof input.data.validatorPublicKey}`,
 			);
 		}
 
