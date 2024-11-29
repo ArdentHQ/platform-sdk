@@ -27,6 +27,12 @@ interface ValidatedTransferInput extends Services.TransferInput {
 	fee: number;
 }
 
+type TransactionsInputs =
+	Services.TransferInput |
+	Services.VoteInput |
+	Services.ValidatorRegistrationInput |
+	Services.ValidatorResignationInput;
+
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
 	readonly #addressService!: Services.AddressService;
@@ -58,9 +64,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	#assertFee(
-		input: Services.TransferInput | Services.VoteInput | Services.ValidatorRegistrationInput,
-	): asserts input is ValidatedTransferInput {
+	#assertFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
 		if (!input.fee) {
 			throw new Error(
 				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
