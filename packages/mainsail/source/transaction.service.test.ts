@@ -112,7 +112,6 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		const signedTransaction = await context.subject.validatorRegistration(
 			context.defaultValidatorRegistrationInput,
 		);
-		console.log(signedTransaction.data().data);
 
 		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
