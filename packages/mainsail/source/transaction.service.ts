@@ -26,10 +26,6 @@ interface ValidatedTransferInput extends Services.TransferInput {
 	fee: number;
 }
 
-interface ValidatedRegisterValidatorInput extends Services.TransferInput {
-	fee: number;
-}
-
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
 	readonly #addressService!: Services.AddressService;
@@ -110,14 +106,17 @@ export class TransactionService extends Services.AbstractTransactionService {
 	): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
 		this.#assertFee(input);
-		// this.#validateInput(input);
+
+		if (!input.data.validatorPublicKey) {
+			throw new Error(
+				`[TransactionService#validatorRegistration] Expected validatorRegistration to be defined but received ${typeof input.data.validatorRegistration}`,
+			);
+		}
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
-
-		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
 
 		const data = encodeFunctionData({
 			abi: ConsensusAbi.abi,
