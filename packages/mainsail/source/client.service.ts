@@ -1,9 +1,8 @@
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
-
-import { Enums } from "./crypto/index.js";
 import { Request } from "./request.js";
+import { trimHexPrefix, TransactionTypes } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -208,53 +207,43 @@ export class ClientService extends Services.AbstractClientService {
 			delete body.identifiers;
 		}
 
+		const transactionTypeMap: Record<string, string | undefined> = {
+			delegateRegistration: TransactionTypes.RegisterValidator,
+			delegateResignation: TransactionTypes.ResignValidator,
+			multiPayment: TransactionTypes.MultiPayment,
+			multiSignature: undefined,
+			transfer: TransactionTypes.Transfer,
+			usernameRegistration: TransactionTypes.ResignUsername,
+			usernameResignation: TransactionTypes.ResignUsername,
+			vote: [trimHexPrefix(TransactionTypes.Vote), trimHexPrefix(TransactionTypes.Unvote)].join(","),
+		};
+
 		// @ts-ignore
 		if (body.type) {
-			const { type, typeGroup } = {
-				delegateRegistration: {
-					type: Enums.TransactionType.DelegateRegistration,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				delegateResignation: {
-					type: Enums.TransactionType.DelegateResignation,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				multiPayment: {
-					type: Enums.TransactionType.MultiPayment,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				multiSignature: {
-					type: Enums.TransactionType.MultiSignature,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				transfer: {
-					type: Enums.TransactionType.Transfer,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				usernameRegistration: {
-					type: Enums.TransactionType.UsernameRegistration,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				usernameResignation: {
-					type: Enums.TransactionType.UsernameResignation,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				vote: {
-					type: Enums.TransactionType.Vote,
-					typeGroup: Enums.TransactionTypeGroup.Core,
-				},
-				// @ts-ignore
-			}[body.type];
-
-			if (type !== undefined) {
-				result.searchParams.type = type;
-			}
-
-			if (typeGroup !== undefined) {
-				result.searchParams.typeGroup = typeGroup;
+			const data = transactionTypeMap[body.type];
+			if (data !== undefined) {
+				result.searchParams.data = trimHexPrefix(data);
 			}
 
 			delete body.type;
+		}
+
+		if (body.types) {
+			const data: string[] = [];
+
+			for (const type of body.types) {
+				const datum = transactionTypeMap[type];
+
+				if (datum) {
+					data.push(trimHexPrefix(datum));
+				}
+			}
+
+			if (data.length > 0) {
+				result.searchParams.data = data.join(",");
+			}
+
+			delete body.types;
 		}
 
 		if (body.timestamp) {
