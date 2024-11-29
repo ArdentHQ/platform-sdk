@@ -112,7 +112,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
-		assert.is(signedTransaction.validatorPublicKey().toString(), context.defaultValidatorRegistrationInput.validatorPublicKey);
+		assert.is(
+			signedTransaction.data().validatorPublicKey.toString(),
+			context.defaultValidatorRegistrationInput.validatorPublicKey
+		);
 	});
 
 	it("should require fee when signing a validator registration transaction", async (context) => {
