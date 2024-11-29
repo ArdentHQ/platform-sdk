@@ -70,6 +70,19 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				}),
 			),
 		};
+
+		context.defaultValidatorResignationInput = {
+			fee: 1,
+			nonce: "1",
+			signatory: new Signatories.Signatory(
+				new Signatories.MnemonicSignatory({
+					address: identity.address,
+					privateKey: "privateKey",
+					publicKey: "publicKey",
+					signingKey: identity.mnemonic,
+				}),
+			),
+		};
 	});
 
 	it("should sign a transfer transaction", async (context) => {
@@ -145,6 +158,27 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		} catch (error) {
 			assert.instance(error, Error);
 			assert.match(error.message, "Expected validatorPublicKey to be defined");
+		}
+	});
+
+	it("should sign a validator resignation transaction", async (context) => {
+		const signedTransaction = await context.subject.validatorResignation(
+			context.defaultValidatorResignationInput,
+		);
+
+		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
+		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
+	});
+
+	it("should require fee when signing a validator resignation transaction", async (context) => {
+		try {
+			await context.subject.validatorResignation({
+				...context.defaultValidatorResignationInput,
+				fee: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected fee to be defined");
 		}
 	});
 });
