@@ -1,11 +1,19 @@
 import { Exceptions } from "@ardenthq/sdk";
+import { FunctionSigs } from "@mainsail/evm-contracts/distribution/function-sigs.js";
 
 type TransactionData = Record<string, any>;
 
-// @see https://github.com/ArkEcosystem/mainsail/pull/730/files#diff-c06d287b6a1e2fd442683a5f465288c48abfbab5e37884158a24e072c601c1e4R1
-enum TransactionTypes {
-	Transfer = "0x",
-}
+export const TransactionTypes = {
+	MultiPayment: "0x88d695b2",
+	RegisterUsername: "0xusernamereg",
+	ResignUsername: "0xusernameres",
+	Transfer: "0x",
+	...FunctionSigs.ConsensusV1,
+} as const;
+
+export const trimHexPrefix = (type: string): string => {
+	return type.replace(/^0x/, "");
+};
 
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
@@ -17,35 +25,23 @@ export class TransactionTypeService {
 	}
 
 	public static isDelegateRegistration(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 2;
+		return data.data.startsWith(TransactionTypes.RegisterValidator);
 	}
 
 	public static isVoteCombination(data: TransactionData): boolean {
-		return this.isVote(data) && this.isUnvote(data);
+		return false;
 	}
 
 	public static isVote(data: TransactionData): boolean {
-		const isVote = TransactionTypeService.#typeGroup(data) === 1 && data.type === 3;
-
-		if (!isVote) {
-			return false;
-		}
-
-		return (data.asset?.votes || []).length > 0;
+		return data.data.startsWith(TransactionTypes.Vote);
 	}
 
 	public static isUnvote(data: TransactionData): boolean {
-		const isVote = TransactionTypeService.#typeGroup(data) === 1 && data.type === 3;
-
-		if (!isVote) {
-			return false;
-		}
-
-		return (data.asset?.unvotes || []).length > 0;
+		return data.data.startsWith(TransactionTypes.Unvote);
 	}
 
 	public static isMultiSignatureRegistration(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 4;
+		return false;
 	}
 
 	public static isIpfs(data: TransactionData): boolean {
@@ -53,19 +49,19 @@ export class TransactionTypeService {
 	}
 
 	public static isMultiPayment(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 6;
+		return data.data.startsWith(TransactionTypes.MultiPayment);
 	}
 
 	public static isUsernameRegistration(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 8;
+		return data.data.startsWith(TransactionTypes.RegisterUsername);
 	}
 
 	public static isUsernameResignation(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 9;
+		return data.data.startsWith(TransactionTypes.ResignUsername);
 	}
 
 	public static isDelegateResignation(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 1 && data.type === 7;
+		return data.data.startsWith(TransactionTypes.ResignValidator);
 	}
 
 	public static isHtlcLock(data: TransactionData): boolean {
@@ -81,14 +77,6 @@ export class TransactionTypeService {
 	}
 
 	public static isMagistrate(data: TransactionData): boolean {
-		return TransactionTypeService.#typeGroup(data) === 2;
-	}
-
-	static #typeGroup(data: TransactionData): number {
-		if (data.typeGroup === undefined) {
-			return 1;
-		}
-
-		return data.typeGroup;
+		return false;
 	}
 }

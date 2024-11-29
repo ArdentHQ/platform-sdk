@@ -1,6 +1,6 @@
 {
 	"name": "@ardenthq/sdk-mainsail",
-	"version": "2.0.0-alpha.22",
+	"version": "2.0.0-alpha.23",
 	"description": "Cross-Platform Utilities for Ardent Applications",
 	"license": "MIT",
 	"contributors": [],
@@ -44,7 +44,7 @@
 		"@mainsail/crypto-transaction-evm-call": "0.0.1-evm.9",
 		"@mainsail/crypto-validation": "0.0.1-evm.9",
 		"@mainsail/crypto-wif": "0.0.1-evm.9",
-		"@mainsail/evm-contracts": "0.0.1-evm.3",
+		"@mainsail/evm-contracts": "0.0.1-evm.9",
 		"@mainsail/kernel": "0.0.1-evm.9",
 		"@mainsail/serializer": "0.0.1-evm.9",
 		"@mainsail/validation": "0.0.1-evm.9",
