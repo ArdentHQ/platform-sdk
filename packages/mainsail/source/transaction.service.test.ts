@@ -108,7 +108,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 	});
 
 	it("should sign a validator registration transaction", async (context) => {
-		const signedTransaction = await context.subject.transfer(context.defaultValidatorRegistrationInput);
+		const signedTransaction = await context.subject.validatorRegistration(context.defaultValidatorRegistrationInput);
 
 		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
