@@ -120,7 +120,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
 
 		const data = encodeFunctionData({
-			abi: ConsensusAbi,
+			abi: ConsensusAbi.abi,
 			args: [`0x${input.data.validatorPublicKey}`],
 			functionName: "registerValidator",
 		});
