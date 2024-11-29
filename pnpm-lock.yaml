@@ -452,6 +452,9 @@ importers:
       '@mainsail/crypto-wif':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
+      '@mainsail/evm-contracts':
+        specifier: 0.0.1-evm.3
+        version: 0.0.1-evm.3
       '@mainsail/kernel':
         specifier: 0.0.1-evm.9
         version: 0.0.1-evm.9
@@ -1556,6 +1559,10 @@ packages:
     resolution: {integrity: sha512-QijOxwrW3S2+3OvHbcce1oO4csO9dwIZ7Euqa3Ql1Xctthbs5s39H7EAxFHm84f/Aq2f/IfP6IYWnSx9iMPN6A==}
     engines: {node: '>=20.x'}
 
+  '@mainsail/evm-contracts@0.0.1-evm.3':
+    resolution: {integrity: sha512-58s5nnT3uuwZBcx/bslHQGkdX9ZYk/JTcfwmVJ48HWm2TsQod4jHDfCzKwGxKN6NLFPYbSC3ioyW5gZv06sSQQ==}
+    engines: {node: '>=20.x'}
+
   '@mainsail/kernel@0.0.1-evm.9':
     resolution: {integrity: sha512-jJEwz/XqbiPXiOP1Q26+YfWM+YP3XSiyW53dfz4SS+7LrYQU1OvaXmU8u/n2/4+2gIzIdXdaEQLuxYXE72YbFw==}
     engines: {node: '>=20.x'}
@@ -1915,6 +1922,7 @@ packages:
 
   acorn-import-assertions@1.8.0:
     resolution: {integrity: sha512-m7VZ3jwz4eK6A4Vtt8Ew1/mNbP24u0FhdyfA7fSvnJR6LMdfOYnmuIrrJAgrYfYJ10F/otaHTtrtrtmHdMNzEw==}
+    deprecated: package has been renamed to acorn-import-attributes
     peerDependencies:
       acorn: ^8
 
@@ -6300,6 +6308,8 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  '@mainsail/evm-contracts@0.0.1-evm.3': {}
 
   '@mainsail/kernel@0.0.1-evm.9':
     dependencies:
