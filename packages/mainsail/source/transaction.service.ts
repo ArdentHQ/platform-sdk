@@ -15,11 +15,11 @@ import { parseUnits } from "./helpers/parse-units.js";
 
 const wellKnownContracts = {
 	consensus: "0x522B3294E6d06aA25Ad0f1B8891242E335D3B459",
-}
+};
 
 enum GasLimit {
 	Transfer = 21_000,
-	RegisterValidator = 500_000
+	RegisterValidator = 500_000,
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
@@ -62,7 +62,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	#assertFee(
-		input: Services.TransferInput | Services.VoteInput | Services.ValidatorRegistrationInput
+		input: Services.TransferInput | Services.VoteInput | Services.ValidatorRegistrationInput,
 	): asserts input is ValidatedTransferInput {
 		if (!input.fee) {
 			throw new Error(
@@ -139,7 +139,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async delegateRegistration(
 		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		return this.validatorRegistration(input)
+		return this.validatorRegistration(input);
 	}
 
 	/**
