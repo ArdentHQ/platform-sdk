@@ -134,7 +134,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		}
 	});
 
-	it("should require validator public key when signing a validator registration transaction", async (context) => {
+	it("should require a validator public key when signing a validator registration transaction", async (context) => {
 		try {
 			await context.subject.validatorRegistration({
 				...context.defaultValidatorRegistrationInput,
