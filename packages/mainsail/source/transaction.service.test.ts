@@ -109,13 +109,14 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 	it("should sign a validator registration transaction", async (context) => {
 		const signedTransaction = await context.subject.validatorRegistration(context.defaultValidatorRegistrationInput);
+		console.log(signedTransaction.data().data);
 
 		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
-		assert.is(
-			signedTransaction.data().validatorPublicKey.toString(),
-			context.defaultValidatorRegistrationInput.validatorPublicKey
-		);
+
+		const validatorKey = new RegExp(context.defaultValidatorRegistrationInput.validatorPublicKey, "g");
+
+		assert.match(signedTransaction.data().data, validatorKey);
 	});
 
 	it("should require fee when signing a validator registration transaction", async (context) => {
