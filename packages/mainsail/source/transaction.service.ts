@@ -6,7 +6,7 @@ import { Contracts as MainsailContracts } from "@mainsail/contracts";
 import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
-import { abi } from "@mainsail/evm-contracts/distribution/abis/Consensus.json";
+import { ConsensusAbi, FunctionSigs } from "@mainsail/evm-contracts";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
@@ -124,7 +124,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		// Vote or unvote depending on config
 		const data = encodeFunctionData({
-			abi,
+			abi: ConsensusAbi.abi,
 			args: isVote ? [vote.id] : [],
 			functionName: isVote ? "vote" : "unvote",
 		});
