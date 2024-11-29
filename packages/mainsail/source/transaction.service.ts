@@ -28,10 +28,10 @@ interface ValidatedTransferInput extends Services.TransferInput {
 }
 
 type TransactionsInputs =
-	Services.TransferInput |
-	Services.VoteInput |
-	Services.ValidatorRegistrationInput |
-	Services.ValidatorResignationInput;
+	| Services.TransferInput
+	| Services.VoteInput
+	| Services.ValidatorRegistrationInput
+	| Services.ValidatorResignationInput;
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
