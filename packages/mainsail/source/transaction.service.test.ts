@@ -117,7 +117,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 	it("should require fee when signing a validator registration transaction", async (context) => {
 		try {
-			await context.subject.transfer({
+			await context.subject.validatorRegistration({
 				...context.defaultValidatorRegistrationInput,
 				fee: undefined,
 			});
@@ -129,7 +129,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 	it("should require validator public key when signing a validator registration transaction", async (context) => {
 		try {
-			await context.subject.transfer({
+			await context.subject.validatorRegistration({
 				...context.defaultValidatorRegistrationInput,
 				data: {
 					validatorPublicKey: undefined,
