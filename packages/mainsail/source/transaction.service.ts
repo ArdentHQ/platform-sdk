@@ -4,7 +4,7 @@ import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Application } from "@mainsail/kernel";
 
-import { abi } from "@mainsail/evm-contracts/distribution/abis/Consensus.json";
+import { ConsensusAbi } from "@mainsail/evm-contracts";
 import { encodeFunctionData } from "viem";
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
@@ -120,7 +120,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
 
 		const data = encodeFunctionData({
-			abi,
+			abi: ConsensusAbi,
 			args: [`0x${input.data.validatorPublicKey}`],
 			functionName: "registerValidator",
 		});
