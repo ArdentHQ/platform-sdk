@@ -56,7 +56,8 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		context.defaultValidatorRegistrationInput = {
 			data: {
-				validatorPublicKey: "8e65659ba176f2e14e9042db662c6106a85ecd6ec8de14665facc4aaa643aec0c2d0a7ea29cecd7daf5b6452e39d431d"
+				validatorPublicKey:
+					"8e65659ba176f2e14e9042db662c6106a85ecd6ec8de14665facc4aaa643aec0c2d0a7ea29cecd7daf5b6452e39d431d",
 			},
 			fee: 1,
 			nonce: "1",
@@ -108,7 +109,9 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 	});
 
 	it("should sign a validator registration transaction", async (context) => {
-		const signedTransaction = await context.subject.validatorRegistration(context.defaultValidatorRegistrationInput);
+		const signedTransaction = await context.subject.validatorRegistration(
+			context.defaultValidatorRegistrationInput,
+		);
 		console.log(signedTransaction.data().data);
 
 		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
