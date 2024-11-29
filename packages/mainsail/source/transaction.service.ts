@@ -4,7 +4,7 @@ import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Application } from "@mainsail/kernel";
 
-import { ConsensusAbi } from "@mainsail/evm-contracts";
+import { abi } from "@mainsail/evm-contracts/distribution/abis/Consensus.json";
 import { encodeFunctionData } from "viem";
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
@@ -13,12 +13,20 @@ import { BuilderFactory } from "./crypto/transactions/index.js";
 import { Request } from "./request.js";
 import { parseUnits } from "./helpers/parse-units.js";
 
+const wellKnownContracts = {
+	consensus: "0x522B3294E6d06aA25Ad0f1B8891242E335D3B459",
+}
+
 enum GasLimit {
 	Transfer = 21_000,
 	RegisterValidator = 500_000
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
+	fee: number;
+}
+
+interface ValidatedRegisterValidatorInput extends Services.TransferInput {
 	fee: number;
 }
 
@@ -53,13 +61,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	#validateInput(input: Services.TransferInput): asserts input is ValidatedTransferInput {
-		if (!input.data.amount) {
-			throw new Error(
-				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
-			);
-		}
-
+	#assertFee(input: Services.TransferInput | Services.VoteInput): asserts input is ValidatedTransferInput {
 		if (!input.fee) {
 			throw new Error(
 				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
@@ -67,17 +69,23 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 	}
 
+	#assertAmount(input: Services.TransferInput): asserts input is ValidatedTransferInput {
+		if (!input.data.amount) {
+			throw new Error(
+				`[TransactionService#transfer] Expected amount to be defined but received ${typeof input.data.amount}`,
+			);
+		}
+	}
+
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		this.#validateInput(input);
+		this.#assertFee(input);
+		this.#assertAmount(input);
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
-
-		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
-		console.log({ amount: parseUnits(input.data.amount, "ark") });
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
@@ -95,11 +103,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.#buildTransaction(input, transaction);
 	}
 
-	public override async delegateRegistration(
+	public override async validatorRegistration(
 		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		this.#validateInput(input);
+		this.#assertFee(input);
+		// this.#validateInput(input);
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
@@ -109,22 +118,26 @@ export class TransactionService extends Services.AbstractTransactionService {
 		console.log({ address, input, network: this.#configCrypto.crypto.network, nonce });
 
 		const data = encodeFunctionData({
-			abi: ConsensusAbi.abi,
-			args: [""],
+			abi,
+			args: [`0x${input.data.validatorPublicKey}`],
 			functionName: "registerValidator",
 		});
-
-		const consensusContractAddress = "0x522B3294E6d06aA25Ad0f1B8891242E335D3B459";
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
 			.gasLimit(GasLimit.RegisterValidator)
-			.recipientAddress(consensusContractAddress)
+			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
 			.gasPrice(input.fee);
 
 		return this.#buildTransaction(input, transaction);
+	}
+
+	public override async delegateRegistration(
+		input: Services.ValidatorRegistrationInput,
+	): Promise<Contracts.SignedTransactionData> {
+		return this.validatorRegistration(input)
 	}
 
 	/**

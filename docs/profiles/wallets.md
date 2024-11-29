@@ -301,6 +301,12 @@ await wallet.transaction().signSecondSignature(input, options);
 await wallet.transaction().signDelegateRegistration(input, options);
 ```
 
+### Create a new validator registration transaction
+
+```typescript
+await wallet.transaction().signValidatorRegistration(input, options);
+```
+
 ### Create a new vote transaction
 
 ```typescript

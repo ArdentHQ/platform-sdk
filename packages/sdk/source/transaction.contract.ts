@@ -7,6 +7,7 @@ export interface TransactionService {
 	transfer(input: TransferInput): Promise<SignedTransactionData>;
 	secondSignature(input: SecondSignatureInput): Promise<SignedTransactionData>;
 	delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData>;
+	validatorRegistration(input: ValidatorRegistrationInput): Promise<SignedTransactionData>;
 	usernameRegistration(input: UsernameRegistrationInput): Promise<SignedTransactionData>;
 	usernameResignation(input: UsernameResignationInput): Promise<SignedTransactionData>;
 	vote(input: VoteInput): Promise<SignedTransactionData>;

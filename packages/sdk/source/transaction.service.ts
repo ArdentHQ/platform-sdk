@@ -67,6 +67,10 @@ export class AbstractTransactionService implements Contract {
 		throw new NotImplemented(this.constructor.name, this.delegateRegistration.name);
 	}
 
+	public async validatorRegistration(input: ValidatorRegistrationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.validatorRegistration.name);
+	}
+
 	public async vote(input: VoteInput): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.vote.name);
 	}

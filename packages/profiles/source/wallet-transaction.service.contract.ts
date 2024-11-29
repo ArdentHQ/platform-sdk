@@ -65,11 +65,22 @@ export interface ITransactionService {
 	/**
 	 * Sign a Delegate Registration transaction.
 	 *
+	 * @deprecated
+	 *
 	 * @param {Services.DelegateRegistrationInput} input
 	 * @return {Promise<string>}
 	 * @memberof ITransactionService
 	 */
 	signDelegateRegistration(input: Services.DelegateRegistrationInput): Promise<string>;
+
+	/**
+	 * Sign a Validator Registration transaction.
+	 *
+	 * @param {Services.ValidatorRegistrationInput} input
+	 * @return {Promise<string>}
+	 * @memberof ITransactionService
+	 */
+	signValidatorRegistration(input: Services.ValidatorRegistrationInput): Promise<string>;
 
 	/**
 	 * Sign a Username Registration transaction.
