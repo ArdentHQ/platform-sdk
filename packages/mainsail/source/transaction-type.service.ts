@@ -1,5 +1,5 @@
 import { Exceptions } from "@ardenthq/sdk";
-import { FunctionSigs } from "@mainsail/evm-contracts/distribution/function-sigs.js";
+import { FunctionSigs } from "@mainsail/evm-contracts";
 
 type TransactionData = Record<string, any>;
 
@@ -33,11 +33,11 @@ export class TransactionTypeService {
 	}
 
 	public static isVote(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.Vote);
+		return data.data.includes(TransactionTypes.Vote.slice(2));
 	}
 
 	public static isUnvote(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.Unvote);
+		return data.data.includes(TransactionTypes.Unvote.slice(2));
 	}
 
 	public static isMultiSignatureRegistration(data: TransactionData): boolean {
