@@ -152,7 +152,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
-		console.log({ input });
 		applyCryptoConfiguration(this.#configCrypto);
 		this.#assertFee(input);
 
