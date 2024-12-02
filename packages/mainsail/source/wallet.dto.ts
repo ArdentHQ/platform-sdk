@@ -34,6 +34,10 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 		return this.#getProperty(["username", "attributes.username"]);
 	}
 
+	public override validatorPublicKey(): string | undefined {
+		return this.#getProperty(["attributes.validatorPublicKey"]);
+	}
+
 	public override rank(): number | undefined {
 		return this.#getProperty(["rank", "attributes.validatorRank"]);
 	}
@@ -57,14 +61,22 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 	}
 
 	public override isDelegate(): boolean {
-		if (this.isResignedDelegate()) {
+		return this.isValidator();
+	}
+
+	public override isResignedDelegate(): boolean {
+		return this.isValidator();
+	}
+
+	public override isValidator(): boolean {
+		if (this.isResignedValidator()) {
 			return false;
 		}
 
 		return !!this.#getProperty(["attributes.validatorPublicKey"]);
 	}
 
-	public override isResignedDelegate(): boolean {
+	public override isResignedValidator(): boolean {
 		return !!this.#getProperty(["attributes.validatorResigned"]);
 	}
 

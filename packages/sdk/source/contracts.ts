@@ -54,6 +54,10 @@ export interface WalletData {
 
 	isResignedDelegate(): boolean;
 
+	isValidator(): boolean;
+
+	isResignedValidator(): boolean;
+
 	isMultiSignature(): boolean;
 
 	isSecondSignature(): boolean;

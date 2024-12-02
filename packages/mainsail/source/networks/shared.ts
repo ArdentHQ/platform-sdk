@@ -9,10 +9,10 @@ export const transactions: Networks.NetworkManifestTransactions = {
 	memo: true,
 	multiPaymentRecipients: 64,
 	types: [
-		"delegateRegistration",
+		"validatorRegistration",
 		"usernameRegistration",
 		"usernameResignation",
-		"delegateResignation",
+		"validatorResignation",
 		"multiPayment",
 		"multiSignature",
 		"transfer",
@@ -62,8 +62,8 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 	Transaction: [
 		"usernameRegistration",
 		"usernameResignation",
-		"delegateRegistration",
-		"delegateResignation",
+		"validatorRegistration",
+		"validatorResignation",
 		"estimateExpiration",
 		"multiPayment",
 		"transfer",
