@@ -163,7 +163,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const vote = input.data.votes?.at(0);
 		const isVote = !!vote;
 
-		// Vote or unvote depending on config
 		const data = encodeFunctionData({
 			abi: ConsensusAbi.abi,
 			args: isVote ? [vote.id] : [],
