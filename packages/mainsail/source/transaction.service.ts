@@ -20,11 +20,18 @@ const wellKnownContracts = {
 enum GasLimit {
 	Transfer = 21_000,
 	RegisterValidator = 500_000,
+	ResignValidator = 150_000,
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
 	fee: number;
 }
+
+type TransactionsInputs =
+	| Services.TransferInput
+	| Services.VoteInput
+	| Services.ValidatorRegistrationInput
+	| Services.ValidatorResignationInput;
 
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
@@ -57,9 +64,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	#assertFee(
-		input: Services.TransferInput | Services.VoteInput | Services.ValidatorRegistrationInput,
-	): asserts input is ValidatedTransferInput {
+	#assertFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
 		if (!input.fee) {
 			throw new Error(
 				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
@@ -168,10 +173,38 @@ export class TransactionService extends Services.AbstractTransactionService {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameResignation.name);
 	}
 
+	public override async validatorResignation(
+		input: Services.ValidatorResignationInput,
+	): Promise<Contracts.SignedTransactionData> {
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#assertFee(input);
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		const data = encodeFunctionData({
+			abi: ConsensusAbi.abi,
+			functionName: "resignValidator",
+			args: [],
+		});
+
+		transaction
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(GasLimit.ResignValidator)
+			.recipientAddress(wellKnownContracts.consensus)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.gasPrice(input.fee);
+
+		return this.#buildTransaction(input, transaction);
+	}
+
 	public override async delegateResignation(
 		input: Services.DelegateResignationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateResignation.name);
+		return this.validatorResignation(input);
 	}
 
 	public override async estimateExpiration(value?: string): Promise<string | undefined> {

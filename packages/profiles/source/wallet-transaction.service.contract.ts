@@ -139,11 +139,22 @@ export interface ITransactionService {
 	/**
 	 * Sign a Delegate Resignation transaction.
 	 *
+	 * @deprecated
+	 *
 	 * @param {Services.DelegateResignationInput} input
 	 * @return {Promise<string>}
 	 * @memberof ITransactionService
 	 */
 	signDelegateResignation(input: Services.DelegateResignationInput): Promise<string>;
+
+	/**
+	 * Sign a Validator Resignation transaction.
+	 *
+	 * @param {Services.ValidatorResignationInput} input
+	 * @return {Promise<string>}
+	 * @memberof ITransactionService
+	 */
+	signValidatorResignation(input: Services.ValidatorResignationInput): Promise<string>;
 
 	/**
 	 * Sign an Unlock Token transaction.

@@ -15,6 +15,7 @@ export interface TransactionService {
 	ipfs(input: IpfsInput): Promise<SignedTransactionData>;
 	multiPayment(input: MultiPaymentInput): Promise<SignedTransactionData>;
 	delegateResignation(input: DelegateResignationInput): Promise<SignedTransactionData>;
+	validatorResignation(input: ValidatorResignationInput): Promise<SignedTransactionData>;
 	unlockToken(input: UnlockTokenInput): Promise<SignedTransactionData>;
 
 	// Estimations
@@ -95,6 +96,7 @@ export interface MultiPaymentInput extends TransactionInput {
 }
 
 export type DelegateResignationInput = TransactionInput;
+export type ValidatorResignationInput = TransactionInput;
 
 export interface UnlockTokenInput extends TransactionInput {
 	data: {

@@ -337,6 +337,12 @@ await wallet.transaction().signMultiPayment(input, options);
 await wallet.transaction().signDelegateResignation(input, options);
 ```
 
+### Create a new validator resignation transaction
+
+```typescript
+await wallet.transaction().signValidatorResignation(input, options);
+```
+
 ### Create a new htlc lock transaction
 
 ```typescript
