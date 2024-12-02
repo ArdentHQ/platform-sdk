@@ -152,7 +152,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
-		console.log({ input })
+		console.log({ input });
 		applyCryptoConfiguration(this.#configCrypto);
 		this.#assertFee(input);
 
@@ -161,8 +161,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
 
-		const vote = input.data.votes?.at(0)
-		const isVote = !!vote
+		const vote = input.data.votes?.at(0);
+		const isVote = !!vote;
 
 		// Vote or unvote depending on config
 		const data = encodeFunctionData({

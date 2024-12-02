@@ -29,7 +29,7 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 			container.singleton(IoC.BindingType.AddressService, AddressService);
 			container.singleton(IoC.BindingType.ClientService, ClientService);
 			container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
-			container.constant(IoC.BindingType.LedgerTransportFactory, async () => { });
+			container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
 			container.singleton(IoC.BindingType.LedgerService, LedgerService);
 			container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
 			container.singleton(IoC.BindingType.MultiSignatureService, MultiSignatureService);
@@ -37,7 +37,7 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 
 		context.defaultInput = {
 			data: {
-				votes: [{ amount: 0, id: identity.address }]
+				votes: [{ amount: 0, id: identity.address }],
 			},
 			fee: 5,
 			nonce: "1",
@@ -62,14 +62,16 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 	});
 
 	it("should sign an unvote transaction", async (context) => {
-		const signedTransaction = await context.subject.vote({ ...context.defaultInput, data: { ...context.defaultInput.data, votes: [] } });
+		const signedTransaction = await context.subject.vote({
+			...context.defaultInput,
+			data: { ...context.defaultInput.data, votes: [] },
+		});
 
 		assert.is(signedTransaction.isUnvote(), true);
 		assert.is(signedTransaction.isVote(), false);
 		assert.is(signedTransaction.fee().toNumber(), context.defaultInput.fee);
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);
 	});
-
 
 	it("should require fee when signing transaction", async (context) => {
 		try {
