@@ -1,17 +1,17 @@
-import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Exceptions } from "@mainsail/contracts";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { ConsensusAbi } from "@mainsail/evm-contracts";
+import { Contracts, IoC, Services } from "@ardenthq/sdk";
+import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Application } from "@mainsail/kernel";
-import { encodeFunctionData } from "viem";
 
+import { ConsensusAbi } from "@mainsail/evm-contracts";
+import { encodeFunctionData } from "viem";
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Interfaces, Transactions } from "./crypto/index.js";
 import { BuilderFactory } from "./crypto/transactions/index.js";
-import { parseUnits } from "./helpers/parse-units.js";
 import { Request } from "./request.js";
+import { parseUnits } from "./helpers/parse-units.js";
 
 const wellKnownContracts = {
 	consensus: "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
@@ -21,7 +21,6 @@ enum GasLimit {
 	Transfer = 21_000,
 	RegisterValidator = 500_000,
 	ResignValidator = 150_000,
-	Vote = 200_000,
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
@@ -110,39 +109,34 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async validatorRegistration(
 		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		return this.validatorRegistration(input);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
-		console.log({ input })
 		applyCryptoConfiguration(this.#configCrypto);
 		this.#assertFee(input);
+
+		if (!input.data.validatorPublicKey) {
+			throw new Error(
+				`[TransactionService#validatorRegistration] Expected validatorPublicKey to be defined but received ${typeof input
+					.data.validatorPublicKey}`,
+			);
+		}
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
 
-		const vote = input.data.votes?.at(0)
-		const isVote = !!vote
-
-		// Vote or unvote depending on config
 		const data = encodeFunctionData({
 			abi: ConsensusAbi.abi,
-			args: isVote ? [vote.id] : [],
-			functionName: isVote ? "vote" : "unvote",
+			args: [`0x${input.data.validatorPublicKey}`],
+			functionName: "registerValidator",
 		});
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(GasLimit.RegisterValidator)
 			.recipientAddress(wellKnownContracts.consensus)
-			.gasLimit(GasLimit.Vote)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(5);
+			.gasPrice(input.fee);
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -151,6 +145,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
 		return this.validatorRegistration(input);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
+		throw new Exceptions.NotImplemented(this.constructor.name, this.vote.name);
 	}
 
 	/**
@@ -185,8 +186,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const data = encodeFunctionData({
 			abi: ConsensusAbi.abi,
-			args: [],
 			functionName: "resignValidator",
+			args: [],
 		});
 
 		transaction
