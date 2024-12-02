@@ -33,10 +33,16 @@ export class TransactionTypeService {
 	}
 
 	public static isVote(data: TransactionData): boolean {
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
 		return data.data.includes(TransactionTypes.Vote.slice(2));
 	}
 
 	public static isUnvote(data: TransactionData): boolean {
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
 		return data.data.includes(TransactionTypes.Unvote.slice(2));
 	}
 
