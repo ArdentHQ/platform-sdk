@@ -15,6 +15,7 @@ import {
 	UsernameResignationInput,
 	ValidatorRegistrationInput,
 	VoteInput,
+	ValidatorResignationInput,
 } from "./transaction.contract.js";
 
 import { BigNumberService } from "./big-number.service.js";
@@ -67,6 +68,10 @@ export class AbstractTransactionService implements Contract {
 		throw new NotImplemented(this.constructor.name, this.delegateRegistration.name);
 	}
 
+	public async validatorRegistration(input: ValidatorRegistrationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.validatorRegistration.name);
+	}
+
 	public async vote(input: VoteInput): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.vote.name);
 	}
@@ -85,6 +90,10 @@ export class AbstractTransactionService implements Contract {
 
 	public async delegateResignation(input: DelegateResignationInput): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.delegateResignation.name);
+	}
+
+	public async validatorResignation(input: ValidatorResignationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.validatorResignation.name);
 	}
 
 	public async unlockToken(input: UnlockTokenInput): Promise<SignedTransactionData> {
