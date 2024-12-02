@@ -53,6 +53,36 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				}),
 			),
 		};
+
+		context.defaultValidatorRegistrationInput = {
+			data: {
+				validatorPublicKey:
+					"8e65659ba176f2e14e9042db662c6106a85ecd6ec8de14665facc4aaa643aec0c2d0a7ea29cecd7daf5b6452e39d431d",
+			},
+			fee: 1,
+			nonce: "1",
+			signatory: new Signatories.Signatory(
+				new Signatories.MnemonicSignatory({
+					address: identity.address,
+					privateKey: "privateKey",
+					publicKey: "publicKey",
+					signingKey: identity.mnemonic,
+				}),
+			),
+		};
+
+		context.defaultValidatorResignationInput = {
+			fee: 1,
+			nonce: "1",
+			signatory: new Signatories.Signatory(
+				new Signatories.MnemonicSignatory({
+					address: identity.address,
+					privateKey: "privateKey",
+					publicKey: "publicKey",
+					signingKey: identity.mnemonic,
+				}),
+			),
+		};
 	});
 
 	it("should sign a transfer transaction", async (context) => {
@@ -64,9 +94,9 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		assert.is(signedTransaction.recipient(), context.defaultTransferInput.data.to);
 	});
 
-	it("should require fee when signing transaction", async (context) => {
+	it("should require fee when signing a transfer transaction", async (context) => {
 		try {
-			const signedTransaction = await context.subject.transfer({
+			await context.subject.transfer({
 				...context.defaultTransferInput,
 				fee: null,
 			});
@@ -76,9 +106,9 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		}
 	});
 
-	it("should require amount when signing transaction", async (context) => {
+	it("should require amount when signing a transfer transaction", async (context) => {
 		try {
-			const signedTransaction = await context.subject.transfer({
+			await context.subject.transfer({
 				...context.defaultTransferInput,
 				data: {
 					...context.defaultTransferInput.data,
@@ -88,6 +118,64 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		} catch (error) {
 			assert.instance(error, Error);
 			assert.match(error.message, "Expected amount to be defined");
+		}
+	});
+
+	it("should sign a validator registration transaction", async (context) => {
+		const signedTransaction = await context.subject.validatorRegistration(
+			context.defaultValidatorRegistrationInput,
+		);
+
+		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
+		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
+
+		const validatorKey = new RegExp(context.defaultValidatorRegistrationInput.validatorPublicKey, "g");
+
+		assert.match(signedTransaction.data().data, validatorKey);
+	});
+
+	it("should require fee when signing a validator registration transaction", async (context) => {
+		try {
+			await context.subject.validatorRegistration({
+				...context.defaultValidatorRegistrationInput,
+				fee: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected fee to be defined");
+		}
+	});
+
+	it("should require a validator public key when signing a validator registration transaction", async (context) => {
+		try {
+			await context.subject.validatorRegistration({
+				...context.defaultValidatorRegistrationInput,
+				data: {
+					validatorPublicKey: undefined,
+				},
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected validatorPublicKey to be defined");
+		}
+	});
+
+	it("should sign a validator resignation transaction", async (context) => {
+		const signedTransaction = await context.subject.validatorResignation(context.defaultValidatorResignationInput);
+
+		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
+		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
+	});
+
+	it("should require fee when signing a validator resignation transaction", async (context) => {
+		try {
+			await context.subject.validatorResignation({
+				...context.defaultValidatorResignationInput,
+				fee: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected fee to be defined");
 		}
 	});
 });

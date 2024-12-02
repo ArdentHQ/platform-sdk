@@ -1,26 +1,26 @@
+import { Contracts, IoC, Services } from "@ardenthq/sdk";
+import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Exceptions } from "@mainsail/contracts";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Contracts as MainsailContracts } from "@mainsail/contracts";
-import { Utils } from "@mainsail/crypto-transaction";
+import { ConsensusAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
-import { ConsensusAbi, FunctionSigs } from "@mainsail/evm-contracts";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
 import { Interfaces, Transactions } from "./crypto/index.js";
 import { BuilderFactory } from "./crypto/transactions/index.js";
-import { Request } from "./request.js";
 import { parseUnits } from "./helpers/parse-units.js";
+import { Request } from "./request.js";
 
 const wellKnownContracts = {
 	consensus: "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
-}
+};
 
 enum GasLimit {
 	Transfer = 21_000,
+	RegisterValidator = 500_000,
+	ResignValidator = 150_000,
 	Vote = 200_000,
 }
 
@@ -28,13 +28,19 @@ interface ValidatedTransferInput extends Services.TransferInput {
 	fee: number;
 }
 
+type TransactionsInputs =
+	| Services.TransferInput
+	| Services.VoteInput
+	| Services.ValidatorRegistrationInput
+	| Services.ValidatorResignationInput;
+
 export class TransactionService extends Services.AbstractTransactionService {
 	readonly #ledgerService!: Services.LedgerService;
 	readonly #addressService!: Services.AddressService;
 	readonly #publicKeyService!: Services.PublicKeyService;
 	readonly #request: Request;
 	readonly #app: Application;
-	j
+
 	#transactionBuilder!: IoC.Factory<BuilderFactory>;
 	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
 
@@ -59,7 +65,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	#assertFee(input: Services.TransferInput | Services.VoteInput): asserts input is ValidatedTransferInput {
+	#assertFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
 		if (!input.fee) {
 			throw new Error(
 				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
@@ -101,10 +107,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.#buildTransaction(input, transaction);
 	}
 
-	public override async delegateRegistration(
+	public override async validatorRegistration(
 		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateRegistration.name);
+		return this.validatorRegistration(input);
 	}
 
 	/**
@@ -120,7 +126,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
 
-		const vote = input.data.votes.at(0)
+		const vote = input.data.votes?.at(0)
 		const isVote = !!vote
 
 		// Vote or unvote depending on config
@@ -139,6 +145,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.gasPrice(5);
 
 		return this.#buildTransaction(input, transaction);
+	}
+
+	public override async delegateRegistration(
+		input: Services.ValidatorRegistrationInput,
+	): Promise<Contracts.SignedTransactionData> {
+		return this.validatorRegistration(input);
 	}
 
 	/**
@@ -160,10 +172,38 @@ export class TransactionService extends Services.AbstractTransactionService {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameResignation.name);
 	}
 
+	public override async validatorResignation(
+		input: Services.ValidatorResignationInput,
+	): Promise<Contracts.SignedTransactionData> {
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#assertFee(input);
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		const data = encodeFunctionData({
+			abi: ConsensusAbi.abi,
+			args: [],
+			functionName: "resignValidator",
+		});
+
+		transaction
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(GasLimit.ResignValidator)
+			.recipientAddress(wellKnownContracts.consensus)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.gasPrice(input.fee);
+
+		return this.#buildTransaction(input, transaction);
+	}
+
 	public override async delegateResignation(
 		input: Services.DelegateResignationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.delegateResignation.name);
+		return this.validatorResignation(input);
 	}
 
 	public override async estimateExpiration(value?: string): Promise<string | undefined> {
@@ -257,7 +297,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		const signedTransaction = await signedTransactionBuilder?.build();
-		console.log("after2", signedTransaction.data)
 
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 	}
