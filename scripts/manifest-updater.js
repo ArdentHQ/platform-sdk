@@ -56,6 +56,8 @@ const updaters = {
 					"usernameResignation",
 					"delegateRegistration",
 					"delegateResignation",
+					"validatorRegistration",
+					"validatorResignation",
 					"estimateExpiration",
 					"htlcClaim",
 					"htlcLock",
