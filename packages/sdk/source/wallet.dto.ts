@@ -53,6 +53,10 @@ export class AbstractWalletData {
 		return undefined;
 	}
 
+	public validatorPublicKey(): string | undefined {
+		return undefined;
+	}
+
 	public rank(): number | undefined {
 		return undefined;
 	}
@@ -75,6 +79,14 @@ export class AbstractWalletData {
 		return false;
 	}
 
+	public isValidator(): boolean {
+		return false;
+	}
+
+	public isResignedValidator(): boolean {
+		return false;
+	}
+
 	public isMultiSignature(): boolean {
 		return false;
 	}
@@ -90,7 +102,9 @@ export class AbstractWalletData {
 			isDelegate: this.isDelegate(),
 			isMultiSignature: this.isMultiSignature(),
 			isResignedDelegate: this.isResignedDelegate(),
+			isResignedValidator: this.isResignedValidator(),
 			isSecondSignature: this.isSecondSignature(),
+			isValidator: this.isValidator(),
 			nonce: this.nonce(),
 			publicKey: this.publicKey(),
 			rank: this.rank(),
