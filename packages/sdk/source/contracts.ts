@@ -43,6 +43,8 @@ export interface WalletData {
 	// Delegate
 	username(): string | undefined;
 
+	validatorPublicKey(): string | undefined;
+
 	rank(): number | undefined;
 
 	votes(): BigNumber | undefined;
