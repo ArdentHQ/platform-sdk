@@ -65,7 +65,7 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 	}
 
 	public override isResignedDelegate(): boolean {
-		return this.isValidator();
+		return this.isResignedValidator();
 	}
 
 	public override isValidator(): boolean {
