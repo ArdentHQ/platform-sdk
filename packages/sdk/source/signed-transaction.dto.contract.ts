@@ -36,8 +36,10 @@ export interface SignedTransactionData {
 	isTransfer(): boolean;
 	isSecondSignature(): boolean;
 	isDelegateRegistration(): boolean;
+	isValidatorRegistration(): boolean;
 	isUsernameRegistration(): boolean;
 	isUsernameResignation(): boolean;
+	isValidatorResignation(): boolean;
 	isVoteCombination(): boolean;
 	isVote(): boolean;
 	isUnvote(): boolean;
@@ -67,6 +69,7 @@ export interface SignedTransactionData {
 
 	// @TODO: remove those after introducing proper signed tx DTOs
 	username(): string;
+	validatorPublicKey(): string;
 	hash(): string;
 	recipients(): MultiPaymentRecipient[];
 	sanitizeSignatures(): Promise<void>;

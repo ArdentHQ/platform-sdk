@@ -136,6 +136,10 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 		return false;
 	}
 
+	public isValidatorRegistration(): boolean {
+		return false;
+	}
+
 	public isVoteCombination(): boolean {
 		return false;
 	}
@@ -161,6 +165,10 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	public isDelegateResignation(): boolean {
+		return false;
+	}
+
+	public isValidatorResignation(): boolean {
 		return false;
 	}
 
@@ -232,6 +240,10 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)
 	public username(): string {
 		return this.signedData.asset.delegate.username;
+	}
+
+	public validatorPublicKey(): string {
+		return this.signedData.asset.validatorPublicKey;
 	}
 
 	public hash(): string {

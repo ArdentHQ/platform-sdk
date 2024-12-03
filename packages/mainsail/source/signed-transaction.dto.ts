@@ -70,8 +70,13 @@ export class SignedTransactionData
 	public override isUsernameResignation(): boolean {
 		return TransactionTypeService.isUsernameResignation(this.signedData);
 	}
+
 	public override isDelegateRegistration(): boolean {
-		return TransactionTypeService.isDelegateRegistration(this.signedData);
+		return this.isValidatorRegistration();
+	}
+
+	public override isValidatorRegistration(): boolean {
+		return TransactionTypeService.isValidatorRegistration(this.signedData);
 	}
 
 	public override isVoteCombination(): boolean {
@@ -94,6 +99,10 @@ export class SignedTransactionData
 		return this.signedData.asset.username;
 	}
 
+	public override validatorPublicKey(): string {
+		return this.signedData.asset.validatorPublicKey;
+	}
+
 	public override isIpfs(): boolean {
 		return false;
 	}
@@ -103,7 +112,11 @@ export class SignedTransactionData
 	}
 
 	public override isDelegateResignation(): boolean {
-		return TransactionTypeService.isDelegateResignation(this.signedData);
+		return this.isValidatorResignation();
+	}
+
+	public override isValidatorResignation(): boolean {
+		return TransactionTypeService.isValidatorResignation(this.signedData);
 	}
 
 	public override isHtlcLock(): boolean {
