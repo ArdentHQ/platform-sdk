@@ -62,8 +62,8 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 	Transaction: [
 		"usernameRegistration",
 		"usernameResignation",
-		"validatorRegistration",
-		"validatorResignation",
+		"delegateRegistration",
+		"delegateResignation",
 		"estimateExpiration",
 		"multiPayment",
 		"transfer",
