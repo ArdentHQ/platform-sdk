@@ -25,6 +25,10 @@ export class TransactionTypeService {
 	}
 
 	public static isDelegateRegistration(data: TransactionData): boolean {
+		return this.isValidatorRegistration(data);
+	}
+
+	public static isValidatorRegistration(data: TransactionData): boolean {
 		return data.data.startsWith(TransactionTypes.RegisterValidator);
 	}
 
@@ -67,6 +71,10 @@ export class TransactionTypeService {
 	}
 
 	public static isDelegateResignation(data: TransactionData): boolean {
+		return this.isValidatorResignation(data);
+	}
+
+	public static isValidatorResignation(data: TransactionData): boolean {
 		return data.data.startsWith(TransactionTypes.ResignValidator);
 	}
 

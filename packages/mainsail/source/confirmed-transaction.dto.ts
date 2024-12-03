@@ -106,7 +106,11 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isDelegateRegistration(): boolean {
-		return TransactionTypeService.isDelegateRegistration(this.data);
+		return this.isValidatorRegistration();
+	}
+
+	public override isValidatorRegistration(): boolean {
+		return TransactionTypeService.isValidatorRegistration(this.data);
 	}
 
 	public override isVoteCombination(): boolean {
@@ -130,7 +134,11 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isDelegateResignation(): boolean {
-		return TransactionTypeService.isDelegateResignation(this.data);
+		return this.isValidatorResignation();
+	}
+
+	public override isValidatorResignation(): boolean {
+		return TransactionTypeService.isValidatorResignation(this.data);
 	}
 
 	public override isMagistrate(): boolean {
@@ -140,6 +148,10 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	// Username registration
 	public override username(): string {
 		return this.data.asset?.username;
+	}
+
+	public override validatorPublicKey(): string {
+		return this.data.asset?.validatorPublicKey;
 	}
 
 	// Transfer

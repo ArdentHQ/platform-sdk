@@ -182,6 +182,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		return false;
 	}
 
+	public isValidatorRegistration(): boolean {
+		return false;
+	}
+
 	public isVoteCombination(): boolean {
 		return false;
 	}
@@ -207,6 +211,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	}
 
 	public isDelegateResignation(): boolean {
+		return false;
+	}
+
+	public isValidatorResignation(): boolean {
 		return false;
 	}
 
@@ -238,6 +246,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	// Delegate Registration
 	public username(): string {
 		throw new NotImplemented(this.constructor.name, this.username.name);
+	}
+
+	public validatorPublicKey(): string {
+		throw new NotImplemented(this.constructor.name, this.validatorPublicKey.name);
 	}
 
 	// Vote
