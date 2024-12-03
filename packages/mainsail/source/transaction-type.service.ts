@@ -1,5 +1,5 @@
 import { Exceptions } from "@ardenthq/sdk";
-import { FunctionSigs } from "@mainsail/evm-contracts/distribution/function-sigs.js";
+import { FunctionSigs } from "@mainsail/evm-contracts";
 
 type TransactionData = Record<string, any>;
 
@@ -33,11 +33,17 @@ export class TransactionTypeService {
 	}
 
 	public static isVote(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.Vote);
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
+		return data.data.includes(TransactionTypes.Vote.slice(2)); // remove `0x` prefix from api response
 	}
 
 	public static isUnvote(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.Unvote);
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
+		return data.data.includes(TransactionTypes.Unvote.slice(2)); // remove `0x` prefix from api response
 	}
 
 	public static isMultiSignatureRegistration(data: TransactionData): boolean {
