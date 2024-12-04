@@ -4,6 +4,7 @@ import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 
+import { Hex } from "viem";
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
@@ -101,7 +102,13 @@ export class SignedTransactionData
 	}
 
 	public override validatorPublicKey(): string {
-		const key = decodeFunctionData(this.signedData.data).args[0] as string;
+		let data = this.signedData.data as string;
+
+		if (!data.startsWith('0x')) {
+			data = `0x${data}`;
+		}
+
+		const key = decodeFunctionData(data as Hex).args[0] as string;
 		return key.slice(2); // removes 0x part
 	}
 
