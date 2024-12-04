@@ -133,6 +133,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return this.#data.isDelegateRegistration();
 	}
 
+	public isValidatorRegistration(): boolean {
+		return this.#data.isValidatorRegistration();
+	}
+
 	public isVoteCombination(): boolean {
 		return this.#data.isVoteCombination();
 	}
@@ -161,6 +165,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return this.#data.isDelegateResignation();
 	}
 
+	public isValidatorResignation(): boolean {
+		return this.#data.isValidatorResignation();
+	}
+
 	public isHtlcLock(): boolean {
 		return this.#data.isHtlcLock();
 	}
@@ -179,6 +187,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 
 	public username(): string {
 		return this.data<Contracts.ConfirmedTransactionData>().username();
+	}
+
+	public validatorPublicKey(): string {
+		return this.data<Contracts.ConfirmedTransactionData>().validatorPublicKey();
 	}
 
 	public lockTransactionId(): string {

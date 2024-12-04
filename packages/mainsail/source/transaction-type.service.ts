@@ -25,7 +25,14 @@ export class TransactionTypeService {
 	}
 
 	public static isDelegateRegistration(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.RegisterValidator);
+		return this.isValidatorRegistration(data);
+	}
+
+	public static isValidatorRegistration(data: TransactionData): boolean {
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
+		return data.data.includes(TransactionTypes.RegisterValidator.slice(2)); // remove `0x` prefix from api response
 	}
 
 	public static isVoteCombination(data: TransactionData): boolean {
@@ -67,7 +74,14 @@ export class TransactionTypeService {
 	}
 
 	public static isDelegateResignation(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.ResignValidator);
+		return this.isValidatorResignation(data);
+	}
+
+	public static isValidatorResignation(data: TransactionData): boolean {
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
+		return data.data.includes(TransactionTypes.ResignValidator.slice(2)); // remove `0x` prefix from api response
 	}
 
 	public static isHtlcLock(data: TransactionData): boolean {

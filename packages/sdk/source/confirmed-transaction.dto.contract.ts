@@ -74,6 +74,8 @@ export interface ConfirmedTransactionData {
 
 	isDelegateRegistration(): boolean;
 
+	isValidatorRegistration(): boolean;
+
 	isVoteCombination(): boolean;
 
 	isVote(): boolean;
@@ -87,6 +89,8 @@ export interface ConfirmedTransactionData {
 	isMultiPayment(): boolean;
 
 	isDelegateResignation(): boolean;
+
+	isValidatorResignation(): boolean;
 
 	isHtlcLock(): boolean;
 
@@ -103,6 +107,8 @@ export interface ConfirmedTransactionData {
 
 	// Delegate Registration
 	username(): string;
+
+	validatorPublicKey(): string;
 
 	// Vote
 	votes(): string[];

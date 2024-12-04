@@ -103,6 +103,10 @@ export class ExtendedSignedTransactionData {
 		return this.#data.isDelegateRegistration();
 	}
 
+	public isValidatorRegistration(): boolean {
+		return this.#data.isValidatorRegistration();
+	}
+
 	public isUsernameRegistration(): boolean {
 		return this.#data.isUsernameRegistration();
 	}
@@ -137,6 +141,10 @@ export class ExtendedSignedTransactionData {
 
 	public isDelegateResignation(): boolean {
 		return this.#data.isDelegateResignation();
+	}
+
+	public isValidatorResignation(): boolean {
+		return this.#data.isValidatorResignation();
 	}
 
 	public isHtlcLock(): boolean {
@@ -219,6 +227,10 @@ export class ExtendedSignedTransactionData {
 	// @TODO: remove those after introducing proper signed tx DTOs (ARK/LSK specific)
 	public username(): string {
 		return this.#data.username();
+	}
+
+	public validatorPublicKey(): string {
+		return this.#data.validatorPublicKey();
 	}
 
 	public hash(): string {

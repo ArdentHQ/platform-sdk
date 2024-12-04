@@ -4,9 +4,11 @@ import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 
+import { Hex } from "viem";
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { decodeFunctionData } from "./helpers/decode-function-data.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
@@ -70,8 +72,13 @@ export class SignedTransactionData
 	public override isUsernameResignation(): boolean {
 		return TransactionTypeService.isUsernameResignation(this.signedData);
 	}
+
 	public override isDelegateRegistration(): boolean {
-		return TransactionTypeService.isDelegateRegistration(this.signedData);
+		return this.isValidatorRegistration();
+	}
+
+	public override isValidatorRegistration(): boolean {
+		return TransactionTypeService.isValidatorRegistration(this.signedData);
 	}
 
 	public override isVoteCombination(): boolean {
@@ -94,6 +101,17 @@ export class SignedTransactionData
 		return this.signedData.asset.username;
 	}
 
+	public override validatorPublicKey(): string {
+		let data = this.signedData.data as string;
+
+		if (!data.startsWith("0x")) {
+			data = `0x${data}`;
+		}
+
+		const key = decodeFunctionData(data as Hex).args[0] as string;
+		return key.slice(2); // removes 0x part
+	}
+
 	public override isIpfs(): boolean {
 		return false;
 	}
@@ -103,7 +121,11 @@ export class SignedTransactionData
 	}
 
 	public override isDelegateResignation(): boolean {
-		return TransactionTypeService.isDelegateResignation(this.signedData);
+		return this.isValidatorResignation();
+	}
+
+	public override isValidatorResignation(): boolean {
+		return TransactionTypeService.isValidatorResignation(this.signedData);
 	}
 
 	public override isHtlcLock(): boolean {

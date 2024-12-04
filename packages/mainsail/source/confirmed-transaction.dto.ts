@@ -5,6 +5,7 @@ import { DateTime } from "@ardenthq/sdk-intl";
 import { BindingType } from "./coin.contract.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { decodeFunctionData } from "./helpers/decode-function-data.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	readonly #addressService: Services.AddressService;
@@ -106,7 +107,11 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isDelegateRegistration(): boolean {
-		return TransactionTypeService.isDelegateRegistration(this.data);
+		return this.isValidatorRegistration();
+	}
+
+	public override isValidatorRegistration(): boolean {
+		return TransactionTypeService.isValidatorRegistration(this.data);
 	}
 
 	public override isVoteCombination(): boolean {
@@ -130,7 +135,11 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isDelegateResignation(): boolean {
-		return TransactionTypeService.isDelegateResignation(this.data);
+		return this.isValidatorResignation();
+	}
+
+	public override isValidatorResignation(): boolean {
+		return TransactionTypeService.isValidatorResignation(this.data);
 	}
 
 	public override isMagistrate(): boolean {
@@ -140,6 +149,11 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	// Username registration
 	public override username(): string {
 		return this.data.asset?.username;
+	}
+
+	public override validatorPublicKey(): string {
+		const key = decodeFunctionData(this.data.data).args[0] as string;
+		return key.slice(2); // removes 0x part
 	}
 
 	// Transfer
