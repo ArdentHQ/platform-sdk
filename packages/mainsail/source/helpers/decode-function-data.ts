@@ -1,4 +1,4 @@
-import { decodeFunctionData as viemDecodeFunctionData, } from "viem";
+import { decodeFunctionData as viemDecodeFunctionData, Hex } from "viem";
 import { ConsensusAbi } from "@mainsail/evm-contracts";
 
 interface FunctionData {
@@ -6,7 +6,7 @@ interface FunctionData {
 	args: any[];
 }
 
-export const decodeFunctionData = (data: string): FunctionData => {
+export const decodeFunctionData = (data: Hex): FunctionData => {
 	try {
 		const result = viemDecodeFunctionData({
 			abi: ConsensusAbi.abi,
