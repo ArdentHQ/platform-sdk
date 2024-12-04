@@ -209,4 +209,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	public override async normalizeData(): Promise<void> {
 		this.data.sender = (await this.#addressService.fromPublicKey(this.data.senderPublicKey)).address;
 	}
+
+	public override isSuccess(): boolean {
+		return this.data.success === true;
+	}
 }

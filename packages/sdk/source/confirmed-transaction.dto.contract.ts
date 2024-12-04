@@ -148,6 +148,8 @@ export interface ConfirmedTransactionData {
 	setMeta(key: string, value: TransactionDataMeta): void;
 
 	normalizeData(): Promise<void>;
+
+	isSuccess(): boolean;
 }
 
 export type ConfirmedTransactionDataCollection = ConfirmedTransactionData[];
