@@ -366,5 +366,4 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	public isSuccess(): boolean {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.isSuccess.name);
 	}
-
 }
