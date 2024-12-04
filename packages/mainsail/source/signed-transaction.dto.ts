@@ -104,7 +104,7 @@ export class SignedTransactionData
 	public override validatorPublicKey(): string {
 		let data = this.signedData.data as string;
 
-		if (!data.startsWith('0x')) {
+		if (!data.startsWith("0x")) {
 			data = `0x${data}`;
 		}
 
