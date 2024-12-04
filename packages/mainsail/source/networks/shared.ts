@@ -64,6 +64,8 @@ export const featureFlags: Networks.NetworkManifestFeatureFlags = {
 		"usernameResignation",
 		"delegateRegistration",
 		"delegateResignation",
+		"validatorRegistration",
+		"validatorResignation",
 		"estimateExpiration",
 		"multiPayment",
 		"transfer",
