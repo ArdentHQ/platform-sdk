@@ -243,7 +243,7 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	public validatorPublicKey(): string {
-		return this.signedData.asset.validatorPublicKey;
+		throw new NotImplemented(this.constructor.name, this.validatorPublicKey.name);
 	}
 
 	public hash(): string {

@@ -7,6 +7,7 @@ import { Application } from "@mainsail/kernel";
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { decodeFunctionData } from "./helpers/decode-function-data.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
@@ -100,7 +101,8 @@ export class SignedTransactionData
 	}
 
 	public override validatorPublicKey(): string {
-		return this.signedData.asset.validatorPublicKey;
+		const key = decodeFunctionData(this.signedData.data).args[0] as string;
+		return key.slice(2); // removes 0x part
 	}
 
 	public override isIpfs(): boolean {

@@ -5,6 +5,7 @@ import { DateTime } from "@ardenthq/sdk-intl";
 import { BindingType } from "./coin.contract.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { decodeFunctionData } from "./helpers/decode-function-data.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	readonly #addressService: Services.AddressService;
@@ -151,7 +152,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override validatorPublicKey(): string {
-		return this.data.asset?.validatorPublicKey;
+		const key = decodeFunctionData(this.data.data).args[0] as string;
+		return key.slice(2); // removes 0x part
 	}
 
 	// Transfer
