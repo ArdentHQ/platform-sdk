@@ -334,7 +334,6 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 	}
 
 	public isSuccess(): boolean {
-		return this.#data.isSuccess()
+		return this.#data.isSuccess();
 	}
-
 }

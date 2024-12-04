@@ -366,5 +366,4 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	public async normalizeData(): Promise<void> {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.normalizeData.name);
 	}
-
 }
