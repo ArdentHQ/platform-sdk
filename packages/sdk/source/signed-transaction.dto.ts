@@ -198,7 +198,7 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	public methodHash(): string {
-		return "transfer"
+		return "transfer";
 	}
 
 	public usesMultiSignature(): boolean {

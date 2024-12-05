@@ -193,7 +193,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override methodHash(): string {
-		return this.data.data.slice(0, 10)
+		return this.data.data.slice(0, 10);
 	}
 
 	// IPFS

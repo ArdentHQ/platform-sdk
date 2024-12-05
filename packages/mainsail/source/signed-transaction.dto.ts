@@ -145,7 +145,7 @@ export class SignedTransactionData
 	}
 
 	public override methodHash(): string {
-		return this.signedData.data.slice(0, 8)
+		return this.signedData.data.slice(0, 8);
 	}
 
 	public override usesMultiSignature(): boolean {
