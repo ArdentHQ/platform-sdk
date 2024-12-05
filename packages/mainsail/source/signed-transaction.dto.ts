@@ -144,6 +144,10 @@ export class SignedTransactionData
 		return TransactionTypeService.isMagistrate(this.signedData);
 	}
 
+	public override methodHash(): string | undefined {
+		return this.signedData.data.slice(0, 10)
+	}
+
 	public override usesMultiSignature(): boolean {
 		return !!this.signedData.multiSignature;
 	}

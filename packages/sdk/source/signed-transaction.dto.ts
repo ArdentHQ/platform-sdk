@@ -22,16 +22,21 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	readonly #types = {
 		delegateRegistration: "isDelegateRegistration",
 		delegateResignation: "isDelegateResignation",
-		usernameRegistration: "isUsernameRegistration",
-		usernameResignation: "isUsernameResignation",
+		htlcClaim: "isHtlcClaim",
+		htlcLock: "isHtlcLock",
+		htlcRefund: "isHtlcRefund",
 		ipfs: "isIpfs",
 		magistrate: "isMagistrate",
 		multiPayment: "isMultiPayment",
 		multiSignature: "isMultiSignatureRegistration",
 		secondSignature: "isSecondSignature",
 		transfer: "isTransfer",
+		usernameRegistration: "isUsernameRegistration",
 		unlockToken: "isUnlockToken",
+		usernameResignation: "isUsernameResignation",
 		unvote: "isUnvote",
+		validatorRegistration: "isValidatorRegistration",
+		validatorResignation: "isValidatorResignation",
 		vote: "isVote",
 		voteCombination: "isVoteCombination",
 	};
@@ -81,7 +86,7 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 			}
 		}
 
-		return "transfer";
+		return this.methodHash();
 	}
 
 	public data(): RawTransactionData {
@@ -190,6 +195,10 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 
 	public isUnlockToken(): boolean {
 		return false;
+	}
+
+	public methodHash(): string {
+		return "transfer"
 	}
 
 	public usesMultiSignature(): boolean {
