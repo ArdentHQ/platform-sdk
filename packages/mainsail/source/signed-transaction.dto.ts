@@ -144,7 +144,7 @@ export class SignedTransactionData
 		return TransactionTypeService.isMagistrate(this.signedData);
 	}
 
-	public override methodHash(): string | undefined {
+	public override methodHash(): string {
 		return this.signedData.data.slice(0, 8)
 	}
 
