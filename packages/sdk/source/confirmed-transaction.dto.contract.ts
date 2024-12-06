@@ -126,6 +126,8 @@ export interface ConfirmedTransactionData {
 	// Multi-Payment
 	payments(): { recipientId: string; amount: BigNumber }[];
 
+	methodHash(): string;
+
 	// HTLC Claim / Refund
 	lockTransactionId(): string;
 

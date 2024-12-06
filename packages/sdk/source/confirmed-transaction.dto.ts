@@ -28,8 +28,6 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 
 	readonly #types = {
 		delegateRegistration: "isDelegateRegistration",
-		usernameRegistration: "isUsernameRegistration",
-		usernameResignation: "isUsernameResignation",
 		delegateResignation: "isDelegateResignation",
 		htlcClaim: "isHtlcClaim",
 		htlcLock: "isHtlcLock",
@@ -40,8 +38,12 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		multiSignature: "isMultiSignatureRegistration",
 		secondSignature: "isSecondSignature",
 		transfer: "isTransfer",
+		usernameRegistration: "isUsernameRegistration",
 		unlockToken: "isUnlockToken",
+		usernameResignation: "isUsernameResignation",
 		unvote: "isUnvote",
+		validatorRegistration: "isValidatorRegistration",
+		validatorResignation: "isValidatorResignation",
 		vote: "isVote",
 		voteCombination: "isVoteCombination",
 	};
@@ -91,7 +93,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 			}
 		}
 
-		return "transfer";
+		return this.methodHash();
 	}
 
 	public timestamp(): DateTime | undefined {
@@ -278,6 +280,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	// Multi-Payment
 	public payments(): { recipientId: string; amount: BigNumber }[] {
 		throw new NotImplemented(this.constructor.name, this.payments.name);
+	}
+
+	public methodHash(): string {
+		return "transfer";
 	}
 
 	// HTLC Claim / Refund

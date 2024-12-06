@@ -144,6 +144,14 @@ export class SignedTransactionData
 		return TransactionTypeService.isMagistrate(this.signedData);
 	}
 
+	public override methodHash(): string {
+		// Signed transactions do not have data prefixed with `0x`
+		// that is why we are using first 8 chars to extract method.
+		const methodName = this.signedData.data.slice(0, 8);
+
+		return `0x${methodName}`;
+	}
+
 	public override usesMultiSignature(): boolean {
 		return !!this.signedData.multiSignature;
 	}
