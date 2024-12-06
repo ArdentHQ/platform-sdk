@@ -145,7 +145,11 @@ export class SignedTransactionData
 	}
 
 	public override methodHash(): string {
-		return this.signedData.data.slice(0, 8)
+		// Signed transactions do not have data prefixed with `0x`
+		// that is why we are using first 8 chars to extract method.
+		const methodName = this.signedData.data.slice(0, 8)
+
+		return `0x${methodName}`;
 	}
 
 	public override usesMultiSignature(): boolean {
