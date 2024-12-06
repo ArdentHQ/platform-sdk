@@ -17,7 +17,7 @@ export const trimHexPrefix = (type: string): string => {
 
 export class TransactionTypeService {
 	public static isTransfer(data: TransactionData): boolean {
-		return data.data === "";
+		return data.data === TransactionTypes.Transfer;
 	}
 
 	public static isSecondSignature(data: TransactionData): boolean {
