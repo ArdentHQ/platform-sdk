@@ -7,7 +7,7 @@ export const TransactionTypes = {
 	MultiPayment: "0x88d695b2",
 	RegisterUsername: "0x36a94134",
 	ResignUsername: "0xusernameres",
-	Transfer: "0x",
+	Transfer: "",
 	...FunctionSigs.ConsensusV1,
 } as const;
 
