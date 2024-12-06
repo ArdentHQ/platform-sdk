@@ -283,7 +283,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	}
 
 	public methodHash(): string {
-		return "transfer"
+		return "transfer";
 	}
 
 	// HTLC Claim / Refund
