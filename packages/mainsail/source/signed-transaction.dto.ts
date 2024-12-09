@@ -57,6 +57,22 @@ export class SignedTransactionData
 		return DateTime.make();
 	}
 
+	// Vote
+	public override votes(): string[] {
+		let data = this.signedData.data as string;
+
+		if (!data.startsWith("0x")) {
+			data = `0x${data}`;
+		}
+
+		const voteAddress = decodeFunctionData(data as Hex).args[0] as string;
+		return [voteAddress];
+	}
+
+	public override unvotes(): string[] {
+		return [];
+	}
+
 	public override isTransfer(): boolean {
 		return TransactionTypeService.isTransfer(this.signedData);
 	}
