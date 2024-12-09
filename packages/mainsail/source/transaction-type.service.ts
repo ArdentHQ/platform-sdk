@@ -5,7 +5,7 @@ type TransactionData = Record<string, any>;
 
 export const TransactionTypes = {
 	MultiPayment: "0x88d695b2",
-	RegisterUsername: "0xusernamereg",
+	RegisterUsername: "0x36a94134",
 	ResignUsername: "0xusernameres",
 	Transfer: "",
 	...FunctionSigs.ConsensusV1,

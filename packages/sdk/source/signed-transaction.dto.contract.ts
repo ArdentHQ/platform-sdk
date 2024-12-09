@@ -53,6 +53,8 @@ export interface SignedTransactionData {
 	isMagistrate(): boolean;
 	isUnlockToken(): boolean;
 
+	methodHash(): string;
+
 	// Indicates if the transaction has been signed with a multi-signature.
 	usesMultiSignature(): boolean;
 

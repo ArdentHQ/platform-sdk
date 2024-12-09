@@ -192,6 +192,12 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		}));
 	}
 
+	public override methodHash(): string {
+		// Confirmed transactions have data prefixed with `0x`
+		// that is why we are using first 10 chars to extract method.
+		return this.data.data.slice(0, 10);
+	}
+
 	// IPFS
 	public override hash(): string {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.hash.name);
