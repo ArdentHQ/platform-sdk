@@ -6,7 +6,7 @@ export const transactions: Networks.NetworkManifestTransactions = {
 		ticker: "ARK",
 		type: "static",
 	},
-	memo: true,
+	memo: false,
 	multiPaymentRecipients: 64,
 	types: [
 		"validatorRegistration",

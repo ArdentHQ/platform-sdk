@@ -100,10 +100,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.value(parseUnits(input.data.amount, "ark"))
 			.gasPrice(input.fee);
 
-		if (input.data.memo) {
-			transaction.vendorField(input.data.memo);
-		}
-
 		return this.#buildTransaction(input, transaction);
 	}
 
