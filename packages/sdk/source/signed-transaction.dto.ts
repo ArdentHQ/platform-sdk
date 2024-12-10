@@ -78,7 +78,6 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 				continue;
 			}
 
-			console.log(type, method);
 			if (this[method]()) {
 				return type;
 			}
