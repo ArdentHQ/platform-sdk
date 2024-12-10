@@ -163,11 +163,12 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	// Vote
 	public override votes(): string[] {
-		return this.data.asset?.votes ?? [];
+		const voteAddress = decodeFunctionData(this.data.data).args[0] as string;
+		return [voteAddress];
 	}
 
 	public override unvotes(): string[] {
-		return this.data.asset?.unvotes ?? [];
+		return [];
 	}
 
 	// Second-Signature Registration
