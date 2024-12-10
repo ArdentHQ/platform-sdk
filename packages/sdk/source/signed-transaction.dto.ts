@@ -22,17 +22,14 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	readonly #types = {
 		delegateRegistration: "isDelegateRegistration",
 		delegateResignation: "isDelegateResignation",
-		htlcClaim: "isHtlcClaim",
-		htlcLock: "isHtlcLock",
-		htlcRefund: "isHtlcRefund",
 		ipfs: "isIpfs",
 		magistrate: "isMagistrate",
 		multiPayment: "isMultiPayment",
 		multiSignature: "isMultiSignatureRegistration",
 		secondSignature: "isSecondSignature",
 		transfer: "isTransfer",
-		usernameRegistration: "isUsernameRegistration",
 		unlockToken: "isUnlockToken",
+		usernameRegistration: "isUsernameRegistration",
 		usernameResignation: "isUsernameResignation",
 		unvote: "isUnvote",
 		validatorRegistration: "isValidatorRegistration",
@@ -81,6 +78,7 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 				continue;
 			}
 
+			console.log(type, method);
 			if (this[method]()) {
 				return type;
 			}
