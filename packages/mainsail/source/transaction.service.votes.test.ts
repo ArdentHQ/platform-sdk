@@ -6,6 +6,7 @@ import { identity } from "../test/wallets";
 import { AddressService } from "./address.service.js";
 import { ClientService } from "./client.service.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
+import { parseUnits } from "./helpers/parse-units.js";
 import { KeyPairService } from "./key-pair.service.js";
 import { LedgerService } from "./ledger.service.js";
 import { MultiSignatureService } from "./multi-signature.service.js";
@@ -57,7 +58,7 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 
 		assert.is(signedTransaction.isVote(), true);
 		assert.is(signedTransaction.isUnvote(), false);
-		assert.is(signedTransaction.fee().toNumber(), context.defaultInput.fee);
+		assert.is(signedTransaction.fee().toString(), parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"));
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);
 	});
 
@@ -69,7 +70,7 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 
 		assert.is(signedTransaction.isUnvote(), true);
 		assert.is(signedTransaction.isVote(), false);
-		assert.is(signedTransaction.fee().toNumber(), context.defaultInput.fee);
+		assert.is(signedTransaction.fee().toString(), parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"));
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);
 	});
 
