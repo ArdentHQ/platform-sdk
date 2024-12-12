@@ -61,7 +61,7 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 
 	it("should validate an address", async (context) => {
 		assert.true(await context.subject.validate(identity.address));
-		assert.false(await context.subject.validate("AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX"));
+		assert.false(await context.subject.validate("0x71c3377F6baF114A975A15"));
 		assert.false(await context.subject.validate("ABC"));
 		assert.false(await context.subject.validate(""));
 		assert.false(await context.subject.validate());
