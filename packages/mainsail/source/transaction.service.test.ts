@@ -88,8 +88,11 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 	it("should sign a transfer transaction", async (context) => {
 		const signedTransaction = await context.subject.transfer(context.defaultTransferInput);
 
-		assert.is(signedTransaction.fee().toNumber(), context.defaultTransferInput.fee);
-		assert.is(signedTransaction.amount().toString(), parseUnits(context.defaultTransferInput.data.amount));
+		assert.is(signedTransaction.amount().toString(), parseUnits(context.defaultTransferInput.data.amount, "ark"));
+		assert.is(
+			signedTransaction.fee().toString(),
+			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"),
+		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultTransferInput.nonce);
 		assert.is(signedTransaction.recipient(), context.defaultTransferInput.data.to);
 	});
@@ -126,7 +129,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			context.defaultValidatorRegistrationInput,
 		);
 
-		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
+		assert.is(
+			signedTransaction.fee().toString(),
+			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"),
+		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 
 		const validatorKey = new RegExp(context.defaultValidatorRegistrationInput.validatorPublicKey, "g");
@@ -163,7 +169,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 	it("should sign a validator resignation transaction", async (context) => {
 		const signedTransaction = await context.subject.validatorResignation(context.defaultValidatorResignationInput);
 
-		assert.is(signedTransaction.fee().toNumber(), context.defaultValidatorRegistrationInput.fee);
+		assert.is(
+			signedTransaction.fee().toString(),
+			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"),
+		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 	});
 

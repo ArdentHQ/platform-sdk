@@ -3,12 +3,13 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
-
 import { Hex } from "viem";
+
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
-import { TransactionTypeService } from "./transaction-type.service.js";
 import { decodeFunctionData } from "./helpers/decode-function-data.js";
+import { parseUnits } from "./helpers/parse-units.js";
+import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
@@ -42,7 +43,8 @@ export class SignedTransactionData
 	}
 
 	public override fee(): BigNumber {
-		return this.bigNumberService.make(this.signedData.gasPrice);
+		const gasPrice = this.bigNumberService.make(this.signedData.gasPrice);
+		return this.bigNumberService.make(parseUnits(gasPrice.times(this.signedData.gasLimit).toNumber(), "gwei"));
 	}
 
 	public override memo(): string | undefined {

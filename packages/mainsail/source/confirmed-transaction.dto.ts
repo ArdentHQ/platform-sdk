@@ -3,9 +3,9 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { BindingType } from "./coin.contract.js";
+import { decodeFunctionData } from "./helpers/decode-function-data.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
-import { decodeFunctionData } from "./helpers/decode-function-data.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	readonly #addressService: Services.AddressService;
@@ -63,7 +63,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override fee(): BigNumber {
-		return this.bigNumberService.make(parseUnits(this.data.gasPrice, "ark"));
+		const gasPrice = this.bigNumberService.make(this.data.gasPrice);
+		return this.bigNumberService.make(parseUnits(gasPrice.times(this.data.gasLimit).toNumber(), "gwei"));
 	}
 
 	public override asset(): Record<string, unknown> {
