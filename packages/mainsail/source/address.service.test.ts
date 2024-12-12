@@ -36,11 +36,11 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 		assert.equal(result, { address: identity.address, type: "bip39" });
 	});
 
-	// it("should generate an output from a privateKey", async (context) => {
-	// 	const result = await context.subject.fromPrivateKey(identity.privateKey);
-	//
-	// 	assert.equal(result, { address: identity.address, type: "bip39" });
-	// });
+	it("should generate an output from a privateKey", async (context) => {
+		const result = await context.subject.fromPrivateKey(identity.privateKey);
+
+		assert.equal(result, { address: identity.address, type: "bip39" });
+	});
 
 	it("should generate an output from a secret", async (context) => {
 		await assert.rejects(
