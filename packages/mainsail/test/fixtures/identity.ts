@@ -1,7 +1,8 @@
 export const identity = {
 	// Standard
 	address: "0x71c3377F6baF114A975A151c4685E600d13636F6",
-	mnemonic: "proud area jazz debate clip family gift hockey mean soccer obtain naive tattoo bring keep amateur size order ozone guitar swift dash fetch stove",
+	mnemonic:
+		"proud area jazz debate clip family gift hockey mean soccer obtain naive tattoo bring keep amateur size order ozone guitar swift dash fetch stove",
 	// Multi Signature
 	// multiSignature: {
 	// 	min: 3,
