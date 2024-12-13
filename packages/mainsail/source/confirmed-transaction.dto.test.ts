@@ -139,7 +139,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	});
 
 	it("should determine if the transaction is a validator registration", (context) => {
-		assert.false(context.subject.isDelegateRegistration());
+		assert.false(context.subject.isValidatorRegistration());
 	});
 
 	it("should determine if the transaction is a vote", (context) => {
@@ -159,7 +159,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	});
 
 	it("should determine if the transaction is a validator resignation", (context) => {
-		assert.false(context.subject.isDelegateResignation());
+		assert.false(context.subject.isValidatorResignation());
 	});
 
 	it("should turn into an object", (context) => {
