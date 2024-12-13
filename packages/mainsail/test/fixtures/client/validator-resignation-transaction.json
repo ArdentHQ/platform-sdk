@@ -1,0 +1,20 @@
+{
+	"data": {
+		"amount": "0",
+		"blockId": "abedda1b00b72730ba4f21bb60ac759a1d0e2664ff3f318d281ca06110e2a87f",
+		"confirmations": 1,
+		"data": "0xb85f5da2",
+		"gasLimit": "150000",
+		"gasPrice": "5",
+		"id": "83a5c1e37819e7c91ab0a2e6dba9563576b53adb059306a3e82c382e18804ebd",
+		"nonce": "3",
+		"recipient": "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
+		"senderAddress": "0x71c3377F6baF114A975A151c4685E600d13636F6",
+		"senderPublicKey": "0266e0fd7186193eda55e328184fdaab9f7d4a6c867c25ef03a497fd683cae7788",
+		"signature": "b20a725a69ef52d3a00a5d4a540b381fd0c748b1b401c11f54689b0a415b7e2710e9afb44854866ed96348ea1b4562d7543024a6cfba82f4fcb1ae849187571c00",
+		"signatures": null,
+		"timestamp": 1734117483424,
+		"gasUsed": 61289,
+		"success": true
+	}
+}

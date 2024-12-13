@@ -78,7 +78,6 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 		// "fromWIF",
 	]) {
 		it(`should fail to generate an output from an invalid input when using ${method}()`, async (context) => {
-			// console.log(method)
 			await assert.rejects(() => context.subject[method]());
 		});
 	}
