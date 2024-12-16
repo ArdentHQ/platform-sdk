@@ -20,24 +20,24 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	protected decimals!: number | undefined;
 
 	readonly #types = [
-		{method: "isIpfs", type: "ipfs"},
-		{method: "isMagistrate", type: "magistrate"},
-		{method: "isMultiPayment", type: "multiPayment"},
-		{method: "isMultiSignatureRegistration", type: "multiSignature"},
-		{method: "isSecondSignature", type: "secondSignature"},
-		{method: "isTransfer", type: "transfer"},
-		{method: "isUnlockToken", type: "unlockToken"},
-		{method: "isUsernameRegistration", type: "usernameRegistration"},
-		{method: "isUsernameResignation", type: "usernameResignation"},
-		{method: "isUnvote", type: "unvote"},
-		{method: "isValidatorRegistration", type: "validatorRegistration"},
-		{method: "isValidatorResignation", type: "validatorResignation"},
-		{method: "isVote", type: "vote"},
-		{method: "isVoteCombination", type: "voteCombination"},
+		{ method: "isIpfs", type: "ipfs" },
+		{ method: "isMagistrate", type: "magistrate" },
+		{ method: "isMultiPayment", type: "multiPayment" },
+		{ method: "isMultiSignatureRegistration", type: "multiSignature" },
+		{ method: "isSecondSignature", type: "secondSignature" },
+		{ method: "isTransfer", type: "transfer" },
+		{ method: "isUnlockToken", type: "unlockToken" },
+		{ method: "isUsernameRegistration", type: "usernameRegistration" },
+		{ method: "isUsernameResignation", type: "usernameResignation" },
+		{ method: "isUnvote", type: "unvote" },
+		{ method: "isValidatorRegistration", type: "validatorRegistration" },
+		{ method: "isValidatorResignation", type: "validatorResignation" },
+		{ method: "isVote", type: "vote" },
+		{ method: "isVoteCombination", type: "voteCombination" },
 
 		// `delegate` methods should be after `validator` methods
-		{method: "isDelegateRegistration", type: "delegateRegistration"},
-		{method: "isDelegateResignation", type: "delegateResignation"},
+		{ method: "isDelegateRegistration", type: "delegateRegistration" },
+		{ method: "isDelegateResignation", type: "delegateResignation" },
 	];
 
 	protected readonly bigNumberService: BigNumberService;
