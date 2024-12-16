@@ -100,6 +100,7 @@ for (const network of ["devnet"]) {
 			assert.object(context.subject.toObject());
 		});
 
+		// @TODO: fix when MultiSignature implemented
 		// it("should have a multi signature asset", async () => {
 		// 	const devnetSubject = (await createService(WalletData)).fill(WalletDataFixture.devnet);
 		// 	const mainnetSubject = (await createService(WalletData)).fill(WalletDataFixture.mainnet);

@@ -21,6 +21,7 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 		assert.equal(result, { address: identity.address, type: "bip39" });
 	});
 
+	// @TODO: fix when MultiSignature implemented
 	// it("should generate an output from a multiSignature", async (context) => {
 	// 	const result = await context.subject.fromMultiSignature({
 	// 		min: identity.multiSignature.min,
@@ -53,6 +54,7 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 		assert.equal(result, { address: "0xfb36D3cc82953351A7f9a0Fd09c17D271ecBEB03", type: "bip39" });
 	});
 
+	// @TODO: fix when WIF implemented
 	// it("should generate an output from a wif", async (context) => {
 	// 	const result = await context.subject.fromWIF(identity.wif);
 	//

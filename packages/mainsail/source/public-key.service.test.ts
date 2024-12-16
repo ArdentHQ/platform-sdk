@@ -24,6 +24,7 @@ describe("PublicKeyService", async ({ assert, beforeEach, it, nock, loader }) =>
 		await assert.rejects(() => context.subject.fromMnemonic(undefined));
 	});
 
+	// @TODO: fix when MultiSignature implemented
 	// it("should generate an output from a multiSignature", async (context) => {
 	// 	const result = await context.subject.fromMultiSignature(
 	// 		identity.multiSignature.min,
