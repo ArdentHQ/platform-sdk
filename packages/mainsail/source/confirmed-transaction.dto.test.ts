@@ -1,7 +1,7 @@
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { IoC, } from "@ardenthq/sdk";
+import { IoC } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
-import { describe, } from "@ardenthq/sdk-test";
+import { describe } from "@ardenthq/sdk-test";
 import TransferFixture from "../test/fixtures/client/transfer-transaction.json";
 import ValidatorRegistrationFixture from "../test/fixtures/client/validator-registration-transaction.json";
 import ValidatorResignationFixture from "../test/fixtures/client/validator-resignation-transaction.json";
@@ -13,16 +13,12 @@ import { BindingType } from "./coin.contract";
 import { AddressService } from "./address.service";
 
 const createSubject = async () => {
-	return await createService(
-		ConfirmedTransactionData,
-		"mainsail.devnet",
-		function(container: IoC.Container) {
-			if (container.missing(BindingType.AddressService)) {
-				container.constant(BindingType.AddressService, new AddressService(container));
-			}
+	return await createService(ConfirmedTransactionData, "mainsail.devnet", function (container: IoC.Container) {
+		if (container.missing(BindingType.AddressService)) {
+			container.constant(BindingType.AddressService, new AddressService(container));
 		}
-	);
-}
+	});
+};
 
 describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) => {
 	beforeEach(async (context) => {
@@ -182,7 +178,10 @@ describe("ConfirmedTransactionData - ValidatorRegistrationData", ({ assert, befo
 	});
 
 	it("should a validator public key", (context) => {
-		assert.is(context.subject.validatorPublicKey(), "b19b6b95e7e38a9ec8aecc204b630f07a9170c68e035de758fc981783ccad8cc4181dbbd8ee916dcdb2438f29eb937ad");
+		assert.is(
+			context.subject.validatorPublicKey(),
+			"b19b6b95e7e38a9ec8aecc204b630f07a9170c68e035de758fc981783ccad8cc4181dbbd8ee916dcdb2438f29eb937ad",
+		);
 	});
 
 	it("should have a type", (context) => {
@@ -200,7 +199,6 @@ describe("ConfirmedTransactionData - ValidatorResignationData", ({ assert, befor
 		assert.is(context.subject.type(), "validatorResignation");
 	});
 });
-
 
 // @TODO: fix when MultiPayment implemented
 // describe("ConfirmedTransactionData - MultiPaymentData", ({ assert, beforeEach, it, nock, loader }) => {
@@ -230,7 +228,6 @@ describe("ConfirmedTransactionData - ValidatorResignationData", ({ assert, befor
 // 		assert.is(context.subject.type(), "multiPayment");
 // 	});
 // });
-
 
 // @TODO: fix when MultiSignature implemented
 // describe("ConfirmedTransactionData - MultiSignatureData", ({ assert, beforeEach, it, nock, loader }) => {
@@ -263,7 +260,7 @@ describe("ConfirmedTransactionData - ValidatorResignationData", ({ assert, befor
 
 describe("ConfirmedTransactionData - VoteData", ({ assert, beforeEach, it, nock, loader }) => {
 	beforeEach(async (context) => {
-		context.subject = await createSubject()
+		context.subject = await createSubject();
 		context.subject.configure(VoteFixture.data);
 	});
 
@@ -279,7 +276,7 @@ describe("ConfirmedTransactionData - VoteData", ({ assert, beforeEach, it, nock,
 
 describe("ConfirmedTransactionData - UnvoteData", ({ assert, beforeEach, it, nock, loader }) => {
 	beforeEach(async (context) => {
-		context.subject = await createSubject()
+		context.subject = await createSubject();
 		context.subject.configure(UnvoteFixture.data);
 	});
 

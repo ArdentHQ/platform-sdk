@@ -47,7 +47,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 
 		// `delegate` methods should be after `validator` methods
 		{ type: "delegateRegistration", method: "isDelegateRegistration" },
-		{ type: "delegateResignation", method: "isDelegateResignation" }
+		{ type: "delegateResignation", method: "isDelegateResignation" },
 	];
 
 	protected decimals?: number;
@@ -85,7 +85,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 			return "voteCombination";
 		}
 
-		for (const {type, method} of this.#types) {
+		for (const { type, method } of this.#types) {
 			if (type === "voteCombination") {
 				continue;
 			}
