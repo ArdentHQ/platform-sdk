@@ -139,7 +139,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 	): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
 
-		const transactionWithSignature = await this.#multiSignatureSigner().addSignature(transaction, signatory);
+		const transactionWithSignature = await this.#multiSignatureSigner().addSignature();
 
 		return this.#dataTransferObjectService.signedTransaction(
 			transactionWithSignature.id!,

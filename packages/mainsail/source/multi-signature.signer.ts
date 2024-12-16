@@ -1,8 +1,8 @@
 import { IoC, Services } from "@ardenthq/sdk";
+import { Exceptions } from "@mainsail/contracts";
 import { Application } from "@mainsail/kernel";
 
 import { BindingType } from "./coin.contract.js";
-import { NotImplemented } from "./crypto/errors.js";
 import { Managers } from "./crypto/index.js";
 import { MultiSignatureTransaction } from "./multi-signature.contract.js";
 
@@ -21,10 +21,10 @@ export class MultiSignatureSigner {
 	}
 
 	public sign(): MultiSignatureTransaction {
-		throw new NotImplemented(this.constructor.name, this.sign.name);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.sign.name);
 	}
 
 	public async addSignature(): Promise<MultiSignatureTransaction> {
-		throw new NotImplemented(this.constructor.name, this.addSignature.name);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.addSignature.name);
 	}
 }

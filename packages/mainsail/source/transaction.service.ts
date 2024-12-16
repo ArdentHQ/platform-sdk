@@ -8,8 +8,7 @@ import { encodeFunctionData } from "viem";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
-import { Interfaces, Transactions } from "./crypto/index.js";
-import { BuilderFactory } from "./crypto/transactions/index.js";
+import { Interfaces } from "./crypto/index.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { Request } from "./request.js";
 
