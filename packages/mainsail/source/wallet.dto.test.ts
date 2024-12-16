@@ -8,28 +8,29 @@ for (const network of ["devnet"]) {
 	describe(`WalletData - ${network}`, ({ assert, beforeEach, it, nock, loader }) => {
 		const WalletDataFixture = {
 			devnet: {
-				"address": "0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84",
-				"attributes": {
-					"validatorApproval": 0.0189,
-					"validatorForgedFees": "515",
-					"validatorForgedRewards": "1000000000000000102",
-					"validatorForgedTotal": "1000000000000000617",
-					"validatorLastBlock": {
-						"height": 194_405,
-						"id": "5da85131f1495972df05204f8c15f6bf0f7b976e7e0313a5d39d981230a15445",
-						"timestamp": 1_734_356_107_424
+				address: "0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84",
+				attributes: {
+					validatorApproval: 0.0189,
+					validatorForgedFees: "515",
+					validatorForgedRewards: "1000000000000000102",
+					validatorForgedTotal: "1000000000000000617",
+					validatorLastBlock: {
+						height: 194_405,
+						id: "5da85131f1495972df05204f8c15f6bf0f7b976e7e0313a5d39d981230a15445",
+						timestamp: 1_734_356_107_424,
 					},
-					"validatorProducedBlocks": 3669,
-					"validatorPublicKey": "b6ce18e6d4a21fdf469a45c5299ae7e20b64f4bb2d077aa7bb0d315f844dbfeefb262064e49516f1d0d1dc9260fd0edd",
-					"validatorRank": 17,
-					"validatorResigned": false,
-					"validatorVoteBalance": "2362976566037735849161603",
-					"validatorVotersCount": 1,
-					"vote": "0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84"
+					validatorProducedBlocks: 3669,
+					validatorPublicKey:
+						"b6ce18e6d4a21fdf469a45c5299ae7e20b64f4bb2d077aa7bb0d315f844dbfeefb262064e49516f1d0d1dc9260fd0edd",
+					validatorRank: 17,
+					validatorResigned: false,
+					validatorVoteBalance: "2362976566037735849161603",
+					validatorVotersCount: 1,
+					vote: "0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84",
 				},
-				"balance": "2362976566037735849161603",
-				"nonce": "2",
-				"publicKey": "03a9927b2d4e5481abffb44c3362fafe54a295057224909d6cc9d8674a7a2ad2c6",
+				balance: "2362976566037735849161603",
+				nonce: "2",
+				publicKey: "03a9927b2d4e5481abffb44c3362fafe54a295057224909d6cc9d8674a7a2ad2c6",
 			},
 		};
 
@@ -82,7 +83,7 @@ for (const network of ["devnet"]) {
 				attributes: {
 					...WalletDataFixture.devnet.attributes,
 					validatorResigned: true,
-				}
+				},
 			});
 
 			assert.false(context.subject.isValidator());
