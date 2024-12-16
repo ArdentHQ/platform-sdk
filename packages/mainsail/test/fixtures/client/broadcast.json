@@ -1,17 +1,9 @@
 {
 	"data": {
-		"accept": [
-			0
-		],
-		"broadcast": [
-			0
-		],
-		"excess": [
-
-		],
-		"invalid": [
-			1
-		]
+		"accept": [0],
+		"broadcast": [0],
+		"excess": [],
+		"invalid": [1]
 	},
 	"errors": {
 		"1": [

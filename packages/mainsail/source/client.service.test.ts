@@ -148,7 +148,9 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 	});
 
 	it("should retrieve a validator", async (context) => {
-		nock.fake(/.+/).get("/api/delegates/0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84").reply(200, loader.json(`test/fixtures/client/validator.json`));
+		nock.fake(/.+/)
+			.get("/api/delegates/0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84")
+			.reply(200, loader.json(`test/fixtures/client/validator.json`));
 
 		const result = await context.subject.delegate("0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84");
 
@@ -243,7 +245,9 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 	});
 
 	it("should retrieve a list of voters", async (context) => {
-		nock.fake(/.+/).get("/api/delegates/0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84/voters").reply(200, loader.json(`test/fixtures/client/voters.json`));
+		nock.fake(/.+/)
+			.get("/api/delegates/0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84/voters")
+			.reply(200, loader.json(`test/fixtures/client/voters.json`));
 
 		const result = await context.subject.voters("0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84");
 
@@ -263,7 +267,7 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 			accepted: ["accepted-tx"],
 			rejected: ["failed-tx"],
 			errors: {
-				"1": "tx 123 cannot be applied"
+				"1": "tx 123 cannot be applied",
 			},
 		});
 	});
@@ -286,7 +290,7 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 			accepted: ["accepted-tx"],
 			rejected: ["failed-tx"],
 			errors: {
-				"1": "tx 123 cannot be applied"
+				"1": "tx 123 cannot be applied",
 			},
 		});
 	});
