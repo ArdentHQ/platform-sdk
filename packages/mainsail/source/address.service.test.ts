@@ -54,7 +54,7 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 		assert.equal(result, { address: "0xfb36D3cc82953351A7f9a0Fd09c17D271ecBEB03", type: "bip39" });
 	});
 
-	// @TODO: fix when WIF implemented
+	// @TODO: fix when WIF implemented https://app.clickup.com/t/86dveqxwz
 	// it("should generate an output from a wif", async (context) => {
 	// 	const result = await context.subject.fromWIF(identity.wif);
 	//
@@ -77,7 +77,7 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 		"fromPublicKey",
 		"fromPrivateKey",
 		"fromSecret",
-		// "fromWIF",
+		// "fromWIF", @TODO: fix when WIF implemented https://app.clickup.com/t/86dveqxwz
 	]) {
 		it(`should fail to generate an output from an invalid input when using ${method}()`, async (context) => {
 			await assert.rejects(() => context.subject[method]());

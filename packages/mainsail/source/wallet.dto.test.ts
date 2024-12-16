@@ -65,6 +65,7 @@ for (const network of ["devnet"]) {
 			assert.undefined(context.subject.secondPublicKey());
 		});
 
+		// @TODO enable when username is implemented https://app.clickup.com/t/86dveqxwz
 		// it("should have a username", (context) => {
 		// 	assert.is(context.subject.username(), "arkx");
 		// });
