@@ -20,9 +20,10 @@
 		"build:watch": "pnpm run clean && tsc -w",
 		"clean": "rimraf .coverage distribution tmp",
 		"clean:browser": "rimraf distribution/browser",
-		"test": "uvu -r tsm source .test.ts",
 		"test:coverage": "c8 pnpm run test",
-		"test:watch": "watchlist source -- pnpm run test"
+		"test:watch": "watchlist source -- pnpm run test",
+		"test": "pnpm run uvu source .test.ts",
+		"uvu": "tsx --tsconfig ../../tsconfig.test.json ../../node_modules/uvu/bin.js"
 	},
 	"dependencies": {
 		"@ardenthq/sdk": "workspace:*",
@@ -58,6 +59,7 @@
 		"lodash.get": "^4.4.2",
 		"lodash.set": "^4.3.2",
 		"node-dotify": "^1.1.0",
+		"tsx": "^4.19.2",
 		"viem": "^2.21.51"
 	},
 	"devDependencies": {
