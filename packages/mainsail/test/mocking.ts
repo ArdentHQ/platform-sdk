@@ -10,6 +10,7 @@ import { ServiceProvider as CoreCryptoKeyPairEcdsa } from "@mainsail/crypto-key-
 import { ServiceProvider as CoreCryptoSignatureEcdsa } from "@mainsail/crypto-signature-ecdsa";
 import { ServiceProvider as CoreCryptoTransaction } from "@mainsail/crypto-transaction";
 import { ServiceProvider as EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
+import { ServiceProvider as CoreCryptoConsensusBls12381 } from "@mainsail/crypto-consensus-bls12-381";
 import { ServiceProvider as CoreCryptoValidation } from "@mainsail/crypto-validation";
 import { ServiceProvider as CoreCryptoWif } from "@mainsail/crypto-wif";
 import { Application } from "@mainsail/kernel";
@@ -52,7 +53,7 @@ export const createService = async <T = any>(
 				// @TODO: Enabling CoreCryptoConsensusBls12381 in tests, throws the following exception:
 				// 								 Error [ERR_PACKAGE_PATH_NOT_EXPORTED]:
 				// 								 Package subpath './getImplementation' is not defined by "exports" in node_modules/.pnpm/@mainsail+crypto-key-pair-bls12-381@0.0.1-evm.9/node_modules/@chainsafe/bls/package.json
-				// await application.resolve(CoreCryptoConsensusBls12381).register();
+				await application.resolve(CoreCryptoConsensusBls12381).register();
 				await application.resolve(CoreCryptoWif).register();
 				await application.resolve(CoreCryptoSerializer).register();
 				await application.resolve(EvmCallBuilder).register();
