@@ -1,0 +1,27 @@
+{
+	"data": {
+		"address": "0x3FCe699F036325B142e5568992EaA020ee15518B",
+		"publicKey": "02ba352eab5ddfd1a19f5681162b1550b035003ed01bd83cd173f48dbb8ebb2907",
+		"balance": "2362964566037735849547363",
+		"nonce": "2",
+		"attributes": {
+			"vote": "0x3FCe699F036325B142e5568992EaA020ee15518B",
+			"validatorRank": 2,
+			"validatorApproval": 0.0189,
+			"validatorResigned": false,
+			"validatorLastBlock": {
+				"id": "5fcb0361d9a7731785778109a237f26c18063497ba08ef6cd78bd58eef63a087",
+				"height": 194072,
+				"timestamp": 1734353443424
+			},
+			"validatorPublicKey": "af276ab35b3dd5d1c911c7e1396dae24519f7f9c25240e15325d705e61fd8b9cc2175bf1507b2f5a5210bd053d7a8aa6",
+			"validatorForgedFees": "525",
+			"validatorForgedTotal": "6000000000000000626",
+			"validatorVoteBalance": "2363019566037735836677328",
+			"validatorVotersCount": 2,
+			"validatorForgedRewards": "6000000000000000101",
+			"validatorProducedBlocks": 3663
+		},
+		"updated_at": "194072"
+	}
+}

@@ -26,27 +26,29 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	 */
 	readonly #meta: Record<string, TransactionDataMeta> = {};
 
-	readonly #types = {
-		delegateRegistration: "isDelegateRegistration",
-		delegateResignation: "isDelegateResignation",
-		htlcClaim: "isHtlcClaim",
-		htlcLock: "isHtlcLock",
-		htlcRefund: "isHtlcRefund",
-		ipfs: "isIpfs",
-		magistrate: "isMagistrate",
-		multiPayment: "isMultiPayment",
-		multiSignature: "isMultiSignatureRegistration",
-		secondSignature: "isSecondSignature",
-		transfer: "isTransfer",
-		usernameRegistration: "isUsernameRegistration",
-		unlockToken: "isUnlockToken",
-		usernameResignation: "isUsernameResignation",
-		unvote: "isUnvote",
-		validatorRegistration: "isValidatorRegistration",
-		validatorResignation: "isValidatorResignation",
-		vote: "isVote",
-		voteCombination: "isVoteCombination",
-	};
+	readonly #types = [
+		{ type: "htlcClaim", method: "isHtlcClaim" },
+		{ type: "htlcLock", method: "isHtlcLock" },
+		{ type: "htlcRefund", method: "isHtlcRefund" },
+		{ type: "ipfs", method: "isIpfs" },
+		{ type: "magistrate", method: "isMagistrate" },
+		{ type: "multiPayment", method: "isMultiPayment" },
+		{ type: "multiSignature", method: "isMultiSignatureRegistration" },
+		{ type: "secondSignature", method: "isSecondSignature" },
+		{ type: "transfer", method: "isTransfer" },
+		{ type: "usernameRegistration", method: "isUsernameRegistration" },
+		{ type: "unlockToken", method: "isUnlockToken" },
+		{ type: "usernameResignation", method: "isUsernameResignation" },
+		{ type: "unvote", method: "isUnvote" },
+		{ type: "validatorRegistration", method: "isValidatorRegistration" },
+		{ type: "validatorResignation", method: "isValidatorResignation" },
+		{ type: "vote", method: "isVote" },
+		{ type: "voteCombination", method: "isVoteCombination" },
+
+		// `delegate` methods should be after `validator` methods
+		{ type: "delegateRegistration", method: "isDelegateRegistration" },
+		{ type: "delegateResignation", method: "isDelegateResignation" },
+	];
 
 	protected decimals?: number;
 
@@ -83,7 +85,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 			return "voteCombination";
 		}
 
-		for (const [type, method] of Object.entries(this.#types)) {
+		for (const { type, method } of this.#types) {
 			if (type === "voteCombination") {
 				continue;
 			}
