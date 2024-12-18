@@ -8,8 +8,7 @@ import { encodeFunctionData } from "viem";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
-import { Interfaces, Transactions } from "./crypto/index.js";
-import { BuilderFactory } from "./crypto/transactions/index.js";
+import { Interfaces } from "./crypto/index.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { Request } from "./request.js";
 
@@ -41,7 +40,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	readonly #request: Request;
 	readonly #app: Application;
 
-	#transactionBuilder!: IoC.Factory<BuilderFactory>;
 	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
 
 	public constructor(container: IoC.IContainer) {
@@ -50,7 +48,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		this.#ledgerService = container.get(IoC.BindingType.LedgerService);
 		this.#addressService = container.get(IoC.BindingType.AddressService);
 		this.#publicKeyService = container.get(IoC.BindingType.PublicKeyService);
-		this.#transactionBuilder = container.factory(Transactions.BuilderFactory);
 		this.#app = container.get(BindingType.Application);
 
 		this.#configCrypto = {
