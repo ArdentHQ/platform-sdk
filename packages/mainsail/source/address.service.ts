@@ -75,7 +75,7 @@ export class AddressService extends Services.AbstractAddressService {
 		privateKey: string,
 		options?: Services.IdentityOptions,
 	): Promise<Services.AddressDataTransferObject> {
-		const keyPair = await this.#keyPairFactory.fromPrivateKey(Buffer.from(privateKey));
+		const keyPair = await this.#keyPairFactory.fromPrivateKey(Buffer.from(privateKey, "hex"));
 
 		return {
 			address: await this.#addressFactory.fromPrivateKey(keyPair),
