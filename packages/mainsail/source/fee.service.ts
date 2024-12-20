@@ -2,7 +2,6 @@ import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 
 import { Request } from "./request.js";
-import { formatUnits } from "./helpers/format-units";
 import { GWEI_MULTIPLIER } from "./crypto/constants";
 
 export class FeeService extends Services.AbstractFeeService {
