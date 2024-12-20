@@ -50,11 +50,11 @@ export class FeeService extends Services.AbstractFeeService {
 
 	#transform(dynamicFees: object): Services.TransactionFee {
 		return {
-			avg: this.bigNumberService.make(dynamicFees?.avg ?? "0").divide(GWEI_MULTIPLIER),
+			avg: BigNumber.make(dynamicFees?.avg ?? "0").divide(GWEI_MULTIPLIER),
 			isDynamic: true,
-			max: this.bigNumberService.make(dynamicFees?.max ?? "0").divide(GWEI_MULTIPLIER),
-			min: this.bigNumberService.make(dynamicFees?.min ?? "0").divide(GWEI_MULTIPLIER),
-			static: this.bigNumberService.make(0).divide(GWEI_MULTIPLIER),
+			max: BigNumber.make(dynamicFees?.max ?? "0").divide(GWEI_MULTIPLIER),
+			min: BigNumber.make(dynamicFees?.min ?? "0").divide(GWEI_MULTIPLIER),
+			static: BigNumber.make("0").divide(GWEI_MULTIPLIER),
 		};
 	}
 }
