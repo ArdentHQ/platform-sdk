@@ -2,6 +2,8 @@ import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 
 import { Request } from "./request.js";
+import { formatUnits } from "./helpers/format-units";
+import { GWEI_MULTIPLIER } from "./crypto/constants";
 
 export class FeeService extends Services.AbstractFeeService {
 	readonly #request: Request;
@@ -18,22 +20,19 @@ export class FeeService extends Services.AbstractFeeService {
 
 	public override async all(): Promise<Services.TransactionFees> {
 		const node = await this.#request.get("node/fees");
-		const type = await this.#request.get("transactions/fees");
-
-		const staticFees: object = type.data;
-		const dynamicFees: object = node.data;
+		const dynamicFees: object = node.data.evmCall;
 
 		return {
-			delegateRegistration: this.#transform("validatorRegistration", 1, staticFees, dynamicFees),
-			delegateResignation: this.#transform("validatorResignation", 1, staticFees, dynamicFees),
-			ipfs: this.#transform("ipfs", 1, staticFees, dynamicFees),
-			multiPayment: this.#transform("multiPayment", 1, staticFees, dynamicFees),
-			multiSignature: this.#transform("multiSignature", 1, staticFees, dynamicFees),
-			secondSignature: this.#transform("secondSignature", 1, staticFees, dynamicFees),
-			transfer: this.#transform("transfer", 1, staticFees, dynamicFees),
-			usernameRegistration: this.#transform("usernameRegistration", 1, staticFees, dynamicFees),
-			usernameResignation: this.#transform("usernameResignation", 1, staticFees, dynamicFees),
-			vote: this.#transform("vote", 1, staticFees, dynamicFees),
+			delegateRegistration: this.#transform(dynamicFees),
+			delegateResignation: this.#transform(dynamicFees),
+			ipfs: this.#transform(dynamicFees),
+			multiPayment: this.#transform(dynamicFees),
+			multiSignature: this.#transform(dynamicFees),
+			secondSignature: this.#transform(dynamicFees),
+			transfer: this.#transform(dynamicFees),
+			usernameRegistration: this.#transform(dynamicFees),
+			usernameResignation: this.#transform(dynamicFees),
+			vote: this.#transform(dynamicFees),
 		};
 	}
 
@@ -50,25 +49,13 @@ export class FeeService extends Services.AbstractFeeService {
 		return BigNumber.ZERO;
 	}
 
-	#transform(type: string, typeGroup: number, staticFees: object, dynamicFees: object): Services.TransactionFee {
-		const dynamicFee = (dynamicFees[typeGroup] ?? staticFees[typeGroup])[type] ?? "0";
-		let minimumFee = this.bigNumberService.make(dynamicFee?.min ?? "0");
-		let averageFee = this.bigNumberService.make(dynamicFee?.avg ?? "0");
-		const maximumFee = this.bigNumberService.make(staticFees[typeGroup][type] ?? "0");
-
-		if (type === "multiPayment") {
-			minimumFee = maximumFee;
-			averageFee = maximumFee;
-		}
-
+	#transform(dynamicFees: object): Services.TransactionFee {
 		return {
-			avg: averageFee.isGreaterThan(maximumFee) ? maximumFee : averageFee,
-			isDynamic:
-				this.configRepository.get<string>("network.transactions.fees.type") !== "static" &&
-				type !== "multiSignature",
-			max: maximumFee,
-			min: minimumFee.isGreaterThan(maximumFee) ? maximumFee : minimumFee,
-			static: maximumFee,
+			avg: this.bigNumberService.make(dynamicFees?.avg ?? "0").divide(GWEI_MULTIPLIER),
+			isDynamic: true,
+			max: this.bigNumberService.make(dynamicFees?.max ?? "0").divide(GWEI_MULTIPLIER),
+			min: this.bigNumberService.make(dynamicFees?.min ?? "0").divide(GWEI_MULTIPLIER),
+			static: this.bigNumberService.make(0).divide(GWEI_MULTIPLIER),
 		};
 	}
 }
