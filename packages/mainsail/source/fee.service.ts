@@ -4,6 +4,12 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Request } from "./request.js";
 import { GWEI_MULTIPLIER } from "./crypto/constants";
 
+interface Fees {
+	min: string;
+	avg: string;
+	max: string;
+}
+
 export class FeeService extends Services.AbstractFeeService {
 	readonly #request: Request;
 
@@ -19,7 +25,7 @@ export class FeeService extends Services.AbstractFeeService {
 
 	public override async all(): Promise<Services.TransactionFees> {
 		const node = await this.#request.get("node/fees");
-		const dynamicFees: object = node.data.evmCall;
+		const dynamicFees: Fees = node.data.evmCall;
 
 		return {
 			delegateRegistration: this.#transform(dynamicFees),
@@ -48,7 +54,7 @@ export class FeeService extends Services.AbstractFeeService {
 		return BigNumber.ZERO;
 	}
 
-	#transform(dynamicFees: object): Services.TransactionFee {
+	#transform(dynamicFees: Fees): Services.TransactionFee {
 		return {
 			avg: BigNumber.make(dynamicFees?.avg ?? "0").divide(GWEI_MULTIPLIER),
 			isDynamic: true,
