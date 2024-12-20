@@ -2,7 +2,7 @@ import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 
 import { Request } from "./request.js";
-import { GWEI_MULTIPLIER } from "./crypto/constants";
+import { GWEI_MULTIPLIER } from "./crypto/constants.js";
 
 interface Fees {
 	min: string;
