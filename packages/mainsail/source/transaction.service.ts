@@ -94,7 +94,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(input.data.to)
 			.payload("")
 			.nonce(nonce)
-			.value(parseUnits(input.data.amount, "ark"))
+			.value(parseUnits(input.data.amount, "ark").valueOf())
 			.gasPrice(input.fee);
 
 		return this.#buildTransaction(input, transaction);
