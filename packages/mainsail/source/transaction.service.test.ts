@@ -88,7 +88,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 	it("should sign a transfer transaction", async (context) => {
 		const signedTransaction = await context.subject.transfer(context.defaultTransferInput);
 
-		assert.is(signedTransaction.amount().toString(), parseUnits(context.defaultTransferInput.data.amount, "ark").valueOf());
+		assert.is(
+			signedTransaction.amount().toString(),
+			parseUnits(context.defaultTransferInput.data.amount, "ark").valueOf(),
+		);
 		assert.is(
 			signedTransaction.fee().toString(),
 			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei").valueOf(),
