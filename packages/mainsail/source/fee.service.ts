@@ -1,8 +1,8 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 
+import { formatUnits } from "./helpers/format-units.js";
 import { Request } from "./request.js";
-import { GWEI_MULTIPLIER } from "./crypto/constants.js";
 
 interface Fees {
 	min: string;
@@ -58,11 +58,11 @@ export class FeeService extends Services.AbstractFeeService {
 
 	#transform(dynamicFees: Fees): Services.TransactionFee {
 		return {
-			avg: BigNumber.make(dynamicFees?.avg ?? "0").divide(GWEI_MULTIPLIER),
+			avg: formatUnits(dynamicFees?.avg ?? "0", "gwei"),
 			isDynamic: true,
-			max: BigNumber.make(dynamicFees?.max ?? "0").divide(GWEI_MULTIPLIER),
-			min: BigNumber.make(dynamicFees?.min ?? "0").divide(GWEI_MULTIPLIER),
-			static: BigNumber.make("0").divide(GWEI_MULTIPLIER),
+			max: formatUnits(dynamicFees?.max ?? "0", "gwei"),
+			min: formatUnits(dynamicFees?.min ?? "0", "gwei"),
+			static: formatUnits("0", "gwei"),
 		};
 	}
 }
