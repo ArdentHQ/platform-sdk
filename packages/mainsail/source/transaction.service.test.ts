@@ -88,10 +88,13 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 	it("should sign a transfer transaction", async (context) => {
 		const signedTransaction = await context.subject.transfer(context.defaultTransferInput);
 
-		assert.is(signedTransaction.amount().toString(), parseUnits(context.defaultTransferInput.data.amount, "ark"));
+		assert.is(
+			signedTransaction.amount().toString(),
+			parseUnits(context.defaultTransferInput.data.amount, "ark").valueOf(),
+		);
 		assert.is(
 			signedTransaction.fee().toString(),
-			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"),
+			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei").valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultTransferInput.nonce);
 		assert.is(signedTransaction.recipient(), context.defaultTransferInput.data.to);
@@ -131,7 +134,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(
 			signedTransaction.fee().toString(),
-			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"),
+			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei").valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 
@@ -171,7 +174,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(
 			signedTransaction.fee().toString(),
-			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei"),
+			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei").valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 	});
