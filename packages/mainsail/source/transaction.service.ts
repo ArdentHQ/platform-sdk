@@ -109,7 +109,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
-			.gasLimit(input.gasLimit ?? GasLimit.Transfer)
+			.gasLimit(input.gasLimit)
 			.recipientAddress(input.data.to)
 			.payload("")
 			.nonce(nonce)
