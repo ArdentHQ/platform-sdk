@@ -24,7 +24,8 @@ enum GasLimit {
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
-	fee: number;
+	gasPrice: number;
+	gasLimit: number;
 }
 
 type TransactionsInputs =
@@ -63,9 +64,15 @@ export class TransactionService extends Services.AbstractTransactionService {
 	}
 
 	#assertFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
-		if (!input.fee) {
+		if (!input.gasPrice) {
 			throw new Error(
-				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
+				`[TransactionService#transfer] Expected gasPrice to be defined but received ${typeof input.gasPrice}`,
+			);
+		}
+
+		if (!input.gasLimit) {
+			throw new Error(
+				`[TransactionService#transfer] Expected gasLimit to be defined but received ${typeof input.gasLimit}`,
 			);
 		}
 	}
@@ -90,12 +97,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
-			.gasLimit(GasLimit.Transfer)
+			.gasLimit(input.gasLimit ?? GasLimit.Transfer)
 			.recipientAddress(input.data.to)
 			.payload("")
 			.nonce(nonce)
 			.value(parseUnits(input.data.amount, "ark").valueOf())
-			.gasPrice(input.fee);
+			.gasPrice(input.gasPrice);
 
 		return this.#buildTransaction(input, transaction);
 	}
