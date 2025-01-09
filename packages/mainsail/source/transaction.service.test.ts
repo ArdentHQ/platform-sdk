@@ -42,7 +42,8 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				memo: "foo",
 				to: identity.address,
 			},
-			fee: 1,
+			gasLimit: 21_000,
+			gasPrice: 5,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -59,7 +60,8 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				validatorPublicKey:
 					"8e65659ba176f2e14e9042db662c6106a85ecd6ec8de14665facc4aaa643aec0c2d0a7ea29cecd7daf5b6452e39d431d",
 			},
-			fee: 1,
+			gasLimit: 500_000,
+			gasPrice: 5,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -72,7 +74,8 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		};
 
 		context.defaultValidatorResignationInput = {
-			fee: 1,
+			gasLimit: 150_000,
+			gasPrice: 5,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -100,15 +103,27 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		assert.is(signedTransaction.recipient(), context.defaultTransferInput.data.to);
 	});
 
-	it("should require fee when signing a transfer transaction", async (context) => {
+	it("should require gasFee when signing a transfer transaction", async (context) => {
 		try {
 			await context.subject.transfer({
 				...context.defaultTransferInput,
-				fee: null,
+				gasFee: undefined,
 			});
 		} catch (error) {
 			assert.instance(error, Error);
-			assert.match(error.message, "Expected fee to be defined");
+			assert.match(error.message, "Expected gasFee to be defined");
+		}
+	});
+
+	it("should require gasPrice when signing a transfer transaction", async (context) => {
+		try {
+			await context.subject.transfer({
+				...context.defaultTransferInput,
+				gasPrice: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasPrice to be defined");
 		}
 	});
 
@@ -143,15 +158,27 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		assert.match(signedTransaction.data().data, validatorKey);
 	});
 
-	it("should require fee when signing a validator registration transaction", async (context) => {
+	it("should require gasPrice when signing a validator registration transaction", async (context) => {
 		try {
 			await context.subject.validatorRegistration({
 				...context.defaultValidatorRegistrationInput,
-				fee: undefined,
+				gasPrice: undefined,
 			});
 		} catch (error) {
 			assert.instance(error, Error);
-			assert.match(error.message, "Expected fee to be defined");
+			assert.match(error.message, "Expected gasPrice to be defined");
+		}
+	});
+
+	it("should require gasLimit when signing a validator registration transaction", async (context) => {
+		try {
+			await context.subject.validatorRegistration({
+				...context.defaultValidatorRegistrationInput,
+				gasLimit: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasLimit to be defined");
 		}
 	});
 
@@ -179,15 +206,27 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 	});
 
-	it("should require fee when signing a validator resignation transaction", async (context) => {
+	it("should require gasPrice when signing a validator resignation transaction", async (context) => {
 		try {
 			await context.subject.validatorResignation({
 				...context.defaultValidatorResignationInput,
-				fee: undefined,
+				gasPrice: undefined,
 			});
 		} catch (error) {
 			assert.instance(error, Error);
-			assert.match(error.message, "Expected fee to be defined");
+			assert.match(error.message, "Expected gasPrice to be defined");
+		}
+	});
+
+	it("should require gasLimit when signing a validator resignation transaction", async (context) => {
+		try {
+			await context.subject.validatorResignation({
+				...context.defaultValidatorResignationInput,
+				gasLimit: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasLimit to be defined");
 		}
 	});
 });

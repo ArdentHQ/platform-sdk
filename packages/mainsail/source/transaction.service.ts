@@ -24,7 +24,8 @@ enum GasLimit {
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
-	fee: number;
+	gasPrice: number;
+	gasLimit: number;
 }
 
 type TransactionsInputs =
@@ -62,10 +63,16 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	#assertFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
-		if (!input.fee) {
+	#assertGasFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
+		if (!input.gasPrice) {
 			throw new Error(
-				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
+				`[TransactionService#transfer] Expected gasPrice to be defined but received ${typeof input.gasPrice}`,
+			);
+		}
+
+		if (!input.gasLimit) {
+			throw new Error(
+				`[TransactionService#transfer] Expected gasLimit to be defined but received ${typeof input.gasLimit}`,
 			);
 		}
 	}
@@ -80,7 +87,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		this.#assertFee(input);
+		this.#assertGasFee(input);
 		this.#assertAmount(input);
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
@@ -90,12 +97,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
-			.gasLimit(GasLimit.Transfer)
+			.gasLimit(input.gasLimit)
 			.recipientAddress(input.data.to)
 			.payload("")
 			.nonce(nonce)
 			.value(parseUnits(input.data.amount, "ark").valueOf())
-			.gasPrice(input.fee);
+			.gasPrice(input.gasPrice);
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -104,7 +111,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.ValidatorRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		this.#assertFee(input);
+		this.#assertGasFee(input);
 
 		if (!input.data.validatorPublicKey) {
 			throw new Error(
@@ -126,11 +133,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
-			.gasLimit(GasLimit.RegisterValidator)
+			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.fee);
+			.gasPrice(input.gasPrice);
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -146,7 +153,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 */
 	public override async vote(input: Services.VoteInput): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		this.#assertFee(input);
+		this.#assertGasFee(input);
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
@@ -165,10 +172,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
 			.recipientAddress(wellKnownContracts.consensus)
-			.gasLimit(GasLimit.Vote)
+			.gasLimit(input.gasLimit)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.fee);
+			.gasPrice(input.gasPrice);
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -196,7 +203,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		input: Services.ValidatorResignationInput,
 	): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		this.#assertFee(input);
+		this.#assertGasFee(input);
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
@@ -211,11 +218,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
-			.gasLimit(GasLimit.ResignValidator)
+			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.fee);
+			.gasPrice(input.gasPrice);
 
 		return this.#buildTransaction(input, transaction);
 	}

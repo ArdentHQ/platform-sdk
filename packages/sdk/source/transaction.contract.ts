@@ -26,6 +26,8 @@ export interface TransactionService {
 export interface TransactionInput {
 	fee?: number;
 	feeLimit?: number;
+	gasPrice?: number;
+	gasLimit?: number;
 	nonce?: string;
 	signatory: Signatory;
 	contract?: {
