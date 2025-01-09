@@ -24,6 +24,10 @@ enum GasLimit {
 }
 
 interface ValidatedTransferInput extends Services.TransferInput {
+	fee: number;
+}
+
+interface ValidatedTransferInput2 extends Services.TransferInput {
 	gasPrice: number;
 	gasLimit: number;
 }
@@ -63,7 +67,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		);
 	}
 
-	#assertFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
+	#assertGasPriceAndLimit(input: TransactionsInputs): asserts input is ValidatedTransferInput2 {
 		if (!input.gasPrice) {
 			throw new Error(
 				`[TransactionService#transfer] Expected gasPrice to be defined but received ${typeof input.gasPrice}`,
@@ -73,6 +77,14 @@ export class TransactionService extends Services.AbstractTransactionService {
 		if (!input.gasLimit) {
 			throw new Error(
 				`[TransactionService#transfer] Expected gasLimit to be defined but received ${typeof input.gasLimit}`,
+			);
+		}
+	}
+
+	#assertFee(input: TransactionsInputs): asserts input is ValidatedTransferInput {
+		if (!input.fee) {
+			throw new Error(
+				`[TransactionService#transfer] Expected fee to be defined but received ${typeof input.fee}`,
 			);
 		}
 	}
@@ -87,7 +99,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 	public override async transfer(input: Services.TransferInput): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
-		this.#assertFee(input);
+		this.#assertGasPriceAndLimit(input);
 		this.#assertAmount(input);
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
