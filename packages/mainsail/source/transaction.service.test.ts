@@ -42,7 +42,8 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				memo: "foo",
 				to: identity.address,
 			},
-			fee: 1,
+			gasLimit: 21_000,
+			gasPrice: 5,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
