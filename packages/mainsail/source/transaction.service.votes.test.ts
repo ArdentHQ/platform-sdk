@@ -40,7 +40,8 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 			data: {
 				votes: [{ amount: 0, id: identity.address }],
 			},
-			fee: 5,
+			gasLimit: 200_000,
+			gasPrice: 5,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -80,15 +81,27 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);
 	});
 
-	it("should require fee when signing transaction", async (context) => {
+	it("should require gasPrice when signing transaction", async (context) => {
 		try {
-			const signedTransaction = await context.subject.vote({
+			await context.subject.vote({
 				...context.defaultInput,
-				fee: null,
+				gasPrice: undefined,
 			});
 		} catch (error) {
 			assert.instance(error, Error);
-			assert.match(error.message, "Expected fee to be defined");
+			assert.match(error.message, "Expected gasPrice to be defined");
+		}
+	});
+
+	it("should require gasLimit when signing transaction", async (context) => {
+		try {
+			await context.subject.vote({
+				...context.defaultInput,
+				gasLimit : undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasLimit to be defined");
 		}
 	});
 });
