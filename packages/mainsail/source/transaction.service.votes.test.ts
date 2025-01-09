@@ -97,7 +97,7 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 		try {
 			await context.subject.vote({
 				...context.defaultInput,
-				gasLimit : undefined,
+				gasLimit: undefined,
 			});
 		} catch (error) {
 			assert.instance(error, Error);
