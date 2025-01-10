@@ -66,11 +66,13 @@ export class TransactionAggregate implements ITransactionAggregate {
 		const historyKeys: string[] = [];
 
 		for (const syncedWallet of syncedWallets) {
-			historyKeys.push(syncedWallet.id());
+			historyKeys.push(syncedWallet.address());
 		}
 
 		historyKeys.sort((a, b) => a.localeCompare(b));
-		historyKeys.push(query.orderBy ?? "");
+
+		query.orderBy && historyKeys.push();
+		query.types?.length > 0 && historyKeys.push(query.types.join(":"));
 
 		const historyKey = historyKeys.join("-");
 
