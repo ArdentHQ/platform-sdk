@@ -11,6 +11,7 @@ import { createService } from "../test/mocking";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
 import { BindingType } from "./coin.contract";
 import { AddressService } from "./address.service";
+import { formatUnits } from "./helpers/format-units";
 
 const createSubject = async () => {
 	return await createService(ConfirmedTransactionData, "mainsail.devnet", function (container: IoC.Container) {
@@ -69,8 +70,8 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	// });
 	//
 	it("should have a fee", (context) => {
-		// fees are in gwei unit
-		assert.equal(context.subject.fee(), BigNumber.make(105_000_000_000_000));
+		// fees are in arks
+		assert.equal(context.subject.fee(), formatUnits(BigNumber.make(105_000_000_000_000).toString(), "gwei"));
 	});
 
 	it("should determine if the transaction is confirmed", (context) => {
