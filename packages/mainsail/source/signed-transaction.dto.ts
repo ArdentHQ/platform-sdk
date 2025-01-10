@@ -44,7 +44,7 @@ export class SignedTransactionData
 
 	public override fee(): BigNumber {
 		const gasPrice = this.bigNumberService.make(this.signedData.gasPrice);
-		return parseUnits(gasPrice.times(this.signedData.gasLimit).toNumber(), "gwei");
+		return this.bigNumberService.make(parseUnits(gasPrice.times(this.signedData.gasLimit).toNumber(), "gwei"));
 	}
 
 	public override memo(): string | undefined {
