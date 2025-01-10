@@ -5,6 +5,7 @@ import { describe } from "@ardenthq/sdk-test";
 import { createService } from "../test/mocking";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { formatUnits } from "./helpers/format-units";
+
 describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }) => {
 	beforeAll(async (context) => {
 		context.subject = await createService(SignedTransactionData);
