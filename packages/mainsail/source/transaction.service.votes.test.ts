@@ -61,7 +61,10 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 		assert.is(signedTransaction.isUnvote(), false);
 		assert.is(
 			signedTransaction.fee().toString(),
-			formatUnits((signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(), "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);
 	});
@@ -76,7 +79,10 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 		assert.is(signedTransaction.isVote(), false);
 		assert.is(
 			signedTransaction.fee().toString(),
-			formatUnits((signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(), "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);
 	});

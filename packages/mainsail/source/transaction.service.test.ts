@@ -98,7 +98,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		);
 		assert.is(
 			signedTransaction.fee().toString(),
-			formatUnits((signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(), "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultTransferInput.nonce);
 		assert.is(signedTransaction.recipient(), context.defaultTransferInput.data.to);
@@ -150,7 +153,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(
 			signedTransaction.fee().toString(),
-			formatUnits((signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(), "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 
@@ -202,7 +208,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(
 			signedTransaction.fee().toString(),
-			formatUnits((signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(), "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 	});
