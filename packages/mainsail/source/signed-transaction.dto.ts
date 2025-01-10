@@ -8,8 +8,8 @@ import { Hex } from "viem";
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
 import { decodeFunctionData } from "./helpers/decode-function-data.js";
-import { parseUnits } from "./helpers/parse-units.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { formatUnits } from "./helpers/format-units";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
@@ -44,7 +44,7 @@ export class SignedTransactionData
 
 	public override fee(): BigNumber {
 		const gasPrice = this.bigNumberService.make(this.signedData.gasPrice);
-		return this.bigNumberService.make(parseUnits(gasPrice.times(this.signedData.gasLimit).toNumber(), "gwei"));
+		return formatUnits(gasPrice.times(this.signedData.gasLimit).toString(), "gwei");
 	}
 
 	public override memo(): string | undefined {

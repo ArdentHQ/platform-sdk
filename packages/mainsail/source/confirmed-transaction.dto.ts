@@ -6,6 +6,7 @@ import { BindingType } from "./coin.contract.js";
 import { decodeFunctionData } from "./helpers/decode-function-data.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
+import { formatUnits } from "./helpers/format-units";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	readonly #addressService: Services.AddressService;
@@ -64,7 +65,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	public override fee(): BigNumber {
 		const gasPrice = this.bigNumberService.make(this.data.gasPrice);
-		return this.bigNumberService.make(parseUnits(gasPrice.times(this.data.gasLimit).toNumber(), "gwei"));
+		return formatUnits(gasPrice.times(this.data.gasLimit).toString(), "gwei");
 	}
 
 	public override asset(): Record<string, unknown> {
