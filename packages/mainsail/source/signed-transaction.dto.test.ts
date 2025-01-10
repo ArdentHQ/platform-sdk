@@ -4,7 +4,7 @@ import { describe } from "@ardenthq/sdk-test";
 
 import { createService } from "../test/mocking";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
-import { parseUnits } from "./helpers/parse-units";
+import { formatUnits } from "./helpers/format-units";
 
 describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }) => {
 	beforeAll(async (context) => {
@@ -97,7 +97,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 	});
 
 	it("should have a fee", (context) => {
-		assert.equal(context.subject.fee(), parseUnits(BigNumber.make("1000000000000000").toString(), "gwei"));
+		assert.equal(context.subject.fee(), formatUnits(BigNumber.make(1_000_000).toString(), "gwei"));
 	});
 
 	it("should have a timestamp", (context) => {
