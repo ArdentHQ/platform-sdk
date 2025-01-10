@@ -6,7 +6,6 @@ import { identity } from "../test/wallets";
 import { AddressService } from "./address.service.js";
 import { ClientService } from "./client.service.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
-import { parseUnits } from "./helpers/parse-units.js";
 import { KeyPairService } from "./key-pair.service.js";
 import { LedgerService } from "./ledger.service.js";
 import { MultiSignatureService } from "./multi-signature.service.js";
