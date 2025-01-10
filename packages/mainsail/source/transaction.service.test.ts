@@ -15,6 +15,7 @@ import { PublicKeyService } from "./public-key.service.js";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { TransactionService } from "./transaction.service.js";
 import { WalletData } from "./wallet.dto.js";
+import { formatUnits } from "./helpers/format-units";
 
 describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) => {
 	beforeAll(async (context) => {
@@ -97,7 +98,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		);
 		assert.is(
 			signedTransaction.fee().toString(),
-			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultTransferInput.nonce);
 		assert.is(signedTransaction.recipient(), context.defaultTransferInput.data.to);
@@ -149,7 +153,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(
 			signedTransaction.fee().toString(),
-			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 
@@ -201,7 +208,10 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(
 			signedTransaction.fee().toString(),
-			parseUnits(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice, "gwei").valueOf(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
 	});
