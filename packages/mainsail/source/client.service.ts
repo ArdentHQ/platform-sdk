@@ -234,7 +234,7 @@ export class ClientService extends Services.AbstractClientService {
 			for (const type of body.types) {
 				const datum = transactionTypeMap[type];
 
-				if (datum) {
+				if (datum !== undefined) {
 					data.push(trimHexPrefix(datum));
 				}
 			}
