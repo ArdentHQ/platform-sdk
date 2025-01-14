@@ -75,20 +75,22 @@ export class TransactionAggregate implements ITransactionAggregate {
 		query.orderBy && historyKeys.push(query.orderBy);
 		query.limit && historyKeys.push(query.limit.toString());
 
-		if(query.types && query.types.length > 0) {
+		if (query.types && query.types.length > 0) {
 			historyKeys.push(query.types.join(":"));
 		}
 
 		const historyKey = historyKeys.join("-");
 
 		if (historyRecords[historyKey]) {
-			query = {...query, cursor: historyRecords[historyKey].nextPage()};
+			query = { ...query, cursor: historyRecords[historyKey].nextPage() };
 		}
 
 		let response: ExtendedConfirmedTransactionDataCollection;
 
 		try {
-			response = await syncedWallets[0].transactionIndex()[method](query) as ExtendedConfirmedTransactionDataCollection;
+			response = (await syncedWallets[0]
+				.transactionIndex()
+				[method](query)) as ExtendedConfirmedTransactionDataCollection;
 		} catch {
 			return new ExtendedConfirmedTransactionDataCollection([], {
 				last: undefined,
