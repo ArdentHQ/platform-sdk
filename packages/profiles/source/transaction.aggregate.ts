@@ -53,7 +53,6 @@ export class TransactionAggregate implements ITransactionAggregate {
 		const syncedWallets: IReadWriteWallet[] = this.#getWallets(query.identifiers);
 
 		if (syncedWallets.length === 0) {
-			console.log("No synced wallet found");
 			return new ExtendedConfirmedTransactionDataCollection([], {
 				last: undefined,
 				next: 0,
@@ -62,7 +61,7 @@ export class TransactionAggregate implements ITransactionAggregate {
 			});
 		}
 
-		const historyRecords = this.#history[method];
+		const historyRecords = this.#history[method] ?? {};
 
 		const historyKeys: string[] = [];
 
@@ -85,7 +84,18 @@ export class TransactionAggregate implements ITransactionAggregate {
 			query = {...query, cursor: historyRecords[historyKey].nextPage()};
 		}
 
-		const response = await syncedWallets[0].transactionIndex()[method](query) as ExtendedConfirmedTransactionDataCollection;
+		let response: ExtendedConfirmedTransactionDataCollection;
+
+		try {
+			response = await syncedWallets[0].transactionIndex()[method](query) as ExtendedConfirmedTransactionDataCollection;
+		} catch {
+			return new ExtendedConfirmedTransactionDataCollection([], {
+				last: undefined,
+				next: 0,
+				prev: undefined,
+				self: undefined,
+			});
+		}
 
 		historyRecords[historyKey] = response;
 
