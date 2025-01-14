@@ -53,6 +53,7 @@ export class TransactionAggregate implements ITransactionAggregate {
 		const syncedWallets: IReadWriteWallet[] = this.#getWallets(query.identifiers);
 
 		if (syncedWallets.length === 0) {
+			console.log("No synced wallet found");
 			return new ExtendedConfirmedTransactionDataCollection([], {
 				last: undefined,
 				next: 0,
@@ -71,7 +72,8 @@ export class TransactionAggregate implements ITransactionAggregate {
 
 		historyKeys.sort((a, b) => a.localeCompare(b));
 
-		query.orderBy && historyKeys.push();
+		query.orderBy && historyKeys.push(query.orderBy);
+		query.limit && historyKeys.push(query.limit.toString());
 		query.types?.length > 0 && historyKeys.push(query.types.join(":"));
 
 		const historyKey = historyKeys.join("-");

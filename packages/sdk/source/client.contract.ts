@@ -63,6 +63,7 @@ export interface ClientTransactionsInput extends ClientPagination {
 	identifiers?: WalletIdentifier[];
 	senderId?: string;
 	recipientId?: string;
+	orderBy?: string;
 	// Public Keys
 	senderPublicKey?: string;
 	recipientPublicKey?: string;
