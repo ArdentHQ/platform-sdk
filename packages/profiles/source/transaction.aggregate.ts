@@ -69,13 +69,14 @@ export class TransactionAggregate implements ITransactionAggregate {
 			historyKeys.push(syncedWallet.address());
 		}
 
+		// to sort wallet addresses
 		historyKeys.sort((a, b) => a.localeCompare(b));
 
 		query.orderBy && historyKeys.push(query.orderBy);
 		query.limit && historyKeys.push(query.limit.toString());
 
 		if(query.types && query.types.length > 0) {
-			historyKeys.push(query?.types.join(":"));
+			historyKeys.push(query.types.join(":"));
 		}
 
 		const historyKey = historyKeys.join("-");
