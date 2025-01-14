@@ -74,7 +74,7 @@ export class TransactionAggregate implements ITransactionAggregate {
 
 		query.orderBy && historyKeys.push(query.orderBy);
 		query.limit && historyKeys.push(query.limit.toString());
-		query.types?.length > 0 && historyKeys.push(query.types.join(":"));
+		query?.types.length  && historyKeys.push(query?.types.join(":"));
 
 		const historyKey = historyKeys.join("-");
 
