@@ -18,7 +18,6 @@ export class TransactionIndex implements ITransactionIndex {
 		query: Services.ClientTransactionsInput = {},
 	): Promise<ExtendedConfirmedTransactionDataCollection> {
 		return this.#fetch({
-			...query,
 			identifiers: [
 				{
 					method: this.#wallet.data().get(WalletData.ImportMethod),
@@ -26,6 +25,7 @@ export class TransactionIndex implements ITransactionIndex {
 					value: this.#wallet.address(),
 				},
 			],
+			...query,
 		});
 	}
 
