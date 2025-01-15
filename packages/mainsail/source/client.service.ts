@@ -234,8 +234,8 @@ export class ClientService extends Services.AbstractClientService {
 			for (const type of body.types) {
 				const datum = transactionTypeMap[type];
 
+				// a transfer is an empty string, so explicitly check for undefined
 				if (datum !== undefined) {
-					// a transfer is an empty string, so explicitly check for undefined
 					data.push(trimHexPrefix(datum));
 				}
 			}
