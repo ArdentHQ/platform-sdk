@@ -2,6 +2,7 @@ name: Publish Package
 
 on:
     workflow_dispatch:
+
     push:
         branches:
             - feat/mainsail-evm
@@ -9,7 +10,7 @@ on:
 jobs:
     publish:
         # Only run if commit message starts with 'release:'
-        if: startsWith(github.event.head_commit.message, 'release:')
+        if: startsWith(github.event.head_commit.message, 'release:') || github.event_name == 'workflow_dispatch'
         runs-on: ubuntu-latest
 
         strategy:
