@@ -51,6 +51,6 @@ jobs:
                   pnpm run build:all
 
             - name: Publish
-              run: bash scripts/publish-experimental.sh
+              run: bash scripts/publish-experimental.sh ${{ secrets.NODE_AUTH_TOKEN }}
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
