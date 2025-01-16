@@ -50,4 +50,6 @@ jobs:
                   pnpm run build:all
 
             - name: Publish
-              run: bash scripts/publish-experimental.sh ${{ secrets.NPM_AUTH_TOKEN }}
+              run: bash scripts/publish-experimental.sh
+              env:
+                  NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
