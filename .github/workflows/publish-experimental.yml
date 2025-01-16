@@ -1,6 +1,7 @@
 name: Publish Package
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - feat/mainsail-evm
@@ -48,4 +49,4 @@ jobs:
                   pnpm run build:all
 
             - name: Publish
-              run: bash scripts/publish.sh ${{ secrets.NPM_AUTH_TOKEN }}
+              run: bash scripts/publish-experimental.sh ${{ secrets.NPM_AUTH_TOKEN }}
