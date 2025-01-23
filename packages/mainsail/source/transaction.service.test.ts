@@ -89,7 +89,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 	it("should sign a transfer transaction", async (context) => {
 		try {
-			console.log({ defaultTransferInput: context.defaultTransferInput });
+			console.log({ defaultTransferInput1: context.defaultTransferInput });
 			const signedTransaction = await context.subject.transfer(context.defaultTransferInput);
 			console.log({ signedTransaction });
 		} catch (error) {
