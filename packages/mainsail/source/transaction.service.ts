@@ -99,9 +99,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 			signingValues: {
 				amount: parseUnits(input.data.amount, "ark").valueOf(),
 				gasLimit: input.gasLimit,
+				gasPrice: input.gasPrice,
 				network: this.#configCrypto.crypto.network.pubKeyHash,
 				nonce,
-				recipientAddress: input.data.to,
+				recipientAddress: input.data.to
 			},
 		});
 
