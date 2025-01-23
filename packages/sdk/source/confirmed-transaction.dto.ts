@@ -46,8 +46,8 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		{ type: "voteCombination", method: "isVoteCombination" },
 
 		// `delegate` methods should be after `validator` methods
-		{ type: "delegateRegistration", method: "isDelegateRegistration" },
-		{ type: "delegateResignation", method: "isDelegateResignation" },
+		{ type: "validatorRegistration", method: "isDelegateRegistration" },
+		{ type: "validatorResignation", method: "isDelegateResignation" },
 	];
 
 	protected decimals?: number;
