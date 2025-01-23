@@ -29,7 +29,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			container.singleton(IoC.BindingType.AddressService, AddressService);
 			container.singleton(IoC.BindingType.ClientService, ClientService);
 			container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
-			container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
+			container.constant(IoC.BindingType.LedgerTransportFactory, async () => { });
 			container.singleton(IoC.BindingType.LedgerService, LedgerService);
 			container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
 			container.singleton(IoC.BindingType.MultiSignatureService, MultiSignatureService);
@@ -89,8 +89,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 	it("should sign a transfer transaction", async (context) => {
 		try {
-			console.log({ input: context.defaultTransferInput });
-			// console.log({ input: context.defaultTransferInput})
+			console.log({ defaultTransferInput: context.defaultTransferInput });
 			const signedTransaction = await context.subject.transfer(context.defaultTransferInput);
 			console.log({ signedTransaction });
 		} catch (error) {
