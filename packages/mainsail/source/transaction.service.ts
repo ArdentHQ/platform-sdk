@@ -102,7 +102,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 				gasPrice: input.gasPrice,
 				network: this.#configCrypto.crypto.network.pubKeyHash,
 				nonce,
-				recipientAddress: input.data.to
+				recipientAddress: input.data.to,
 			},
 		});
 
