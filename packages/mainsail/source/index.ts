@@ -20,8 +20,8 @@ import { WalletData } from "./wallet.dto.js";
 import { WIFService } from "./wif.service.js";
 
 export * from "./crypto/managers/network.js";
-export * from "./helpers/format-units.js"
-export * from "./helpers/parse-units.js"
+export * from "./helpers/format-units.js";
+export * from "./helpers/parse-units.js";
 
 export const Mainsail: Coins.CoinBundle = bundle({
 	dataTransferObjects: {

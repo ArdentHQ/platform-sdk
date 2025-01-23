@@ -95,7 +95,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
 
-
 		console.log({
 			signingValues: {
 				amount: parseUnits(input.data.amount, "ark").valueOf(),
@@ -103,8 +102,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 				network: this.#configCrypto.crypto.network.pubKeyHash,
 				nonce,
 				recipientAddress: input.data.to,
-			}
-		})
+			},
+		});
 
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
