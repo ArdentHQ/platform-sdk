@@ -33,14 +33,14 @@ export class TransactionIndex implements ITransactionIndex {
 	public async sent(
 		query: Services.ClientTransactionsInput = {},
 	): Promise<ExtendedConfirmedTransactionDataCollection> {
-		return this.#fetch({ ...query, senderId: this.#wallet.address() });
+		return this.#fetch({ senderId: this.#wallet.address(), ...query });
 	}
 
 	/** {@inheritDoc ITransactionIndex.received} */
 	public async received(
 		query: Services.ClientTransactionsInput = {},
 	): Promise<ExtendedConfirmedTransactionDataCollection> {
-		return this.#fetch({ ...query, recipientId: this.#wallet.address() });
+		return this.#fetch({ recipientId: this.#wallet.address(), ...query });
 	}
 
 	/** {@inheritDoc ITransactionIndex.findById} */
