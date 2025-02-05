@@ -81,8 +81,10 @@ export class TransactionAggregate implements ITransactionAggregate {
 
 		const historyKey = historyKeys.join("-");
 
-		if (historyRecords[historyKey]) {
-			query = { ...query, cursor: historyRecords[historyKey].nextPage() };
+		const historyRecord = historyRecords[historyKey];
+
+		if (historyRecord && historyRecord.nextPage()) {
+			query = { ...query, cursor: historyRecord.nextPage() };
 		}
 
 		let response: ExtendedConfirmedTransactionDataCollection;
