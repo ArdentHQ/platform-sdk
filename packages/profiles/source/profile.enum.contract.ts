@@ -29,6 +29,7 @@ export enum ProfileSetting {
 	UseTestNetworks = "USE_TEST_NETWORKS",
 	LastVisitedPage = "LAST_VISITED_PAGE",
 	Sessions = "SESSIONS",
+	IsTestnetEnabled = "IS_TESTNET_ENABLED",
 }
 
 /**

@@ -44,6 +44,7 @@ export class ProfileInitialiser implements IProfileInitialiser {
 		this.#profile.settings().set(ProfileSetting.UseExpandedTables, useExpandedTables);
 		this.#profile.settings().set(ProfileSetting.UseNetworkWalletNames, useNetworkWalletNames);
 		this.#profile.settings().set(ProfileSetting.UseTestNetworks, false);
+		this.#profile.settings().set(ProfileSetting.IsTestnetEnabled, false);
 
 		this.#profile.status().markAsDirty();
 	}

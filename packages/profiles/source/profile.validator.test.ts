@@ -83,9 +83,10 @@ describe("ProfileValidator", ({ loader, it, assert, nock, beforeEach }) => {
 				[ProfileSetting.TimeFormat]: "HH::MM",
 				[ProfileSetting.UseExpandedTables]: false,
 				[ProfileSetting.UseNetworkWalletNames]: false,
+				[ProfileSetting.IsTestnetEnabled]: false,
 				[ProfileSetting.UseTestNetworks]: false,
-				[ProfileSetting.LastVisitedPage]: { path: "test", data: { foo: "bar" } },
-				[ProfileSetting.Sessions]: { 1: { name: "test", data: { foo: "bar" } } },
+				[ProfileSetting.LastVisitedPage]: { data: { foo: "bar" }, path: "test" },
+				[ProfileSetting.Sessions]: { 1: { data: { foo: "bar" }, name: "test" } },
 			},
 			wallets: {},
 		};

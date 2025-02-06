@@ -77,6 +77,15 @@ export class ProfileValidator implements IProfileValidator {
 					}),
 				)
 				.required(),
+			pendingMusigWallets: Joi.object().pattern(
+				Joi.string().uuid(),
+				Joi.object({
+					data: Joi.object().required(),
+					id: Joi.string().required(),
+					settings: Joi.object().required(),
+				}),
+			),
+
 			plugins: Joi.object()
 				.pattern(
 					Joi.string().uuid(),
@@ -111,20 +120,13 @@ export class ProfileValidator implements IProfileValidator {
 				[ProfileSetting.Theme]: Joi.string().required(),
 				[ProfileSetting.TimeFormat]: Joi.string().required(),
 				[ProfileSetting.UseExpandedTables]: Joi.boolean().default(false),
+				[ProfileSetting.IsTestnetEnabled]: Joi.boolean().default(false),
 				[ProfileSetting.UseNetworkWalletNames]: Joi.boolean().default(false),
 				[ProfileSetting.UseTestNetworks]: Joi.boolean().default(false),
 				[ProfileSetting.Sessions]: Joi.object(),
 				[ProfileSetting.LastVisitedPage]: Joi.object(),
 			}).required(),
 			wallets: Joi.object().pattern(
-				Joi.string().uuid(),
-				Joi.object({
-					data: Joi.object().required(),
-					id: Joi.string().required(),
-					settings: Joi.object().required(),
-				}),
-			),
-			pendingMusigWallets: Joi.object().pattern(
 				Joi.string().uuid(),
 				Joi.object({
 					data: Joi.object().required(),
