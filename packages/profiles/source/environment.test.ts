@@ -213,6 +213,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			ERROR_REPORTING: false,
 			EXCHANGE_CURRENCY: "BTC",
 			FALLBACK_TO_DEFAULT_NODES: true,
+			IS_TESTNET_ENABLED: false,
 			LOCALE: "en-US",
 			MARKET_PROVIDER: "cryptocompare",
 			NAME: "John Doe",
