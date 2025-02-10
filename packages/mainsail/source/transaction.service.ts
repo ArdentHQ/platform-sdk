@@ -207,7 +207,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const data = encodeFunctionData({
 			abi: UsernamesAbi.abi,
-			args: [`0x${input.data.username}`],
+			args: [input.data.username],
 			functionName: "registerUsername",
 		});
 
