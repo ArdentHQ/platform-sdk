@@ -235,7 +235,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const nonce = await this.#generateNonce(address, input);
 
 		const data = encodeFunctionData({
-			abi: ConsensusAbi.abi,
+			abi: UsernamesAbi.abi,
 			args: [],
 			functionName: "resignUsername",
 		});
@@ -243,7 +243,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
 			.gasLimit(input.gasLimit)
-			.recipientAddress(wellKnownContracts.consensus)
+			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
 			.nonce(nonce)
 			.gasPrice(input.gasPrice);
