@@ -87,6 +87,37 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				}),
 			),
 		};
+
+		context.defaultUsernameRegistrationInput = {
+			data: {
+				username: "foo",
+			},
+			gasLimit: 500_000,
+			gasPrice: 5,
+			nonce: "1",
+			signatory: new Signatories.Signatory(
+				new Signatories.MnemonicSignatory({
+					address: identity.address,
+					privateKey: "privateKey",
+					publicKey: "publicKey",
+					signingKey: identity.mnemonic,
+				}),
+			),
+		};
+
+		context.defaultUsernameResignationInput = {
+			gasLimit: 150_000,
+			gasPrice: 5,
+			nonce: "1",
+			signatory: new Signatories.Signatory(
+				new Signatories.MnemonicSignatory({
+					address: identity.address,
+					privateKey: "privateKey",
+					publicKey: "publicKey",
+					signingKey: identity.mnemonic,
+				}),
+			),
+		};
 	});
 
 	it("should sign a transfer transaction", async (context) => {
@@ -232,6 +263,98 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		try {
 			await context.subject.validatorResignation({
 				...context.defaultValidatorResignationInput,
+				gasLimit: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasLimit to be defined");
+		}
+	});
+
+	// username registration tx tests
+	it("should sign a username registration transaction", async (context) => {
+		const signedTransaction = await context.subject.usernameRegistration(
+			context.defaultUsernameRegistrationInput,
+		);
+
+		assert.is(
+			signedTransaction.fee().toString(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
+		);
+		assert.is(signedTransaction.nonce().toString(), context.defaultUsernameRegistrationInput.nonce);
+	});
+
+	it("should require gasPrice when signing a username registration transaction", async (context) => {
+		try {
+			await context.subject.usernameRegistration({
+				...context.defaultUsernameRegistrationInput,
+				gasPrice: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasPrice to be defined");
+		}
+	});
+
+	it("should require gasLimit when signing a username registration transaction", async (context) => {
+		try {
+			await context.subject.usernameRegistration({
+				...context.defaultUsernameRegistrationInput,
+				gasLimit: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasLimit to be defined");
+		}
+	});
+
+	it("should require a username when signing a username registration transaction", async (context) => {
+		try {
+			await context.subject.usernameRegistration({
+				...context.defaultUsernameRegistrationInput,
+				data: {
+					username: undefined,
+				},
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected username to be defined");
+		}
+	});
+
+	// username resignation tx tests
+	it("should sign a username resignation transaction", async (context) => {
+		const signedTransaction = await context.subject.usernameResignation(context.defaultUsernameResignationInput);
+
+		assert.is(
+			signedTransaction.fee().toString(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"gwei",
+			).valueOf(),
+		);
+		assert.is(signedTransaction.nonce().toString(), context.defaultUsernameResignationInput.nonce);
+	});
+
+	it("should require gasPrice when signing a username resignation transaction", async (context) => {
+		try {
+			await context.subject.usernameResignation({
+				...context.defaultUsernameResignationInput,
+				gasPrice: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasPrice to be defined");
+		}
+	});
+
+	it("should require gasLimit when signing a username resignation transaction", async (context) => {
+		try {
+			await context.subject.usernameResignation({
+				...context.defaultUsernameResignationInput,
 				gasLimit: undefined,
 			});
 		} catch (error) {
