@@ -14,6 +14,7 @@ import { Request } from "./request.js";
 
 const wellKnownContracts = {
 	consensus: "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
+	username: "0x2c1DE3b4Dbb4aDebEbB5dcECAe825bE2a9fc6eb6",
 };
 
 enum GasLimit {
@@ -214,7 +215,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		transaction
 			.network(this.#configCrypto.crypto.network.pubKeyHash)
 			.gasLimit(input.gasLimit)
-			.recipientAddress(wellKnownContracts.consensus)
+			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
 			.nonce(nonce)
 			.gasPrice(input.gasPrice);
