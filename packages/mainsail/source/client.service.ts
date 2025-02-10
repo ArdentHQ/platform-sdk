@@ -213,7 +213,7 @@ export class ClientService extends Services.AbstractClientService {
 			multiPayment: TransactionTypes.MultiPayment,
 			multiSignature: undefined,
 			transfer: TransactionTypes.Transfer,
-			usernameRegistration: TransactionTypes.ResignUsername,
+			usernameRegistration: TransactionTypes.RegisterUsername,
 			usernameResignation: TransactionTypes.ResignUsername,
 			vote: [trimHexPrefix(TransactionTypes.Vote), trimHexPrefix(TransactionTypes.Unvote)].join(","),
 		};

@@ -190,13 +190,64 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async usernameRegistration(
 		input: Services.UsernameRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameRegistration.name);
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#assertGasFee(input);
+
+		if (!input.data.username) {
+			throw new Error(
+				`[TransactionService#validatorRegistration] Expected username to be defined but received ${typeof input
+					.data.username}`,
+			);
+		}
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		const data = encodeFunctionData({
+			abi: ConsensusAbi.abi,
+			args: [`0x${input.data.username}`],
+			functionName: "registerUsername",
+		});
+
+		transaction
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(input.gasLimit)
+			.recipientAddress(wellKnownContracts.consensus)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.gasPrice(input.gasPrice);
+
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async usernameResignation(
 		input: Services.UsernameResignationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameResignation.name);
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#assertGasFee(input);
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		const data = encodeFunctionData({
+			abi: ConsensusAbi.abi,
+			args: [],
+			functionName: "resignUsername",
+		});
+
+		transaction
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(input.gasLimit)
+			.recipientAddress(wellKnownContracts.consensus)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.gasPrice(input.gasPrice);
+
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async validatorResignation(
