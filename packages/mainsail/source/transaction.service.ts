@@ -2,7 +2,7 @@ import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Exceptions } from "@mainsail/contracts";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { ConsensusAbi } from "@mainsail/evm-contracts";
+import { ConsensusAbi, UsernamesAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
 
@@ -206,7 +206,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const nonce = await this.#generateNonce(address, input);
 
 		const data = encodeFunctionData({
-			abi: ConsensusAbi.abi,
+			abi: UsernamesAbi.abi,
 			args: [`0x${input.data.username}`],
 			functionName: "registerUsername",
 		});
