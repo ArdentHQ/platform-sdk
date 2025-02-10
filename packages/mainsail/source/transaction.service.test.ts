@@ -273,9 +273,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 	// username registration tx tests
 	it("should sign a username registration transaction", async (context) => {
-		const signedTransaction = await context.subject.usernameRegistration(
-			context.defaultUsernameRegistrationInput,
-		);
+		const signedTransaction = await context.subject.usernameRegistration(context.defaultUsernameRegistrationInput);
 
 		assert.is(
 			signedTransaction.fee().toString(),
