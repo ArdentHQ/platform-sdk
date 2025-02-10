@@ -66,11 +66,17 @@ export class TransactionTypeService {
 	}
 
 	public static isUsernameRegistration(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.RegisterUsername);
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
+		return data.data.includes(TransactionTypes.RegisterUsername.slice(2)); // remove `0x` prefix from api response
 	}
 
 	public static isUsernameResignation(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.ResignUsername);
+		// When signing transaction, mainsail removes the 0x prefix form the data payload forcing these tx type checks to always be false
+		// as the TransactionTypes from mainsail consensus are always prefixed with 0x.
+		// @TODO: Revisit these checks. See relevant issue https://app.clickup.com/t/86dvawadc
+		return data.data.includes(TransactionTypes.ResignUsername.slice(2)); // remove `0x` prefix from api response
 	}
 
 	public static isDelegateResignation(data: TransactionData): boolean {
