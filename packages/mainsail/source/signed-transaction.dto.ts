@@ -116,7 +116,13 @@ export class SignedTransactionData
 	}
 
 	public override username(): string {
-		return this.signedData.asset.username;
+		let data = this.signedData.data as string;
+
+		if (!data.startsWith("0x")) {
+			data = `0x${data}`;
+		}
+
+		return decodeFunctionData(data as Hex).args[0] as string;
 	}
 
 	public override validatorPublicKey(): string {

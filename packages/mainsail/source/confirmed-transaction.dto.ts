@@ -150,7 +150,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	// Username registration
 	public override username(): string {
-		return this.data.asset?.username;
+		return decodeFunctionData(this.data.data).args[0] as string;
 	}
 
 	public override validatorPublicKey(): string {
