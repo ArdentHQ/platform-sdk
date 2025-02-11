@@ -1,15 +1,17 @@
 import { decodeFunctionData as viemDecodeFunctionData, Hex } from "viem";
-import { ConsensusAbi } from "@mainsail/evm-contracts";
+import { ConsensusAbi, UsernamesAbi } from "@mainsail/evm-contracts";
 
 interface FunctionData {
 	functionName: string;
 	args: any[];
 }
 
-export const decodeFunctionData = (data: Hex): FunctionData => {
+export const decodeFunctionData = (data: Hex, abiType: "consensus" | "username" = "consensus"): FunctionData => {
+	const abi = abiType === "consensus" ? ConsensusAbi.abi : UsernamesAbi.abi;
+
 	try {
 		const result = viemDecodeFunctionData({
-			abi: ConsensusAbi.abi,
+			abi,
 			data,
 		}) as FunctionData;
 

@@ -2,7 +2,7 @@ import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Exceptions } from "@mainsail/contracts";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { ConsensusAbi } from "@mainsail/evm-contracts";
+import { ConsensusAbi, UsernamesAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
 
@@ -14,6 +14,7 @@ import { Request } from "./request.js";
 
 const wellKnownContracts = {
 	consensus: "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
+	username: "0x2c1DE3b4Dbb4aDebEbB5dcECAe825bE2a9fc6eb6",
 };
 
 enum GasLimit {
@@ -190,13 +191,64 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async usernameRegistration(
 		input: Services.UsernameRegistrationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameRegistration.name);
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#assertGasFee(input);
+
+		if (!input.data.username) {
+			throw new Error(
+				`[TransactionService#validatorRegistration] Expected username to be defined but received ${typeof input
+					.data.username}`,
+			);
+		}
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		const data = encodeFunctionData({
+			abi: UsernamesAbi.abi,
+			args: [input.data.username],
+			functionName: "registerUsername",
+		});
+
+		transaction
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(input.gasLimit)
+			.recipientAddress(wellKnownContracts.username)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.gasPrice(input.gasPrice);
+
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async usernameResignation(
 		input: Services.UsernameResignationInput,
 	): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.usernameResignation.name);
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#assertGasFee(input);
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		const data = encodeFunctionData({
+			abi: UsernamesAbi.abi,
+			args: [],
+			functionName: "resignUsername",
+		});
+
+		transaction
+			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.gasLimit(input.gasLimit)
+			.recipientAddress(wellKnownContracts.username)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.gasPrice(input.gasPrice);
+
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async validatorResignation(
