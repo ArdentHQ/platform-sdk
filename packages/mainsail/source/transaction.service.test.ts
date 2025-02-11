@@ -92,7 +92,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			data: {
 				username: "foo",
 			},
-			gasLimit: 500_000,
+			gasLimit: 200_000,
 			gasPrice: 5,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
@@ -106,7 +106,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		};
 
 		context.defaultUsernameResignationInput = {
-			gasLimit: 150_000,
+			gasLimit: 200_000,
 			gasPrice: 5,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
