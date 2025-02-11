@@ -122,7 +122,7 @@ export class SignedTransactionData
 			data = `0x${data}`;
 		}
 
-		return decodeFunctionData(data as Hex).args[0] as string;
+		return decodeFunctionData(data as Hex, "username").args[0] as string;
 	}
 
 	public override validatorPublicKey(): string {
