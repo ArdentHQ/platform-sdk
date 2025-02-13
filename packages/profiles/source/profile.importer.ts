@@ -1,9 +1,8 @@
-import { Coins } from "@ardenthq/sdk";
 import { Base64 } from "@ardenthq/sdk-cryptography";
 
 import { container } from "./container.js";
 import { Identifiers } from "./container.models.js";
-import { IProfile, IProfileData, IProfileImporter, IProfileValidator, WalletData } from "./contracts.js";
+import { IProfile, IProfileData, IProfileImporter, IProfileValidator } from "./contracts.js";
 import { Migrator } from "./migrator.js";
 import { ProfileEncrypter } from "./profile.encrypter";
 import { ProfileValidator } from "./profile.validator";
@@ -110,6 +109,6 @@ export class ProfileImporter implements IProfileImporter {
 					this.#profile.coins().set(coin, network);
 				}
 			}
-		} */
-	}
+		} 
+	}*/
 }
