@@ -102,12 +102,13 @@ export class ProfileImporter implements IProfileImporter {
 			}
 		}
 
-		for (const contact of Object.values(data.contacts)) {
+		// @TODO: Refactor this to skip the usage of network now that contacts are not tied to a network.
+		/* for (const contact of Object.values(data.contacts)) {
 			for (const { coin, network } of Object.values(contact.addresses) as any) {
 				if (isRegistered(coin)) {
 					this.#profile.coins().set(coin, network);
 				}
 			}
-		}
+		} */
 	}
 }
