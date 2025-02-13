@@ -50,8 +50,6 @@ export class ProfileImporter implements IProfileImporter {
 		await this.#profile.pendingMusigWallets().fill(data.pendingMusigWallets);
 
 		this.#profile.contacts().fill(data.contacts);
-
-		/* this.#gatherCoins(data); */
 	}
 
 	/**
@@ -84,31 +82,4 @@ export class ProfileImporter implements IProfileImporter {
 
 		return data;
 	}
-
-	/**
-	 * Gather all known coins through wallets and contacts.
-	 *
-	 * @private
-	 * @param {IProfileData} data
-	 * @memberof ProfileImporter
-	 */
-	// @TODO: Refactor this to skip the usage of network now that contacts are not tied to a network.
-	/* #gatherCoins(data: IProfileData): void {
-		const isRegistered = (coin: string) => !!container.get<Coins.CoinBundle>(Identifiers.Coins)[coin.toUpperCase()];
-
-		for (const wallet of Object.values(data.wallets)) {
-			if (isRegistered(wallet.data[WalletData.Coin])) {
-				this.#profile.coins().set(wallet.data[WalletData.Coin], wallet.data[WalletData.Network]);
-			}
-		}
-
-		
-		for (const contact of Object.values(data.contacts)) {
-			for (const { coin, network } of Object.values(contact.addresses) as any) {
-				if (isRegistered(coin)) {
-					this.#profile.coins().set(coin, network);
-				}
-			}
-		} 
-	}*/
 }
