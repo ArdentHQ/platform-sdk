@@ -84,17 +84,12 @@ export class ContactAddressRepository implements IContactAddressRepository {
 		return this.#findByColumn("coin", value);
 	}
 
-	/** {@inheritDoc IContactAddressRepository.findByNetwork} */
-	public findByNetwork(value: string): IContactAddress[] {
-		return this.#findByColumn("network", value);
-	}
-
 	/** {@inheritDoc IContactAddressRepository.exists} */
-	public exists({ address, coin, network }: IContactAddressInput): boolean {
-		const value = [address, coin, network].join("");
+	public exists({ address, coin }: IContactAddressInput): boolean {
+		const value = [address, coin].join("");
 
 		for (const item of this.values()) {
-			const compareValue = [item.address(), item.coin(), item.network()].join("");
+			const compareValue = [item.address(), item.coin()].join("");
 
 			if (value === compareValue) {
 				return true;
