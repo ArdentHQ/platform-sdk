@@ -98,8 +98,7 @@ export class Contact implements IContact {
 				.items(
 					Joi.object({
 						address: Joi.string().required(),
-						coin: Joi.string().required(),
-						network: Joi.string().required(),
+						coin: Joi.string().required()
 					}),
 				),
 			id: Joi.string().required(),
