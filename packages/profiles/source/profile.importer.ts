@@ -1,8 +1,9 @@
+import { Coins } from "@ardenthq/sdk";
 import { Base64 } from "@ardenthq/sdk-cryptography";
 
 import { container } from "./container.js";
 import { Identifiers } from "./container.models.js";
-import { IProfile, IProfileData, IProfileImporter, IProfileValidator } from "./contracts.js";
+import { IProfile, IProfileData, IProfileImporter, IProfileValidator, WalletData } from "./contracts.js";
 import { Migrator } from "./migrator.js";
 import { ProfileEncrypter } from "./profile.encrypter";
 import { ProfileValidator } from "./profile.validator";
@@ -50,6 +51,8 @@ export class ProfileImporter implements IProfileImporter {
 		await this.#profile.pendingMusigWallets().fill(data.pendingMusigWallets);
 
 		this.#profile.contacts().fill(data.contacts);
+
+		this.#gatherCoins(data);
 	}
 
 	/**
@@ -81,5 +84,22 @@ export class ProfileImporter implements IProfileImporter {
 		}
 
 		return data;
+	}
+
+	/**
+	 * Gather all known coins through wallets and contacts.
+	 *
+	 * @private
+	 * @param {IProfileData} data
+	 * @memberof ProfileImporter
+	 */
+	#gatherCoins(data: IProfileData): void {
+		const isRegistered = (coin: string) => !!container.get<Coins.CoinBundle>(Identifiers.Coins)[coin.toUpperCase()];
+
+		for (const wallet of Object.values(data.wallets)) {
+			if (isRegistered(wallet.data[WalletData.Coin])) {
+				this.#profile.coins().set(wallet.data[WalletData.Coin], wallet.data[WalletData.Network]);
+			}
+		}
 	}
 }
