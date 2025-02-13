@@ -111,4 +111,3 @@ export class Contact implements IContact {
 		}
 	}
 }
-
