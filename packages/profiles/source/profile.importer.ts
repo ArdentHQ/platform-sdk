@@ -52,7 +52,7 @@ export class ProfileImporter implements IProfileImporter {
 
 		this.#profile.contacts().fill(data.contacts);
 
-		this.#gatherCoins(data);
+		/* this.#gatherCoins(data); */
 	}
 
 	/**
