@@ -22,7 +22,6 @@ export class ProfileValidator implements IProfileValidator {
 								address: Joi.string().required(),
 								coin: Joi.string().required(),
 								id: Joi.string().required(),
-								network: Joi.string().required(),
 							}),
 						),
 					id: Joi.string().required(),
@@ -77,6 +76,15 @@ export class ProfileValidator implements IProfileValidator {
 					}),
 				)
 				.required(),
+			pendingMusigWallets: Joi.object().pattern(
+				Joi.string().uuid(),
+				Joi.object({
+					data: Joi.object().required(),
+					id: Joi.string().required(),
+					settings: Joi.object().required(),
+				}),
+			),
+			
 			plugins: Joi.object()
 				.pattern(
 					Joi.string().uuid(),
@@ -91,7 +99,7 @@ export class ProfileValidator implements IProfileValidator {
 				)
 				.required(),
 			// @TODO: assert specific values for enums
-			settings: Joi.object({
+settings: Joi.object({
 				[ProfileSetting.AccentColor]: Joi.string().required(),
 				[ProfileSetting.AdvancedMode]: Joi.boolean().required(),
 				[ProfileSetting.AutomaticSignOutPeriod]: Joi.number().required(),
@@ -117,14 +125,6 @@ export class ProfileValidator implements IProfileValidator {
 				[ProfileSetting.LastVisitedPage]: Joi.object(),
 			}).required(),
 			wallets: Joi.object().pattern(
-				Joi.string().uuid(),
-				Joi.object({
-					data: Joi.object().required(),
-					id: Joi.string().required(),
-					settings: Joi.object().required(),
-				}),
-			),
-			pendingMusigWallets: Joi.object().pattern(
 				Joi.string().uuid(),
 				Joi.object({
 					data: Joi.object().required(),
