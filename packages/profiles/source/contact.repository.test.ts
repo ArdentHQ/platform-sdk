@@ -63,7 +63,7 @@ void describeWithContext(
 					context.subject.create("InvalidAddress", [
 						{
 							address: undefined,
-							coin: "ARK"
+							coin: "ARK",
 						},
 					]),
 				'addresses[0].address" is required',
