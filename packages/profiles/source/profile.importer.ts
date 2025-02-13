@@ -93,7 +93,8 @@ export class ProfileImporter implements IProfileImporter {
 	 * @param {IProfileData} data
 	 * @memberof ProfileImporter
 	 */
-	#gatherCoins(data: IProfileData): void {
+	// @TODO: Refactor this to skip the usage of network now that contacts are not tied to a network.
+	/* #gatherCoins(data: IProfileData): void {
 		const isRegistered = (coin: string) => !!container.get<Coins.CoinBundle>(Identifiers.Coins)[coin.toUpperCase()];
 
 		for (const wallet of Object.values(data.wallets)) {
@@ -102,8 +103,8 @@ export class ProfileImporter implements IProfileImporter {
 			}
 		}
 
-		// @TODO: Refactor this to skip the usage of network now that contacts are not tied to a network.
-		/* for (const contact of Object.values(data.contacts)) {
+		
+		for (const contact of Object.values(data.contacts)) {
 			for (const { coin, network } of Object.values(contact.addresses) as any) {
 				if (isRegistered(coin)) {
 					this.#profile.coins().set(coin, network);
