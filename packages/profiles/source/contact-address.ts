@@ -20,11 +20,6 @@ export class ContactAddress implements IContactAddress {
 		return this.#data.coin;
 	}
 
-	/** {@inheritDoc IContactAddress.network} */
-	public network(): string {
-		return this.#data.network;
-	}
-
 	/** {@inheritDoc IContactAddress.address} */
 	public address(): string {
 		return this.#data.address;
@@ -41,7 +36,6 @@ export class ContactAddress implements IContactAddress {
 			address: this.address(),
 			coin: this.coin(),
 			id: this.id(),
-			network: this.network(),
 		};
 	}
 

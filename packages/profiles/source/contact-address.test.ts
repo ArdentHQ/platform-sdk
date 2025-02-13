@@ -15,7 +15,6 @@ describe("ContactAddress", async ({ it, assert, beforeEach }) => {
 				address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
 				coin: "ARK",
 				id: "uuid",
-				network: "ark.devnet",
 			},
 			profile,
 		);
@@ -27,10 +26,6 @@ describe("ContactAddress", async ({ it, assert, beforeEach }) => {
 
 	it("should have a coin", (context) => {
 		assert.is(context.subject.coin(), "ARK");
-	});
-
-	it("should have a network", (context) => {
-		assert.is(context.subject.network(), "ark.devnet");
 	});
 
 	it("should have an address", (context) => {
@@ -46,7 +41,6 @@ describe("ContactAddress", async ({ it, assert, beforeEach }) => {
 			address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
 			coin: "ARK",
 			id: "uuid",
-			network: "ark.devnet",
 		});
 	});
 

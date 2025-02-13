@@ -138,11 +138,6 @@ export class ContactRepository implements IContactRepository {
 		return this.#findByColumn("coin", value);
 	}
 
-	/** {@inheritDoc IContactRepository.findByNetwork} */
-	public findByNetwork(value: string): IContact[] {
-		return this.#findByColumn("network", value);
-	}
-
 	/** {@inheritDoc IContactRepository.toObject} */
 	public toObject(): Record<string, IContactData> {
 		const result: Record<string, IContactData> = {};

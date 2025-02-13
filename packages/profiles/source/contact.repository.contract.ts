@@ -126,15 +126,6 @@ export interface IContactRepository {
 	findByCoin(value: string): IContact[];
 
 	/**
-	 * Find many contacts by their network.
-	 *
-	 * @param {string} value
-	 * @returns {IContact[]}
-	 * @memberof IContactRepository
-	 */
-	findByNetwork(value: string): IContact[];
-
-	/**
 	 * Turn the contacts into a normalised object.
 	 *
 	 * @returns {Record<string, IContactData>}
