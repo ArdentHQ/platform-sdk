@@ -121,10 +121,7 @@ export class SignedTransactionData
 	public override payments(): MultiPaymentItem[] {
 		const payments: MultiPaymentItem[] = [];
 
-		const [recipients, amounts] = decodeFunctionData(
-			this.normalizedData() as Hex,
-			AbiType.MultiPayment
-		).args;
+		const [recipients, amounts] = decodeFunctionData(this.normalizedData() as Hex, AbiType.MultiPayment).args;
 
 		for (const index in recipients) {
 			payments[index] = {
