@@ -1,17 +1,25 @@
 import { Identities } from "../../source/crypto/index.js";
 
 export const identity = {
-	// Standard
-	privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
-	publicKey: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
-	address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
-	wif: "SHA89yQdW3bLFYyCvEBpn7ngYNR8TEojGCC1uAJjT5esJPm1NiG3",
-	mnemonic: "bomb open frame quit success evolve gain donate prison very rent later",
-	// Multi Signature
-	multiSignature: {
+	
+	address: "0x902Ca4319BabB2236155E42bE837cE40C6DC6396",
+	
+mnemonic: "brother woman opinion heart brand sad clip ignore neutral rigid arm uniform birth speak disease cannon simple donate crawl obscure champion cry hurdle reject",
+	
+// Multi Signature
+multiSignature: {
 		min: 3,
 		publicKeys: ["secret 1", "secret 2", "secret 3"].map((secret) => Identities.PublicKey.fromPassphrase(secret)),
 	},
-	multiSignatureAddress: "DMS861mLRrtH47QUMVif3C2rBCAdHbmwsi",
-	multiSignaturePublicKey: "0279f05076556da7173610a7676399c3620276ebbf8c67552ad3b1f26ec7627794",
+	
+
+multiSignatureAddress: "DMS861mLRrtH47QUMVif3C2rBCAdHbmwsi",
+	
+
+multiSignaturePublicKey: "0279f05076556da7173610a7676399c3620276ebbf8c67552ad3b1f26ec7627794",
+	
+	// Standard
+privateKey: "a27872084dd69fc78996a2af4181a82f6b101c7bf4bee763b4b5d906eea5fb88",
+	publicKey: "034598a4613fa09b4d77003df03dd626ef7ee9ef03cfe2249ba457687d4cdd310a",
+	wif: "UcJ6zDNvMCmsLDLJumKwgsHo9ocpBF7KHWdxqG3Zr6rxmSs4giFa",
 };
