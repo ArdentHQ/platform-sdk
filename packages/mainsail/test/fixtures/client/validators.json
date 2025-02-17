@@ -1,0 +1,1520 @@
+{
+	"meta": {
+		"totalCountIsEstimate": true,
+		"count": 65,
+		"first": "/delegates?limit=100&page=1",
+		"last": "/delegates?limit=100&page=1",
+		"next": null,
+		"pageCount": 1,
+		"previous": null,
+		"self": "/delegates?limit=100&page=1",
+		"totalCount": 65
+	},
+	"data": [
+		{
+			"address": "0xC3bBE9B1CeE1ff85Ad72b87414B0E9B7F2366763",
+			"publicKey": "0370049512c71549a5cd8bb6a2e33fd85729f74bb1070c7e9dcc0b3708c6d35177",
+			"balance": "2362962566037735850718009",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xC3bBE9B1CeE1ff85Ad72b87414B0E9B7F2366763",
+				"validatorRank": 1,
+				"validatorApproval": 0.0377,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "2e1e4facbb628c548cefdae5f90ee22baa7106769b1a9c82330fcbf9314459de",
+					"height": 194121,
+					"timestamp": 1734353835424
+				},
+				"validatorPublicKey": "848a73c1c9be7733138c0bef8ea5f091130facc89c141490282d7c095f8b54e0a44e06b1cae516e8e9e4c560461d160d",
+				"validatorForgedFees": "534",
+				"validatorForgedTotal": "100000000000636",
+				"validatorVoteBalance": "4725768131075471579729537",
+				"validatorVotersCount": 3,
+				"validatorForgedRewards": "100000000000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194121"
+		},
+		{
+			"address": "0x3FCe699F036325B142e5568992EaA020ee15518B",
+			"publicKey": "02ba352eab5ddfd1a19f5681162b1550b035003ed01bd83cd173f48dbb8ebb2907",
+			"balance": "2362966566037735849547363",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x3FCe699F036325B142e5568992EaA020ee15518B",
+				"validatorRank": 2,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "8eeb1e9728ed21e82e9bd65f2be66dc323aaf3c4df61ec1f8ea25b27d87aff71",
+					"height": 194106,
+					"timestamp": 1734353715424
+				},
+				"validatorPublicKey": "af276ab35b3dd5d1c911c7e1396dae24519f7f9c25240e15325d705e61fd8b9cc2175bf1507b2f5a5210bd053d7a8aa6",
+				"validatorForgedFees": "525",
+				"validatorForgedTotal": "6000000000000000626",
+				"validatorVoteBalance": "2363021566037735836677328",
+				"validatorVotersCount": 2,
+				"validatorForgedRewards": "6000000000000000101",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194106"
+		},
+		{
+			"address": "0x44083669cf29374D548b71c558EBD1e2F5DCC4De",
+			"publicKey": "031ffedcfcb902b7a1cf22961a803c154d2038cb34f3096c2fd8cc102985fcc579",
+			"balance": "2362968566037735850923933",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x44083669cf29374D548b71c558EBD1e2F5DCC4De",
+				"validatorRank": 3,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "45867e51b9b81ef30f6509d44f4c34f5b1c5771d13d9157366f212a869be9e9b",
+					"height": 194116,
+					"timestamp": 1734353795424
+				},
+				"validatorPublicKey": "8dfc3ec76e11c9403527854f8ee5d551a4bb81b6caac312d92c82d02cab2c98a089ca0ced7042d415e177aeb3716715f",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "1231231000000000000000621",
+				"validatorVoteBalance": "2362969566037735850176768",
+				"validatorVotersCount": 2,
+				"validatorForgedRewards": "1231231000000000000000101",
+				"validatorProducedBlocks": 3665
+			},
+			"updated_at": "194116"
+		},
+		{
+			"address": "0x1e9c31895Da0F14d7c0f73F1BC0567631cb0fF01",
+			"publicKey": "034cc5de0e7d78bd56706e787c8f1f7c1029eb404c8296d0ee40379d1f0529975f",
+			"balance": "2362966566037735851946803",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x1e9c31895Da0F14d7c0f73F1BC0567631cb0fF01",
+				"validatorRank": 4,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "2ae8eb81d65bf2cf1f502f7658e0a4b01644a5d2a7032c9540b9890de5fe9ea6",
+					"height": 194111,
+					"timestamp": 1734353755424
+				},
+				"validatorPublicKey": "a3e6dd53d3d6820ce1ff607e5cc60beca98aedbfb5bc6f64f0cf9585c15f955cb76d3e48193fafd2834f8fa8f5650cae",
+				"validatorForgedFees": "540",
+				"validatorForgedTotal": "1000000000000000642",
+				"validatorVoteBalance": "2362966566037735851946803",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000102",
+				"validatorProducedBlocks": 3665
+			},
+			"updated_at": "194111"
+		},
+		{
+			"address": "0x59b7882d257D7C1C5e82f61F09DfAec7d9bF97d7",
+			"publicKey": "025381d4205f87df9387ecb0957573ab2f0bce47d880cddbdb3423b15dea6b4775",
+			"balance": "2362966566037735850409823",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x59b7882d257D7C1C5e82f61F09DfAec7d9bF97d7",
+				"validatorRank": 5,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "9f93db886134c447da8eaac380cfc8b8c350e20573a786ef19b15f1b6d92c542",
+					"height": 194103,
+					"timestamp": 1734353691424
+				},
+				"validatorPublicKey": "92caf44ab5ce5e1d8c78455400372588563e28df80b5776a04851fbf03a0b67ee9d318f06bd05f7bf10e2f640bc9fa18",
+				"validatorForgedFees": "540",
+				"validatorForgedTotal": "15000000010100000641",
+				"validatorVoteBalance": "2362966566037735850409823",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "15000000010100000101",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194103"
+		},
+		{
+			"address": "0x2F61f2118fd6Fa819Cf1695642c14145a4539F9a",
+			"publicKey": "03b423fef8eb3859cd4122c2a9d184c29568685f01e11601fcf8b59ba06e81f4a0",
+			"balance": "2362966566037735850215453",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x2F61f2118fd6Fa819Cf1695642c14145a4539F9a",
+				"validatorRank": 6,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "353a87dfe4e4a68b9081d088c480b1107c4f7f517d764d6c9b2220d484575c4c",
+					"height": 194126,
+					"timestamp": 1734353875424
+				},
+				"validatorPublicKey": "ae2a4513692f6d62ed1d60c1b82f202804cfeff2e93defc1fbe87c8a605fd006b0f7d97c6ebadb874007de616cc3e3e9",
+				"validatorForgedFees": "535",
+				"validatorForgedTotal": "5001000000000000637",
+				"validatorVoteBalance": "2362966566037735850215453",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "5001000000000000102",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194126"
+		},
+		{
+			"address": "0xa732C81De8a23d1aa2422463Fe7489b2cBCb48c4",
+			"publicKey": "03f3f6d09101d6fd97cc5b987707442c14cb4b990b097852f265ef41631ae4c7d5",
+			"balance": "2362966566037735850069393",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xa732C81De8a23d1aa2422463Fe7489b2cBCb48c4",
+				"validatorRank": 7,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "a7d5ebd628c4a662b8c4d906afaf858b818d9b91b2eeb6529c907e84a00256fa",
+					"height": 194102,
+					"timestamp": 1734353683424
+				},
+				"validatorPublicKey": "8c820e9c8ceaa403ddc6bba99dde7be6e0fe5bd1945c5dab4355a635728d6d649c5274fb8bac8a5584229d0ca7b9d8ea",
+				"validatorForgedFees": "525",
+				"validatorForgedTotal": "627",
+				"validatorVoteBalance": "2362966566037735850069393",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "102",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194102"
+		},
+		{
+			"address": "0xD07c4ccd83cff5b6B6e9e29181824c0a2Df1139c",
+			"publicKey": "022a90a50c444195c35b852460c7d2be0312290bd5a1695d7a57a9554bcb34d0d7",
+			"balance": "2362966566037735850037198",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xD07c4ccd83cff5b6B6e9e29181824c0a2Df1139c",
+				"validatorRank": 8,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "6a61a43e089b42f2e9c7ae2cf2249c958e2255b2b4bec01a116c65cf0e62664e",
+					"height": 194095,
+					"timestamp": 1734353627424
+				},
+				"validatorPublicKey": "b5300e91d2c40c0ec46ff541ce33b705a961d727370f0c0238f50897e3f8aaa55fb52d5902cdd62b82277738a94d50cf",
+				"validatorForgedFees": "525",
+				"validatorForgedTotal": "100000000000627",
+				"validatorVoteBalance": "2362966566037735850037198",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "100000000000102",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194095"
+		},
+		{
+			"address": "0xBA595868ce9F740Cba0e39de124ca33fb5Ed92fE",
+			"publicKey": "03d878ed802a26f299c1492e5a5db7615a45bfa05cc703881d7f28286ce8bb96a4",
+			"balance": "2362966566037735849965978",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xBA595868ce9F740Cba0e39de124ca33fb5Ed92fE",
+				"validatorRank": 9,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "f84c9f519d7d3c20ef2ee86bfb913daea2c39a4b85aa48283b0e6a2622f29a51",
+					"height": 194092,
+					"timestamp": 1734353603424
+				},
+				"validatorPublicKey": "8767aad179f0ed0e109b31e2c57821de1a84581a949923eedd8834cbe5dbf3ef0117ffc4135d96c60e076277b52423fb",
+				"validatorForgedFees": "275",
+				"validatorForgedTotal": "1000000000000000346",
+				"validatorVoteBalance": "2362966566037735849965978",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000071",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194092"
+		},
+		{
+			"address": "0xa1440fda0dc509B428E0C954893Ac3ec21dDb146",
+			"publicKey": "0216accc59f9d143ed562853a28558ed835d3e484d36dd53290a4f7c2752f57c88",
+			"balance": "2362966566037735849335258",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xa1440fda0dc509B428E0C954893Ac3ec21dDb146",
+				"validatorRank": 10,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "f9ac3aadab6bd47740bf1b5f3fb60aee6a90113f14b6f54ff579f944d22ce8ee",
+					"height": 194091,
+					"timestamp": 1734353595424
+				},
+				"validatorPublicKey": "98a376cb676c9a5576e2ba042110dda8d5cac8aff57b316f4e1fd221316b9d523a6b38cf413bde6d1c7ff90b62e0def4",
+				"validatorForgedFees": "515",
+				"validatorForgedTotal": "616",
+				"validatorVoteBalance": "2362966566037735849335258",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "101",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194091"
+		},
+		{
+			"address": "0x09C94A51cb63b4b70A9Dbf190543c371741D13Fd",
+			"publicKey": "0210dcee3ee798258e1e92cc27c886da7cd4d94bda6a33e60876836e935aab6462",
+			"balance": "2362966566037735849056603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x09C94A51cb63b4b70A9Dbf190543c371741D13Fd",
+				"validatorRank": 11,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "af770f394172c31406ae667075b5cfb053e821adfe689ebc46f26197a2cc3e96",
+					"height": 194109,
+					"timestamp": 1734353739424
+				},
+				"validatorPublicKey": "8ba871d2ba2ddd65fdd24e559d5d27424bdfc5be6a1d1d5bc946068f3e24bfecc66d4e1f0bde3a7aeb8a29564e63e139",
+				"validatorForgedFees": "505",
+				"validatorForgedTotal": "606",
+				"validatorVoteBalance": "2362966566037735849056603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "101",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194109"
+		},
+		{
+			"address": "0x6762BAAaE8374748793c77225FFb6a444a9D5de9",
+			"publicKey": "02ab5bebf52333bdad0d3d75e6b5b1f602adf7b8af6faa87c23b2e121318f95542",
+			"balance": "2362964566037735857215658",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x6762BAAaE8374748793c77225FFb6a444a9D5de9",
+				"validatorRank": 12,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "730043c80dad5a09539ce07b900de1c58b72bd317b39de3718b6f4a4fe6af557",
+					"height": 194089,
+					"timestamp": 1734353579424
+				},
+				"validatorPublicKey": "87b4b3f66caf02230c448469e9811fe7d4d077c98747507460786ba89b4e140eecdbfe0ac21e14cc92b4da914071cb17",
+				"validatorForgedFees": "275",
+				"validatorForgedTotal": "100000326",
+				"validatorVoteBalance": "2362964566037735857215658",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "100000051",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194089"
+		},
+		{
+			"address": "0x7e1372c9B66F434A22c429C600835894cE33641b",
+			"publicKey": "038297916c825d2e09ffe03de2c67a15803472fc92569240fa8fbf457502d7400d",
+			"balance": "2362964566037735856429253",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x7e1372c9B66F434A22c429C600835894cE33641b",
+				"validatorRank": 13,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "a782896ad3e16e05bdc8323e62052ad601c6a6e9ecb3b254f72dbd8efc5075ee",
+					"height": 194099,
+					"timestamp": 1734353659424
+				},
+				"validatorPublicKey": "8721636e8eec6651422de9eb6915bd0cdb46b59f4796e473088ed5b33b767ce3461d678df12dd80d16d9f878f3a9bd89",
+				"validatorForgedFees": "555",
+				"validatorForgedTotal": "2000000000100000657",
+				"validatorVoteBalance": "2362964566037735856429253",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "2000000000100000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194099"
+		},
+		{
+			"address": "0x4041C30B708da49227856c005a656F55fe44eF1C",
+			"publicKey": "03aafd6b0c134c77c3b4f571e7d29d800254c6a28586dc104a0d01aeebad11b370",
+			"balance": "2362964566037735855761988",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x4041C30B708da49227856c005a656F55fe44eF1C",
+				"validatorRank": 14,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "6470002fc2c2c27da179286daf306b65bc155c45db68a9ae2a2b91cfe3ced4e2",
+					"height": 194133,
+					"timestamp": 1734353931424
+				},
+				"validatorPublicKey": "ae294666a41610acc1a35c94372b4c573978d7cb76014aa41e7aa6829e27414d8003a2d7196009aa9e7ad5fac4d23231",
+				"validatorForgedFees": "525",
+				"validatorForgedTotal": "12000000000000000625",
+				"validatorVoteBalance": "2362964566037735855761988",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "12000000000000000100",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194133"
+		},
+		{
+			"address": "0x3F8eCbF08078F22038235F9834540A960E99085b",
+			"publicKey": "030cc854a680d4065304bd49928cdf80154e69f3d43fdf28b0c4b2e46d87a9630c",
+			"balance": "2362964566037735851497638",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x3F8eCbF08078F22038235F9834540A960E99085b",
+				"validatorRank": 15,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "2c2f83241d16dbb98748eaa46c58e5d1fb8e1e6c3386adfc3432d96b75f436bb",
+					"height": 194093,
+					"timestamp": 1734353611424
+				},
+				"validatorPublicKey": "b41881c3ad67ab36dabf74ac9271f10fa315c5b281313c14e3143103a3f5f43ca6abf50e3c7bd0271e12631fdb4640dc",
+				"validatorForgedFees": "535",
+				"validatorForgedTotal": "3000000000000000636",
+				"validatorVoteBalance": "2362964566037735851497638",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "3000000000000000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194093"
+		},
+		{
+			"address": "0x7228d1eE0Fa9AC810Aa02072bFdde6A172258051",
+			"publicKey": "03fd950438c08bec76fbf6c0fb5698c556f008c8d03247d9e21e35f82e9329024c",
+			"balance": "2362964566037735850759788",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x7228d1eE0Fa9AC810Aa02072bFdde6A172258051",
+				"validatorRank": 16,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "503d44ea8183aa7b224c447d17dbc22ca2f6a98c30992e67567dfb999ee4f946",
+					"height": 194088,
+					"timestamp": 1734353571424
+				},
+				"validatorPublicKey": "a6346192db9d40984037fe2275d91fa7c5fc55550fcc9c177e01c2689e5b41d5cd8ab6b96a55a027bd3c2991dee5babe",
+				"validatorForgedFees": "535",
+				"validatorForgedTotal": "1000100000637",
+				"validatorVoteBalance": "2362964566037735850759788",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000100000102",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194088"
+		},
+		{
+			"address": "0x989eb5C243Ac348fed0a32704a6a767Ceab26065",
+			"publicKey": "022c94738794b9a25dd8e5db2a86a888463a05553d5522e840f5c9e254ae93355e",
+			"balance": "2362964566037735850638893",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x989eb5C243Ac348fed0a32704a6a767Ceab26065",
+				"validatorRank": 17,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "d9bb52327a47ed47b3df3f3c1519cb081105492c837adebe86111898454d0df6",
+					"height": 194134,
+					"timestamp": 1734353939424
+				},
+				"validatorPublicKey": "aaa5c3860a2e2d2170b8dab16a333cadb6b4816fc71a570079d616db2d004f3307efbb920ddf9d3f1e0129e74c1f7ba3",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "10000000000000000619",
+				"validatorVoteBalance": "2362964566037735850638893",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "10000000000000000099",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194134"
+		},
+		{
+			"address": "0x373012E575CFD07dCd1139AEb3D71188677039be",
+			"publicKey": "02b6d4a02e6d4e7e8d5190005e3450bb1d993af563c5229b2ca06c29143f318d07",
+			"balance": "2362964566037735850628533",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x373012E575CFD07dCd1139AEb3D71188677039be",
+				"validatorRank": 18,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "11c6b215a6fc1063861cdaa31fbb328728f85ae94873d87f67a7fdd97c1a2756",
+					"height": 194118,
+					"timestamp": 1734353811424
+				},
+				"validatorPublicKey": "aa61bcc95a4a64d0aac80ae9177d007a01c1fca641b1ccfb4ccf8902d4d471cd91d07e0a195ec93b6c79cd67fa8b5a07",
+				"validatorForgedFees": "530",
+				"validatorForgedTotal": "100000000000631",
+				"validatorVoteBalance": "2362964566037735850628533",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "100000000000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194118"
+		},
+		{
+			"address": "0xB34415Af3A8127596b94f86efdb6AdaE2E9dF45e",
+			"publicKey": "03636080960d7998b2baf3385fe8bea9bb05940aceb7a778b4a231a9cd47005cd9",
+			"balance": "2362964566037735850609963",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xB34415Af3A8127596b94f86efdb6AdaE2E9dF45e",
+				"validatorRank": 19,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "6571a6d69c87f8f1fa44c7c44d74d97c1f927619be7d94891d1faf0fcc6fe52d",
+					"height": 194094,
+					"timestamp": 1734353619424
+				},
+				"validatorPublicKey": "8edaf2f10ca6888f6a2bcc3e2bc8255f82d134469cfb2209fc4cffb4a3ab256f5dcf0580d04c91af5c07e487ffb6158f",
+				"validatorForgedFees": "555",
+				"validatorForgedTotal": "16000100000100000657",
+				"validatorVoteBalance": "2362964566037735850609963",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "16000100000100000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194094"
+		},
+		{
+			"address": "0x1Bf9cf8a006a5279ca81Ea9D3F6aC2D41e1353e2",
+			"publicKey": "03a8fce7db7ab62be3024d5cd9e8ca6c7b6768933c3b815fcc8d06e106b795262e",
+			"balance": "2362964566037735850240128",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x1Bf9cf8a006a5279ca81Ea9D3F6aC2D41e1353e2",
+				"validatorRank": 20,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "3fbf361ca425917543d3ecc0bd5d966c3c6e138866d04c20623108c2cd78c296",
+					"height": 194113,
+					"timestamp": 1734353771424
+				},
+				"validatorPublicKey": "abc5daa62f4daddcf4651d91dfa1a2e403302931ee77211db29527b612959efea2110b5afc6ca4475558187148b54a60",
+				"validatorForgedFees": "535",
+				"validatorForgedTotal": "1000100000000000637",
+				"validatorVoteBalance": "2362964566037735850240128",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000100000000000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194113"
+		},
+		{
+			"address": "0x1C45E829a6a0d5AfB01f9FB0F394D0D8aA2f4fae",
+			"publicKey": "03931feebc4cc63b508d991e21023564e612072cf026fd0f9f2dd091a064d544c1",
+			"balance": "2362964566037735850067248",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x1C45E829a6a0d5AfB01f9FB0F394D0D8aA2f4fae",
+				"validatorRank": 21,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "b663a5b3a2e9d4088b244801b666df2fdd210b1927eae740ef19c0df03730671",
+					"height": 194132,
+					"timestamp": 1734353923424
+				},
+				"validatorPublicKey": "ac7b8bfbfae20363bf775cf09fa3ff7bcfbedbaed917d77a4dc95062d4467810725093b11ff7fc5a0423b2a28565cc79",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "810",
+				"validatorVoteBalance": "2362964566037735850067248",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "290",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194132"
+		},
+		{
+			"address": "0x137c59f371a7049159ef19a72f908773Ade219b1",
+			"publicKey": "02f50270f25c600d3411d4ad2d98065a413e08e5f891a079210bb8e35c982236aa",
+			"balance": "2362964566037735850013768",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x137c59f371a7049159ef19a72f908773Ade219b1",
+				"validatorRank": 22,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "c085e0647f52a65a398a4a7b15cd94624b1999a09a3f8e1dbdc6c5cd282fde8b",
+					"height": 194131,
+					"timestamp": 1734353915424
+				},
+				"validatorPublicKey": "b3d708887ce4011308d262a1800d5e009e000e04f09bd3770350b1c0132beefd87c41c52d7800fce1e2f6cc8289a9c2d",
+				"validatorForgedFees": "525",
+				"validatorForgedTotal": "1010000000000000000627",
+				"validatorVoteBalance": "2362964566037735850013768",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1010000000000000000102",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194131"
+		},
+		{
+			"address": "0x38f3f308e63Ae213633d71ed6f4A89d4Ee7C386e",
+			"publicKey": "02872e746de4310161781ce49eddfd9ec492a9cf3a9bf0c5571af7eb2e175c2d2c",
+			"balance": "2362964566037735849967758",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x38f3f308e63Ae213633d71ed6f4A89d4Ee7C386e",
+				"validatorRank": 23,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "ac20fc0aa1d9c3fb0c27b7f2dff800133ab3569fa1d00e9b96c2a1c97bc8f2e1",
+					"height": 194122,
+					"timestamp": 1734353843424
+				},
+				"validatorPublicKey": "b339112bc9b4542ab0c1e95eebc2b87ddf9f65daf3ac84b3c9005c4ab2c6968906561b1e30508de3d6b531e1718549cd",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "1000000000000000621",
+				"validatorVoteBalance": "2362964566037735849967758",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194122"
+		},
+		{
+			"address": "0xDF419379AD91b59005e438fB47deE4D610B997a5",
+			"publicKey": "035334916d9adeae7ddf937fe9a72488206dc73d3deabaa82419bced7a4bdb7e09",
+			"balance": "2362964566037735849967553",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xDF419379AD91b59005e438fB47deE4D610B997a5",
+				"validatorRank": 24,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "7f64bc4585ef6d4caca89e9748023ca5559ed2590c727641abbbbbd272faa1e9",
+					"height": 194108,
+					"timestamp": 1734353731424
+				},
+				"validatorPublicKey": "8a11dfb163a1cc01568a8ded5b36bbf189885d1df96e1a36b17d3e29038dc74ec41c9d0f3d69bf5d9a83bd98eb212538",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "722",
+				"validatorVoteBalance": "2362964566037735849967553",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "202",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194108"
+		},
+		{
+			"address": "0x95b4Cf480fC2C1e90A3Aee36B5DC1D8A0C623b87",
+			"publicKey": "027f920f4e3f012fe05ccf0b73e7973bddbe0778c8eeedf06e8c82d7c16d450686",
+			"balance": "2362964566037735849933368",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x95b4Cf480fC2C1e90A3Aee36B5DC1D8A0C623b87",
+				"validatorRank": 25,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "3269375f732d5708860b397499f102745eb3b5e739db9b385325f1dea2729936",
+					"height": 194114,
+					"timestamp": 1734353779424
+				},
+				"validatorPublicKey": "9156e05ef8d542f7a93f53eb51407d95ac8e163d5155b97befaa33d283ceec95dada9c74b4bc9128b3ae97f3756ca060",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "622",
+				"validatorVoteBalance": "2362964566037735849933368",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194114"
+		},
+		{
+			"address": "0x522CbD1C22529a27ba4BFDBf4b6f037F71b2AC77",
+			"publicKey": "0205c38eecba963b935c88f9d785b58930f74cb9bfccb45e857c9ad98ba50e2997",
+			"balance": "2362964566037735849484478",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x522CbD1C22529a27ba4BFDBf4b6f037F71b2AC77",
+				"validatorRank": 26,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "c31d466bf066e85dd88b89c5f99fee030e9c15aa2efb3e3b39977912ae84fe9e",
+					"height": 194110,
+					"timestamp": 1734353747424
+				},
+				"validatorPublicKey": "8e5d17e0e88a7669b68d45e09f8710a208c267b8d7c48596f61d9bf4c661ce4141c37f349345d3a932da89a1a049ddaa",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "622",
+				"validatorVoteBalance": "2362964566037735849484478",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194110"
+		},
+		{
+			"address": "0xEbc20236953408F61356AE616ce3fD3c46EBF2Db",
+			"publicKey": "0270d7400c6262ea35dadbb2f71d6e871dc48c3f1869fb68e03f9a0179b530226c",
+			"balance": "2362964566037735849375808",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xEbc20236953408F61356AE616ce3fD3c46EBF2Db",
+				"validatorRank": 27,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "f2f8b427ba85568b3a99eeac7c6e7e6f8f2121f77c160e0ef72b0a3b04f21cbe",
+					"height": 194087,
+					"timestamp": 1734353563424
+				},
+				"validatorPublicKey": "922286e1480c5ef4286476b799fd49882c8b0fc54b0e8a0d5138dcaa3d86d6d81bd373e5c61defd31dff059232cb569c",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "15000000000000000621",
+				"validatorVoteBalance": "2362964566037735849375808",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "15000000000000000101",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194087"
+		},
+		{
+			"address": "0x7762598E3e3203FAC062D2588e70950CF19F918B",
+			"publicKey": "030565e9b148a12ed2c500dd9acd7d7b97bd37723804181c7e492ed4f49aae26f6",
+			"balance": "2362964566037735849371603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x7762598E3e3203FAC062D2588e70950CF19F918B",
+				"validatorRank": 28,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "6dea09e26a2ea99d53016c001ff09846d463e6c012c52ae69a64d205f9edc55a",
+					"height": 194115,
+					"timestamp": 1734353787424
+				},
+				"validatorPublicKey": "b259bbe5897e40d3a71dd691d4d8ebcc304881564e715efbbbca6be8e8657e545842150d8a698870fa6a509ef718b3e1",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "12000000000000000621",
+				"validatorVoteBalance": "2362964566037735849371603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "12000000000000000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194115"
+		},
+		{
+			"address": "0xA64d324eBc9E95d763A45B77bdAa0546d0D37DC8",
+			"publicKey": "0375e624da5204a6b1181673d9027b534269a7bdf288bc6067c675f8d144cf8698",
+			"balance": "2362964566037735849310883",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xA64d324eBc9E95d763A45B77bdAa0546d0D37DC8",
+				"validatorRank": 29,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "fe459cefd96da1f183994559b457ebc772ec2565f462c7247c860c08b544de3b",
+					"height": 194127,
+					"timestamp": 1734353883424
+				},
+				"validatorPublicKey": "a7bf828ea379e2147d9692bd1576891583ed5444887d67f0270c7f12a25091f4dd746a18f9ad542464abcdc662252309",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "150000000000000000622",
+				"validatorVoteBalance": "2362964566037735849310883",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "150000000000000000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194127"
+		},
+		{
+			"address": "0xC46C85b3Dc856cdD23ac864a38be2E12090e7715",
+			"publicKey": "03150a599c9f8df707f3433fe8d6d53bda646de0054cc82cb22ba375cb9bd1f096",
+			"balance": "2362964566037735849306628",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xC46C85b3Dc856cdD23ac864a38be2E12090e7715",
+				"validatorRank": 30,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "4aedac4d53e36a65802a708dcb45aa48d46df392011870f6a43721fbf6e25479",
+					"height": 194117,
+					"timestamp": 1734353803424
+				},
+				"validatorPublicKey": "a590daad2c88699ce48bd0bf978f70cdd82c5bb2b6284e56511fca0fbd5657bfa2e42e4a4b20c6c3d1735473f39852c9",
+				"validatorForgedFees": "510",
+				"validatorForgedTotal": "5000000000000000610",
+				"validatorVoteBalance": "2362964566037735849306628",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "5000000000000000100",
+				"validatorProducedBlocks": 3664
+			},
+			"updated_at": "194117"
+		},
+		{
+			"address": "0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84",
+			"publicKey": "03a9927b2d4e5481abffb44c3362fafe54a295057224909d6cc9d8674a7a2ad2c6",
+			"balance": "2362964566037735849161603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x7AF9d8582F439ECC9d83c84a425DFbA422bc7a84",
+				"validatorRank": 31,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "69333f0a05c0ae965f957c1feaaf80caae7804041ee2ef3b65e0abad5e3bb872",
+					"height": 194105,
+					"timestamp": 1734353707424
+				},
+				"validatorPublicKey": "b6ce18e6d4a21fdf469a45c5299ae7e20b64f4bb2d077aa7bb0d315f844dbfeefb262064e49516f1d0d1dc9260fd0edd",
+				"validatorForgedFees": "515",
+				"validatorForgedTotal": "1000000000000000617",
+				"validatorVoteBalance": "2362964566037735849161603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194105"
+		},
+		{
+			"address": "0xC2402c93F00C67B10a11d78CE5c57B3D8D1FC2da",
+			"publicKey": "02874e789117a42947e442aac6a43a02fdab283973a1aae76ea8ddc31cd299bebe",
+			"balance": "2362964566037735849056603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xC2402c93F00C67B10a11d78CE5c57B3D8D1FC2da",
+				"validatorRank": 32,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "89301a53eac5d8bfc497ceed323994f4f3e131b48ac015428b69fed94f3937f0",
+					"height": 194098,
+					"timestamp": 1734353651424
+				},
+				"validatorPublicKey": "8a2654afc229f199a45611f52ea3e077d387733d7ffed460ba6fcac51a71ac82d33288264749b2724e8ab8ba85ab9968",
+				"validatorForgedFees": "510",
+				"validatorForgedTotal": "612",
+				"validatorVoteBalance": "2362964566037735849056603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194098"
+		},
+		{
+			"address": "0x9fF98D41d6a06062e9566c0d0d8A0BB92D5baD6F",
+			"publicKey": "03ce47f02c036685ac897e7dd4e931ff83a52238e94a769e23b4b13c44ac558d3f",
+			"balance": "2362962566037735857062643",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x9fF98D41d6a06062e9566c0d0d8A0BB92D5baD6F",
+				"validatorRank": 33,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "ee409e3597be6a95a0b30359d1f768ac5e76f30536032efdb249460a6a8a3c1e",
+					"height": 194101,
+					"timestamp": 1734353675424
+				},
+				"validatorPublicKey": "9132e38bb6fa3f18c9a3797acdb128ecb982f056275b8454f5c6200592dc6424904b9503775c8f4d2cbff12cd3bcabe2",
+				"validatorForgedFees": "280",
+				"validatorForgedTotal": "10000000000000000331",
+				"validatorVoteBalance": "2362962566037735857062643",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "10000000000000000051",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194101"
+		},
+		{
+			"address": "0x677fdAE653661CC73295728746E3653351d50887",
+			"publicKey": "03eae68ae44161c755ef212bfcbc476a773dec1c023100a31bd775e09c4e430893",
+			"balance": "2362962566037735851659673",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x677fdAE653661CC73295728746E3653351d50887",
+				"validatorRank": 34,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "97dc3ec73151889582da680c54a07d9ce08727bbf586c1763734d7c94f860a7d",
+					"height": 194097,
+					"timestamp": 1734353643424
+				},
+				"validatorPublicKey": "916a6dae3e0eb5c0f34fb640e250e06ba83ae4f80244fff56f386fd6404271720150d38c5d63e9486e9052fa1818cd59",
+				"validatorForgedFees": "545",
+				"validatorForgedTotal": "11000100000000000847",
+				"validatorVoteBalance": "2362962566037735851659673",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "11000100000000000302",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194097"
+		},
+		{
+			"address": "0x218A779dcAC83b284a4417A75128c3c881156bAE",
+			"publicKey": "0204b4c02886108b1a1006371fb5313ab4eb3d6a7d375070d956a59ea87f818e77",
+			"balance": "2362962566037735851552563",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x218A779dcAC83b284a4417A75128c3c881156bAE",
+				"validatorRank": 35,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "0319e42cae885b7c06bae00e8649885cc46320ff5232b70b4f6f03406faf76d2",
+					"height": 194107,
+					"timestamp": 1734353723424
+				},
+				"validatorPublicKey": "b62620a509751fc7ffb565780c77ca6825cf1862d8ffe015464b2ebc24ce55ed71af74a64814097aacb1731caa46ff4b",
+				"validatorForgedFees": "280",
+				"validatorForgedTotal": "331",
+				"validatorVoteBalance": "2362962566037735851552563",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "51",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194107"
+		},
+		{
+			"address": "0xB8Be76b31E402a2D89294Aa107056484Bef94362",
+			"publicKey": "03daae3f4b6d486e9fdcd5c8698b31b13b6b8aacb0c89a936cece79d443a3f5e9e",
+			"balance": "2362962566037735851419238",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xB8Be76b31E402a2D89294Aa107056484Bef94362",
+				"validatorRank": 36,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "182788c98b0e5dd5063a52528a2f505982e013a7b6a1539dbeb10507e638db3a",
+					"height": 194100,
+					"timestamp": 1734353667424
+				},
+				"validatorPublicKey": "9572d4dacfb9f44314f1091abb4c58b7d9a3c4af00d57de16c3d54f1a5e4d7c45712624842a9dc8303d8ae9db434a27c",
+				"validatorForgedFees": "525",
+				"validatorForgedTotal": "726",
+				"validatorVoteBalance": "2362962566037735851419238",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "201",
+				"validatorProducedBlocks": 3662
+			},
+			"updated_at": "194100"
+		},
+		{
+			"address": "0x07CDD5CB29a70ad52ba6F4ad9fb94d397a26486e",
+			"publicKey": "0276669e64188c2a0044665eb0ed3b501563c19b27fb2b902b7fe23d705522211c",
+			"balance": "2362962566037735850423688",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x07CDD5CB29a70ad52ba6F4ad9fb94d397a26486e",
+				"validatorRank": 37,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "01eddbf59ca252635c6ba1780773aaa910bd686abf10e263a2980b241dfb1336",
+					"height": 194123,
+					"timestamp": 1734353851424
+				},
+				"validatorPublicKey": "b4ff268381b76fe4a156d859ae63e7cc2a3a13fa3a473996f6a896101198b4aacb7d253c31b10bc56e9882b279320eb7",
+				"validatorForgedFees": "15",
+				"validatorForgedTotal": "15",
+				"validatorVoteBalance": "2362962566037735850423688",
+				"validatorVotersCount": 1,
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194123"
+		},
+		{
+			"address": "0x07Ac3E438719be72a9e2591bB6015F10E8Af2468",
+			"publicKey": "02911cdc7c36dc733cb866d3d70f79a0e8c7586764ec1d4467688c51b02038f135",
+			"balance": "2362962566037735850215213",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x07Ac3E438719be72a9e2591bB6015F10E8Af2468",
+				"validatorRank": 38,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "f54efb9535daba6498cc9dd27d007b618f3157633a4f2bf97997877f2116c83e",
+					"height": 194125,
+					"timestamp": 1734353867424
+				},
+				"validatorPublicKey": "8ed23a6889cfa6c58ec9fdd916677f5fa226268b1ee81603a70be7263c77ad621816225a8523460939522c5ab1580f94",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "1000000000000000000621",
+				"validatorVoteBalance": "2362962566037735850215213",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194125"
+		},
+		{
+			"address": "0x56F925416Ef2725646442D5E0150088bd7202aCd",
+			"publicKey": "02905643df1fffd9c11d6fd35864802f87729a2727b5e2d24e32dd4835e955dcf3",
+			"balance": "2362962566037735850193163",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x56F925416Ef2725646442D5E0150088bd7202aCd",
+				"validatorRank": 39,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "a41dcd1f3e96f988ee0dab61484ea7e4d1c7a11f7564b86b1ab44811188afefe",
+					"height": 194137,
+					"timestamp": 1734353963424
+				},
+				"validatorPublicKey": "b8bdf1dc386689a9f3bad8b41d7c00f77030839b73a3237ed4035ab89b35002410b9bcb301e3394fd77764e4794edf65",
+				"validatorForgedFees": "525",
+				"validatorForgedTotal": "1000000000000000000627",
+				"validatorVoteBalance": "2362962566037735850193163",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194137"
+		},
+		{
+			"address": "0x9df2D2396BcEB5B0D3d5b4D1fF53E1373d776CBB",
+			"publicKey": "03022fe77444e68de32ac034a0dc628a8b3d362784fa37e09e035e932c6a16e439",
+			"balance": "2362962566037735849980373",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x9df2D2396BcEB5B0D3d5b4D1fF53E1373d776CBB",
+				"validatorRank": 40,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "d0dfb205381b522fd6ec2f66646de725595e71bd1a28b0e7a1e3f3ae83247f89",
+					"height": 194096,
+					"timestamp": 1734353635424
+				},
+				"validatorPublicKey": "8135433db3d55f2dea9fd407ea1ae24a7e07dd22c8a754031f951a29c29199aa6fbc6ca0774ca963a0051eb0fb26b28c",
+				"validatorForgedFees": "540",
+				"validatorForgedTotal": "100002000100000200000641",
+				"validatorVoteBalance": "2362962566037735849980373",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "100002000100000200000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194096"
+		},
+		{
+			"address": "0x69aD988298FB856adD785070781aaE6370cf0093",
+			"publicKey": "02da652d03f195fd2adb9e6290b8916f78a16daee4bc3d0a2c03b7f6c6651d1a29",
+			"balance": "2362962566037735849805593",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x69aD988298FB856adD785070781aaE6370cf0093",
+				"validatorRank": 41,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "bee989f0c4c6e8d1ad191ae8f05187de5c02dea0002a08b1a4c79216210fee02",
+					"height": 194135,
+					"timestamp": 1734353947424
+				},
+				"validatorPublicKey": "95e766b01acc717706d9cde51e2501c960fe8f39d342517f02b48fd75515cb10bb28a00510f06a26f434a29cd2ba37e1",
+				"validatorForgedFees": "20",
+				"validatorForgedTotal": "2000000000000000020",
+				"validatorVoteBalance": "2362962566037735849805593",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "2000000000000000000",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194135"
+		},
+		{
+			"address": "0x57Dc55AED392F634d6bea6E6A89718de7f5fA7e0",
+			"publicKey": "0272f6dbecafa9a09f747b8116fd0c4207c3a34575da8d97087e6cd8d5f5f53d6a",
+			"balance": "2362962566037735849384418",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x57Dc55AED392F634d6bea6E6A89718de7f5fA7e0",
+				"validatorRank": 42,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "d62a94123fb8c5e65f5d0d21adb373330347dfaa83b9f8e5b731b86f023048ae",
+					"height": 194129,
+					"timestamp": 1734353899424
+				},
+				"validatorPublicKey": "a6a368a94a0de1fe4c5490a9b18d6384f4d6812e8c00aa79ff4c214361ed235905a214960f5a079f38bb065a2e4a57ea",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "6000000000000000621",
+				"validatorVoteBalance": "2362962566037735849384418",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "6000000000000000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194129"
+		},
+		{
+			"address": "0xA71dAdA10295c14854B5FBc6D28eFd170e8470B4",
+			"publicKey": "0391efef50e718683588e44f10e0bbcc19469da24de83d46ab8d2e488febffa8d6",
+			"balance": "2362962566037735849371603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xA71dAdA10295c14854B5FBc6D28eFd170e8470B4",
+				"validatorRank": 43,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "0c591ba185e855638f7b114e614abeac9fb88f20d24fea33408bd57569867421",
+					"height": 194090,
+					"timestamp": 1734353587424
+				},
+				"validatorPublicKey": "b257540df9d345d60017d6e170b7c63c55cb7b64f90e8ad742dd8a3256f9732c2d12aa6cfb5505f65f00d6008e829a07",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "1010000100000000000621",
+				"validatorVoteBalance": "2362962566037735849371603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1010000100000000000101",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194090"
+		},
+		{
+			"address": "0xFb0Af483A0a4FdE23EA71aDBE2ea2D4301828E4B",
+			"publicKey": "03be3616815c3a5115c229279b9e2e0c755c9a105a973e7cba68921996c177057b",
+			"balance": "2362962566037735849303828",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xFb0Af483A0a4FdE23EA71aDBE2ea2D4301828E4B",
+				"validatorRank": 44,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "09732f52e04157578ba18f25b037ffdd19e6e28f7489ba44ab15abb18bcbf710",
+					"height": 194124,
+					"timestamp": 1734353859424
+				},
+				"validatorPublicKey": "9904ec6be10f56db0f1a4d4bd6f00332af21ac7a83ac0ecc6e95df12c89dfd139773bf1066216d9244840775a030d95a",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "10000000000000000622",
+				"validatorVoteBalance": "2362962566037735849303828",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "10000000000000000102",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194124"
+		},
+		{
+			"address": "0x12361f0Bd5f95C3Ea8BF34af48F5484b811B5CCe",
+			"publicKey": "03ff2e9b086a5137c8425b5cfcb0d65720270030a50a16f6ab237c5876c9b2323a",
+			"balance": "2362962566037735849266603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x12361f0Bd5f95C3Ea8BF34af48F5484b811B5CCe",
+				"validatorRank": 45,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "8c1fa79d52a2819fa6efed7c17aaad7e25cd9935230318fc67d5938595260b24",
+					"height": 194051,
+					"timestamp": 1734353275424
+				},
+				"validatorPublicKey": "a6dc6f406b2bbd1ab93d0a2d903b1952a7f6e753bcc18c109646d392a2e4414f38ff25f2ed23d8191cd3e60521a32ec2",
+				"validatorForgedFees": "515",
+				"validatorForgedTotal": "200000616",
+				"validatorVoteBalance": "2362962566037735849266603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "200000101",
+				"validatorProducedBlocks": 3662
+			},
+			"updated_at": "194051"
+		},
+		{
+			"address": "0x2a74550fC2e741118182B7ab020DC0B7Ed01e1db",
+			"publicKey": "02c9484c9b92f8f92416f9850510c5137fab47b0daeebf2169f334214b61ac6eae",
+			"balance": "2362960566037735851549918",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x2a74550fC2e741118182B7ab020DC0B7Ed01e1db",
+				"validatorRank": 46,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "d4bf36ec0f550439b46ccd6c249623a28790c03220f82a602c3f9243a92778a3",
+					"height": 194130,
+					"timestamp": 1734353907424
+				},
+				"validatorPublicKey": "9309ad5df3747c2fd525a8612982bc994a24ec114b726d7ca630dbe1cfd2ee3450eb51d152c4e4c9e1b638731de23310",
+				"validatorForgedFees": "535",
+				"validatorForgedTotal": "2000000000000000636",
+				"validatorVoteBalance": "2362960566037735851549918",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "2000000000000000101",
+				"validatorProducedBlocks": 3661
+			},
+			"updated_at": "194130"
+		},
+		{
+			"address": "0x21c61c9E608df7ad6fD8730a0CEBe37A83B9F365",
+			"publicKey": "0306eac6dc8d83f3cd9135dd350b023a9561cad2d884037ee757613ddc6f48ee2c",
+			"balance": "2362960566037735851009863",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x21c61c9E608df7ad6fD8730a0CEBe37A83B9F365",
+				"validatorRank": 47,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "c58b35da83ef8e2a4bd9ee88007b11d5381e6ebc2a7bcc1188263ee2072b2056",
+					"height": 194136,
+					"timestamp": 1734353955424
+				},
+				"validatorPublicKey": "a380143f5ef0b5f474135ae7c7e715eaff5824ff713a046a22add009edaaf7d04f4bc2238aad737e2e87edc58ed4fb53",
+				"validatorForgedFees": "535",
+				"validatorForgedTotal": "21000000000000000637",
+				"validatorVoteBalance": "2362960566037735851009863",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "21000000000000000102",
+				"validatorProducedBlocks": 3662
+			},
+			"updated_at": "194136"
+		},
+		{
+			"address": "0xb78843D7a0F237AA83911a9834Bf410C1b4c1CDe",
+			"publicKey": "03286e698f3336b420a286e0832579cfda88ae2b5b872eeb0f8c32917642bd835d",
+			"balance": "2362960566037735849056603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xb78843D7a0F237AA83911a9834Bf410C1b4c1CDe",
+				"validatorRank": 48,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "612831031f668e1b8e7068c86c525a0b9f7aa63c4c2ed9c4df5cd474f18366bc",
+					"height": 194082,
+					"timestamp": 1734353523424
+				},
+				"validatorPublicKey": "87a8a52a8b6a68d303bd7cf451583645a3c651067bf2f738c4d156945370400e1e6272f3dc0151aaeeb9fe28ef69889e",
+				"validatorForgedFees": "510",
+				"validatorForgedTotal": "612",
+				"validatorVoteBalance": "2362960566037735849056603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "102",
+				"validatorProducedBlocks": 3662
+			},
+			"updated_at": "194082"
+		},
+		{
+			"address": "0xFf44bE17e48C35D0bcB6f64b36cddbea45B17817",
+			"publicKey": "03fb05022616e0c7d1f16a7d1afbdd7d2b63b0c78062120e93343e6dcbfcc2cf05",
+			"balance": "2362958566037735851384623",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0xFf44bE17e48C35D0bcB6f64b36cddbea45B17817",
+				"validatorRank": 49,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "3ae892037d2345cba816b17a9d76f355c439739bc8b3d0dc2e72c95fd654441a",
+					"height": 194104,
+					"timestamp": 1734353699424
+				},
+				"validatorPublicKey": "87f1a4066c513325adfc2431b510d9ee1c7b56788ae256272228d89e6cd143d36aedf923c51712cc12359c75986f6823",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "1000000000000000720",
+				"validatorVoteBalance": "2362958566037735851384623",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000200",
+				"validatorProducedBlocks": 3660
+			},
+			"updated_at": "194104"
+		},
+		{
+			"address": "0x54e64501796D3040a826628490B5Ea755B56E965",
+			"publicKey": "0288ea329a06e1a983b9ce0cb34ab35664ead0a174b3a13090899d09b5aa064b81",
+			"balance": "2362954566037735854804823",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x54e64501796D3040a826628490B5Ea755B56E965",
+				"validatorRank": 50,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "23d5b0aee746381be267a4088b76bd348ac4d468e8b42b6cd9251f8b0bf2253b",
+					"height": 194119,
+					"timestamp": 1734353819424
+				},
+				"validatorPublicKey": "a45d5b16714a55ac48089a4a9443ce38b732e84664566de441a0e703186455fb8fddb8532f99d6fb2443660fe0e76b77",
+				"validatorForgedFees": "520",
+				"validatorForgedTotal": "1000000000000000622",
+				"validatorVoteBalance": "2362954566037735854804823",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000102",
+				"validatorProducedBlocks": 3658
+			},
+			"updated_at": "194119"
+		},
+		{
+			"address": "0x03BC306C369A55c0336EB003bB07F29E5c150F36",
+			"publicKey": "02fa786b53f66e64118d394dc17ff4c40aa134660eef33aeec22b320570fa4ba28",
+			"balance": "2362954566037735849161603",
+			"nonce": "2",
+			"attributes": {
+				"vote": "0x03BC306C369A55c0336EB003bB07F29E5c150F36",
+				"validatorRank": 51,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "19e712ae324ab2b738524e69e2e554f7e6d592f98e68d2f5323214c0d0524c5e",
+					"height": 194128,
+					"timestamp": 1734353891424
+				},
+				"validatorPublicKey": "8093139580a4035a93e7d49aa28c49c1fa852df8ef006f312435050359025e0d519c5511d3aa879a827337c12a89a3f8",
+				"validatorForgedFees": "515",
+				"validatorForgedTotal": "1000000000000000617",
+				"validatorVoteBalance": "2362954566037735849161603",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "1000000000000000102",
+				"validatorProducedBlocks": 3658
+			},
+			"updated_at": "194128"
+		},
+		{
+			"address": "0xBE47E4E73DC8c82f0fF2f5BFa8900aA57624144B",
+			"publicKey": "0344f117129787f5f36c40c33f0aa62310f45f00a94361efa3e178e402f539af98",
+			"balance": "2360961566037735849800998",
+			"nonce": "5",
+			"attributes": {
+				"vote": "0xBE47E4E73DC8c82f0fF2f5BFa8900aA57624144B",
+				"validatorRank": 52,
+				"validatorApproval": 0.0189,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "5bc2f8a7c9e12b1b976cad043f0b8d08b487f38720344f325c2808f6a40c6dd3",
+					"height": 194120,
+					"timestamp": 1734353827424
+				},
+				"validatorPublicKey": "a058709acee67dd7c005f3b301ad201def1a764fca5dfd632c2c0a8280182075e34379ce604908ef9729e930fc97262d",
+				"validatorForgedFees": "275",
+				"validatorForgedTotal": "5000000000000000326",
+				"validatorVoteBalance": "2360961566037735849800998",
+				"validatorVotersCount": 1,
+				"validatorForgedRewards": "5000000000000000051",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194120"
+		},
+		{
+			"address": "0x47ea9bAa16edd859C1792933556c4659A647749C",
+			"publicKey": "0293b9fd80d472bbf678404d593705268cf09324115f73103bc1477a3933350041",
+			"balance": "9999999999999094355",
+			"nonce": "1",
+			"attributes": {
+				"validatorRank": 53,
+				"validatorApproval": 0,
+				"validatorResigned": false,
+				"validatorPublicKey": "8313551e7379b2e44ab5bac0466d6f558d2625088e03da5e56d77daf6a21e9dfeda9dab13c7d57b436158593a6ae42f5",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "63521"
+		},
+		{
+			"address": "0x52e1FdCF0BD722b77F295903112bB115FaD9F1c3",
+			"publicKey": "022bdb495a70ef51edef4f797421ef8a6f3f38bf2c3e8e23bbbf1ef8d958b804da",
+			"balance": "9999999999999094355",
+			"nonce": "1",
+			"attributes": {
+				"validatorRank": 54,
+				"validatorApproval": 0,
+				"validatorResigned": false,
+				"validatorPublicKey": "b60b2ff6f3a75b0bdac610f91af70f067e980af8924326777bad71c5adf001385ae2ced438283bc8186037fe3eacbb15",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "64342"
+		},
+		{
+			"address": "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22",
+			"publicKey": "023efc1da7f315f3c533a4080e491f32cd4219731cef008976c3876539e1f192d3",
+			"balance": "1007000999999266853630",
+			"nonce": "74",
+			"attributes": {
+				"validatorRank": 55,
+				"validatorApproval": 0,
+				"validatorResigned": false,
+				"validatorPublicKey": "a08058db53e2665c84a40f5152e76dd2b652125a6079130d4c315e728bcf4dd1dfb44ac26e82302331d61977d3141118",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "193597"
+		},
+		{
+			"address": "0x73E95e629e0E152B6Ea6ba2Ce4E71e69FCbc0dcB",
+			"publicKey": "023f61b4969c8cb2c8f6a01f373245f11b98e7759af4f69c9f9c2e99945707e720",
+			"balance": "9999999999999094355",
+			"nonce": "1",
+			"attributes": {
+				"validatorRank": 56,
+				"validatorApproval": 0,
+				"validatorResigned": false,
+				"validatorPublicKey": "a625ae128ba4d9f2019df518d49da403403313df9e4eb6811d11319c620f3ec8a4caafc94c4eb0132c50879d6d429d8a",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "64398"
+		},
+		{
+			"address": "0xfEAf2f24ba1205e9255d015DFaD8463c70D9A466",
+			"publicKey": "03f25455408f9a7e6c6a056b121e68fbda98f3511d22e9ef27b0ebaf1ef9e4eabc",
+			"balance": "2361815566037735736601893",
+			"nonce": "15",
+			"attributes": {
+				"vote": "0xC3bBE9B1CeE1ff85Ad72b87414B0E9B7F2366763",
+				"validatorRank": 57,
+				"validatorApproval": 0,
+				"validatorResigned": false,
+				"validatorLastBlock": {
+					"id": "3e3e25016dd52717865fb07398e924f765a24819b39d8fcd088fea5b66930f50",
+					"height": 194112,
+					"timestamp": 1734353763424
+				},
+				"validatorPublicKey": "8a0836e15156b95cab8fbfb756cd2a5ce27909cc23752691b991831dfcd3c4a15be1e7b883566d0d5c4f068adcc1c588",
+				"validatorForgedFees": "20",
+				"validatorForgedTotal": "3000000000000000020",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0,
+				"validatorForgedRewards": "3000000000000000000",
+				"validatorProducedBlocks": 3663
+			},
+			"updated_at": "194112"
+		},
+		{
+			"address": "0x1F37ccf04c8B3d6F7e8866c6331b7DFc06B94A67",
+			"publicKey": "03e0c6e1f07a7e5a8cdb3058ba8a28ea79fa99901c8d17a44b7be379f8ad24b8e6",
+			"balance": "998999999999996912950",
+			"nonce": "8",
+			"attributes": {
+				"validatorRank": 58,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "b7d005e68584faadf2b9975624c6c1cf22f7b57346cb0531c893c4ea2db768a187be0294feb42d38b634afccdbcffdf1",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "162821"
+		},
+		{
+			"address": "0x6564d389c5614455BB78c4cc050cB04B0E99dB33",
+			"publicKey": "028b215c920448b08dcdc96d644f7b10e4d3fa45db6b180107a6630a611cfc1ad2",
+			"balance": "4999999999998087874",
+			"nonce": "3",
+			"attributes": {
+				"validatorRank": 59,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "84a2a485761f4eeb7a4c6e82a8a577e0c48c03e387d6603fcfb70ad47d6712158a36e5229449487b265cc30f090f1ac3",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "64225"
+		},
+		{
+			"address": "0x6720D422D543c631746D8cdE62EaCD691E1d807B",
+			"publicKey": "02f466e826c4bd2135761d0634e41a0e0cb00fd68894e3c96af0b4b4ae8555eb4e",
+			"balance": "9999999999998787970",
+			"nonce": "2",
+			"attributes": {
+				"validatorRank": 60,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "a3c9e348cde7e8bfd1fb68aa73a1035b13deb00b6ea18ef0c110641c75015f9fc14dc882b8d40e5bfa43540003501b84",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "54637"
+		},
+		{
+			"address": "0x6F63c4B507a250A5364a5A43bC5390c6Fb405925",
+			"publicKey": "03c1772ef7d947d473bfac08cfc51d082a63b4966b2796e28cfeadee40b94c2797",
+			"balance": "9999999999998787910",
+			"nonce": "2",
+			"attributes": {
+				"validatorRank": 61,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "812e2547fb48b1d4e89e5d05b49f6bbd33c0fecd98a837f2eeaead89ad7a587d6ddda6b2e1f2c9b62d36fb7f481bf1b8",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "64708"
+		},
+		{
+			"address": "0x71c3377F6baF114A975A151c4685E600d13636F6",
+			"publicKey": "0266e0fd7186193eda55e328184fdaab9f7d4a6c867c25ef03a497fd683cae7788",
+			"balance": "9999999999997641975",
+			"nonce": "5",
+			"attributes": {
+				"validatorRank": 62,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "b19b6b95e7e38a9ec8aecc204b630f07a9170c68e035de758fc981783ccad8cc4181dbbd8ee916dcdb2438f29eb937ad",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "165119"
+		},
+		{
+			"address": "0x95beCdAaA3ca60F86193b582715AfFed17787854",
+			"publicKey": "03c8cbc953f294a7077e4839356f071c1228cad680a1b53a742a627a155774e4a3",
+			"balance": "9999999999998787910",
+			"nonce": "2",
+			"attributes": {
+				"validatorRank": 63,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "95ec164f6e87071e3a0ae1546b02822a24d0947aacf25af1c697d1dafb43831cd5b288d0804e362cb7b70d5fe7ce7f83",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "64446"
+		},
+		{
+			"address": "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
+			"publicKey": "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
+			"balance": "989998999999992409635",
+			"nonce": "28",
+			"attributes": {
+				"vote": "0xC3bBE9B1CeE1ff85Ad72b87414B0E9B7F2366763",
+				"validatorRank": 64,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "82ac408b348d6b2b2ae6112dc921dd2daf62855600c9552f51e6f08f723dfb138c2d622f32f0867254ce1153f194b664",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "160891"
+		},
+		{
+			"address": "0xb5a08d12818A046902da3FA8718EbBD94Dca43d8",
+			"publicKey": "02dbd52a457da00bc8e8c6c03003274a0b10a4fff8b9a29dc815a6f4637484614c",
+			"balance": "999999999997922355",
+			"nonce": "6",
+			"attributes": {
+				"validatorRank": 65,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "954f46d6097a1d314e900e66e11e0dad0a57cd03e04ec99f0dedd1c765dcb11e6d7fa02e22cf40f9ee23d9cc1c0624bd",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "193269"
+		}
+	]
+}

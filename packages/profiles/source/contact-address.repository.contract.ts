@@ -93,16 +93,7 @@ export interface IContactAddressRepository {
 	findByCoin(value: string): IContactAddress[];
 
 	/**
-	 * Find many contact addresses by their network.
-	 *
-	 * @param {string} value
-	 * @returns {IContactAddress[]}
-	 * @memberof IContactAddressRepository
-	 */
-	findByNetwork(value: string): IContactAddress[];
-
-	/**
-	 * Check if an item exists with the same network, coin, and address.
+	 * Check if an item exists with the same coin, and address.
 	 *
 	 * @param {IContactAddressInput} value
 	 * @return {boolean}

@@ -7,8 +7,8 @@ import { Profile } from "./profile";
 void describeWithContext(
 	"ContactRepository",
 	{
-		addr: { address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10", coin: "ARK", network: "mainsail.devnet" },
-		addr2: { address: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22", coin: "ARK", network: "mainsail.devnet" },
+		addr: { address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10", coin: "ARK" },
+		addr2: { address: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22", coin: "ARK" },
 		name: "John Doe",
 	},
 	async ({ beforeEach, it, assert }) => {
@@ -64,7 +64,6 @@ void describeWithContext(
 						{
 							address: undefined,
 							coin: "ARK",
-							network: "ark.devnet",
 						},
 					]),
 				'addresses[0].address" is required',
@@ -78,24 +77,9 @@ void describeWithContext(
 						{
 							address: "a",
 							coin: undefined,
-							network: "ark.devnet",
 						},
 					]),
 				'addresses[0].coin" is required',
-			);
-
-			assert.is(context.subject.count(), 1);
-
-			assert.throws(
-				() =>
-					context.subject.create("InvalidAddress", [
-						{
-							address: "a",
-							coin: "ARK",
-							network: undefined,
-						},
-					]),
-				'addresses[0].network" is required',
 			);
 
 			assert.is(context.subject.count(), 1);
@@ -167,13 +151,6 @@ void describeWithContext(
 
 			assert.length(context.subject.findByCoin(context.addr.coin), 1);
 			assert.length(context.subject.findByCoin("invalid"), 0);
-		});
-
-		it("#findByNetwork", (context) => {
-			context.subject.create(context.name, [context.addr]);
-
-			assert.length(context.subject.findByNetwork(context.addr.network), 1);
-			assert.length(context.subject.findByNetwork("invalid"), 0);
 		});
 
 		it("#flush", (context) => {

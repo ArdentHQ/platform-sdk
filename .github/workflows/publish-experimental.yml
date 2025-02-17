@@ -1,0 +1,54 @@
+name: Publish Package
+
+on:
+    workflow_dispatch:
+
+    push:
+        branches:
+            - feat/mainsail-evm
+
+jobs:
+    publish:
+        # Only run if commit message starts with 'release:'
+        if: startsWith(github.event.head_commit.message, 'release:') || github.event_name == 'workflow_dispatch'
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [20.x]
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  registry-url: "https://registry.npmjs.org/"
+
+            - name: Cache pnpm modules
+              uses: actions/cache@v4
+              env:
+                  cache-name: cache-pnpm-modules
+              with:
+                  path: ~/.pnpm-store
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+                  restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 9.x
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Build
+              run: |
+                  pnpm i
+                  pnpm run build
+                  pnpm run rebuild
+                  pnpm run build:all
+
+            - name: Publish
+              run: bash scripts/publish-experimental.sh ${{ secrets.NODE_AUTH_TOKEN }}

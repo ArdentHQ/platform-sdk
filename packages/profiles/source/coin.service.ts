@@ -115,7 +115,7 @@ export class CoinService implements ICoinService {
 	}
 
 	#getCoinBundle(coin: string): Coins.CoinBundle {
-		return container.get<Coins.CoinBundle>(Identifiers.Coins)[coin.toUpperCase()];
+		return container.get<Coins.CoinBundle>(Identifiers.Coins)[coin];
 	}
 
 	#coinManifests() {
@@ -125,8 +125,7 @@ export class CoinService implements ICoinService {
 			const manifests: Networks.CoinManifest[] = [];
 
 			for (const network of Object.values(networks[name])) {
-				// TODO: Remove hardcoded name.
-				manifests.push({ name: "ARK", networks: { [network.id]: network } });
+				manifests.push({ name: network.coin, networks: { [network.id]: network } });
 			}
 
 			return manifests;

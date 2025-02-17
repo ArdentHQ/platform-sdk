@@ -68,7 +68,13 @@ export interface ConfirmedTransactionData {
 
 	isSecondSignature(): boolean;
 
+	isUsernameRegistration(): boolean;
+
+	isUsernameResignation(): boolean;
+
 	isDelegateRegistration(): boolean;
+
+	isValidatorRegistration(): boolean;
 
 	isVoteCombination(): boolean;
 
@@ -83,6 +89,8 @@ export interface ConfirmedTransactionData {
 	isMultiPayment(): boolean;
 
 	isDelegateResignation(): boolean;
+
+	isValidatorResignation(): boolean;
 
 	isHtlcLock(): boolean;
 
@@ -100,6 +108,8 @@ export interface ConfirmedTransactionData {
 	// Delegate Registration
 	username(): string;
 
+	validatorPublicKey(): string;
+
 	// Vote
 	votes(): string[];
 
@@ -115,6 +125,8 @@ export interface ConfirmedTransactionData {
 
 	// Multi-Payment
 	payments(): { recipientId: string; amount: BigNumber }[];
+
+	methodHash(): string;
 
 	// HTLC Claim / Refund
 	lockTransactionId(): string;
@@ -142,6 +154,10 @@ export interface ConfirmedTransactionData {
 	getMeta(key: string): TransactionDataMeta;
 
 	setMeta(key: string, value: TransactionDataMeta): void;
+
+	normalizeData(): Promise<void>;
+
+	isSuccess(): boolean;
 }
 
 export type ConfirmedTransactionDataCollection = ConfirmedTransactionData[];

@@ -1,17 +1,21 @@
-import { UnlockableBalance } from "./client.contract.js";
-import { SignedTransactionData } from "./contracts.js";
 import { Signatory } from "./signatories.js";
+import { SignedTransactionData } from "./contracts.js";
+import { UnlockableBalance } from "./client.contract.js";
 
 export interface TransactionService {
 	// Core
 	transfer(input: TransferInput): Promise<SignedTransactionData>;
 	secondSignature(input: SecondSignatureInput): Promise<SignedTransactionData>;
 	delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData>;
+	validatorRegistration(input: ValidatorRegistrationInput): Promise<SignedTransactionData>;
+	usernameRegistration(input: UsernameRegistrationInput): Promise<SignedTransactionData>;
+	usernameResignation(input: UsernameResignationInput): Promise<SignedTransactionData>;
 	vote(input: VoteInput): Promise<SignedTransactionData>;
 	multiSignature(input: MultiSignatureInput): Promise<SignedTransactionData>;
 	ipfs(input: IpfsInput): Promise<SignedTransactionData>;
 	multiPayment(input: MultiPaymentInput): Promise<SignedTransactionData>;
 	delegateResignation(input: DelegateResignationInput): Promise<SignedTransactionData>;
+	validatorResignation(input: ValidatorResignationInput): Promise<SignedTransactionData>;
 	unlockToken(input: UnlockTokenInput): Promise<SignedTransactionData>;
 
 	// Estimations
@@ -22,6 +26,8 @@ export interface TransactionService {
 export interface TransactionInput {
 	fee?: number;
 	feeLimit?: number;
+	gasPrice?: number;
+	gasLimit?: number;
 	nonce?: string;
 	signatory: Signatory;
 	contract?: {
@@ -42,8 +48,18 @@ export interface SecondSignatureInput extends TransactionInput {
 	data: { mnemonic: string };
 }
 
+export interface UsernameRegistrationInput extends TransactionInput {
+	data: { username: string };
+}
+
+export declare type UsernameResignationInput = TransactionInput;
+
 export interface DelegateRegistrationInput extends TransactionInput {
 	data: { username: string };
+}
+
+export interface ValidatorRegistrationInput extends TransactionInput {
+	data: { validatorPublicKey: string };
 }
 
 export interface VoteInput extends TransactionInput {
@@ -82,6 +98,7 @@ export interface MultiPaymentInput extends TransactionInput {
 }
 
 export type DelegateResignationInput = TransactionInput;
+export type ValidatorResignationInput = TransactionInput;
 
 export interface UnlockTokenInput extends TransactionInput {
 	data: {

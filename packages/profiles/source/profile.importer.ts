@@ -101,13 +101,5 @@ export class ProfileImporter implements IProfileImporter {
 				this.#profile.coins().set(wallet.data[WalletData.Coin], wallet.data[WalletData.Network]);
 			}
 		}
-
-		for (const contact of Object.values(data.contacts)) {
-			for (const { coin, network } of Object.values(contact.addresses) as any) {
-				if (isRegistered(coin)) {
-					this.#profile.coins().set(coin, network);
-				}
-			}
-		}
 	}
 }

@@ -262,7 +262,17 @@ export interface IReadWriteWallet {
 	username(): string | undefined;
 
 	/**
+	 * Get the validator public key.
+	 *
+	 * @return {(string | undefined)}
+	 * @memberof IReadWriteWallet
+	 */
+	validatorPublicKey(): string | undefined;
+
+	/**
 	 * Determine if the wallet is a delegate.
+	 *
+	 * @deprecated
 	 *
 	 * @return {boolean}
 	 * @memberof IReadWriteWallet
@@ -272,10 +282,28 @@ export interface IReadWriteWallet {
 	/**
 	 * Determine if the wallet is a resigned delegate.
 	 *
+	 * @deprecated
+	 *
 	 * @return {boolean}
 	 * @memberof IReadWriteWallet
 	 */
 	isResignedDelegate(): boolean;
+
+	/**
+	 * Determine if the wallet is a validator
+	 *
+	 * @return {boolean}
+	 * @memberof IReadWriteWallet
+	 */
+	isValidator(): boolean;
+
+	/**
+	 * Determine if the wallet is a resigned validator.
+	 *
+	 * @return {boolean}
+	 * @memberof IReadWriteWallet
+	 */
+	isResignedValidator(): boolean;
 
 	/**
 	 * Determine if the wallet is known.

@@ -12,6 +12,7 @@ export interface IGenerateOptions {
 	network: string;
 	locale?: string;
 	wordCount?: number;
+	withPublicKey?: boolean;
 }
 
 /**

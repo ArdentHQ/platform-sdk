@@ -99,7 +99,6 @@ export class Contact implements IContact {
 					Joi.object({
 						address: Joi.string().required(),
 						coin: Joi.string().required(),
-						network: Joi.string().required(),
 					}),
 				),
 			id: Joi.string().required(),

@@ -11,7 +11,6 @@ void describeWithContext(
 		stubData: {
 			address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			coin: "ARK",
-			network: "mainsail.devnet",
 		},
 	},
 	async ({ it, beforeEach, assert }) => {
@@ -128,13 +127,6 @@ void describeWithContext(
 			assert.length(context.subject.findByCoin("invalid"), 0);
 		});
 
-		it("#findByNetwork", (context) => {
-			const address = context.subject.create(context.stubData);
-
-			assert.length(context.subject.findByNetwork(address.network()), 1);
-			assert.length(context.subject.findByNetwork("invalid"), 0);
-		});
-
 		it("#flush", (context) => {
 			context.subject.create(context.stubData);
 
@@ -154,7 +146,6 @@ void describeWithContext(
 				context.subject.exists({
 					address: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22",
 					coin: "ARK",
-					network: "mainsail.devnet",
 				}),
 			);
 		});

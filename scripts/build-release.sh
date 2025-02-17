@@ -23,6 +23,7 @@ then
 	bundle $1
 else
 	bundle ark
+	bundle mainsail
 fi
 
 # 3. Integration

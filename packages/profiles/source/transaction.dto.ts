@@ -121,8 +121,20 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return this.#data.isSecondSignature();
 	}
 
+	public isUsernameRegistration(): boolean {
+		return this.#data.isUsernameRegistration();
+	}
+
+	public isUsernameResignation(): boolean {
+		return this.#data.isUsernameResignation();
+	}
+
 	public isDelegateRegistration(): boolean {
 		return this.#data.isDelegateRegistration();
+	}
+
+	public isValidatorRegistration(): boolean {
+		return this.#data.isValidatorRegistration();
 	}
 
 	public isVoteCombination(): boolean {
@@ -153,6 +165,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return this.#data.isDelegateResignation();
 	}
 
+	public isValidatorResignation(): boolean {
+		return this.#data.isValidatorResignation();
+	}
+
 	public isHtlcLock(): boolean {
 		return this.#data.isHtlcLock();
 	}
@@ -171,6 +187,10 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 
 	public username(): string {
 		return this.data<Contracts.ConfirmedTransactionData>().username();
+	}
+
+	public validatorPublicKey(): string {
+		return this.data<Contracts.ConfirmedTransactionData>().validatorPublicKey();
 	}
 
 	public lockTransactionId(): string {
@@ -319,5 +339,13 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 		return container
 			.get<IExchangeRateService>(Identifiers.ExchangeRateService)
 			.exchange(this.wallet().currency(), this.wallet().exchangeCurrency(), timestamp, value);
+	}
+
+	public normalizeData(): Promise<void> {
+		return this.#data.normalizeData();
+	}
+
+	public isSuccess(): boolean {
+		return this.#data.isSuccess();
 	}
 }

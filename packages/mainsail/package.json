@@ -1,0 +1,73 @@
+{
+	"name": "@ardenthq/sdk-mainsail",
+	"version": "2.0.0-alpha.48",
+	"description": "Cross-Platform Utilities for Ardent Applications",
+	"license": "MIT",
+	"contributors": [],
+	"type": "module",
+	"exports": {
+		"browser": "./distribution/browser/index.js",
+		"default": "./distribution/esm/index.js"
+	},
+	"types": "./distribution/esm/index.d.ts",
+	"files": [
+		"/distribution"
+	],
+	"scripts": {
+		"build": "pnpm run clean && tsc",
+		"build:analyze": "webpack --config ../../webpack.analyze.cjs",
+		"build:release": "webpack --config ./webpack.config.cjs",
+		"build:watch": "pnpm run clean && tsc -w",
+		"clean": "rimraf .coverage distribution tmp",
+		"clean:browser": "rimraf distribution/browser",
+		"test": "uvu -r tsm source .test.ts",
+		"test:coverage": "c8 pnpm run test",
+		"test:watch": "watchlist source -- pnpm run test"
+	},
+	"dependencies": {
+		"@ardenthq/sdk": "workspace:*",
+		"@ardenthq/sdk-cryptography": "workspace:*",
+		"@ardenthq/sdk-helpers": "workspace:*",
+		"@ardenthq/sdk-intl": "workspace:*",
+		"@arkecosystem/ledger-transport": "^2.0.0",
+		"@mainsail/container": "0.0.1-evm.13",
+		"@mainsail/contracts": "0.0.1-evm.13",
+		"@mainsail/crypto-address-keccak256": "0.0.1-evm.13",
+		"@mainsail/crypto-config": "0.0.1-evm.13",
+		"@mainsail/crypto-consensus-bls12-381": "0.0.1-evm.13",
+		"@mainsail/crypto-hash-bcrypto": "0.0.1-evm.13",
+		"@mainsail/crypto-key-pair-bls12-381": "0.0.1-evm.13",
+		"@mainsail/crypto-key-pair-ecdsa": "0.0.1-evm.13",
+		"@mainsail/crypto-signature-ecdsa": "0.0.1-evm.13",
+		"@mainsail/crypto-signature-schnorr": "0.0.1-evm.13",
+		"@mainsail/crypto-transaction": "0.0.1-evm.13",
+		"@mainsail/crypto-transaction-evm-call": "0.0.1-evm.13",
+		"@mainsail/crypto-validation": "0.0.1-evm.13",
+		"@mainsail/crypto-wif": "0.0.1-evm.13",
+		"@mainsail/evm-contracts": "0.0.1-evm.13",
+		"@mainsail/kernel": "0.0.1-evm.13",
+		"@mainsail/serializer": "0.0.1-evm.13",
+		"@mainsail/validation": "0.0.1-evm.13",
+		"ajv": "6.12.6",
+		"ajv-keywords": "3.4.1",
+		"bip39": "3.0.4",
+		"dayjs": "1.10.7",
+		"deepmerge": "4.2.2",
+		"get-random-values": "^1.2.2",
+		"is-url-superb": "^6.1.0",
+		"lodash.get": "^4.4.2",
+		"lodash.set": "^4.3.2",
+		"node-dotify": "^1.1.0",
+		"viem": "^2.21.51"
+	},
+	"devDependencies": {
+		"@ardenthq/sdk-fetch": "workspace:*",
+		"@ardenthq/sdk-test": "workspace:*",
+		"@ledgerhq/hw-transport-mocker": "^6.20.0",
+		"@types/node": "^17.0.8",
+		"typescript": "^5.4.3"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	}
+}

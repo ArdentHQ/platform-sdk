@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
 import { Contracts, Services, Signatories } from "@ardenthq/sdk";
+
 import { IReadWriteWallet, ITransactionService, WalletData } from "./contracts.js";
 import { pqueueSettled } from "./helpers/queue.js";
 import { ExtendedSignedTransactionData } from "./signed-transaction.dto.js";
@@ -79,10 +80,8 @@ export class TransactionService implements ITransactionService {
 			//
 		}
 
-		return this.#wallet
-			.coin()
-			.multiSignature()
-			.broadcast(this.#createExtendedSignedTransactionData(transactionWithSignature).data().toSignedData());
+		const signedTransaction = this.#createExtendedSignedTransactionData(transactionWithSignature);
+		return this.#wallet.coin().multiSignature().broadcast(signedTransaction.data().toSignedData());
 	}
 
 	/** {@inheritDoc ITransactionService.signTransfer} */
@@ -95,9 +94,24 @@ export class TransactionService implements ITransactionService {
 		return this.#signTransaction("secondSignature", input);
 	}
 
+	/** {@inheritDoc ITransactionService.signUsernameRegistration} */
+	public async signUsernameRegistration(input: Services.UsernameRegistrationInput): Promise<string> {
+		return this.#signTransaction("usernameRegistration", input);
+	}
+
+	/** {@inheritDoc ITransactionService.signUsernameResignation} */
+	public async signUsernameResignation(input: Services.UsernameResignationInput): Promise<string> {
+		return this.#signTransaction("usernameResignation", input);
+	}
+
 	/** {@inheritDoc ITransactionService.signDelegateRegistration} */
 	public async signDelegateRegistration(input: Services.DelegateRegistrationInput): Promise<string> {
 		return this.#signTransaction("delegateRegistration", input);
+	}
+
+	/** {@inheritDoc ITransactionService.signValidatorRegistration} */
+	public async signValidatorRegistration(input: Services.ValidatorRegistrationInput): Promise<string> {
+		return this.#signTransaction("validatorRegistration", input);
 	}
 
 	/** {@inheritDoc ITransactionService.signVote} */
@@ -123,6 +137,11 @@ export class TransactionService implements ITransactionService {
 	/** {@inheritDoc ITransactionService.signDelegateResignation} */
 	public async signDelegateResignation(input: Services.DelegateResignationInput): Promise<string> {
 		return this.#signTransaction("delegateResignation", input);
+	}
+
+	/** {@inheritDoc ITransactionService.signValidatorResignation} */
+	public async signValidatorResignation(input: Services.ValidatorResignationInput): Promise<string> {
+		return this.#signTransaction("validatorResignation", input);
 	}
 
 	/** {@inheritDoc ITransactionService.signUnlockToken} */
@@ -370,8 +389,9 @@ export class TransactionService implements ITransactionService {
 			for (const [id, transaction] of Object.entries(transactions)) {
 				this.#assertHasValidIdentifier(id);
 
-				storage[id] = this.#createExtendedSignedTransactionData(
+				storage[id] = new ExtendedSignedTransactionData(
 					this.#wallet.dataTransferObject().signedTransaction(id, transaction),
+					this.#wallet,
 				);
 			}
 		};
@@ -449,9 +469,12 @@ export class TransactionService implements ITransactionService {
 		this.#pending = {};
 
 		for (const transaction of transactions) {
-			this.#pending[transaction.id] = this.#createExtendedSignedTransactionData(
-				this.#wallet.coin().dataTransferObject().signedTransaction(transaction.id, transaction),
-			);
+			const signedTransactionData = this.#wallet
+				.coin()
+				.dataTransferObject()
+				.signedTransaction(transaction.id, transaction);
+			await signedTransactionData.sanitizeSignatures();
+			this.#pending[transaction.id] = this.#createExtendedSignedTransactionData(signedTransactionData);
 		}
 	}
 
@@ -464,9 +487,13 @@ export class TransactionService implements ITransactionService {
 		this.#signed = {};
 
 		for (const transaction of transactions) {
-			this.#signed[transaction.id] = this.#createExtendedSignedTransactionData(
-				this.#wallet.coin().dataTransferObject().signedTransaction(transaction.id, transaction),
-			);
+			const signedTransactionData = this.#wallet
+				.coin()
+				.dataTransferObject()
+				.signedTransaction(transaction.id, transaction);
+			await signedTransactionData.sanitizeSignatures();
+
+			this.#signed[transaction.id] = this.#createExtendedSignedTransactionData(signedTransactionData);
 		}
 	}
 

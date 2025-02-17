@@ -1,0 +1,30 @@
+{
+	"meta": {
+		"totalCountIsEstimate": true,
+		"count": 1,
+		"first": "/wallets?address=0x71c3377F6baF114A975A151c4685E600d13636F6&transform=true&limit=100&page=1",
+		"last": "/wallets?address=0x71c3377F6baF114A975A151c4685E600d13636F6&transform=true&limit=100&page=1",
+		"next": null,
+		"pageCount": 1,
+		"previous": null,
+		"self": "/wallets?address=0x71c3377F6baF114A975A151c4685E600d13636F6&transform=true&limit=100&page=1",
+		"totalCount": 1
+	},
+	"data": [
+		{
+			"address": "0x71c3377F6baF114A975A151c4685E600d13636F6",
+			"publicKey": "0266e0fd7186193eda55e328184fdaab9f7d4a6c867c25ef03a497fd683cae7788",
+			"balance": "9999999999997641975",
+			"nonce": "5",
+			"attributes": {
+				"validatorRank": 62,
+				"validatorApproval": 0,
+				"validatorResigned": true,
+				"validatorPublicKey": "b19b6b95e7e38a9ec8aecc204b630f07a9170c68e035de758fc981783ccad8cc4181dbbd8ee916dcdb2438f29eb937ad",
+				"validatorVoteBalance": "0",
+				"validatorVotersCount": 0
+			},
+			"updated_at": "165119"
+		}
+	]
+}

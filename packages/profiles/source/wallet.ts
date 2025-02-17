@@ -273,6 +273,15 @@ export class Wallet implements IReadWriteWallet {
 		return this.#attributes.get<Contracts.WalletData>("wallet").username();
 	}
 
+	/** {@inheritDoc IReadWriteWallet.validatorPublicKey} */
+	public validatorPublicKey(): string | undefined {
+		if (!this.#attributes.get<Contracts.WalletData>("wallet")) {
+			throw new Error(ERR_NOT_SYNCED);
+		}
+
+		return this.#attributes.get<Contracts.WalletData>("wallet").validatorPublicKey();
+	}
+
 	/** {@inheritDoc IReadWriteWallet.isDelegate} */
 	public isDelegate(): boolean {
 		if (!this.#attributes.get<Contracts.WalletData>("wallet")) {
@@ -289,6 +298,24 @@ export class Wallet implements IReadWriteWallet {
 		}
 
 		return this.#attributes.get<Contracts.WalletData>("wallet").isResignedDelegate();
+	}
+
+	/** {@inheritDoc IReadWriteWallet.isValidator} */
+	public isValidator(): boolean {
+		if (!this.#attributes.get<Contracts.WalletData>("wallet")) {
+			throw new Error(ERR_NOT_SYNCED);
+		}
+
+		return this.#attributes.get<Contracts.WalletData>("wallet").isValidator();
+	}
+
+	/** {@inheritDoc IReadWriteWallet.isResignedValidator} */
+	public isResignedValidator(): boolean {
+		if (!this.#attributes.get<Contracts.WalletData>("wallet")) {
+			throw new Error(ERR_NOT_SYNCED);
+		}
+
+		return this.#attributes.get<Contracts.WalletData>("wallet").isResignedValidator();
 	}
 
 	/** {@inheritDoc IReadWriteWallet.isKnown} */
@@ -667,9 +694,10 @@ export class Wallet implements IReadWriteWallet {
 
 	#decimals(): number {
 		try {
-			return this.manifest().get(Coins.ConfigKey.CurrencyDecimals);
+			const manifest: Networks.NetworkManifest = this.coin().manifest().get<object>("networks")[this.networkId()];
+			return manifest.currency.decimals ?? 18;
 		} catch {
-			return 8;
+			return 18;
 		}
 	}
 }

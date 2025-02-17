@@ -6,12 +6,16 @@ export type ExpirationType = "height" | "timestamp";
 
 export type SignatureMethod = "default" | "musig" | "ledgerS" | "ledgerX";
 
-export type NetworkHostType = "full" | "musig" | "archival" | "explorer";
+export type NetworkHostType = "full" | "tx" | "musig" | "archival" | "explorer";
 
 export type WalletPermission = "read" | "write";
 
 export type TransactionType =
+	| "usernameRegistration"
+	| "usernameResignation"
+	| "validatorResignation"
 	| "delegateRegistration"
+	| "validatorRegistration"
 	| "delegateResignation"
 	| "ipfs"
 	| "multiPayment"
@@ -230,14 +234,30 @@ export type MessageMethod = "sign" | "verify";
 export type MessageMethods = MessageMethod[];
 
 export type TransactionMethod =
+	| "usernameRegistration"
+	| "usernameRegistration.ledgerS"
+	| "usernameRegistration.ledgerX"
+	| "usernameRegistration.musig"
+	| "usernameResignation"
+	| "usernameResignation.ledgerS"
+	| "usernameResignation.ledgerX"
+	| "usernameResignation.musig"
+	| "delegateRegistration"
 	| "delegateRegistration.ledgerS"
 	| "delegateRegistration.ledgerX"
 	| "delegateRegistration.musig"
-	| "delegateRegistration"
+	| "delegateResignation"
 	| "delegateResignation.ledgerS"
 	| "delegateResignation.ledgerX"
 	| "delegateResignation.musig"
-	| "delegateResignation"
+	| "validatorRegistration"
+	| "validatorRegistration.ledgerS"
+	| "validatorRegistration.ledgerX"
+	| "validatorRegistration.musig"
+	| "validatorResignation"
+	| "validatorResignation.ledgerS"
+	| "validatorResignation.ledgerX"
+	| "validatorResignation.musig"
 	| "estimateExpiration"
 	| "ipfs.ledgerS"
 	| "ipfs.ledgerX"

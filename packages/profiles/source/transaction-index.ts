@@ -18,7 +18,6 @@ export class TransactionIndex implements ITransactionIndex {
 		query: Services.ClientTransactionsInput = {},
 	): Promise<ExtendedConfirmedTransactionDataCollection> {
 		return this.#fetch({
-			...query,
 			identifiers: [
 				{
 					method: this.#wallet.data().get(WalletData.ImportMethod),
@@ -26,6 +25,7 @@ export class TransactionIndex implements ITransactionIndex {
 					value: this.#wallet.address(),
 				},
 			],
+			...query,
 		});
 	}
 
@@ -33,14 +33,14 @@ export class TransactionIndex implements ITransactionIndex {
 	public async sent(
 		query: Services.ClientTransactionsInput = {},
 	): Promise<ExtendedConfirmedTransactionDataCollection> {
-		return this.#fetch({ ...query, senderId: this.#wallet.address() });
+		return this.#fetch({ senderId: this.#wallet.address(), ...query });
 	}
 
 	/** {@inheritDoc ITransactionIndex.received} */
 	public async received(
 		query: Services.ClientTransactionsInput = {},
 	): Promise<ExtendedConfirmedTransactionDataCollection> {
-		return this.#fetch({ ...query, recipientId: this.#wallet.address() });
+		return this.#fetch({ recipientId: this.#wallet.address(), ...query });
 	}
 
 	/** {@inheritDoc ITransactionIndex.findById} */
@@ -59,15 +59,17 @@ export class TransactionIndex implements ITransactionIndex {
 	async #fetch(query: Services.ClientTransactionsInput): Promise<ExtendedConfirmedTransactionDataCollection> {
 		const result = await this.#wallet.getAttributes().get<Coins.Coin>("coin").client().transactions(query);
 
-		for (const transaction of result.items()) {
-			if (this.#wallet.isCold() && (transaction.isSent() || transaction.isReturn())) {
-				this.#wallet.data().set(WalletData.Status, WalletFlag.Hot);
-			}
+		const transactions = result.items();
 
+		for (const transaction of transactions) {
 			transaction.setMeta("address", this.#wallet.address());
 			transaction.setMeta("publicKey", this.#wallet.publicKey());
 		}
 
-		return transformConfirmedTransactionDataCollection(this.#wallet, result);
+		if (this.#wallet.isCold() && transactions.some((t) => t.isSent() || t.isReturn())) {
+			this.#wallet.data().set(WalletData.Status, WalletFlag.Hot);
+		}
+
+		return await transformConfirmedTransactionDataCollection(this.#wallet, result);
 	}
 }

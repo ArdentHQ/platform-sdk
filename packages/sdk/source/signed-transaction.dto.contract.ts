@@ -36,6 +36,10 @@ export interface SignedTransactionData {
 	isTransfer(): boolean;
 	isSecondSignature(): boolean;
 	isDelegateRegistration(): boolean;
+	isValidatorRegistration(): boolean;
+	isUsernameRegistration(): boolean;
+	isUsernameResignation(): boolean;
+	isValidatorResignation(): boolean;
 	isVoteCombination(): boolean;
 	isVote(): boolean;
 	isUnvote(): boolean;
@@ -48,6 +52,8 @@ export interface SignedTransactionData {
 	isHtlcRefund(): boolean;
 	isMagistrate(): boolean;
 	isUnlockToken(): boolean;
+
+	methodHash(): string;
 
 	// Indicates if the transaction has been signed with a multi-signature.
 	usesMultiSignature(): boolean;
@@ -65,6 +71,8 @@ export interface SignedTransactionData {
 
 	// @TODO: remove those after introducing proper signed tx DTOs
 	username(): string;
+	validatorPublicKey(): string;
 	hash(): string;
 	recipients(): MultiPaymentRecipient[];
+	sanitizeSignatures(): Promise<void>;
 }

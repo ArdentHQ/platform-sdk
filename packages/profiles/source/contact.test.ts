@@ -68,7 +68,6 @@ describe("Contact", ({ assert, it, beforeEach }) => {
 			{
 				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 				coin: "ARK",
-				network: "mainsail.devnet",
 			},
 		]);
 

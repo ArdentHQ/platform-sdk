@@ -1,0 +1,16 @@
+{
+	"data": {
+		"accept": [0],
+		"broadcast": [0],
+		"excess": [],
+		"invalid": [1]
+	},
+	"errors": {
+		"1": [
+			{
+				"message": "tx 123 cannot be applied",
+				"type": "ERR_APPLY"
+			}
+		]
+	}
+}

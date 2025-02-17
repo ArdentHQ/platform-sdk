@@ -50,57 +50,63 @@ export class TransactionAggregate implements ITransactionAggregate {
 	}
 
 	async #aggregate(method: string, query: AggregateQuery): Promise<ExtendedConfirmedTransactionDataCollection> {
-		if (!this.#history[method]) {
-			this.#history[method] = {};
-		}
-
 		const syncedWallets: IReadWriteWallet[] = this.#getWallets(query.identifiers);
-		const requests: Record<string, Promise<Collections.ConfirmedTransactionDataCollection>> = {};
 
-		delete query.identifiers;
-
-		for (const syncedWallet of syncedWallets) {
-			requests[syncedWallet.id()] = new Promise((resolve, reject) => {
-				const lastResponse: HistoryWallet = this.#history[method][syncedWallet.id()];
-
-				if (lastResponse && !lastResponse.hasMorePages()) {
-					return reject(
-						`Fetched all transactions for ${syncedWallet.id()}. Call [#flush] if you want to reset the history.`,
-					);
-				}
-
-				if (lastResponse && lastResponse.hasMorePages()) {
-					return resolve(
-						syncedWallet.transactionIndex()[method]({ cursor: lastResponse.nextPage(), ...query }),
-					);
-				}
-
-				return resolve(syncedWallet.transactionIndex()[method](query));
+		if (syncedWallets.length === 0) {
+			return new ExtendedConfirmedTransactionDataCollection([], {
+				last: undefined,
+				next: 0,
+				prev: undefined,
+				self: undefined,
 			});
 		}
 
-		const responses = await promiseAllSettledByKey<ExtendedConfirmedTransactionDataCollection>(requests);
-		const result: ExtendedConfirmedTransactionData[] = [];
+		const historyRecords = this.#history[method] ?? {};
 
-		for (const [id, request] of Object.entries(responses || {})) {
-			if (request.status === "rejected" || request.value instanceof Error) {
-				continue;
-			}
+		const historyKeys: string[] = [];
 
-			if (request.value.isEmpty()) {
-				continue;
-			}
-
-			for (const transaction of request.value.items()) {
-				result.push(transaction);
-			}
-
-			this.#history[method][id] = request.value;
+		for (const syncedWallet of syncedWallets) {
+			historyKeys.push(syncedWallet.address());
 		}
 
-		return new ExtendedConfirmedTransactionDataCollection(result, {
+		// to sort wallet addresses
+		historyKeys.sort((a, b) => a.localeCompare(b));
+
+		query.orderBy && historyKeys.push(query.orderBy);
+		query.limit && historyKeys.push(query.limit.toString());
+
+		if (query.types && query.types.length > 0) {
+			historyKeys.push(query.types.join(":"));
+		}
+
+		const historyKey = historyKeys.join("-");
+
+		const historyRecord = historyRecords[historyKey];
+
+		if (historyRecord && historyRecord.nextPage()) {
+			query = { ...query, cursor: historyRecord.nextPage() };
+		}
+
+		let response: ExtendedConfirmedTransactionDataCollection;
+
+		try {
+			response = (await syncedWallets[0]
+				.transactionIndex()
+				[method](query)) as ExtendedConfirmedTransactionDataCollection;
+		} catch {
+			return new ExtendedConfirmedTransactionDataCollection([], {
+				last: undefined,
+				next: 0,
+				prev: undefined,
+				self: undefined,
+			});
+		}
+
+		historyRecords[historyKey] = response;
+
+		return new ExtendedConfirmedTransactionDataCollection(response.items(), {
 			last: undefined,
-			next: Number(this.hasMore(method)),
+			next: Number(response.nextPage()),
 			prev: undefined,
 			self: undefined,
 		});

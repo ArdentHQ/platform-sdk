@@ -15,13 +15,13 @@ jobs:
             group: ${{ github.head_ref }}-test
             cancel-in-progress: true
         steps:
-            - uses: actions/checkout@v2
-            - uses: pnpm/action-setup@v2
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
               with:
-                  version: 8.8.0
-            - uses: actions/setup-node@v2
+                  version: 9.5.0
+            - uses: actions/setup-node@v4
               with:
-                  node-version: "16"
+                  node-version: "20"
                   cache: "pnpm"
             - name: Build
               run: |
@@ -50,6 +50,8 @@ jobs:
               run: cd "$GITHUB_WORKSPACE/packages/sdk/" && pnpm run test:coverage
             - name: Test TEST
               run: cd "$GITHUB_WORKSPACE/packages/test/" && pnpm run test:coverage
+            - name: Test MAINSAIL
+              run: cd "$GITHUB_WORKSPACE/packages/mainsail/" && pnpm run test:coverage
             - name: Lint
               run: |
                   cd $GITHUB_WORKSPACE

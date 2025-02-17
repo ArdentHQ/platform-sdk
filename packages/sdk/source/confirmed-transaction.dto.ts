@@ -15,6 +15,7 @@ import {
 	UnspentTransactionData,
 } from "./confirmed-transaction.dto.contract.js";
 import { IContainer } from "./container.contracts.js";
+import { Exceptions } from "./index.js";
 
 export abstract class AbstractConfirmedTransactionData implements ConfirmedTransactionData {
 	/**
@@ -25,23 +26,29 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	 */
 	readonly #meta: Record<string, TransactionDataMeta> = {};
 
-	readonly #types = {
-		delegateRegistration: "isDelegateRegistration",
-		delegateResignation: "isDelegateResignation",
-		htlcClaim: "isHtlcClaim",
-		htlcLock: "isHtlcLock",
-		htlcRefund: "isHtlcRefund",
-		ipfs: "isIpfs",
-		magistrate: "isMagistrate",
-		multiPayment: "isMultiPayment",
-		multiSignature: "isMultiSignatureRegistration",
-		secondSignature: "isSecondSignature",
-		transfer: "isTransfer",
-		unlockToken: "isUnlockToken",
-		unvote: "isUnvote",
-		vote: "isVote",
-		voteCombination: "isVoteCombination",
-	};
+	readonly #types = [
+		{ type: "htlcClaim", method: "isHtlcClaim" },
+		{ type: "htlcLock", method: "isHtlcLock" },
+		{ type: "htlcRefund", method: "isHtlcRefund" },
+		{ type: "ipfs", method: "isIpfs" },
+		{ type: "magistrate", method: "isMagistrate" },
+		{ type: "multiPayment", method: "isMultiPayment" },
+		{ type: "multiSignature", method: "isMultiSignatureRegistration" },
+		{ type: "secondSignature", method: "isSecondSignature" },
+		{ type: "transfer", method: "isTransfer" },
+		{ type: "usernameRegistration", method: "isUsernameRegistration" },
+		{ type: "unlockToken", method: "isUnlockToken" },
+		{ type: "usernameResignation", method: "isUsernameResignation" },
+		{ type: "unvote", method: "isUnvote" },
+		{ type: "validatorRegistration", method: "isValidatorRegistration" },
+		{ type: "validatorResignation", method: "isValidatorResignation" },
+		{ type: "vote", method: "isVote" },
+		{ type: "voteCombination", method: "isVoteCombination" },
+
+		// `delegate` methods should be after `validator` methods
+		{ type: "delegateRegistration", method: "isDelegateRegistration" },
+		{ type: "delegateResignation", method: "isDelegateResignation" },
+	];
 
 	protected decimals?: number;
 
@@ -78,7 +85,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 			return "voteCombination";
 		}
 
-		for (const [type, method] of Object.entries(this.#types)) {
+		for (const { type, method } of this.#types) {
 			if (type === "voteCombination") {
 				continue;
 			}
@@ -88,7 +95,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 			}
 		}
 
-		return "transfer";
+		return this.methodHash();
 	}
 
 	public timestamp(): DateTime | undefined {
@@ -167,7 +174,19 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		return false;
 	}
 
+	public isUsernameRegistration(): boolean {
+		return false;
+	}
+
+	public isUsernameResignation(): boolean {
+		return false;
+	}
+
 	public isDelegateRegistration(): boolean {
+		return false;
+	}
+
+	public isValidatorRegistration(): boolean {
 		return false;
 	}
 
@@ -196,6 +215,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	}
 
 	public isDelegateResignation(): boolean {
+		return false;
+	}
+
+	public isValidatorResignation(): boolean {
 		return false;
 	}
 
@@ -229,6 +252,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		throw new NotImplemented(this.constructor.name, this.username.name);
 	}
 
+	public validatorPublicKey(): string {
+		throw new NotImplemented(this.constructor.name, this.validatorPublicKey.name);
+	}
+
 	// Vote
 	public votes(): string[] {
 		throw new NotImplemented(this.constructor.name, this.votes.name);
@@ -255,6 +282,10 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	// Multi-Payment
 	public payments(): { recipientId: string; amount: BigNumber }[] {
 		throw new NotImplemented(this.constructor.name, this.payments.name);
+	}
+
+	public methodHash(): string {
+		return "transfer";
 	}
 
 	// HTLC Claim / Refund
@@ -346,5 +377,13 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 		}
 
 		return processor.process(emoji.emojify(memo));
+	}
+
+	public async normalizeData(): Promise<void> {
+		throw new Exceptions.NotImplemented(this.constructor.name, this.normalizeData.name);
+	}
+
+	public isSuccess(): boolean {
+		throw new Exceptions.NotImplemented(this.constructor.name, this.isSuccess.name);
 	}
 }

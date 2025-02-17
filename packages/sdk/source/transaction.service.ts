@@ -1,29 +1,33 @@
 /* istanbul ignore file */
 
 import { BigNumber, NumberLike } from "@ardenthq/sdk-helpers";
-
-import { BigNumberService } from "./big-number.service.js";
-import { ClientService } from "./client.contract.js";
-import { ConfigRepository } from "./coins.js";
-import { IContainer } from "./container.contracts.js";
-import { SignedTransactionData } from "./contracts.js";
-import { DataTransferObjectService } from "./data-transfer-object.contract.js";
-import { NotImplemented } from "./exceptions.js";
-import { HttpClient } from "./http.js";
-import { NetworkHostSelector } from "./network.models.js";
-import { BindingType } from "./service-provider.contract.js";
 import {
+	TransactionService as Contract,
 	DelegateRegistrationInput,
 	DelegateResignationInput,
 	IpfsInput,
 	MultiPaymentInput,
 	MultiSignatureInput,
 	SecondSignatureInput,
-	TransactionService as Contract,
 	TransferInput,
 	UnlockTokenInput,
+	UsernameRegistrationInput,
+	UsernameResignationInput,
+	ValidatorRegistrationInput,
 	VoteInput,
+	ValidatorResignationInput,
 } from "./transaction.contract.js";
+
+import { BigNumberService } from "./big-number.service.js";
+import { BindingType } from "./service-provider.contract.js";
+import { ClientService } from "./client.contract.js";
+import { ConfigRepository } from "./coins.js";
+import { DataTransferObjectService } from "./data-transfer-object.contract.js";
+import { HttpClient } from "./http.js";
+import { IContainer } from "./container.contracts.js";
+import { NetworkHostSelector } from "./network.models.js";
+import { NotImplemented } from "./exceptions.js";
+import { SignedTransactionData } from "./contracts.js";
 
 export class AbstractTransactionService implements Contract {
 	protected readonly bigNumberService: BigNumberService;
@@ -50,8 +54,22 @@ export class AbstractTransactionService implements Contract {
 		throw new NotImplemented(this.constructor.name, this.secondSignature.name);
 	}
 
-	public async delegateRegistration(input: DelegateRegistrationInput): Promise<SignedTransactionData> {
+	public async usernameRegistration(input: UsernameRegistrationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.usernameRegistration.name);
+	}
+
+	public async usernameResignation(input: UsernameResignationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.usernameResignation.name);
+	}
+
+	public async delegateRegistration(
+		input: DelegateRegistrationInput | ValidatorRegistrationInput,
+	): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.delegateRegistration.name);
+	}
+
+	public async validatorRegistration(input: ValidatorRegistrationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.validatorRegistration.name);
 	}
 
 	public async vote(input: VoteInput): Promise<SignedTransactionData> {
@@ -72,6 +90,10 @@ export class AbstractTransactionService implements Contract {
 
 	public async delegateResignation(input: DelegateResignationInput): Promise<SignedTransactionData> {
 		throw new NotImplemented(this.constructor.name, this.delegateResignation.name);
+	}
+
+	public async validatorResignation(input: ValidatorResignationInput): Promise<SignedTransactionData> {
+		throw new NotImplemented(this.constructor.name, this.validatorResignation.name);
 	}
 
 	public async unlockToken(input: UnlockTokenInput): Promise<SignedTransactionData> {

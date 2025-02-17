@@ -1,12 +1,13 @@
 /* istanbul ignore file */
 
+import { PublicKeyDataTransferObject, PublicKeyService } from "./public-key.contract.js";
+
+import { BindingType } from "./service-provider.contract.js";
 import { ConfigRepository } from "./coins.js";
 import { IContainer } from "./container.contracts.js";
-import { NotImplemented } from "./exceptions.js";
-import { NetworkHostSelector } from "./network.models.js";
-import { PublicKeyDataTransferObject, PublicKeyService } from "./public-key.contract.js";
-import { BindingType } from "./service-provider.contract.js";
 import { IdentityOptions } from "./shared.contract.js";
+import { NetworkHostSelector } from "./network.models.js";
+import { NotImplemented } from "./exceptions.js";
 
 export class AbstractPublicKeyService implements PublicKeyService {
 	protected readonly configRepository: ConfigRepository;
@@ -31,5 +32,9 @@ export class AbstractPublicKeyService implements PublicKeyService {
 
 	public async fromSecret(secret: string): Promise<PublicKeyDataTransferObject> {
 		throw new NotImplemented(this.constructor.name, this.fromSecret.name);
+	}
+
+	public async verifyPublicKeyWithBLS(publicKey: string): Promise<boolean> {
+		throw new NotImplemented(this.constructor.name, this.verifyPublicKeyWithBLS.name);
 	}
 }
