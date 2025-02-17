@@ -2,6 +2,7 @@ import { Contracts, DTO } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
 import { Identities } from "./crypto/index.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
@@ -25,6 +26,13 @@ export class SignedTransactionData
 		}
 
 		return this.bigNumberService.make(this.signedData.amount);
+	}
+
+	public override payments(): MultiPaymentItem[] {
+		return this.signedData.asset.payments.map((payment: MultiPaymentItem) => ({
+			address: payment.recipientId,
+			amount: this.bigNumberService.make(payment.amount),
+		}));
 	}
 
 	public override fee(): BigNumber {
