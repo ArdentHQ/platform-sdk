@@ -1,10 +1,11 @@
 import { BIP38 } from "@ardenthq/sdk-cryptography";
-import { Identifiers } from "./container.models";
-import { WalletIdentifierFactory } from "./wallet.identifier.factory.js";
+import { describe } from "@ardenthq/sdk-test";
+
+import { identity } from "../test/fixtures/identity";
 import { bootContainer } from "../test/mocking";
 import { container } from "./container";
-import { describe } from "@ardenthq/sdk-test";
-import { identity } from "../test/fixtures/identity";
+import { Identifiers } from "./container.models";
+import { WalletIdentifierFactory } from "./wallet.identifier.factory.js";
 
 describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) => {
 	beforeAll(() => {
@@ -17,7 +18,7 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 			.reply(200, loader.json("test/fixtures/client/cryptoConfiguration.json"))
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.get("/api/wallets/D7seWn8JLVwX4nHd9hh2Lf7gvZNiRJ7qLk")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
@@ -67,7 +68,7 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		assert.equal(await WalletIdentifierFactory.make(wallet), {
 			method: "bip39",
 			type: "address",
-			value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 		});
 	});
 
@@ -97,7 +98,7 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		assert.equal(await WalletIdentifierFactory.make(wallet), {
 			method: "bip39",
 			type: "address",
-			value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 		});
 	});
 
@@ -127,7 +128,7 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		assert.equal(await WalletIdentifierFactory.make(wallet), {
 			method: "bip39",
 			type: "address",
-			value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 		});
 	});
 
@@ -141,7 +142,7 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		assert.equal(await WalletIdentifierFactory.make(wallet), {
 			method: "bip39",
 			type: "address",
-			value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 		});
 	});
 
@@ -184,7 +185,7 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		assert.equal(await WalletIdentifierFactory.make(wallet), {
 			method: "bip39",
 			type: "address",
-			value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 		});
 	});
 
@@ -207,7 +208,7 @@ describe("WalletIdentifierFactory", ({ beforeAll, beforeEach, loader, nock, asse
 		assert.equal(await WalletIdentifierFactory.make(wallet), {
 			method: "bip39",
 			type: "address",
-			value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 		});
 	});
 });
