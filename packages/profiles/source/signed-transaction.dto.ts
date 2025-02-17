@@ -239,12 +239,12 @@ export class ExtendedSignedTransactionData {
 	}
 
 	// @ts-ignore
-	public payments(): { recipientId: string; amount: number; }[] {
+	public payments(): { recipientId: string; amount: number }[] {
 		return this.#data.payments().map((payment) => {
 			return {
 				amount: payment.amount.toHuman(),
 				recipientId: payment.recipientId,
-			}
+			};
 		});
 	}
 
