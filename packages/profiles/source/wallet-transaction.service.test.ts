@@ -1,12 +1,12 @@
-import { ProfileSetting, WalletData } from "./contracts";
-
-import { ExtendedSignedTransactionData } from "./signed-transaction.dto.js";
-import { Profile } from "./profile";
 import { Signatories } from "@ardenthq/sdk";
-import { TransactionService } from "./wallet-transaction.service.js";
-import { bootContainer } from "../test/mocking";
 import { describe } from "@ardenthq/sdk-test";
+
 import { identity } from "../test/fixtures/identity";
+import { bootContainer } from "../test/mocking";
+import { ProfileSetting, WalletData } from "./contracts";
+import { Profile } from "./profile";
+import { ExtendedSignedTransactionData } from "./signed-transaction.dto.js";
+import { TransactionService } from "./wallet-transaction.service.js";
 
 const deriveIdentity = async (wallet, signingKey) => ({
 	address: (await wallet.addressService().fromMnemonic(signingKey)).address,
@@ -33,7 +33,7 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
 			// default wallet
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.get("/api/wallets/030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
@@ -155,7 +155,7 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -207,7 +207,7 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -233,7 +233,7 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -252,7 +252,7 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -272,11 +272,11 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		const input = {
 			data: {
 				amount: 1,
-				to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			},
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -334,11 +334,11 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		const input = {
 			data: {
 				amount: 1,
-				to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			},
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -366,11 +366,11 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		const input = {
 			data: {
 				amount: 1,
-				to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			},
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -392,11 +392,11 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		const input = {
 			data: {
 				amount: 1,
-				to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			},
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -532,11 +532,11 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		const input = {
 			data: {
 				amount: 1,
-				to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			},
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -569,11 +569,11 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		const input = {
 			data: {
 				amount: 1,
-				to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			},
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -708,11 +708,11 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		const input = {
 			data: {
 				amount: 1,
-				to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			},
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
-					address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+					address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					privateKey: "privateKey",
 					publicKey: "publicKey",
 					signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -774,7 +774,7 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
 			// default wallet
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.get("/api/wallets/030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
@@ -850,11 +850,11 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 				input: {
 					data: {
 						amount: 1,
-						to: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+						to: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 					},
 					signatory: new Signatories.Signatory(
 						new Signatories.MnemonicSignatory({
-							address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+							address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 							privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
 							publicKey: "39b49ead71b16c0b0330a6ba46c57183819936bfdf789dfd2452df4dc04f5a2a",
 							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -909,7 +909,7 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 					},
 					signatory: new Signatories.Signatory(
 						new Signatories.MnemonicSignatory({
-							address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+							address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 							privateKey: "privateKey",
 							publicKey: "publicKey",
 							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -970,10 +970,10 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 					},
 					signatory: new Signatories.Signatory(
 						new Signatories.MnemonicSignatory({
-							address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+							address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 							privateKey: "privateKey",
 							publicKey: "publicKey",
-							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
+							signingKey: "qaa",
 						}),
 					),
 				},
@@ -1031,7 +1031,7 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 					},
 					signatory: new Signatories.Signatory(
 						new Signatories.MnemonicSignatory({
-							address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+							address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 							privateKey: "privateKey",
 							publicKey: "publicKey",
 							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
@@ -1097,7 +1097,7 @@ describe("Shared", ({ afterEach, beforeAll, beforeEach, each, nock, assert, load
 					},
 					signatory: new Signatories.Signatory(
 						new Signatories.MnemonicSignatory({
-							address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+							address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 							privateKey: "privateKey",
 							publicKey: "publicKey",
 							signingKey: "bomb open frame quit success evolve gain donate prison very rent later",
