@@ -58,7 +58,7 @@ describeWithContext(
 			const [a, b, c] = await Promise.all([
 				importByMnemonic(
 					context.profile,
-					"qaa",
+					"fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 					"ARK",
 					"ark.devnet",
 				),
@@ -95,7 +95,7 @@ describeWithContext(
 			await Promise.all([
 				importByMnemonic(
 					context.profile,
-					"qaa",
+					"fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 					"ARK",
 					"ark.devnet",
 				),

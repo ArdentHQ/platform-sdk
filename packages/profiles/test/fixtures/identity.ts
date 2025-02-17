@@ -11,7 +11,7 @@ export const bitcoinIdentity = {
 	address: "n16aeukbAKUZPh3iefK3DjpyJAc6TUHw9C",
 	extPublicKey:
 		"xpub6DFd5Yjvs8jmEsh3QFi3QbdF78teaH9q71ztsPULJp7FZdFsfUJyhW4sZBHLiG6SXcUyPacP5PYJgKtn5VKXcstbj3QiwCQX2kRC3q2dQjP",
-	mnemonic: "qaa",
+	mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	publicKey: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 };
 

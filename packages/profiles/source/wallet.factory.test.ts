@@ -62,7 +62,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	it("#fromMnemonicWithBIP39 - should create a wallet using BIP39", async (context) => {
 		const wallet = await context.subject.fromMnemonicWithBIP39({
 			coin: "ARK",
-			mnemonic: "qaa",
+			mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 			network: "ark.devnet",
 		});
 
@@ -75,7 +75,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	// 		() =>
 	// 			context.subject.fromMnemonicWithBIP39({
 	// 				coin: "ADA",
-	// 				mnemonic: "qaa",
+	// 				mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	// 				network: "ada.testnet",
 	// 			}),
 	// 		"The configured network uses extended public keys with BIP44 for derivation.",
@@ -85,7 +85,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	it("#fromMnemonicWithBIP39 - should create a wallet using BIP39 with encryption", async (context) => {
 		const wallet = await context.subject.fromMnemonicWithBIP39({
 			coin: "ARK",
-			mnemonic: "qaa",
+			mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 			network: "ark.devnet",
 			password: "password",
 		});
@@ -96,7 +96,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 
 		assert.is(
 			await PBKDF2.decrypt(wallet.data().get(WalletData.EncryptedSigningKey), "password"),
-			"qaa",
+			"fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 		);
 	});
 
@@ -119,7 +119,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	// 	const wallet = await context.subject.fromMnemonicWithBIP44({
 	// 		coin: "BTC",
 	// 		levels: { account: 0 },
-	// 		mnemonic: "qaa",
+	// 		mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	// 		network: "btc.testnet",
 	// 	});
 
@@ -145,7 +145,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	// 	const wallet = await context.subject.fromMnemonicWithBIP44({
 	// 		coin: "BTC",
 	// 		levels: { account: 0 },
-	// 		mnemonic: "qaa",
+	// 		mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	// 		network: "btc.testnet",
 	// 	});
 
@@ -159,7 +159,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	// 	const wallet = await context.subject.fromMnemonicWithBIP49({
 	// 		coin: "BTC",
 	// 		levels: { account: 0 },
-	// 		mnemonic: "qaa",
+	// 		mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	// 		network: "btc.testnet",
 	// 	});
 
@@ -170,7 +170,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	// 	const wallet = await context.subject.fromMnemonicWithBIP49({
 	// 		coin: "BTC",
 	// 		levels: { account: 0 },
-	// 		mnemonic: "qaa",
+	// 		mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	// 		network: "btc.testnet",
 	// 	});
 
@@ -184,7 +184,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	// 	const wallet = await context.subject.fromMnemonicWithBIP84({
 	// 		coin: "BTC",
 	// 		levels: { account: 0 },
-	// 		mnemonic: "qaa",
+	// 		mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	// 		network: "btc.testnet",
 	// 	});
 
@@ -195,7 +195,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 	// 	const wallet = await context.subject.fromMnemonicWithBIP84({
 	// 		coin: "BTC",
 	// 		levels: { account: 0 },
-	// 		mnemonic: "qaa",
+	// 		mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	// 		network: "btc.testnet",
 	// 	});
 
