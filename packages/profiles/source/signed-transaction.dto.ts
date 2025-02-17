@@ -8,6 +8,7 @@ import { container } from "./container.js";
 import { Identifiers } from "./container.models.js";
 import { IExchangeRateService, IReadWriteWallet } from "./contracts.js";
 import { ExtendedTransactionRecipient } from "./transaction.dto.js";
+import { MultiPaymentItem } from "@ardenthq/sdk/source/signed-transaction.dto.contract";
 
 export class ExtendedSignedTransactionData {
 	readonly #data: Contracts.SignedTransactionData;
@@ -235,6 +236,16 @@ export class ExtendedSignedTransactionData {
 
 	public hash(): string {
 		return this.#data.hash();
+	}
+
+	// @ts-ignore
+	public payments(): MultiPaymentItem[] {
+		return this.#data.payments().map((payment) => {
+			return {
+				recipientId: payment.recipientId,
+				amount: payment.amount.toHuman(),
+			}
+		});
 	}
 
 	public recipients(): ExtendedTransactionRecipient[] {
