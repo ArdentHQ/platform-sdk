@@ -1,27 +1,27 @@
-import { ProfileData, ProfileSetting } from "./contracts";
-
+import { resolve } from "path";
+import { Helpers } from "@ardenthq/sdk";
 import { ARK } from "@ardenthq/sdk-ark";
+import { Request } from "@ardenthq/sdk-fetch";
+import { describe } from "@ardenthq/sdk-test";
+import fs from "fs-extra";
+
+import storageData from "../test/fixtures/env-storage.json";
+import { identity } from "../test/fixtures/identity";
+import { importByMnemonic } from "../test/mocking";
+import { StubStorage } from "../test/stubs/storage";
+import { container } from "./container";
+import { Identifiers } from "./container.models";
+import { ProfileData, ProfileSetting } from "./contracts";
 import { DataRepository } from "./data.repository";
 import { Environment } from "./environment";
 import { ExchangeRateService } from "./exchange-rate.service.js";
-import { Helpers } from "@ardenthq/sdk";
-import { Identifiers } from "./container.models";
 import { MemoryStorage } from "./memory.storage";
 import { PluginRegistry } from "./plugin-registry.service.js";
 import { Profile } from "./profile";
 import { ProfileImporter } from "./profile.importer";
 import { ProfileRepository } from "./profile.repository";
 import { ProfileSerialiser } from "./profile.serialiser";
-import { Request } from "@ardenthq/sdk-fetch";
-import { StubStorage } from "../test/stubs/storage";
 import { WalletService } from "./wallet.service.js";
-import { container } from "./container";
-import { describe } from "@ardenthq/sdk-test";
-import fs from "fs-extra";
-import { identity } from "../test/fixtures/identity";
-import { importByMnemonic } from "../test/mocking";
-import { resolve } from "path";
-import storageData from "../test/fixtures/env-storage.json";
 
 const makeSubject = async (context) => {
 	context.subject = new Environment({
@@ -74,7 +74,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 					type: "exchange",
 				},
 			])
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.get(/.+/)
 			.query(true)
@@ -138,14 +138,14 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		// Create a Contact
 		profile.contacts().create("Jane Doe", [
 			{
-				address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 				coin: "ARK",
-				network: "ark.devnet",
+				network: "mainsail.devnet",
 			},
 		]);
 
 		// Create a Wallet
-		await importByMnemonic(profile, identity.mnemonic, "ARK", "ark.devnet");
+		await importByMnemonic(profile, identity.mnemonic, "ARK", "mainsail.devnet");
 
 		// Create a Notification
 		profile
@@ -164,7 +164,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		profile.settings().set("ADVANCED_MODE", false);
 
 		// Create a Setting
-		profile.settings().set(ProfileSetting.LastVisitedPage, { path: "test", data: { foo: "bar" } });
+		profile.settings().set(ProfileSetting.LastVisitedPage, { data: { foo: "bar" }, path: "test" });
 
 		// Encode all data
 		await context.subject.profiles().persist(profile);
@@ -213,6 +213,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			ERROR_REPORTING: false,
 			EXCHANGE_CURRENCY: "BTC",
 			FALLBACK_TO_DEFAULT_NODES: true,
+			LAST_VISITED_PAGE: { data: { foo: "bar" }, path: "test" },
 			LOCALE: "en-US",
 			MARKET_PROVIDER: "cryptocompare",
 			NAME: "John Doe",
@@ -221,7 +222,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
-			LAST_VISITED_PAGE: { path: "test", data: { foo: "bar" } },
 		});
 	});
 
@@ -339,17 +339,17 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 	it("#fees", async (context) => {
 		await makeSubject(context);
 
-		await context.subject.fees().sync(await context.subject.profiles().create("John"), "ARK", "ark.devnet");
+		await context.subject.fees().sync(await context.subject.profiles().create("John"), "ARK", "mainsail.devnet");
 
-		assert.length(Object.keys(context.subject.fees().all("ARK", "ark.devnet")), 8);
+		assert.length(Object.keys(context.subject.fees().all("ARK", "mainsail.devnet")), 8);
 	});
 
 	it("#delegates", async (context) => {
 		await makeSubject(context);
 
-		await context.subject.delegates().sync(await context.subject.profiles().create("John"), "ARK", "ark.devnet");
+		await context.subject.delegates().sync(await context.subject.profiles().create("John"), "ARK", "mainsail.devnet");
 
-		assert.length(context.subject.delegates().all("ARK", "ark.devnet"), 200);
+		assert.length(context.subject.delegates().all("ARK", "mainsail.devnet"), 200);
 	});
 
 	it("#knownWallets", async (context) => {
@@ -357,7 +357,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		await context.subject.knownWallets().syncAll(await context.subject.profiles().create("John Doe"));
 
-		assert.false(context.subject.knownWallets().is("ark.devnet", "unknownWallet"));
+		assert.false(context.subject.knownWallets().is("mainsail.devnet", "unknownWallet"));
 	});
 
 	it("#wallets", async (context) => {
@@ -430,7 +430,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		const john = await context.subject.profiles().create("John");
 
-		await importByMnemonic(john, identity.mnemonic, "ARK", "ark.devnet");
+		await importByMnemonic(john, identity.mnemonic, "ARK", "mainsail.devnet");
 		await context.subject.profiles().persist(john);
 
 		const jane = await context.subject.profiles().create("Jane");
