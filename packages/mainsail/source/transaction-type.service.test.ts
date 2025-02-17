@@ -29,7 +29,7 @@ describe("TransactionTypeService", async ({ assert, it, nock, loader }) => {
 	// });
 
 	it("should determine if the transaction is a multi payment", () => {
-		assert.true(TransactionTypeService.isMultiPayment({ data: "0x88d695b2" }));
+		assert.true(TransactionTypeService.isMultiPayment({ data: "0x084ce708" }));
 		assert.false(TransactionTypeService.isMultiPayment({ data: "0x58d695b2" }));
 	});
 
