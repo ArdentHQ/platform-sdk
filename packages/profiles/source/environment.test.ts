@@ -140,12 +140,12 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			{
 				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 				coin: "ARK",
-				network: "mainsail.devnet",
+				network: "ark.devnet",
 			},
 		]);
 
 		// Create a Wallet
-		await importByMnemonic(profile, identity.mnemonic, "ARK", "mainsail.devnet");
+		await importByMnemonic(profile, identity.mnemonic, "ARK", "ark.devnet");
 
 		// Create a Notification
 		profile
@@ -339,17 +339,17 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 	it("#fees", async (context) => {
 		await makeSubject(context);
 
-		await context.subject.fees().sync(await context.subject.profiles().create("John"), "ARK", "mainsail.devnet");
+		await context.subject.fees().sync(await context.subject.profiles().create("John"), "ARK", "ark.devnet");
 
-		assert.length(Object.keys(context.subject.fees().all("ARK", "mainsail.devnet")), 8);
+		assert.length(Object.keys(context.subject.fees().all("ARK", "ark.devnet")), 8);
 	});
 
 	it("#delegates", async (context) => {
 		await makeSubject(context);
 
-		await context.subject.delegates().sync(await context.subject.profiles().create("John"), "ARK", "mainsail.devnet");
+		await context.subject.delegates().sync(await context.subject.profiles().create("John"), "ARK", "ark.devnet");
 
-		assert.length(context.subject.delegates().all("ARK", "mainsail.devnet"), 200);
+		assert.length(context.subject.delegates().all("ARK", "ark.devnet"), 200);
 	});
 
 	it("#knownWallets", async (context) => {
@@ -357,7 +357,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		await context.subject.knownWallets().syncAll(await context.subject.profiles().create("John Doe"));
 
-		assert.false(context.subject.knownWallets().is("mainsail.devnet", "unknownWallet"));
+		assert.false(context.subject.knownWallets().is("ark.devnet", "unknownWallet"));
 	});
 
 	it("#wallets", async (context) => {
@@ -430,7 +430,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 
 		const john = await context.subject.profiles().create("John");
 
-		await importByMnemonic(john, identity.mnemonic, "ARK", "mainsail.devnet");
+		await importByMnemonic(john, identity.mnemonic, "ARK", "ark.devnet");
 		await context.subject.profiles().persist(john);
 
 		const jane = await context.subject.profiles().create("Jane");
