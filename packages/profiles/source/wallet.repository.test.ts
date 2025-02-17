@@ -118,7 +118,7 @@ describe("WalletRepository", ({ beforeAll, beforeEach, loader, nock, assert, stu
 	});
 
 	it("#findByAddressWithNetwork", (context) => {
-		assert.instance(context.subject.findByAddressWithNetwork(identity.address, "ark.devnet"), Wallet);
+		assert.instance(context.subject.findByAddressWithNetwork(identity.address, "mainsail.devnet"), Wallet);
 	});
 
 	it("#findByPublicKey", (context) => {

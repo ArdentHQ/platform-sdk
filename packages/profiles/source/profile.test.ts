@@ -28,7 +28,7 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 			.reply(200, loader.json("test/fixtures/client/peers.json"))
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.get("/api/wallets/DNc92FQmYu8G9Xvo6YqhPtRxYsUxdsUn9w")
 			.reply(200, loader.json("test/fixtures/client/wallet-2.json"))
@@ -68,8 +68,8 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 
 	it("should have a last visited page", (context) => {
 		const lastVisitedPage = {
-			path: "/test",
 			data: { foo: "bar" },
+			path: "/test",
 		};
 
 		context.subject.settings().set(ProfileSetting.LastVisitedPage, lastVisitedPage);
@@ -80,8 +80,8 @@ describe("Profile", ({ beforeEach, it, assert, loader, stub, nock }) => {
 	it("should have sessions", (context) => {
 		const sessions = {
 			"1": {
-				name: "test",
 				data: { foo: "bar" },
+				name: "test",
 			},
 		};
 

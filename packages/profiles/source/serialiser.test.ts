@@ -63,9 +63,9 @@ describe("WalletSerialiser", ({ beforeAll, beforeEach, assert, loader, each, noc
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
 
 			// default wallet
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet-non-resigned.json"))
-			.get("/api/wallets/030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd")
+			.get("/api/wallets/022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd")
 			.reply(200, loader.json("test/fixtures/client/wallet-non-resigned.json"))
 
 			// second wallet
@@ -130,12 +130,12 @@ describe("WalletSerialiser", ({ beforeAll, beforeEach, assert, loader, each, noc
 
 			assert.containKeys(actual, ["id", "data", "settings"]);
 			assert.string(actual.id);
-			assert.is(actual.data[WalletData.Address], "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
+			assert.is(actual.data[WalletData.Address], "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
 			assert.is(actual.data[WalletData.Coin], "ARK");
 			assert.is(actual.data[WalletData.Network], "ark.devnet");
 			assert.is(
 				actual.data[WalletData.PublicKey],
-				"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+				"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 			);
 			assert.object(actual.data);
 			assert.object(actual.settings);

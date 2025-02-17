@@ -25,9 +25,9 @@ describe("TransactionIndex", ({ beforeAll, beforeEach, nock, assert, it, loader 
 			.reply(200, {})
 
 			// default wallet
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet-non-resigned.json"))
-			.get("/api/wallets/030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd")
+			.get("/api/wallets/022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd")
 			.reply(200, loader.json("test/fixtures/client/wallet-non-resigned.json"))
 
 			// second wallet

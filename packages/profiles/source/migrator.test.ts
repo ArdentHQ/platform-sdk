@@ -178,7 +178,7 @@ describe("Migrator", ({ beforeEach, it, assert }) => {
 					"0e147f96-049f-4d89-bad4-ad3341109907": {
 						addresses: [
 							{
-								address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+								address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 								coin: "ARK",
 								id: "403a2b1a-8f0a-4351-9e86-1e50da063de0",
 								network: "ark.devnet",
@@ -244,7 +244,7 @@ describe("Migrator", ({ beforeEach, it, assert }) => {
 					profileData.data.contacts["0e147f96-049f-4d89-bad4-ad3341109907"].name = "John Doe";
 					profileData.data.contacts["0e147f96-049f-4d89-bad4-ad3341109907"].addresses = [
 						{
-							address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+							address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 							coin: "ARK",
 							id: "403a2b1a-8f0a-4351-9e86-1e50da063de0",
 							network: "ark.devnet",

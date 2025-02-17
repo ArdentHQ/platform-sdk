@@ -3,14 +3,14 @@
 	"network": 30,
 	"type": 4,
 	"nonce": "2",
-	"senderPublicKey": "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+	"senderPublicKey": "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 	"fee": "2000000000",
 	"amount": "0",
 	"asset": {
 		"multiSignature": {
 			"publicKeys": [
 				"037eaa8cb236c40a08fcb9d6220743ee6ae1b5c40e8a77a38f286516c3ff663901",
-				"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd"
+				"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd"
 			],
 			"min": 1
 		}

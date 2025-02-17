@@ -24,7 +24,7 @@ describe("ProfileRepository", ({ it, assert, beforeEach, loader, nock, stub }) =
 			.reply(200, loader.json("test/fixtures/client/cryptoConfiguration.json"))
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.persist();
 
@@ -90,7 +90,7 @@ describe("ProfileRepository", ({ it, assert, beforeEach, loader, nock, stub }) =
 						},
 					},
 					"ac38fe6d-4b67-4ef1-85be-17c5f6841129": {
-						address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+						address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 						coin: "ARK",
 						data: {
 							BALANCE: {},
@@ -98,7 +98,7 @@ describe("ProfileRepository", ({ it, assert, beforeEach, loader, nock, stub }) =
 						},
 						id: "ac38fe6d-4b67-4ef1-85be-17c5f6841129",
 						network: "ark.devnet",
-						publicKey: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+						publicKey: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 						settings: {
 							ALIAS: "Johnathan Doe",
 							AVATAR: "...",

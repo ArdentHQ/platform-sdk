@@ -28,7 +28,7 @@ describe("TransactionAggregate", ({ each, loader, afterEach, beforeAll, beforeEa
 			.get("/api/wallets", {})
 			.query({ limit: 1, nonce: 0 })
 			.reply(200, {})
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.persist();
 
@@ -209,7 +209,7 @@ describe("TransactionAggregate", ({ each, loader, afterEach, beforeAll, beforeEa
 			const indexSpy = spy(wallet.transactionIndex(), dataset);
 
 			await context.subject[dataset]({
-				identifiers: [{ type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW" }],
+				identifiers: [{ type: "address", value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10" }],
 			});
 
 			assert.true(indexSpy.calledOnce);
@@ -231,7 +231,7 @@ describe("TransactionAggregate", ({ each, loader, afterEach, beforeAll, beforeEa
 
 			await context.subject[dataset]({
 				identifiers: [
-					{ type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", networkId: "ark.devnet" },
+					{ networkId: "ark.devnet", type: "address", value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10" },
 				],
 			});
 
@@ -254,7 +254,7 @@ describe("TransactionAggregate", ({ each, loader, afterEach, beforeAll, beforeEa
 
 			await context.subject[dataset]({
 				identifiers: [
-					{ type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", networkId: "ark.mainnet" },
+					{ networkId: "ark.mainnet", type: "address", value: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10" },
 				],
 			});
 

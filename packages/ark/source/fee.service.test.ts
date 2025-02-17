@@ -94,15 +94,15 @@ describe("FeeService", async ({ assert, nock, it, loader }) => {
 				data: {
 					min: 2,
 					publicKeys: [
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 5
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 10
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 15
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 20
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 25
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 30
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 35
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 40
-						"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd", // 45
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 5
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 10
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 15
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 20
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 25
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 30
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 35
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 40
+						"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd", // 45
 					],
 				},
 				signatory: new Signatories.Signatory(
@@ -116,7 +116,7 @@ describe("FeeService", async ({ assert, nock, it, loader }) => {
 			}),
 		);
 
-		const b = await (await createService(FeeService, "ark.devnet")).calculate({ type: 1, data: () => ({}) });
+		const b = await (await createService(FeeService, "ark.devnet")).calculate({ data: () => ({}), type: 1 });
 
 		assert.is(a.toHuman(), 50); // Signatures + Base 5
 		assert.is(b.toHuman(), 0);

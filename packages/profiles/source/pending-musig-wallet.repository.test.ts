@@ -16,7 +16,7 @@ const createEnvironment = async (context: any, { loader, nock }) => {
 		.reply(200, loader.json("test/fixtures/client/cryptoConfiguration.json"))
 		.get("/api/node/syncing")
 		.reply(200, loader.json("test/fixtures/client/syncing.json"))
-		.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+		.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 		.reply(200, loader.json("test/fixtures/client/wallet.json"))
 		.get("/api/wallets/1")
 		.reply(404)
@@ -35,7 +35,7 @@ const createEnvironment = async (context: any, { loader, nock }) => {
 
 const defaults = {
 	data: {
-		ADDRESS: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+		ADDRESS: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 		BALANCE: [Object],
 		BROADCASTED_TRANSACTIONS: {},
 		COIN: "ARK",
@@ -47,7 +47,7 @@ const defaults = {
 		LEDGER_MODEL: undefined,
 		NETWORK: "ark.devnet",
 		PENDING_MULTISIGNATURE_TRANSACTIONS: {},
-		PUBLIC_KEY: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+		PUBLIC_KEY: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 		SEQUENCE: "111932",
 		SIGNED_TRANSACTIONS: {},
 		STARRED: false,
@@ -75,10 +75,10 @@ describe("PendingMusigWalletRepository", ({ beforeAll, beforeEach, loader, nock,
 	});
 
 	it("#add", async (context) => {
-		await context.subject.add("D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", "ARK", "ark.devnet");
-		await context.subject.add("D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", "ARK", "ark.devnet");
+		await context.subject.add("0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10", "ARK", "ark.devnet");
+		await context.subject.add("0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10", "ARK", "ark.devnet");
 
-		assert.equal(getAddresses(context), ["D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW"]);
+		assert.equal(getAddresses(context), ["0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10"]);
 	});
 
 	it("#fill", async (context) => {
@@ -86,13 +86,13 @@ describe("PendingMusigWalletRepository", ({ beforeAll, beforeEach, loader, nock,
 			"05146383-b26d-4ac0-aad2-3d5cb7e6c5e2": defaults,
 		});
 
-		assert.equal(getAddresses(context), ["D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW"]);
+		assert.equal(getAddresses(context), ["0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10"]);
 	});
 
 	it("#toObject", async (context) => {
-		await context.subject.add("D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", "ARK", "ark.devnet");
+		await context.subject.add("0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10", "ARK", "ark.devnet");
 		const json: Record<string, any> = context.subject.toObject();
-		assert.equal(Object.values(json)[0].data.ADDRESS, "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
+		assert.equal(Object.values(json)[0].data.ADDRESS, "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
 	});
 
 	it("#sync", async (context) => {
@@ -155,7 +155,7 @@ describe("PendingMusigWalletRepository", ({ beforeAll, beforeEach, loader, nock,
 	it("should not remove wallet if it exists in musig server", async (context) => {
 		context.profile.wallets().push(
 			await context.profile.walletFactory().fromAddress({
-				address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 				coin: "ARK",
 				network: "ark.devnet",
 			}),
@@ -191,7 +191,7 @@ describe("PendingMusigWalletRepository", ({ beforeAll, beforeEach, loader, nock,
 	it("should forget wallet if pending transaction not found in musig server", async (context) => {
 		context.profile.wallets().push(
 			await context.profile.walletFactory().fromAddress({
-				address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 				coin: "ARK",
 				network: "ark.devnet",
 			}),

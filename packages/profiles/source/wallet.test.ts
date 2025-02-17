@@ -34,9 +34,9 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			.reply(200, {})
 
 			// default wallet
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet-non-resigned.json"))
-			.get("/api/wallets/030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd")
+			.get("/api/wallets/022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd")
 			.reply(200, loader.json("test/fixtures/client/wallet-non-resigned.json"))
 
 			// second wallet
@@ -412,7 +412,7 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 	});
 
 	it("should return explorer link", (context) => {
-		assert.is(context.subject.explorerLink(), "https://test.arkscan.io/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
+		assert.is(context.subject.explorerLink(), "https://test.arkscan.io/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
 	});
 
 	it("should turn into an object", (context) => {
@@ -425,15 +425,15 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 
 		assert.containKeys(actual, ["id", "data", "settings"]);
 		assert.string(actual.id);
-		assert.is(actual.data[WalletData.Address], "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
+		assert.is(actual.data[WalletData.Address], "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
 		assert.is(actual.data[WalletData.Coin], "ARK");
 		assert.is(actual.data[WalletData.Network], "ark.devnet");
 		assert.is(
 			actual.data[WalletData.PublicKey],
-			"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+			"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 		);
 		assert.equal(actual.data, {
-			ADDRESS: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			ADDRESS: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			BALANCE: { available: "55827093444556", fees: "55827093444556" },
 			BROADCASTED_TRANSACTIONS: {},
 			COIN: "ARK",
@@ -442,10 +442,11 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			ENCRYPTED_CONFIRM_KEY: undefined,
 			ENCRYPTED_SIGNING_KEY: undefined,
 			IMPORT_METHOD: "BIP39.MNEMONIC",
+			IS_PRIMARY: false,
 			LEDGER_MODEL: undefined,
 			NETWORK: "ark.devnet",
 			PENDING_MULTISIGNATURE_TRANSACTIONS: {},
-			PUBLIC_KEY: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+			PUBLIC_KEY: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 			SEQUENCE: "111932",
 			SIGNED_TRANSACTIONS: {},
 			STARRED: true,
@@ -453,7 +454,6 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			VOTES: [],
 			VOTES_AVAILABLE: 0,
 			VOTES_USED: 0,
-			IS_PRIMARY: false,
 		});
 		assert.object(actual.settings);
 		assert.string(actual.settings.AVATAR);

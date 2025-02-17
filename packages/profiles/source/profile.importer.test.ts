@@ -20,7 +20,7 @@ describeWithContext(
 				"448042c3-a405-4895-970e-a33c6e907905": {
 					addresses: [
 						{
-							address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+							address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 							coin: "ARK",
 							id: "3a7a9e03-c10b-4135-88e9-92e586d53e69",
 							network: "ark.devnet",
@@ -67,7 +67,7 @@ describeWithContext(
 						BALANCE: {},
 						COIN: "ARK",
 						NETWORK: "ark.devnet",
-						PUBLIC_KEY: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+						PUBLIC_KEY: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 						SEQUENCE: {},
 					},
 					id: "88ff9e53-7d40-420d-8f39-9f24acee2164",
@@ -77,11 +77,11 @@ describeWithContext(
 				},
 				"ac38fe6d-4b67-4ef1-85be-17c5f6841129": {
 					data: {
-						ADDRESS: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+						ADDRESS: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 						BALANCE: {},
 						COIN: "ARK",
 						NETWORK: "ark.devnet",
-						PUBLIC_KEY: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+						PUBLIC_KEY: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 						SEQUENCE: {},
 					},
 					id: "ac38fe6d-4b67-4ef1-85be-17c5f6841129",
@@ -102,7 +102,7 @@ describeWithContext(
 				.reply(200, loader.json("test/fixtures/client/peers.json"))
 				.get("/api/node/syncing")
 				.reply(200, loader.json("test/fixtures/client/syncing.json"))
-				.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+				.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 				.reply(200, loader.json("test/fixtures/client/wallet.json"))
 				.get("/api/wallets/DNc92FQmYu8G9Xvo6YqhPtRxYsUxdsUn9w")
 				.reply(200, loader.json("test/fixtures/client/wallet-2.json"))

@@ -1,24 +1,23 @@
-import { describe } from "@ardenthq/sdk-test";
-
-import { Address } from "./crypto/identities/address.js";
 import { IoC, Services } from "@ardenthq/sdk";
+import { describe } from "@ardenthq/sdk-test";
 import { openTransportReplayer, RecordStore } from "@ledgerhq/hw-transport-mocker";
 
 import { ledger } from "../test/fixtures/ledger";
 import { createService } from "../test/mocking";
 import { AddressService } from "./address.service.js";
 import { ClientService } from "./client.service.js";
+import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
+import { Address } from "./crypto/identities/address.js";
 import { LedgerService } from "./ledger.service.js";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
-import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
 import { WalletData } from "./wallet.dto.js";
 
 const createMockService = async (record) => {
 	const transport = await createService(LedgerService, undefined, (container) => {
 		container.constant(IoC.BindingType.Container, container);
 		container.constant(IoC.BindingType.DataTransferObjects, {
-			SignedTransactionData,
 			ConfirmedTransactionData,
+			SignedTransactionData,
 			WalletData,
 		});
 		container.singleton(IoC.BindingType.DataTransferObjectService, Services.AbstractDataTransferObjectService);
@@ -144,10 +143,10 @@ describe("LedgerService - scan", ({ assert, nock, beforeAll, it, loader, stub })
 		const ark = await createMockService(ledger.wallets.record);
 
 		stub(ark, "getExtendedPublicKey").resolvedValue(
-			"030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+			"022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 		);
 
-		const walletData = await ark.scan({ useLegacy: false, startPath: "m/44'/0'/0'/0/0" });
+		const walletData = await ark.scan({ startPath: "m/44'/0'/0'/0/0", useLegacy: false });
 		assert.length(Object.keys(walletData), 1);
 		assert.object(walletData);
 
