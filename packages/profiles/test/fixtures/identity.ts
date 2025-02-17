@@ -1,18 +1,18 @@
 export const identity = {
-	privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
-	publicKey: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
-	address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
-	wif: "SHA89yQdW3bLFYyCvEBpn7ngYNR8TEojGCC1uAJjT5esJPm1NiG3",
+	address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 	mnemonic: "bomb open frame quit success evolve gain donate prison very rent later",
+	privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
+	publicKey: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 	secondMnemonic: "finger narrow silent network stable glue submit dress lucky extra govern garbage",
+	wif: "SHA89yQdW3bLFYyCvEBpn7ngYNR8TEojGCC1uAJjT5esJPm1NiG3",
 };
 
 export const bitcoinIdentity = {
-	publicKey: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+	address: "n16aeukbAKUZPh3iefK3DjpyJAc6TUHw9C",
 	extPublicKey:
 		"xpub6DFd5Yjvs8jmEsh3QFi3QbdF78teaH9q71ztsPULJp7FZdFsfUJyhW4sZBHLiG6SXcUyPacP5PYJgKtn5VKXcstbj3QiwCQX2kRC3q2dQjP",
-	address: "n16aeukbAKUZPh3iefK3DjpyJAc6TUHw9C",
 	mnemonic: "bomb open frame quit success evolve gain donate prison very rent later",
+	publicKey: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
 };
 
 export const mnemonics = {

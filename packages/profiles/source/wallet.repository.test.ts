@@ -51,7 +51,7 @@ const createEnvironment = async (context, { loader, nock }) => {
 		.reply(200, loader.json("test/fixtures/client/cryptoConfiguration.json"))
 		.get("/api/node/syncing")
 		.reply(200, loader.json("test/fixtures/client/syncing.json"))
-		.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+		.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 		.reply(200, loader.json("test/fixtures/client/wallet.json"))
 		.get(/\/api\/wallets\/D.*/)
 		.reply(404, `{"statusCode":404,"error":"Not Found","message":"Wallet not found"}`)
