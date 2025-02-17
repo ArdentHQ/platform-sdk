@@ -58,7 +58,7 @@ describeWithContext(
 			const [a, b, c] = await Promise.all([
 				importByMnemonic(
 					context.profile,
-					"bomb open frame quit success evolve gain donate prison very rent later",
+					"qaa",
 					"ARK",
 					"ark.devnet",
 				),
@@ -95,7 +95,7 @@ describeWithContext(
 			await Promise.all([
 				importByMnemonic(
 					context.profile,
-					"bomb open frame quit success evolve gain donate prison very rent later",
+					"qaa",
 					"ARK",
 					"ark.devnet",
 				),

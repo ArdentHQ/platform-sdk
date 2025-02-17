@@ -115,7 +115,7 @@ describe("WIF", ({ beforeAll, beforeEach, each, nock, assert, it, loader }) => {
 			assert.true(context.subject.signingKey().exists());
 		},
 		[
-			"bomb open frame quit success evolve gain donate prison very rent later",
+			"qaa",
 			"unaware tunnel sibling bottom color fan student kitten sting seminar usual protect entire air afford potato three now win drastic salmon enable fox day",
 			"secret",
 		],
