@@ -239,11 +239,11 @@ export class ExtendedSignedTransactionData {
 	}
 
 	// @ts-ignore
-	public payments(): MultiPaymentItem[] {
+	public payments(): { recipientId: string; amount: number; }[] {
 		return this.#data.payments().map((payment) => {
 			return {
-				recipientId: payment.recipientId,
 				amount: payment.amount.toHuman(),
+				recipientId: payment.recipientId,
 			}
 		});
 	}

@@ -6,6 +6,7 @@ import { BindingType } from "./coin.contract.js";
 import { AbiType, decodeFunctionData } from "./helpers/decode-function-data.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
 import { formatUnits } from "./helpers/format-units";
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	readonly #addressService: Services.AddressService;
@@ -190,8 +191,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	// Multi-Payment
-	public override payments(): { recipientId: string; amount: BigNumber }[] {
-		const payments: { recipientId: string; amount: BigNumber }[] = [];
+	public override payments(): MultiPaymentItem[] {
+		const payments: MultiPaymentItem[] = [];
 
 		const [recipients, amounts] = decodeFunctionData(this.data.data, AbiType.MultiPayment).args;
 
