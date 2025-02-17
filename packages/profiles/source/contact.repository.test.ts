@@ -8,7 +8,7 @@ void describeWithContext(
 	"ContactRepository",
 	{
 		addr: { address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10", coin: "ARK" },
-		addr2: { address: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22", coin: "ARK" },
+		addr2: { address: "DAWdHfDFEvvu57cHjAhs5K5di33B2DdCu1", coin: "ARK" },
 		name: "John Doe",
 	},
 	async ({ beforeEach, it, assert }) => {
