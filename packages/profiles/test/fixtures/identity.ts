@@ -1,6 +1,6 @@
 export const identity = {
 	address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
-	mnemonic: "qaa",
+	mnemonic: "fly quote board process robust adjust ostrich silly remove tourist about dash code favorite exact short kitten evil sentence quiz mango valve noodle include",
 	privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
 	publicKey: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 	secondMnemonic: "finger narrow silent network stable glue submit dress lucky extra govern garbage",
