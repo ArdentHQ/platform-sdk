@@ -1,11 +1,11 @@
 import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
-import { MultiPaymentItem } from "@ardenthq/sdk/source/signed-transaction.dto.contract.js";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 import { Hex } from "viem";
 
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
 import { AbiType, decodeFunctionData } from "./helpers/decode-function-data.js";

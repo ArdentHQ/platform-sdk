@@ -5,7 +5,7 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { strict as assert } from "assert";
 
-import { MultiPaymentRecipient } from "./confirmed-transaction.dto.contract.js";
+import { MultiPaymentItem, MultiPaymentRecipient } from "./confirmed-transaction.dto.contract.js";
 import { IContainer } from "./container.contracts.js";
 import { RawTransactionData, SignedTransactionData } from "./contracts.js";
 import { NotImplemented } from "./exceptions.js";
@@ -256,6 +256,11 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 
 	public hash(): string {
 		return this.signedData.asset.ipfs;
+	}
+
+	// Multi-Payment
+	public payments(): MultiPaymentItem[] {
+		throw new NotImplemented(this.constructor.name, this.payments.name);
 	}
 
 	public recipients(): MultiPaymentRecipient[] {

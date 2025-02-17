@@ -4,11 +4,11 @@ import { Contracts, DTO } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
 import { container } from "./container.js";
 import { Identifiers } from "./container.models.js";
 import { IExchangeRateService, IReadWriteWallet } from "./contracts.js";
 import { ExtendedTransactionRecipient } from "./transaction.dto.js";
-import { MultiPaymentItem } from "@ardenthq/sdk/source/signed-transaction.dto.contract";
 
 export class ExtendedSignedTransactionData {
 	readonly #data: Contracts.SignedTransactionData;
