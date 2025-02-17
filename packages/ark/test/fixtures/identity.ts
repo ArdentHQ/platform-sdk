@@ -3,7 +3,7 @@ import { Identities } from "../../source/crypto/index.js";
 export const identity = {
 	// Standard
 	address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
-	mnemonic: "qaa",
+	mnemonic: "bomb open frame quit success evolve gain donate prison very rent later",
 	// Multi Signature
 	multiSignature: {
 		min: 3,
