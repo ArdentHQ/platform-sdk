@@ -1,10 +1,10 @@
 import { BIP38, PBKDF2 } from "@ardenthq/sdk-cryptography";
-
-import { Profile } from "./profile";
-import { WalletData } from "./contracts";
-import { WalletFactory } from "./wallet.factory.js";
-import { bootContainer } from "../test/mocking";
 import { describe } from "@ardenthq/sdk-test";
+
+import { bootContainer } from "../test/mocking";
+import { WalletData } from "./contracts";
+import { Profile } from "./profile";
+import { WalletFactory } from "./wallet.factory.js";
 
 describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) => {
 	beforeAll((context) => {
@@ -23,7 +23,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			.reply(200, loader.json("test/fixtures/client/cryptoConfiguration.json"))
 			.get("/api/node/syncing")
 			.reply(200, loader.json("test/fixtures/client/syncing.json"))
-			.get("/api/wallets/D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW")
+			.get("/api/wallets/0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10")
 			.reply(200, loader.json("test/fixtures/client/wallet.json"))
 			.persist();
 
@@ -66,8 +66,8 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			network: "ark.devnet",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 	});
 
 	// it("#fromMnemonicWithBIP39 - should throw if BIP39 is requested but extended public keys are used", async (context) => {
@@ -90,8 +90,8 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			password: "password",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 		assert.string(wallet.data().get(WalletData.EncryptedSigningKey));
 
 		assert.is(
@@ -207,13 +207,13 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 
 	it("#fromAddress", async (context) => {
 		const wallet = await context.subject.fromAddress({
-			address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			coin: "ARK",
 			network: "ark.devnet",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 
 		const mainnetWallet = await context.subject.fromAddress({
 			address: "AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX",
@@ -228,11 +228,11 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 		const wallet = await context.subject.fromPublicKey({
 			coin: "ARK",
 			network: "ark.devnet",
-			publicKey: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
+			publicKey: "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 	});
 
 	// it("#fromPublicKey - for BTC (testnet)", async (context) => {
@@ -274,20 +274,20 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 	});
 
 	it("#fromAddressWithDerivationPath", async (context) => {
 		const wallet = await context.subject.fromAddressWithDerivationPath({
-			address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			coin: "ARK",
 			network: "ark.devnet",
 			path: "m/44",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 	});
 
 	it("#fromWIF - should create it with a WIF", async (context) => {
@@ -297,8 +297,8 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			wif: "SHA89yQdW3bLFYyCvEBpn7ngYNR8TEojGCC1uAJjT5esJPm1NiG3",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 	});
 
 	it("#fromWIF - should create it with a WIF and encryption", async (context) => {
@@ -317,7 +317,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			wif: "6PYRydorcUPgUAtyd8KQCPd3YHo3vBAmSkBmwFcbEj7W4wBWoQ4JjxLj2d",
 		});
 
-		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
-		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
+		assert.is(wallet.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
+		assert.is(wallet.publicKey(), "022a40ea35d53eedf0341ffa17574fca844d69665ce35f224e9a6b1385575044fd");
 	});
 });
