@@ -9,9 +9,9 @@ void describeWithContext(
 	"ContactAddressRepository",
 	{
 		stubData: {
-			address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			coin: "ARK",
-			network: "ark.devnet",
+			network: "mainsail.devnet",
 		},
 	},
 	async ({ it, beforeEach, assert }) => {
@@ -152,9 +152,9 @@ void describeWithContext(
 
 			assert.false(
 				context.subject.exists({
-					address: "DAWdHfDFEvvu57cHjAhs5K5di33B2DdCu1",
+					address: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22",
 					coin: "ARK",
-					network: "ark.devnet",
+					network: "mainsail.devnet",
 				}),
 			);
 		});

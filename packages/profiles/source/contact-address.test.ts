@@ -12,10 +12,10 @@ describe("ContactAddress", async ({ it, assert, beforeEach }) => {
 
 		context.subject = new ContactAddress(
 			{
-				address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 				coin: "ARK",
 				id: "uuid",
-				network: "ark.devnet",
+				network: "mainsail.devnet",
 			},
 			profile,
 		);
@@ -34,7 +34,7 @@ describe("ContactAddress", async ({ it, assert, beforeEach }) => {
 	});
 
 	it("should have an address", (context) => {
-		assert.is(context.subject.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
+		assert.is(context.subject.address(), "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10");
 	});
 
 	it("should have an avatar", (context) => {
@@ -43,10 +43,10 @@ describe("ContactAddress", async ({ it, assert, beforeEach }) => {
 
 	it("should turn into an object", (context) => {
 		assert.equal(context.subject.toObject(), {
-			address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 			coin: "ARK",
 			id: "uuid",
-			network: "ark.devnet",
+			network: "mainsail.devnet",
 		});
 	});
 

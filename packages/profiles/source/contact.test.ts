@@ -66,9 +66,9 @@ describe("Contact", ({ assert, it, beforeEach }) => {
 
 		context.subject.setAddresses([
 			{
-				address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
 				coin: "ARK",
-				network: "ark.devnet",
+				network: "mainsail.devnet",
 			},
 		]);
 

@@ -7,8 +7,8 @@ import { Profile } from "./profile";
 void describeWithContext(
 	"ContactRepository",
 	{
-		addr: { address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", coin: "ARK", network: "ark.devnet" },
-		addr2: { address: "DAWdHfDFEvvu57cHjAhs5K5di33B2DdCu1", coin: "ARK", network: "ark.devnet" },
+		addr: { address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10", coin: "ARK", network: "mainsail.devnet" },
+		addr2: { address: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22", coin: "ARK", network: "mainsail.devnet" },
 		name: "John Doe",
 	},
 	async ({ beforeEach, it, assert }) => {
