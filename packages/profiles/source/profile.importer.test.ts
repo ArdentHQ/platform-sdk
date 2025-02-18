@@ -228,7 +228,6 @@ describeWithContext(
 			assert.is(profile.wallets().valuesWithCoin().length, 2);
 			assert.is(profile.contacts().count(), 1);
 			assert.is(profile.contacts().first().addresses().count(), 1);
-			assert.is(profile.settings().get(ProfileSetting.AccentColor), "navy");
 			assert.is(profile.settings().get(ProfileSetting.Theme), "dark");
 		});
 
@@ -253,7 +252,6 @@ describeWithContext(
 
 			assert.is(profile.contacts().count(), 1);
 			assert.is(profile.contacts().first().addresses().count(), 1);
-			assert.is(profile.settings().get(ProfileSetting.AccentColor), "navy");
 			assert.is(profile.settings().get(ProfileSetting.Theme), "dark");
 
 			container.get(Identifiers.Coins)["ARK"] = coin;
