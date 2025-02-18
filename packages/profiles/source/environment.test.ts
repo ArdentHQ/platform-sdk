@@ -204,13 +204,9 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			LATEST_MIGRATION: "0.0.0",
 		});
 		assert.equal(newProfile.settings().all(), {
-			ACCENT_COLOR: "navy",
-			ADVANCED_MODE: false,
 			AUTOMATIC_SIGN_OUT_PERIOD: 15,
 			BIP39_LOCALE: "english",
-			DASHBOARD_TRANSACTION_HISTORY: false,
 			DO_NOT_SHOW_FEE_WARNING: false,
-			ERROR_REPORTING: false,
 			EXCHANGE_CURRENCY: "BTC",
 			FALLBACK_TO_DEFAULT_NODES: true,
 			LOCALE: "en-US",
@@ -218,7 +214,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			NAME: "John Doe",
 			THEME: "light",
 			TIME_FORMAT: "h:mm A",
-			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
 			LAST_VISITED_PAGE: { path: "test", data: { foo: "bar" } },
@@ -248,13 +243,9 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 		});
 
 		assert.equal(newProfile.settings().all(), {
-			ACCENT_COLOR: "green",
-			ADVANCED_MODE: false,
 			AUTOMATIC_SIGN_OUT_PERIOD: 15,
 			BIP39_LOCALE: "english",
-			DASHBOARD_TRANSACTION_HISTORY: false,
 			DO_NOT_SHOW_FEE_WARNING: false,
-			ERROR_REPORTING: false,
 			EXCHANGE_CURRENCY: "BTC",
 			FALLBACK_TO_DEFAULT_NODES: true,
 			LOCALE: "en-US",
@@ -262,7 +253,6 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			NAME: "John Doe",
 			THEME: "light",
 			TIME_FORMAT: "h:mm A",
-			USE_EXPANDED_TABLES: false,
 			USE_NETWORK_WALLET_NAMES: false,
 			USE_TEST_NETWORKS: false,
 		});
