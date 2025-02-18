@@ -6,6 +6,11 @@ export interface MultiPaymentRecipient {
 	amount: BigNumber;
 }
 
+export interface MultiPaymentItem {
+	recipientId: string;
+	amount: BigNumber;
+}
+
 // These types and interfaces are responsible for transaction-specific methods.
 export type TransactionDataMeta = string | number | boolean | undefined;
 
@@ -124,7 +129,7 @@ export interface ConfirmedTransactionData {
 	hash(): string;
 
 	// Multi-Payment
-	payments(): { recipientId: string; amount: BigNumber }[];
+	payments(): MultiPaymentItem[];
 
 	methodHash(): string;
 

@@ -5,11 +5,12 @@ import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
 import { Hex } from "viem";
 
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
 import { BindingType } from "./coin.contract.js";
 import { Hash } from "./crypto/hash.js";
-import { decodeFunctionData } from "./helpers/decode-function-data.js";
+import { AbiType, decodeFunctionData } from "./helpers/decode-function-data.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
-import { formatUnits } from "./helpers/format-units";
+import { formatUnits } from "./helpers/format-units.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
@@ -36,8 +37,9 @@ export class SignedTransactionData
 	}
 
 	public override amount(): BigNumber {
-		// @TODO: Handle evm multipayment.
-		// if (this.isMultiPayment()) {}
+		if (this.isMultiPayment()) {
+			return BigNumber.sum(this.payments().map(({ amount }) => amount));
+		}
 
 		return this.bigNumberService.make(this.signedData.value);
 	}
@@ -115,24 +117,28 @@ export class SignedTransactionData
 		return TransactionTypeService.isMultiSignatureRegistration(this.signedData);
 	}
 
-	public override username(): string {
-		let data = this.signedData.data as string;
+	// Multi-Payment
+	public override payments(): MultiPaymentItem[] {
+		const payments: MultiPaymentItem[] = [];
 
-		if (!data.startsWith("0x")) {
-			data = `0x${data}`;
+		const [recipients, amounts] = decodeFunctionData(this.normalizedData() as Hex, AbiType.MultiPayment).args;
+
+		for (const index in recipients) {
+			payments[index] = {
+				amount: formatUnits(amounts[index], "ark"),
+				recipientId: recipients[index],
+			};
 		}
 
-		return decodeFunctionData(data as Hex, "username").args[0] as string;
+		return payments;
+	}
+
+	public override username(): string {
+		return decodeFunctionData(this.normalizedData() as Hex, AbiType.Username).args[0] as string;
 	}
 
 	public override validatorPublicKey(): string {
-		let data = this.signedData.data as string;
-
-		if (!data.startsWith("0x")) {
-			data = `0x${data}`;
-		}
-
-		const key = decodeFunctionData(data as Hex).args[0] as string;
+		const key = decodeFunctionData(this.normalizedData() as Hex).args[0] as string;
 		return key.slice(2); // removes 0x part
 	}
 
@@ -223,5 +229,15 @@ export class SignedTransactionData
 				transaction.signature = undefined;
 			}
 		}
+	}
+
+	private normalizedData() {
+		let data = this.signedData.data as string;
+
+		if (!data.startsWith("0x")) {
+			data = `0x${data}`;
+		}
+
+		return data;
 	}
 }

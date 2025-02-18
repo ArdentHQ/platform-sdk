@@ -4,6 +4,7 @@ import { Contracts, DTO } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
 import { container } from "./container.js";
 import { Identifiers } from "./container.models.js";
 import { IExchangeRateService, IReadWriteWallet } from "./contracts.js";
@@ -235,6 +236,16 @@ export class ExtendedSignedTransactionData {
 
 	public hash(): string {
 		return this.#data.hash();
+	}
+
+	// @ts-ignore
+	public payments(): { recipientId: string; amount: number }[] {
+		return this.#data.payments().map((payment) => {
+			return {
+				amount: payment.amount.toHuman(),
+				recipientId: payment.recipientId,
+			};
+		});
 	}
 
 	public recipients(): ExtendedTransactionRecipient[] {

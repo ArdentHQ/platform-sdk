@@ -1,7 +1,7 @@
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
-import { MultiPaymentRecipient } from "./confirmed-transaction.dto.contract.js";
+import { MultiPaymentItem, MultiPaymentRecipient } from "./confirmed-transaction.dto.contract.js";
 
 export type RawTransactionData = any;
 
@@ -68,6 +68,9 @@ export interface SignedTransactionData {
 
 	votes(): string[];
 	unvotes(): string[];
+
+	// Multi-Payment
+	payments(): MultiPaymentItem[];
 
 	// @TODO: remove those after introducing proper signed tx DTOs
 	username(): string;

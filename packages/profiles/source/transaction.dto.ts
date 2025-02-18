@@ -219,13 +219,14 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 
 	// @ts-ignore
 	public payments(): { recipientId: string; amount: number }[] {
-		// @ts-ignore
 		return this.data<Contracts.ConfirmedTransactionData>()
 			.payments()
-			.map((payment: { recipientId: string; amount: BigNumber }) => ({
-				recipientId: payment.recipientId,
-				amount: payment.amount.toHuman(),
-			}));
+			.map((payment) => {
+				return {
+					recipientId: payment.recipientId,
+					amount: payment.amount.toHuman(),
+				};
+			});
 	}
 
 	public publicKeys(): string[] {

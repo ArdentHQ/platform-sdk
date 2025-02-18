@@ -4,7 +4,7 @@ import { FunctionSigs } from "@mainsail/evm-contracts";
 type TransactionData = Record<string, any>;
 
 export const TransactionTypes = {
-	MultiPayment: "0x88d695b2",
+	MultiPayment: "0x084ce708",
 	RegisterUsername: "0x36a94134",
 	ResignUsername: "0xebed6dab",
 	Transfer: "",

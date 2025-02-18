@@ -3,10 +3,10 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { BindingType } from "./coin.contract.js";
-import { decodeFunctionData } from "./helpers/decode-function-data.js";
-import { parseUnits } from "./helpers/parse-units.js";
+import { AbiType, decodeFunctionData } from "./helpers/decode-function-data.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
 import { formatUnits } from "./helpers/format-units";
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	readonly #addressService: Services.AddressService;
@@ -50,15 +50,18 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 			return [];
 		}
 
-		return this.data.asset.payments.map((payment: { recipientId: string; amount: BigNumber }) => ({
-			address: payment.recipientId,
-			amount: this.bigNumberService.make(payment.amount),
-		}));
+		return this.payments().map((payment) => {
+			return {
+				address: payment.recipientId,
+				amount: payment.amount,
+			};
+		});
 	}
 
 	public override amount(): BigNumber {
-		// @TODO: handle evm multipayments.
-		// if (this.isMultiPayment()) { }
+		if (this.isMultiPayment()) {
+			return BigNumber.sum(this.payments().map(({ amount }) => amount));
+		}
 
 		return this.bigNumberService.make(this.data.amount);
 	}
@@ -150,7 +153,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	// Username registration
 	public override username(): string {
-		return decodeFunctionData(this.data.data, "username").args[0] as string;
+		return decodeFunctionData(this.data.data, AbiType.Username).args[0] as string;
 	}
 
 	public override validatorPublicKey(): string {
@@ -188,11 +191,19 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	// Multi-Payment
-	public override payments(): { recipientId: string; amount: BigNumber }[] {
-		return this.data.asset.payments.map((payment: { recipientId: string; amount: BigNumber }) => ({
-			address: payment.recipientId,
-			amount: this.bigNumberService.make(payment.amount),
-		}));
+	public override payments(): MultiPaymentItem[] {
+		const payments: MultiPaymentItem[] = [];
+
+		const [recipients, amounts] = decodeFunctionData(this.data.data, AbiType.MultiPayment).args;
+
+		for (const index in recipients) {
+			payments[index] = {
+				amount: formatUnits(amounts[index], "ark"),
+				recipientId: recipients[index],
+			};
+		}
+
+		return payments;
 	}
 
 	public override methodHash(): string {
