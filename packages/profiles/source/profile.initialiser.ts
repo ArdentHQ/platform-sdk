@@ -24,8 +24,7 @@ export class ProfileInitialiser implements IProfileInitialiser {
 
 	/** {@inheritDoc IProfileInitialiser.initialiseSettings} */
 	public initialiseSettings(name: string): void {
-		const { theme, useNetworkWalletNames } =
-			this.#profile.appearance().defaults();
+		const { theme, useNetworkWalletNames } = this.#profile.appearance().defaults();
 
 		this.#profile.settings().set(ProfileSetting.AutomaticSignOutPeriod, 15);
 		this.#profile.settings().set(ProfileSetting.Bip39Locale, "english");
