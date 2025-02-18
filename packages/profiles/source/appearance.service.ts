@@ -9,21 +9,9 @@ export class AppearanceService implements IAppearanceService {
 			defaultValue: IProfileAppearance[key];
 		};
 	} = {
-		accentColor: {
-			defaultValue: "navy",
-			profileSetting: ProfileSetting.AccentColor,
-		},
-		dashboardTransactionHistory: {
-			defaultValue: false,
-			profileSetting: ProfileSetting.DashboardTransactionHistory,
-		},
 		theme: {
 			defaultValue: "light",
 			profileSetting: ProfileSetting.Theme,
-		},
-		useExpandedTables: {
-			defaultValue: false,
-			profileSetting: ProfileSetting.UseExpandedTables,
 		},
 		useNetworkWalletNames: {
 			defaultValue: false,

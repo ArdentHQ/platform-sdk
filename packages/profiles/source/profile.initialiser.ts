@@ -24,16 +24,12 @@ export class ProfileInitialiser implements IProfileInitialiser {
 
 	/** {@inheritDoc IProfileInitialiser.initialiseSettings} */
 	public initialiseSettings(name: string): void {
-		const { accentColor, dashboardTransactionHistory, theme, useExpandedTables, useNetworkWalletNames } =
+		const { theme, useNetworkWalletNames } =
 			this.#profile.appearance().defaults();
 
-		this.#profile.settings().set(ProfileSetting.AccentColor, accentColor);
-		this.#profile.settings().set(ProfileSetting.AdvancedMode, false);
 		this.#profile.settings().set(ProfileSetting.AutomaticSignOutPeriod, 15);
 		this.#profile.settings().set(ProfileSetting.Bip39Locale, "english");
-		this.#profile.settings().set(ProfileSetting.DashboardTransactionHistory, dashboardTransactionHistory);
 		this.#profile.settings().set(ProfileSetting.DoNotShowFeeWarning, false);
-		this.#profile.settings().set(ProfileSetting.ErrorReporting, false);
 		this.#profile.settings().set(ProfileSetting.FallbackToDefaultNodes, true);
 		this.#profile.settings().set(ProfileSetting.ExchangeCurrency, "BTC");
 		this.#profile.settings().set(ProfileSetting.Locale, "en-US");
@@ -41,7 +37,6 @@ export class ProfileInitialiser implements IProfileInitialiser {
 		this.#profile.settings().set(ProfileSetting.Name, name);
 		this.#profile.settings().set(ProfileSetting.Theme, theme);
 		this.#profile.settings().set(ProfileSetting.TimeFormat, "h:mm A");
-		this.#profile.settings().set(ProfileSetting.UseExpandedTables, useExpandedTables);
 		this.#profile.settings().set(ProfileSetting.UseNetworkWalletNames, useNetworkWalletNames);
 		this.#profile.settings().set(ProfileSetting.UseTestNetworks, false);
 
