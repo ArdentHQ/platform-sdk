@@ -1,6 +1,6 @@
 import { describe } from "@ardenthq/sdk-test";
 
-import { identity, identityWithSecret } from '../test/fixtures/identity';
+import { identity, identityWithSecret } from "../test/fixtures/identity";
 import { createService } from "../test/mocking";
 import { WIFService } from "./wif.service.js";
 
