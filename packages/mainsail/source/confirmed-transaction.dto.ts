@@ -67,9 +67,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override fee(): BigNumber {
-		const gasPrice = this.bigNumberService.make(this.data.gasPrice);
-		const gasLimit = formatUnits(this.data.gasLimit, "gwei");
-		return gasPrice.times(gasLimit);
+		const gasPrice = formatUnits(this.data.gasPrice, "ark");
+		return gasPrice.times(this.data.gasLimit);
 	}
 
 	public override asset(): Record<string, unknown> {
