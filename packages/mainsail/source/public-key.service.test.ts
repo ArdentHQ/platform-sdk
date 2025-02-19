@@ -1,4 +1,5 @@
 import { describe } from "@ardenthq/sdk-test";
+
 import { identity } from "../test/fixtures/identity";
 import { createService } from "../test/mocking";
 import { PublicKeyService } from "./public-key.service.js";
@@ -21,18 +22,8 @@ describe("PublicKeyService", async ({ assert, beforeEach, it, nock, loader }) =>
 	});
 
 	it("should fail to generate an output from an invalid mnemonic", async (context) => {
-		await assert.rejects(() => context.subject.fromMnemonic(undefined));
+		await assert.rejects(() => context.subject.fromMnemonic());
 	});
-
-	// @TODO: fix when MultiSignature implemented
-	// it("should generate an output from a multiSignature", async (context) => {
-	// 	const result = await context.subject.fromMultiSignature(
-	// 		identity.multiSignature.min,
-	// 		identity.multiSignature.publicKeys,
-	// 	);
-	//
-	// 	assert.equal(result, { publicKey: "0279f05076556da7173610a7676399c3620276ebbf8c67552ad3b1f26ec7627794" });
-	// });
 
 	it("should fail to generate an output from a multiSignature", async (context) => {
 		await assert.rejects(() => context.subject.fromMultiSignature(-1, []));
@@ -45,7 +36,7 @@ describe("PublicKeyService", async ({ assert, beforeEach, it, nock, loader }) =>
 	});
 
 	it("should fail to generate an output from a wif", async (context) => {
-		await assert.rejects(() => context.subject.fromWIF(undefined));
+		await assert.rejects(() => context.subject.fromWIF());
 	});
 
 	it("should generate an output from a secret", async (context) => {
@@ -60,6 +51,6 @@ describe("PublicKeyService", async ({ assert, beforeEach, it, nock, loader }) =>
 	});
 
 	it("should fail to generate an output from a secret", async (context) => {
-		await assert.rejects(() => context.subject.fromSecret(undefined));
+		await assert.rejects(() => context.subject.fromSecret());
 	});
 });
