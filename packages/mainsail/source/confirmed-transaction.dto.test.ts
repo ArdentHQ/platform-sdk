@@ -14,7 +14,8 @@ import { BindingType } from "./coin.contract";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
 import { formatUnits } from "./helpers/format-units";
 
-const createSubject = async () => await createService(ConfirmedTransactionData, "mainsail.devnet", function (container: IoC.Container) {
+const createSubject = async () =>
+	await createService(ConfirmedTransactionData, "mainsail.devnet", function (container: IoC.Container) {
 		if (container.missing(BindingType.AddressService)) {
 			container.constant(BindingType.AddressService, new AddressService(container));
 		}
