@@ -1,4 +1,5 @@
 import { describe } from "@ardenthq/sdk-test";
+
 import { TransactionTypeService } from "./transaction-type.service.js";
 
 describe("TransactionTypeService", async ({ assert, it, nock, loader }) => {
@@ -21,12 +22,6 @@ describe("TransactionTypeService", async ({ assert, it, nock, loader }) => {
 		assert.true(TransactionTypeService.isUnvote({ data: "0x3174b689" }));
 		assert.false(TransactionTypeService.isUnvote({ data: "0x7244b689" }));
 	});
-
-	// @TODO: fix when MultiSignature implemented
-	// it("should determine if the transaction is a multi signature registration", () => {
-	// 	assert.true(TransactionTypeService.isMultiSignatureRegistration({ type: 4 }));
-	// 	assert.false(TransactionTypeService.isMultiSignatureRegistration({ type: 0 }));
-	// });
 
 	it("should determine if the transaction is a multi payment", () => {
 		assert.true(TransactionTypeService.isMultiPayment({ data: "0x084ce708" }));
