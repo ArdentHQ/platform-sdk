@@ -21,16 +21,6 @@ describe("AddressService", async ({ assert, beforeEach, it, nock, loader }) => {
 		assert.equal(result, { address: identity.address, type: "bip39" });
 	});
 
-	// @TODO: fix when MultiSignature implemented
-	// it("should generate an output from a multiSignature", async (context) => {
-	// 	const result = await context.subject.fromMultiSignature({
-	// 		min: identity.multiSignature.min,
-	// 		publicKeys: identity.multiSignature.publicKeys,
-	// 	});
-	//
-	// 	assert.equal(result, { address: "DMS861mLRrtH47QUMVif3C2rBCAdHbmwsi", type: "bip39" });
-	// });
-
 	it("should generate an output from a publicKey", async (context) => {
 		const result = await context.subject.fromPublicKey(identity.publicKey);
 
