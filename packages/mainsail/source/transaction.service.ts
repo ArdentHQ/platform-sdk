@@ -97,13 +97,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const nonce = await this.#generateNonce(address, input);
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(input.data.to)
 			.payload("")
 			.nonce(nonce)
 			.value(parseUnits(input.data.amount, "ark").valueOf())
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -133,12 +133,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -171,12 +171,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.recipientAddress(wellKnownContracts.consensus)
 			.gasLimit(input.gasLimit)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -213,12 +213,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -241,12 +241,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -269,12 +269,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
 	}
