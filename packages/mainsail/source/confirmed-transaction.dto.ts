@@ -1,12 +1,12 @@
 import { Contracts, DTO, Exceptions, IoC, Services } from "@ardenthq/sdk";
+import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
 import { BindingType } from "./coin.contract.js";
 import { AbiType, decodeFunctionData } from "./helpers/decode-function-data.js";
-import { TransactionTypeService } from "./transaction-type.service.js";
 import { formatUnits } from "./helpers/format-units";
-import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract";
+import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionData {
 	readonly #addressService: Services.AddressService;
@@ -50,12 +50,10 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 			return [];
 		}
 
-		return this.payments().map((payment) => {
-			return {
-				address: payment.recipientId,
-				amount: payment.amount,
-			};
-		});
+		return this.payments().map((payment) => ({
+			address: payment.recipientId,
+			amount: payment.amount,
+		}));
 	}
 
 	public override amount(): BigNumber {
@@ -67,8 +65,8 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override fee(): BigNumber {
-		const gasPrice = this.bigNumberService.make(this.data.gasPrice);
-		return formatUnits(gasPrice.times(this.data.gasLimit).toString(), "gwei");
+		const gasPrice = formatUnits(this.data.gasPrice, "ark");
+		return gasPrice.times(this.data.gasLimit);
 	}
 
 	public override asset(): Record<string, unknown> {
