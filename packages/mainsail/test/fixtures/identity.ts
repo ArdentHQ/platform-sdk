@@ -7,3 +7,9 @@ export const identity = {
 	publicKey: "0266e0fd7186193eda55e328184fdaab9f7d4a6c867c25ef03a497fd683cae7788",
 	wif: "UX3uP3AFnFb331tBuXM1nZ1oachZAGv4mGmQRPoUkoZKF24RCF9y",
 };
+
+export const identityWithSecret = {
+	publicKey: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
+	secret: "qaa",
+	wif: "UcnBMjKzK2iYbv9TWUWSMiQoFwBRuHCj6ph884M14Nzf7g5knCSS"
+}
