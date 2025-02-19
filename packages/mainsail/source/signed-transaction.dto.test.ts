@@ -97,7 +97,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 	});
 
 	it("should have a fee", (context) => {
-		assert.equal(context.subject.fee(), formatUnits(BigNumber.make(1_000_000).toString(), "gwei"));
+		assert.equal(context.subject.fee(), formatUnits(BigNumber.make(1_000_000).toString(), "ark"));
 	});
 
 	it("should have a timestamp", (context) => {

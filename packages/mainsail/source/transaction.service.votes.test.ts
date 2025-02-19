@@ -63,7 +63,7 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);
@@ -81,7 +81,7 @@ describe("TransactionService Votes", async ({ assert, beforeAll, nock, it }) => 
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultInput.nonce);

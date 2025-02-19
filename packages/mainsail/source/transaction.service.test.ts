@@ -6,6 +6,7 @@ import { identity } from "../test/wallets";
 import { AddressService } from "./address.service.js";
 import { ClientService } from "./client.service.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
+import { formatUnits } from "./helpers/format-units.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { KeyPairService } from "./key-pair.service.js";
 import { LedgerService } from "./ledger.service.js";
@@ -15,7 +16,6 @@ import { PublicKeyService } from "./public-key.service.js";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { TransactionService } from "./transaction.service.js";
 import { WalletData } from "./wallet.dto.js";
-import { formatUnits } from "./helpers/format-units";
 
 describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) => {
 	beforeAll(async (context) => {
@@ -125,13 +125,13 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		assert.is(
 			signedTransaction.amount().toString(),
-			parseUnits(context.defaultTransferInput.data.amount, "ark").valueOf(),
+			parseUnits(context.defaultTransferInput.data.amount, "ark").toString(),
 		);
 		assert.is(
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultTransferInput.nonce);
@@ -186,7 +186,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
@@ -241,7 +241,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
@@ -279,7 +279,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultUsernameRegistrationInput.nonce);
@@ -331,7 +331,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultUsernameResignationInput.nonce);
