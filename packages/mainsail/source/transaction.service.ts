@@ -103,7 +103,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.payload("")
 			.nonce(nonce)
 			.value(parseUnits(input.data.amount, "ark").valueOf())
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "ark").valueOf());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -138,7 +138,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber())
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -176,7 +176,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.gasLimit(input.gasLimit)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").valueOf());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -218,7 +218,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").valueOf());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -246,7 +246,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").valueOf());
 
 		return this.#buildTransaction(input, transaction);
 	}
@@ -274,7 +274,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(input.gasPrice);
+			.gasPrice(parseUnits(input.gasPrice, "gwei").valueOf());
 
 		return this.#buildTransaction(input, transaction);
 	}
