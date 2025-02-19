@@ -11,5 +11,5 @@ export const identity = {
 export const identityWithSecret = {
 	publicKey: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22",
 	secret: "my super secret passphrase",
-	wif: "UdFWh1JiogHqCye7kv8RoUq9zr2z6gVsMQsZARuF7xF9JTk97NWT"
-}
+	wif: "UdFWh1JiogHqCye7kv8RoUq9zr2z6gVsMQsZARuF7xF9JTk97NWT",
+};
