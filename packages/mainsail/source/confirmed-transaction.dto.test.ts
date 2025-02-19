@@ -1,25 +1,24 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { IoC } from "@ardenthq/sdk";
+import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
+
 import TransferFixture from "../test/fixtures/client/transfer-transaction.json";
+import UnvoteFixture from "../test/fixtures/client/unvote-transaction.json";
 import ValidatorRegistrationFixture from "../test/fixtures/client/validator-registration-transaction.json";
 import ValidatorResignationFixture from "../test/fixtures/client/validator-resignation-transaction.json";
 import VoteFixture from "../test/fixtures/client/vote-transaction.json";
-import UnvoteFixture from "../test/fixtures/client/unvote-transaction.json";
 import { createService } from "../test/mocking";
-import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
-import { BindingType } from "./coin.contract";
 import { AddressService } from "./address.service";
+import { BindingType } from "./coin.contract";
+import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
 import { formatUnits } from "./helpers/format-units";
 
-const createSubject = async () => {
-	return await createService(ConfirmedTransactionData, "mainsail.devnet", function (container: IoC.Container) {
+const createSubject = async () => await createService(ConfirmedTransactionData, "mainsail.devnet", function (container: IoC.Container) {
 		if (container.missing(BindingType.AddressService)) {
 			container.constant(BindingType.AddressService, new AddressService(container));
 		}
 	});
-};
 
 describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) => {
 	beforeEach(async (context) => {
@@ -229,35 +228,6 @@ describe("ConfirmedTransactionData - ValidatorResignationData", ({ assert, befor
 // 		assert.is(context.subject.type(), "multiPayment");
 // 	});
 // });
-
-// @TODO: fix when MultiSignature implemented
-// describe("ConfirmedTransactionData - MultiSignatureData", ({ assert, beforeEach, it, nock, loader }) => {
-// 	beforeEach(async (context) => {
-// 		context.subject = await createService(ConfirmedTransactionData);
-// 		context.subject.configure({
-// 			asset: {
-// 				multiSignature: {
-// 					min: 1,
-// 					publicKeys: ["2", "3"],
-// 				},
-// 			},
-// 			type: 4,
-// 		});
-// 	});
-//
-// 	it("should have a list of participant public keys", (context) => {
-// 		assert.length(context.subject.publicKeys(), 2);
-// 	});
-//
-// 	it("should have a minimum number or required signatures", (context) => {
-// 		assert.is(context.subject.min(), 1);
-// 	});
-//
-// 	it("should have a type", (context) => {
-// 		assert.is(context.subject.type(), "multiSignature");
-// 	});
-// });
-//
 
 describe("ConfirmedTransactionData - VoteData", ({ assert, beforeEach, it, nock, loader }) => {
 	beforeEach(async (context) => {
