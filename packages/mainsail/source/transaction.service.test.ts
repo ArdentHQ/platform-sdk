@@ -44,7 +44,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				to: identity.address,
 			},
 			gasLimit: 21_000,
-			gasPrice: 5,
+			gasPrice: 5_000_000_000,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -62,7 +62,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 					"8e65659ba176f2e14e9042db662c6106a85ecd6ec8de14665facc4aaa643aec0c2d0a7ea29cecd7daf5b6452e39d431d",
 			},
 			gasLimit: 500_000,
-			gasPrice: 5,
+			gasPrice: 5_000_000_000,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -76,7 +76,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		context.defaultValidatorResignationInput = {
 			gasLimit: 150_000,
-			gasPrice: 5,
+			gasPrice: 5_000_000_000,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -93,7 +93,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				username: "foo",
 			},
 			gasLimit: 200_000,
-			gasPrice: 5,
+			gasPrice: 5_000_000_000,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
@@ -107,7 +107,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 
 		context.defaultUsernameResignationInput = {
 			gasLimit: 200_000,
-			gasPrice: 5,
+			gasPrice: 5_000_000_000,
 			nonce: "1",
 			signatory: new Signatories.Signatory(
 				new Signatories.MnemonicSignatory({
