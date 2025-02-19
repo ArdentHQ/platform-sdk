@@ -131,7 +131,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultTransferInput.nonce);
@@ -186,7 +186,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
@@ -241,7 +241,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultValidatorRegistrationInput.nonce);
@@ -279,7 +279,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultUsernameRegistrationInput.nonce);
@@ -331,7 +331,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			signedTransaction.fee().toString(),
 			formatUnits(
 				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
-				"gwei",
+				"ark",
 			).valueOf(),
 		);
 		assert.is(signedTransaction.nonce().toString(), context.defaultUsernameResignationInput.nonce);
