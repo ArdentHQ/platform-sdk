@@ -97,7 +97,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const nonce = await this.#generateNonce(address, input);
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(input.data.to)
 			.payload("")
@@ -133,7 +133,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
@@ -171,7 +171,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.recipientAddress(wellKnownContracts.consensus)
 			.gasLimit(input.gasLimit)
 			.payload(data.slice(2))
@@ -213,7 +213,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
@@ -241,7 +241,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.username)
 			.payload(data.slice(2))
@@ -269,7 +269,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		});
 
 		transaction
-			.network(this.#configCrypto.crypto.network.pubKeyHash)
+			.network(this.#configCrypto.crypto.network.chainId)
 			.gasLimit(input.gasLimit)
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
