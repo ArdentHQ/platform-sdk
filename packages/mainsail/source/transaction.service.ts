@@ -138,7 +138,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.consensus)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber())
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
 	}

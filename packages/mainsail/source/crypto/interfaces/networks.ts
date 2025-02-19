@@ -15,7 +15,7 @@ export interface Network {
 	wif: number;
 	slip44: number;
 	aip20: number;
-	chainId: number,
+	chainId: number;
 	client: {
 		token: string;
 		symbol: string;
