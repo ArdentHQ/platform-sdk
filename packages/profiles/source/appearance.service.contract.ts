@@ -5,10 +5,7 @@
  * @interface IProfileAppearance
  */
 export interface IProfileAppearance {
-	accentColor: string;
-	dashboardTransactionHistory: boolean;
 	theme: string;
-	useExpandedTables: boolean;
 	useNetworkWalletNames: boolean;
 }
 

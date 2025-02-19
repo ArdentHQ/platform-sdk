@@ -41,22 +41,16 @@ describeWithContext(
 				data: {},
 			},
 			settings: {
-				[ProfileSetting.AccentColor]: "navy",
-				[ProfileSetting.AdvancedMode]: false,
 				[ProfileSetting.AutomaticSignOutPeriod]: 60,
 				[ProfileSetting.Bip39Locale]: "english",
-				[ProfileSetting.DashboardTransactionHistory]: false,
 				[ProfileSetting.DoNotShowFeeWarning]: false,
-				[ProfileSetting.ErrorReporting]: false,
 				[ProfileSetting.FallbackToDefaultNodes]: true,
 				[ProfileSetting.ExchangeCurrency]: "ADA",
 				[ProfileSetting.Locale]: "en-US",
 				[ProfileSetting.MarketProvider]: "coingecko",
 				[ProfileSetting.Name]: "John Doe",
-				[ProfileSetting.NewsFilters]: JSON.stringify({ categories: [], coins: ["ARK"] }),
 				[ProfileSetting.Theme]: "dark",
 				[ProfileSetting.TimeFormat]: "HH::MM",
-				[ProfileSetting.UseExpandedTables]: false,
 				[ProfileSetting.UseNetworkWalletNames]: false,
 				[ProfileSetting.UseTestNetworks]: false,
 			},
@@ -234,7 +228,6 @@ describeWithContext(
 			assert.is(profile.wallets().valuesWithCoin().length, 2);
 			assert.is(profile.contacts().count(), 1);
 			assert.is(profile.contacts().first().addresses().count(), 1);
-			assert.is(profile.settings().get(ProfileSetting.AccentColor), "navy");
 			assert.is(profile.settings().get(ProfileSetting.Theme), "dark");
 		});
 
@@ -259,7 +252,6 @@ describeWithContext(
 
 			assert.is(profile.contacts().count(), 1);
 			assert.is(profile.contacts().first().addresses().count(), 1);
-			assert.is(profile.settings().get(ProfileSetting.AccentColor), "navy");
 			assert.is(profile.settings().get(ProfileSetting.Theme), "dark");
 
 			container.get(Identifiers.Coins)["ARK"] = coin;

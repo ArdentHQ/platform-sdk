@@ -51,13 +51,11 @@ describe("ProfileInitialiser", ({ afterAll, afterEach, beforeAll, beforeEach, it
 
 	it("should initialise the default settings", (context) => {
 		assert.undefined(context.profile.settings().get(ProfileSetting.Name));
-		assert.undefined(context.profile.settings().get(ProfileSetting.AccentColor));
 		assert.undefined(context.profile.settings().get(ProfileSetting.Theme));
 
 		new ProfileInitialiser(context.profile).initialiseSettings("name");
 
 		assert.is(context.profile.settings().get(ProfileSetting.Name), "name");
-		assert.is(context.profile.settings().get(ProfileSetting.AccentColor), "navy");
 		assert.is(context.profile.settings().get(ProfileSetting.Theme), "light");
 	});
 });

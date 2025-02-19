@@ -11,10 +11,7 @@ describe("AppearanceService", async ({ beforeEach, it, assert }) => {
 
 		context.profile = new Profile({
 			appearance: {
-				accentColor: "navy",
-				dashboardTransactionHistory: false,
 				theme: "dark",
-				useExpandedTables: true,
 				useNetworkWalletNames: true,
 			},
 			avatar: "avatar",
@@ -28,20 +25,14 @@ describe("AppearanceService", async ({ beforeEach, it, assert }) => {
 
 	it("#defaults", async (context) => {
 		assert.equal(context.subject.defaults(), {
-			accentColor: "navy",
-			dashboardTransactionHistory: false,
 			theme: "light",
-			useExpandedTables: false,
 			useNetworkWalletNames: false,
 		});
 	});
 
 	it("#all", async (context) => {
 		assert.equal(context.subject.all(), {
-			accentColor: "navy",
-			dashboardTransactionHistory: false,
 			theme: "dark",
-			useExpandedTables: true,
 			useNetworkWalletNames: true,
 		});
 	});
@@ -49,15 +40,12 @@ describe("AppearanceService", async ({ beforeEach, it, assert }) => {
 	it("should throw error if an unknown key is provided", (context) => {
 		assert.throws(
 			() => context.subject.get("unknownKey"),
-			'Parameter "key" must be one of: accentColor, dashboardTransactionHistory, theme, useExpandedTables, useNetworkWalletNames',
+			'Parameter "key" must be one of: theme, useNetworkWalletNames',
 		);
 	});
 
 	it("should get setting value by key", (context) => {
-		assert.is(context.subject.get("accentColor"), "navy");
-		assert.false(context.subject.get("dashboardTransactionHistory"));
 		assert.is(context.subject.get("theme"), "dark");
-		assert.true(context.subject.get("useExpandedTables"));
 		assert.true(context.subject.get("useNetworkWalletNames"));
 	});
 
