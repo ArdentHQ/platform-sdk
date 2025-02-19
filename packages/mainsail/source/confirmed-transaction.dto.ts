@@ -51,9 +51,9 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		}
 
 		return this.payments().map((payment) => ({
-				address: payment.recipientId,
-				amount: payment.amount,
-			}));
+			address: payment.recipientId,
+			amount: payment.amount,
+		}));
 	}
 
 	public override amount(): BigNumber {
