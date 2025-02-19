@@ -9,7 +9,7 @@ export const identity = {
 };
 
 export const identityWithSecret = {
-	publicKey: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
-	secret: "qaa",
-	wif: "UcnBMjKzK2iYbv9TWUWSMiQoFwBRuHCj6ph884M14Nzf7g5knCSS"
+	publicKey: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22",
+	secret: "my super secret passphrase",
+	wif: "UdFWh1JiogHqCye7kv8RoUq9zr2z6gVsMQsZARuF7xF9JTk97NWT"
 }
