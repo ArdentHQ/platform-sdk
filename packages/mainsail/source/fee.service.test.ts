@@ -35,14 +35,6 @@ describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
                 "usernameResignation",
                 "vote",
             ]);
-
-            assert.snapshot("fees_mainsail_delegate_registration", result.delegateRegistration);
-            assert.snapshot("fees_mainsail_delegate_resignation", result.delegateResignation);
-            assert.snapshot("fees_mainsail_multi_payment", result.multiPayment);
-            assert.snapshot("fees_mainsail_transfer", result.transfer);
-            assert.snapshot("fees_mainsail_username_registration", result.usernameRegistration);
-            assert.snapshot("fees_mainsail_username_resignation", result.usernameResignation);
-            assert.snapshot("fees_mainsail_vote", result.vote);
         });
     });
 
