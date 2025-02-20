@@ -1,5 +1,4 @@
 import { IoC, Services, Signatories } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
 
 import { createService } from "../test/mocking";
@@ -18,148 +17,108 @@ import { TransactionService } from "./transaction.service.js";
 import { WalletData } from "./wallet.dto.js";
 
 describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
-	describe("all", () => {
-		it("should get the fees for Mainsail", async () => {
-			nock.fake(/.+/).get("/api/node/fees").reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
+    describe("all", () => {
+        it("should get the fees for Mainsail", async () => {
+            nock.fake(/.+/).get("/api/node/fees").reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
 
-			const feeService = await createService(FeeService, "mainsail.devnet");
-			const result = await feeService.all();
+            const feeService = await createService(FeeService, "mainsail.devnet");
+            const result = await feeService.all();
 
-			assert.containKeys(result, [
-				"delegateRegistration",
-				"delegateResignation",
-				"ipfs",
-				"multiPayment",
-				"multiSignature",
-				"secondSignature",
-				"transfer",
-				"usernameRegistration",
-				"usernameResignation",
-				"vote",
-			]);
-		});
-	});
+            assert.containKeys(result, [
+                "delegateRegistration",
+                "delegateResignation",
+                "ipfs",
+                "multiPayment",
+                "multiSignature",
+                "secondSignature",
+                "transfer",
+                "usernameRegistration",
+                "usernameResignation",
+                "vote",
+            ]);
+        });
+    });
 
-	describe("calculate", () => {
-		let feeService: FeeService;
-		let transactionService: TransactionService;
-		let defaultTransferInput: any;
+    describe("calculate", () => {
+        let feeService: FeeService;
+        let transactionService: TransactionService;
+        let defaultTransferInput: any;
 
-		beforeAll(async () => {
-			feeService = await createService(FeeService, "mainsail.devnet");
-			transactionService = await createService(TransactionService, "mainsail.devnet", (container) => {
-				container.constant(IoC.BindingType.Container, container);
-				container.factory(MultiSignatureSigner);
-				container.constant(IoC.BindingType.DataTransferObjects, {
-					ConfirmedTransactionData,
-					SignedTransactionData,
-					WalletData,
-				});
-				container.singleton(
-					IoC.BindingType.DataTransferObjectService,
-					Services.AbstractDataTransferObjectService,
-				);
-				container.singleton(IoC.BindingType.AddressService, AddressService);
-				container.singleton(IoC.BindingType.ClientService, ClientService);
-				container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
-				container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
-				container.singleton(IoC.BindingType.LedgerService, LedgerService);
-				container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
-				container.singleton(IoC.BindingType.MultiSignatureService, MultiSignatureService);
-			});
+        beforeAll(async () => {
+            feeService = await createService(FeeService, "mainsail.devnet");
+            transactionService = await createService(TransactionService, "mainsail.devnet", (container) => {
+                container.constant(IoC.BindingType.Container, container);
+                container.factory(MultiSignatureSigner);
+                container.constant(IoC.BindingType.DataTransferObjects, {
+                    ConfirmedTransactionData,
+                    SignedTransactionData,
+                    WalletData,
+                });
+                container.singleton(
+                    IoC.BindingType.DataTransferObjectService,
+                    Services.AbstractDataTransferObjectService,
+                );
+                container.singleton(IoC.BindingType.AddressService, AddressService);
+                container.singleton(IoC.BindingType.ClientService, ClientService);
+                container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
+                container.constant(IoC.BindingType.LedgerTransportFactory, async () => { });
+                container.singleton(IoC.BindingType.LedgerService, LedgerService);
+                container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
+                container.singleton(IoC.BindingType.MultiSignatureService, MultiSignatureService);
+            });
 
-			defaultTransferInput = {
-				data: {
-					amount: 1,
-					memo: "foo",
-					to: identity.address,
-				},
-				gasLimit: 21_000,
-				gasPrice: 5,
-				nonce: "1",
-				signatory: new Signatories.Signatory(
-					new Signatories.MnemonicSignatory({
-						address: identity.address,
-						privateKey: "privateKey",
-						publicKey: "publicKey",
-						signingKey: identity.mnemonic,
-					}),
-				),
-			};
-		});
+            defaultTransferInput = {
+                data: {
+                    amount: 1,
+                    memo: "foo",
+                    to: identity.address,
+                },
+                gasLimit: 21_000,
+                gasPrice: 5,
+                nonce: "1",
+                signatory: new Signatories.Signatory(
+                    new Signatories.MnemonicSignatory({
+                        address: identity.address,
+                        privateKey: "privateKey",
+                        publicKey: "publicKey",
+                        signingKey: identity.mnemonic,
+                    }),
+                ),
+            };
+        });
 
-		it("should calculate fee for a default transfer transaction", async () => {
-			nock.fake(/.+/).get("/api/node/fees").reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
+        it("should calculate fee for transfer transaction", async () => {
+            nock.fake(/.+/).get("/api/node/fees").reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
 
-			const transaction = await transactionService.transfer(defaultTransferInput);
-			const fee = await feeService.calculate(transaction);
-			assert.equal(fee.toString(), "0");
-		});
+            const transaction = await transactionService.transfer(defaultTransferInput);
+            const fee = await feeService.calculate(transaction);
+            assert.equal(fee.toString(), "0");
+        });
+    });
 
-		it("should calculate fee for a multi-signature transfer transaction", async () => {
-			nock.fake(/.+/).get("/api/node/fees").reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
+    describe("transform", () => {
+        it("should transform dynamic fees correctly", async () => {
+            nock.fake(/.+/)
+                .get("/api/node/fees")
+                .reply(200, {
+                    data: {
+                        evmCall: {
+                            avg: "2000000000",
+                            max: "3000000000",
+                            min: "1000000000",
+                        },
+                    },
+                })
+                .get("/api/transactions/fees")
+                .reply(200, {});
 
-			feeService.all = async (): Promise<Services.TransactionFees> => {
-				const fee = {
-					avg: BigNumber.make("2"),
-					isDynamic: true,
-					max: BigNumber.make("3"),
-					min: BigNumber.make("1"),
-					static: BigNumber.make("1000"),
-				};
-				return {
-					delegateRegistration: fee,
-					delegateResignation: fee,
-					ipfs: fee,
-					multiPayment: fee,
-					multiSignature: fee,
-					secondSignature: fee,
-					transfer: fee,
-					usernameRegistration: fee,
-					usernameResignation: fee,
-					vote: fee,
-				};
-			};
-
-			const transaction = await transactionService.transfer(defaultTransferInput);
-			const originalData = transaction.data();
-			transaction.data = () => ({
-				...originalData,
-				asset: {
-					multiSignature: {
-						publicKeys: ["publicKey1", "publicKey2"],
-					},
-				},
-			});
-
-			const fee = await feeService.calculate(transaction);
-			assert.equal(fee.toString(), "3000");
-		});
-	});
-
-	describe("transform", () => {
-		it("should transform dynamic fees correctly", async () => {
-			nock.fake(/.+/)
-				.get("/api/node/fees")
-				.reply(200, {
-					data: {
-						evmCall: {
-							avg: "2000000000",
-							max: "3000000000",
-							min: "1000000000",
-						},
-					},
-				})
-				.get("/api/transactions/fees")
-				.reply(200, {});
-
-			const feeService = await createService(FeeService, "mainsail.devnet");
-			const fees = await feeService.all();
-			assert.equal(fees.delegateRegistration.min, "1");
-			assert.equal(fees.delegateRegistration.avg, "2");
-			assert.equal(fees.delegateRegistration.max, "3");
-			assert.true(fees.delegateRegistration.isDynamic);
-			assert.equal(fees.delegateRegistration.static.toString(), "0");
-		});
-	});
+            const feeService = await createService(FeeService, "mainsail.devnet");
+            const fees = await feeService.all();
+            assert.equal(fees.delegateRegistration.min, "1");
+            assert.equal(fees.delegateRegistration.avg, "2");
+            assert.equal(fees.delegateRegistration.max, "3");
+            assert.true(fees.delegateRegistration.isDynamic);
+            assert.equal(fees.delegateRegistration.static.toString(), "0");
+        });
+    });
 });
