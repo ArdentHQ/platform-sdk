@@ -146,7 +146,7 @@ void describeWithContext(
 			assert.false(
 				context.subject.exists({
 					address: "0x71c3377F6baF114A975A151c4685E600d13636F6",
-					coin: "Mainsail",
+					coin: "ARK",
 				}),
 			);
 		});
