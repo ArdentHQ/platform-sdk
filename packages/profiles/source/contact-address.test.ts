@@ -1,6 +1,6 @@
 import { describe } from "@ardenthq/sdk-test";
 
-import { identity } from '../../mainsail/test/fixtures/identity';
+import { identity } from "../../mainsail/test/fixtures/identity";
 import { bootContainer } from "../test/mocking";
 import { ContactAddress } from "./contact-address.js";
 import { Profile } from "./profile";
