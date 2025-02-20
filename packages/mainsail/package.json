@@ -21,7 +21,7 @@
 		"clean": "rimraf .coverage distribution tmp",
 		"clean:browser": "rimraf distribution/browser",
 		"test": "uvu -r tsm source .test.ts",
-		"test:coverage": "c8 pnpm run test",
+		"test:coverage": "c8 --all --reporter=text pnpm run test",
 		"test:watch": "watchlist source -- pnpm run test"
 	},
 	"dependencies": {
