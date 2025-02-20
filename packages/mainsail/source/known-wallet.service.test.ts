@@ -1,5 +1,5 @@
-import { describe } from "@ardenthq/sdk-test";
 import { Coins, IoC } from "@ardenthq/sdk";
+import { describe } from "@ardenthq/sdk-test";
 
 import { createService } from "../test/mocking";
 import { KnownWalletService } from "./known-wallet.service.js";
@@ -12,19 +12,19 @@ describe("KnownWalletService", async ({ assert, beforeAll, it, nock }) => {
 	it("should return a list of known wallets if the request succeeds", async (context) => {
 		const wallets = [
 			{
-				type: "team",
-				name: "ACF Hot Wallet",
 				address: "0x522B3294E6d06aA25Ad0f1B8891242E335D3B459",
+				name: "ACF Hot Wallet",
+				type: "team",
 			},
 			{
-				type: "team",
-				name: "ACF Hot Wallet (old)",
 				address: "0xA5cc0BfEB09742C5e4C610f2EBaaB82Eb142Ca10",
+				name: "ACF Hot Wallet (old)",
+				type: "team",
 			},
 		];
 
 		nock.fake("https://raw.githubusercontent.com")
-			.get("/ArkEcosystem/common/master/devnet/known-wallets-extended.json")
+			.get("/ArkEcosystem/common/refs/heads/master/mainsail/devnet/known-wallets-extended.json")
 			.reply(200, wallets);
 
 		assert.equal(await context.subject.all(), wallets);
@@ -32,7 +32,7 @@ describe("KnownWalletService", async ({ assert, beforeAll, it, nock }) => {
 
 	it("should return an empty list if the request fails", async (context) => {
 		nock.fake("https://raw.githubusercontent.com")
-			.get("/ArkEcosystem/common/master/devnet/known-wallets-extended.json")
+			.get("/ArkEcosystem/common/refs/heads/master/mainsail/devnet/known-wallets-extended.json")
 			.reply(404);
 
 		assert.equal(await context.subject.all(), []);
@@ -40,7 +40,7 @@ describe("KnownWalletService", async ({ assert, beforeAll, it, nock }) => {
 
 	it("should return an empty list if the request response is not an array", async (context) => {
 		nock.fake("https://raw.githubusercontent.com")
-			.get("/ArkEcosystem/common/master/devnet/known-wallets-extended.json")
+			.get("/ArkEcosystem/common/refs/heads/master/mainsail/devnet/known-wallets-extended.json")
 			.reply(200, {});
 
 		assert.equal(await context.subject.all(), []);
