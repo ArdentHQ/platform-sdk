@@ -1,6 +1,6 @@
 import { describeWithContext } from "@ardenthq/sdk-test";
 
-import { identity } from '../../mainsail/test/fixtures/identity';
+import { identity } from "../../mainsail/test/fixtures/identity";
 import { bootContainer } from "../test/mocking";
 import { ContactRepository } from "./contact.repository";
 import { Profile } from "./profile";
