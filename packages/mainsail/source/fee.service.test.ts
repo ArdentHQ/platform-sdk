@@ -20,9 +20,7 @@ import { WalletData } from "./wallet.dto.js";
 describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
     describe("all", () => {
         it("should get the fees for Mainsail", async () => {
-            nock.fake(/.+/)
-                .get("/api/node/fees")
-                .reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
+            nock.fake(/.+/).get("/api/node/fees").reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
 
             const feeService = await createService(FeeService, "mainsail.devnet");
             const result = await feeService.all();
