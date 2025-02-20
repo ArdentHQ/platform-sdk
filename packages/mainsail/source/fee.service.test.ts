@@ -1,4 +1,5 @@
 import { IoC, Services, Signatories } from "@ardenthq/sdk";
+import { BigNumber } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
 
 import { createService } from "../test/mocking";
@@ -29,7 +30,10 @@ describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
             assert.containKeys(result, [
                 "delegateRegistration",
                 "delegateResignation",
+                "ipfs",
                 "multiPayment",
+                "multiSignature",
+                "secondSignature",
                 "transfer",
                 "usernameRegistration",
                 "usernameResignation",
@@ -86,7 +90,7 @@ describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
             };
         });
 
-        it("should calculate fee for a transfer transaction", async () => {
+        it("should calculate fee for a default transfer transaction", async () => {
             nock.fake(/.+/)
                 .get("/api/node/fees")
                 .reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
@@ -94,6 +98,48 @@ describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
             const transaction = await transactionService.transfer(defaultTransferInput);
             const fee = await feeService.calculate(transaction);
             assert.equal(fee.toString(), "0");
+        });
+
+        it("should calculate fee for a multi-signature transfer transaction", async () => {
+            nock.fake(/.+/)
+                .get("/api/node/fees")
+                .reply(200, loader.json(`test/fixtures/client/feesByNode.json`));
+
+            feeService.all = async (): Promise<Services.TransactionFees> => {
+                const fee = {
+                    avg: BigNumber.make("2"),
+                    isDynamic: true,
+                    max: BigNumber.make("3"),
+                    min: BigNumber.make("1"),
+                    static: BigNumber.make("1000"),
+                };
+                return {
+                    delegateRegistration: fee,
+                    delegateResignation: fee,
+                    ipfs: fee,
+                    multiPayment: fee,
+                    multiSignature: fee,
+                    secondSignature: fee,
+                    transfer: fee,
+                    usernameRegistration: fee,
+                    usernameResignation: fee,
+                    vote: fee,
+                };
+            };
+
+            const transaction = await transactionService.transfer(defaultTransferInput);
+            const originalData = transaction.data();
+            transaction.data = () => ({
+                ...originalData,
+                asset: {
+                    multiSignature: {
+                        publicKeys: ["publicKey1", "publicKey2"],
+                    },
+                },
+            });
+
+            const fee = await feeService.calculate(transaction);
+            assert.equal(fee.toString(), "3000");
         });
     });
 
