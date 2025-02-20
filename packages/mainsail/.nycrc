@@ -1,0 +1,3 @@
+{
+  "exclude": ["source/index.ts", "source/multi-signature.contract.ts", "source/ledger.service.types.ts", "distribution/*"]
+}
