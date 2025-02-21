@@ -45,12 +45,6 @@ export class FeeService extends Services.AbstractFeeService {
 		transaction: Contracts.RawTransactionData,
 		options?: Services.TransactionFeeOptions,
 	): Promise<BigNumber> {
-		const { multiSignature } = await this.all();
-
-		if (Array.isArray(transaction.data()?.asset?.multiSignature?.publicKeys)) {
-			return multiSignature.static.times(transaction.data().asset.multiSignature.publicKeys.length + 1);
-		}
-
 		return BigNumber.ZERO;
 	}
 
