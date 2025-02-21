@@ -1,16 +1,16 @@
-import { UUID } from "@ardenthq/sdk-cryptography";
-import { describeWithContext } from "@ardenthq/sdk-test";
-
-import { bootContainer } from "../test/mocking";
 import { ContactAddressRepository } from "./contact-address.repository";
 import { Profile } from "./profile";
+import { UUID } from "@ardenthq/sdk-cryptography";
+import { bootContainer } from "../test/mocking";
+import { describeWithContext } from "@ardenthq/sdk-test";
+import { identity } from "../../mainsail/test/fixtures/identity";
 
 void describeWithContext(
 	"ContactAddressRepository",
 	{
 		stubData: {
-			address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
-			coin: "ARK",
+			address: identity.address,
+			coin: "Mainsail",
 		},
 	},
 	async ({ it, beforeEach, assert }) => {
@@ -144,8 +144,8 @@ void describeWithContext(
 
 			assert.false(
 				context.subject.exists({
-					address: "DAWdHfDFEvvu57cHjAhs5K5di33B2DdCu1",
-					coin: "ARK",
+					address: "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22",
+					coin: "Mainsail",
 				}),
 			);
 		});
