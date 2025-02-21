@@ -1,10 +1,9 @@
-import { UUID } from "@ardenthq/sdk-cryptography";
-import { describeWithContext } from "@ardenthq/sdk-test";
-
-import { identity } from "../../mainsail/test/fixtures/identity";
-import { bootContainer } from "../test/mocking";
 import { ContactAddressRepository } from "./contact-address.repository";
 import { Profile } from "./profile";
+import { UUID } from "@ardenthq/sdk-cryptography";
+import { bootContainer } from "../test/mocking";
+import { describeWithContext } from "@ardenthq/sdk-test";
+import { identity } from "../../mainsail/test/fixtures/identity";
 
 void describeWithContext(
 	"ContactAddressRepository",
@@ -146,7 +145,7 @@ void describeWithContext(
 			assert.false(
 				context.subject.exists({
 					address: "0x71c3377F6baF114A975A151c4685E600d13636F6",
-					coin: "ARK",
+					coin: "Mainsail",
 				}),
 			);
 		});
