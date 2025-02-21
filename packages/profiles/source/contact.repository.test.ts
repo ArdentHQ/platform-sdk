@@ -1,5 +1,6 @@
 import { describeWithContext } from "@ardenthq/sdk-test";
 
+import { identity } from "../../mainsail/test/fixtures/identity";
 import { bootContainer } from "../test/mocking";
 import { ContactRepository } from "./contact.repository";
 import { Profile } from "./profile";
@@ -7,8 +8,8 @@ import { Profile } from "./profile";
 void describeWithContext(
 	"ContactRepository",
 	{
-		addr: { address: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", coin: "ARK" },
-		addr2: { address: "DAWdHfDFEvvu57cHjAhs5K5di33B2DdCu1", coin: "ARK" },
+		addr: { address: identity.address, coin: "Mainsail" },
+		addr2: { address: "0x71c3377F6baF114A975A151c4685E600d13636F6", coin: "Mainsail" },
 		name: "John Doe",
 	},
 	async ({ beforeEach, it, assert }) => {
