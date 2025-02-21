@@ -1,6 +1,6 @@
-import { Networks } from "@ardenthq/sdk";
-
 import { explorer, featureFlags, importMethods, transactions } from "./shared.js";
+
+import { Networks } from "@ardenthq/sdk";
 
 const network: Networks.NetworkManifest = {
 	coin: "Mainsail",
@@ -40,11 +40,12 @@ const network: Networks.NetworkManifest = {
 	],
 	id: "mainsail.devnet",
 	importMethods,
-	knownWallets: "https://raw.githubusercontent.com/ArkEcosystem/common/master/devnet/known-wallets-extended.json",
+	knownWallets:
+		"https://raw.githubusercontent.com/ArkEcosystem/common/master/mainsail/devnet/known-wallets-extended.json",
 	meta: {
+		chainId: 10_000,
 		// fastDelegateSync: true,
 		nethash: "c481dea3dcc13708364e576dff94dd499692b56cbc646d5acd22a3902297dd51",
-		chainId: 10_000,
 		slip44: 1,
 		wif: 186,
 	},
