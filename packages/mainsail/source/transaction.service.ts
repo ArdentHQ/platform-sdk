@@ -184,7 +184,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		if (!input.data.payments) {
 			throw new Error(
-				`[TransactionService#multiPayment] Expected payments to be defined but received ${typeof input.data.payments}`,
+				`[TransactionService#multiPayment] Expected payments to be defined but received ${typeof input.data
+					.payments}`,
 			);
 		}
 
@@ -217,7 +218,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
-
 	}
 
 	public override async usernameRegistration(
