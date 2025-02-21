@@ -12,7 +12,6 @@ import { createService } from "../test/mocking";
 import { AddressService } from "./address.service";
 import { BindingType } from "./coin.contract";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
-import { formatUnits } from "./helpers/format-units";
 
 const createSubject = async () =>
 	await createService(ConfirmedTransactionData, "mainsail.devnet", function (container: IoC.Container) {
@@ -28,20 +27,20 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	});
 
 	it("should have an id", (context) => {
-		assert.is(context.subject.id(), "7beec0fead3860a677eb28c943a400b1d841666b6d3f3254d887290193be1fc7");
+		assert.is(context.subject.id(), "6acfc98ee12df1b6d619254f92208e85d072e138df81d96483c0284b57e2f55f");
 	});
 
 	it("should have a blockId", (context) => {
-		assert.is(context.subject.blockId(), "a93f64fc4bb31b1857eea961971c6fd73b5d0ff3709ff4353fad6976410f0d11");
+		assert.is(context.subject.blockId(), "d595f2bdeae15bad821d4ddc70190269ae49646d4491082deb354f40bcb8da8e");
 	});
 
 	it("should have a timestamp", (context) => {
 		assert.instance(context.subject.timestamp(), DateTime);
-		assert.equal(context.subject.timestamp().toUNIX(), 1_734_010_459);
+		assert.equal(context.subject.timestamp().toUNIX(), 1_740_153_890);
 	});
 
 	it("should have a number of confirmations", (context) => {
-		assert.equal(context.subject.confirmations(), BigNumber.make(1));
+		assert.equal(context.subject.confirmations(), BigNumber.make(202));
 	});
 
 	it("should have a sender", (context) => {
@@ -49,7 +48,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	});
 
 	it("should have a recipient", (context) => {
-		assert.is(context.subject.recipient(), "0x71a5abB8A11E0D1e2937A8A51822B8f7d15286C0");
+		assert.is(context.subject.recipient(), "0x71c3377F6baF114A975A151c4685E600d13636F6");
 	});
 
 	// @TODO: fix when MultiPayment implemented
@@ -70,8 +69,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	// });
 	//
 	it("should have a fee", (context) => {
-		// fees are in arks
-		assert.equal(context.subject.fee(), formatUnits(BigNumber.make(105_000).toString(), "ark"));
+		assert.equal(context.subject.fee(), "0.000105");
 	});
 
 	it("should determine if the transaction is confirmed", (context) => {
@@ -169,6 +167,10 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 
 	it("should have a type", (context) => {
 		assert.is(context.subject.type(), "transfer");
+	});
+
+	it("should have isSuccess", (context) => {
+		assert.true(context.subject.isSuccess());
 	});
 });
 
