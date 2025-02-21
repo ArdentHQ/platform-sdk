@@ -1,8 +1,5 @@
 import { IoC, Services, Signatories } from "@ardenthq/sdk";
-import { describe } from "@ardenthq/sdk-test";
 
-import { createService } from "../test/mocking";
-import { identity } from "../test/wallets";
 import { AddressService } from "./address.service.js";
 import { ClientService } from "./client.service.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
@@ -15,6 +12,9 @@ import { PublicKeyService } from "./public-key.service.js";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { TransactionService } from "./transaction.service.js";
 import { WalletData } from "./wallet.dto.js";
+import { createService } from "../test/mocking";
+import { describe } from "@ardenthq/sdk-test";
+import { identity } from "../test/wallets";
 
 describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
 	describe("all", () => {
@@ -48,7 +48,6 @@ describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
 			feeService = await createService(FeeService, "mainsail.devnet");
 			transactionService = await createService(TransactionService, "mainsail.devnet", (container) => {
 				container.constant(IoC.BindingType.Container, container);
-				container.factory(MultiSignatureSigner);
 				container.constant(IoC.BindingType.DataTransferObjects, {
 					ConfirmedTransactionData,
 					SignedTransactionData,
@@ -64,13 +63,11 @@ describe("FeeService", ({ assert, nock, it, loader, beforeAll }) => {
 				container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
 				container.singleton(IoC.BindingType.LedgerService, LedgerService);
 				container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
-				container.singleton(IoC.BindingType.MultiSignatureService, MultiSignatureService);
 			});
 
 			defaultTransferInput = {
 				data: {
 					amount: 1,
-					memo: "foo",
 					to: identity.address,
 				},
 				gasLimit: 21_000,
