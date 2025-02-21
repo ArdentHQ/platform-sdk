@@ -180,7 +180,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
 		applyCryptoConfiguration(this.#configCrypto);
 		this.#assertGasFee(input);
-		this.#assertAmount(input);
 
 		if (!input.data.payments) {
 			throw new Error(
