@@ -1,4 +1,4 @@
-import { Collections, Contracts, DTO,IoC, Services } from "@ardenthq/sdk";
+import { Collections, Contracts, DTO, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { UsernamesAbi } from "@mainsail/evm-contracts";
 import dotify from "node-dotify";
@@ -220,15 +220,16 @@ export class ClientService extends Services.AbstractClientService {
 				throw new Error(`Failed to decode function result: ${(decodeError as Error).message}`);
 			}
 
-			const usernameDataList = (decoded as any[]).map((user) =>
-				new DTO.UsernameData({
+			const usernameDataList = (decoded as any[]).map(
+				(user) =>
+					new DTO.UsernameData({
 						address: user.addr,
 						username: user.username,
-				})
-		);
+					}),
+			);
 
-		// Devolver la colección
-		return new Collections.UsernameDataCollection(usernameDataList)
+			// Devolver la colección
+			return new Collections.UsernameDataCollection(usernameDataList);
 		} catch (error) {
 			if (error instanceof Error) {
 				throw error;
