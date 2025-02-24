@@ -1,6 +1,8 @@
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { UsernamesAbi } from "@mainsail/evm-contracts";
 import dotify from "node-dotify";
+import { decodeFunctionResult, encodeFunctionData } from "viem";
 
 import { Request } from "./request.js";
 import { TransactionTypes, trimHexPrefix } from "./transaction-type.service.js";
@@ -185,6 +187,51 @@ export class ClientService extends Services.AbstractClientService {
 		} catch (error) {
 			const errorResponse = (error as any).response?.json();
 			throw new Error(errorResponse?.error?.message || "Failed to make EVM call");
+		}
+	}
+
+	public async getUsernames(addresses: string[]): Promise<{ address: string; username: string }[]> {
+		const contractAddress = "0x2c1DE3b4Dbb4aDebEbB5dcECAe825bE2a9fc6eb6";
+
+		try {
+			const data = encodeFunctionData({
+				abi: UsernamesAbi.abi,
+				args: [addresses],
+				functionName: "getUsernames",
+			});
+
+			const response = await this.#request.post(
+				"",
+				{
+					body: {
+						id: 1,
+						jsonrpc: "2.0",
+						method: "eth_call",
+						params: [
+							{
+								data: data,
+								to: contractAddress,
+							},
+							"latest",
+						],
+					},
+				},
+				"evm",
+			);
+
+			const decoded = decodeFunctionResult({
+				abi: UsernamesAbi.abi,
+				data: response.result,
+				functionName: "getUsernames",
+			});
+
+			return (decoded as any[]).map((user) => ({
+				address: user.addr,
+				username: user.username,
+			}));
+		} catch (error) {
+			const errorResponse = (error as any).response?.json();
+			throw new Error(errorResponse?.error?.message || "Failed to fetch usernames");
 		}
 	}
 
