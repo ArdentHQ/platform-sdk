@@ -1,4 +1,4 @@
-import { IoC, Services } from "@ardenthq/sdk";
+import { Collections, IoC, Services } from "@ardenthq/sdk";
 import { describe } from "@ardenthq/sdk-test";
 
 import { createService } from "../test/mocking";
@@ -326,10 +326,14 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 		const result = await context.subject.getUsernames(addresses);
 
-		assert.array(result);
-		// Just one of the addresses has a username
-		assert.equal(result.length, 1);
-		assert.equal(result[0].address, "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22");
-		assert.string(result[0].username);
+		assert.instance(result, Collections.UsernameDataCollection);
+
+		const items = result.items();
+
+		assert.equal(items.length, 1);
+
+		const firstItem = items[0];
+		assert.equal(firstItem.address(), "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22");
+		assert.string(firstItem.username());
 	});
 });
