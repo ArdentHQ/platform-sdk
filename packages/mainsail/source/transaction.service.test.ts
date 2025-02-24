@@ -60,13 +60,13 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			data: {
 				payments: [
 					{
-						"amount": 1,
-						"to": "0x93485b57ff3DeD81430D08579142fAe8234c6A17"
+						amount: 1,
+						to: "0x93485b57ff3DeD81430D08579142fAe8234c6A17",
 					},
 					{
-						"amount": 2,
-						"to": "0x93485b57ff3DeD81430D08579142fAe8234c6A17"
-					}
+						amount: 2,
+						to: "0x93485b57ff3DeD81430D08579142fAe8234c6A17",
+					},
 				],
 			},
 			gasLimit: 210_000,
@@ -405,7 +405,7 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 		try {
 			await context.subject.multiPayment({
 				...context.defaultMultiPaymentInput,
-				data: {}
+				data: {},
 			});
 		} catch (error) {
 			assert.instance(error, Error);
@@ -436,5 +436,4 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			assert.match(error.message, "Expected gasLimit to be defined");
 		}
 	});
-
 });
