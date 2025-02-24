@@ -1,5 +1,5 @@
 export interface EvmCallData {
-	from: string;
+	from?: string;
 	to: string;
 	data: string;
 	block?: string;
@@ -8,5 +8,5 @@ export interface EvmCallData {
 export interface EvmCallResponse {
 	id: number;
 	jsonrpc: string;
-	result: string;
+	result: `0x${string}`;
 }

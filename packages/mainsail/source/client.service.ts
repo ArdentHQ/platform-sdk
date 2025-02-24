@@ -204,24 +204,10 @@ export class ClientService extends Services.AbstractClientService {
 				throw new Error(`Failed to encode function data: ${(encodeError as Error).message}`);
 			}
 
-			const response = await this.#request.post(
-				"",
-				{
-					body: {
-						id: 1,
-						jsonrpc: "2.0",
-						method: "eth_call",
-						params: [
-							{
-								data: data,
-								to: wellKnownContracts.username,
-							},
-							"latest",
-						],
-					},
-				},
-				"evm",
-			);
+			const response = await this.evmCall({
+				data: data,
+				to: wellKnownContracts.username,
+			});
 
 			let decoded;
 			try {
@@ -239,14 +225,10 @@ export class ClientService extends Services.AbstractClientService {
 				username: user.username,
 			}));
 		} catch (error) {
-			const errorResponse = (error as any).response?.json?.error?.message;
-			if (errorResponse) {
-				throw new Error(`API call failed: ${errorResponse}`);
-			} else if (error instanceof Error) {
+			if (error instanceof Error) {
 				throw error;
-			} else {
-				throw new TypeError("Failed to fetch usernames: Unknown error occurred");
 			}
+			throw new TypeError("Failed to fetch usernames: Unknown error occurred");
 		}
 	}
 
