@@ -380,3 +380,5 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 	}
 }
+
+export { wellKnownContracts };

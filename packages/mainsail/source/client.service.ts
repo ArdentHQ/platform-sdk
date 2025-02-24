@@ -5,6 +5,7 @@ import dotify from "node-dotify";
 import { decodeFunctionResult, encodeFunctionData } from "viem";
 
 import { Request } from "./request.js";
+import { wellKnownContracts } from "./transaction.service.js";
 import { TransactionTypes, trimHexPrefix } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
@@ -191,14 +192,17 @@ export class ClientService extends Services.AbstractClientService {
 	}
 
 	public async getUsernames(addresses: string[]): Promise<{ address: string; username: string }[]> {
-		const contractAddress = "0x2c1DE3b4Dbb4aDebEbB5dcECAe825bE2a9fc6eb6";
-
 		try {
-			const data = encodeFunctionData({
-				abi: UsernamesAbi.abi,
-				args: [addresses],
-				functionName: "getUsernames",
-			});
+			let data;
+			try {
+				data = encodeFunctionData({
+					abi: UsernamesAbi.abi,
+					args: [addresses],
+					functionName: "getUsernames",
+				});
+			} catch (encodeError) {
+				throw new Error(`Failed to encode function data: ${(encodeError as Error).message}`);
+			}
 
 			const response = await this.#request.post(
 				"",
@@ -210,7 +214,7 @@ export class ClientService extends Services.AbstractClientService {
 						params: [
 							{
 								data: data,
-								to: contractAddress,
+								to: wellKnownContracts.username,
 							},
 							"latest",
 						],
@@ -219,19 +223,30 @@ export class ClientService extends Services.AbstractClientService {
 				"evm",
 			);
 
-			const decoded = decodeFunctionResult({
-				abi: UsernamesAbi.abi,
-				data: response.result,
-				functionName: "getUsernames",
-			});
+			let decoded;
+			try {
+				decoded = decodeFunctionResult({
+					abi: UsernamesAbi.abi,
+					data: response.result,
+					functionName: "getUsernames",
+				});
+			} catch (decodeError) {
+				throw new Error(`Failed to decode function result: ${(decodeError as Error).message}`);
+			}
 
 			return (decoded as any[]).map((user) => ({
 				address: user.addr,
 				username: user.username,
 			}));
 		} catch (error) {
-			const errorResponse = (error as any).response?.json();
-			throw new Error(errorResponse?.error?.message || "Failed to fetch usernames");
+			const errorResponse = (error as any).response?.json?.error?.message;
+			if (errorResponse) {
+				throw new Error(`API call failed: ${errorResponse}`);
+			} else if (error instanceof Error) {
+				throw error;
+			} else {
+				throw new TypeError("Failed to fetch usernames: Unknown error occurred");
+			}
 		}
 	}
 
