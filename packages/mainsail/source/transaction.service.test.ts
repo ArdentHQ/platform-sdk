@@ -56,6 +56,32 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			),
 		};
 
+		context.defaultMultiPaymentInput = {
+			data: {
+				payments: [
+					{
+						"amount": 1,
+						"to": "0x93485b57ff3DeD81430D08579142fAe8234c6A17"
+					},
+					{
+						"amount": 2,
+						"to": "0x93485b57ff3DeD81430D08579142fAe8234c6A17"
+					}
+				],
+			},
+			gasLimit: 210_000,
+			gasPrice: 5,
+			nonce: "1",
+			signatory: new Signatories.Signatory(
+				new Signatories.MnemonicSignatory({
+					address: identity.address,
+					privateKey: "privateKey",
+					publicKey: "publicKey",
+					signingKey: identity.mnemonic,
+				}),
+			),
+		};
+
 		context.defaultValidatorRegistrationInput = {
 			data: {
 				validatorPublicKey:
@@ -360,4 +386,55 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 			assert.match(error.message, "Expected gasLimit to be defined");
 		}
 	});
+
+	// multiPayment tx tests
+	it("should sign a multiPayment transaction", async (context) => {
+		const signedTransaction = await context.subject.multiPayment(context.defaultMultiPaymentInput);
+
+		assert.is(
+			signedTransaction.fee().toString(),
+			formatUnits(
+				(signedTransaction.signedData.gasLimit * signedTransaction.signedData.gasPrice).toString(),
+				"ark",
+			).valueOf(),
+		);
+		assert.is(signedTransaction.nonce().toString(), context.defaultMultiPaymentInput.nonce);
+	});
+
+	it("should require payments when signing a multiPayment transaction", async (context) => {
+		try {
+			await context.subject.multiPayment({
+				...context.defaultMultiPaymentInput,
+				data: {}
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected payments to be defined");
+		}
+	});
+
+	it("should require gasPrice when signing a multiPayment transaction", async (context) => {
+		try {
+			await context.subject.multiPayment({
+				...context.defaultMultiPaymentInput,
+				gasPrice: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasPrice to be defined");
+		}
+	});
+
+	it("should require gasLimit when signing a multiPayment transaction", async (context) => {
+		try {
+			await context.subject.multiPayment({
+				...context.defaultMultiPaymentInput,
+				gasLimit: undefined,
+			});
+		} catch (error) {
+			assert.instance(error, Error);
+			assert.match(error.message, "Expected gasLimit to be defined");
+		}
+	});
+
 });
