@@ -228,7 +228,6 @@ export class ClientService extends Services.AbstractClientService {
 					}),
 			);
 
-			// Devolver la colección
 			return new Collections.UsernameDataCollection(usernameDataList);
 		} catch (error) {
 			if (error instanceof Error) {
