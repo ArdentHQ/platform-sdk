@@ -243,6 +243,6 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override isSuccess(): boolean {
-		return this.data.success === true;
+		return this.data.receipt.success === true;
 	}
 }
