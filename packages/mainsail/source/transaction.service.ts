@@ -198,7 +198,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		for (const payment of input.data.payments) {
 			recipients.push(payment.to);
-			amounts.push(payment.amount);
+			amounts.push(parseUnits(payment.amount, "ark").toNumber());
 		}
 
 		const data = encodeFunctionData({
