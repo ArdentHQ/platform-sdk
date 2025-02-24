@@ -1,8 +1,9 @@
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
+
 import { Request } from "./request.js";
-import { trimHexPrefix, TransactionTypes } from "./transaction-type.service.js";
+import { TransactionTypes, trimHexPrefix } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -152,6 +153,39 @@ export class ClientService extends Services.AbstractClientService {
 		}
 
 		return result;
+	}
+
+	public async evmCall(callData: Contracts.EvmCallData): Promise<Contracts.EvmCallResponse> {
+		try {
+			const response = await this.#request.post(
+				"",
+				{
+					body: {
+						id: 1,
+						jsonrpc: "2.0",
+						method: "eth_call",
+						params: [
+							{
+								data: callData.data,
+								from: callData.from,
+								to: callData.to,
+							},
+							callData.block || "latest",
+						],
+					},
+				},
+				"evm",
+			);
+
+			return {
+				id: response.id,
+				jsonrpc: response.jsonrpc,
+				result: response.result,
+			};
+		} catch (error) {
+			const errorResponse = (error as any).response?.json();
+			throw new Error(errorResponse?.error?.message || "Failed to make EVM call");
+		}
 	}
 
 	#createMetaPagination(body): Services.MetaPagination {
