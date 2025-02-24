@@ -1,8 +1,9 @@
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
+
 import { Request } from "./request.js";
-import { trimHexPrefix, TransactionTypes } from "./transaction-type.service.js";
+import { TransactionTypes, trimHexPrefix } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
 	readonly #request: Request;
@@ -31,8 +32,8 @@ export class ClientService extends Services.AbstractClientService {
 		return this.dataTransferObjectService.transactions(response.data, this.#createMetaPagination(response));
 	}
 
-	public override async wallet(id: Services.WalletIdentifier): Promise<Contracts.WalletData> {
-		const body = await this.#request.get(`wallets/${id.value}`);
+	public override async wallet(id: Services.WalletIdentifier, options?: { ttl?: boolean }): Promise<Contracts.WalletData> {
+		const body = await this.#request.get(`wallets/${id.value}`, options);
 
 		return this.dataTransferObjectService.wallet(body.data);
 	}
@@ -72,11 +73,11 @@ export class ClientService extends Services.AbstractClientService {
 			used: hasVoted ? 1 : 0,
 			votes: hasVoted
 				? [
-						{
-							amount: 0,
-							id: vote,
-						},
-				  ]
+					{
+						amount: 0,
+						id: vote,
+					},
+				]
 				: [],
 		};
 	}

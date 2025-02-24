@@ -25,16 +25,17 @@ export class Request {
 		path: string,
 		query?: Contracts.KeyValuePair,
 		type: Networks.NetworkHostType = "full",
+		options?: { ttl?: boolean }
 	): Promise<Contracts.KeyValuePair> {
 		return this.#sendRequest(
-			({ host }) => this.#httpClient.get(`${host}/${path}`.replace(/\/$/, ""), query?.searchParams),
+			({ host }) => this.#httpClient.get(`${host}/${path}`.replace(/\/$/, ""), { ...query?.searchParams, ttl: options?.ttl }),
 			type,
 		);
 	}
 
 	public async post(
 		path: string,
-		{ body, searchParams }: { body; searchParams? },
+		{ body, searchParams }: { body; searchParams?},
 		type: Networks.NetworkHostType = "full",
 	): Promise<Contracts.KeyValuePair> {
 		return this.#sendRequest(
