@@ -89,9 +89,9 @@ export class AbstractServiceProvider implements IServiceProvider {
 				services.KnownWalletService || AbstractKnownWalletService,
 			);
 		}
-		// if (container.missing(BindingType.UsernamesService)) {
-		// 	container.singleton(BindingType.UsernamesService, services.UsernamesService || AbstractUsernamesService);
-		// }
+		if (container.missing(BindingType.UsernamesService)) {
+			container.singleton(BindingType.UsernamesService, services.UsernamesService || AbstractUsernamesService);
+		}
 
 		if (container.missing(BindingType.LedgerService)) {
 			container.singleton(BindingType.LedgerService, services.LedgerService || AbstractLedgerService);
