@@ -25,7 +25,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	public override async connect(): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
 		this.#transport = new Eth(this.#ledger);
-		console.log("transport", this.#transport);
+		console.log("[connect]", { transport: this.#transport });
 	}
 
 	public override async disconnect(): Promise<void> {
