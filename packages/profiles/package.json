@@ -42,6 +42,7 @@
 	},
 	"devDependencies": {
 		"@ardenthq/sdk-ark": "workspace:*",
+		"@ardenthq/sdk-mainsail": "workspace:*",
 		"@ardenthq/sdk-fetch": "workspace:*",
 		"@ardenthq/sdk-test": "workspace:*",
 		"@types/fs-extra": "^9.0.13",
