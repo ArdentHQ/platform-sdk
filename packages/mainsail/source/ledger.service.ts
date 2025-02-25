@@ -1,15 +1,15 @@
-import { ARKTransport } from "@arkecosystem/ledger-transport";
+import { Buffer } from "buffer";
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
-import { Buffer } from "buffer";
-
+import Eth from "@ledgerhq/hw-app-eth";
+import { Exceptions } from "@mainsail/contracts";
 import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
 	readonly #addressService!: Services.AddressService;
 	#ledger!: Services.LedgerTransport;
-	#transport!: ARKTransport;
+	#transport!: InstanceType<typeof Eth>;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -24,7 +24,8 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 	public override async connect(): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
-		this.#transport = new ARKTransport(this.#ledger);
+		this.#transport = new Eth(this.#ledger);
+		console.log("transport", this.#transport)
 	}
 
 	public override async disconnect(): Promise<void> {
@@ -34,23 +35,25 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getVersion(): Promise<string> {
-		return this.#transport.getVersion();
+		throw new Exceptions.NotImplemented(this.constructor.name, this.getVersion.name);
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
-		return this.#transport.getPublicKey(path);
+		const result = await this.#transport.getAddress(path)
+		console.log("[getPublicKey]", result)
+		return result.publicKey
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
-		return this.#transport.getExtPublicKey(path);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.getExtendedPublicKey.name);
 	}
 
 	public override async signTransaction(path: string, payload: Buffer): Promise<string> {
-		return this.#transport.signTransactionWithSchnorr(path, payload);
+		throw new Exceptions.NotImplemented(this.constructor.name, this.signTransaction.name);
 	}
 
 	public override async signMessage(path: string, payload: string): Promise<string> {
-		return this.#transport.signMessageWithSchnorr(path, Buffer.from(payload));
+		throw new Exceptions.NotImplemented(this.constructor.name, this.signMessage.name);
 	}
 
 	public override async scan(options?: {
@@ -71,84 +74,52 @@ export class LedgerService extends Services.AbstractLedgerService {
 		do {
 			const addresses: string[] = [];
 
+			const path = `m/44'/${slip44}'/0'`;
+			let initialAddressIndex = 0;
+
+			if (options?.startPath) {
+				// Get the address index from expected format `m/purpose'/coinType'/account'/change/addressIndex`
+				initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
+			}
+
 			/**
 			 * @remarks
-			 * This needs to be used to support the borked BIP44 implementation from the v2 desktop wallet.
+			 * This is the new BIP44 compliant derivation which will be used by default.
 			 */
-			if (options?.useLegacy) {
-				for (const accountIndex of createRange(page, pageSize)) {
-					const path: string = formatLedgerDerivationPath({ account: accountIndex, coinType: slip44 });
-					const publicKey: string = await this.getPublicKey(path);
-					const { address } = await this.#addressService.fromPublicKey(publicKey);
+			const compressedPublicKey = await this.getExtendedPublicKey(path);
 
-					addresses.push(address);
+			for (const addressIndexIterator of createRange(page, pageSize)) {
+				const addressIndex = initialAddressIndex + addressIndexIterator;
+				const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
+					.derive(`m/0/${addressIndex}`)
+					.publicKey.toString("hex");
 
-					addressCache[path] = { address, publicKey };
-				}
+				const { address } = await this.#addressService.fromPublicKey(publicKey);
 
-				const collection = await this.#clientService.wallets({
-					identifiers: [...addresses].map((address: string) => ({ type: "address", value: address })),
-				});
+				addresses.push(address);
 
-				const batchWalletsCollection = collection.items();
-
-				if (options?.onProgress !== undefined) {
-					for (const item of batchWalletsCollection) {
-						options.onProgress(item);
-					}
-				}
-
-				walletsCollection.push(...batchWalletsCollection);
-
-				hasMore = collection.isNotEmpty();
-			} else {
-				const path = `m/44'/${slip44}'/0'`;
-				let initialAddressIndex = 0;
-
-				if (options?.startPath) {
-					// Get the address index from expected format `m/purpose'/coinType'/account'/change/addressIndex`
-					initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
-				}
-
-				/**
-				 * @remarks
-				 * This is the new BIP44 compliant derivation which will be used by default.
-				 */
-				const compressedPublicKey = await this.getExtendedPublicKey(path);
-
-				for (const addressIndexIterator of createRange(page, pageSize)) {
-					const addressIndex = initialAddressIndex + addressIndexIterator;
-					const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
-						.derive(`m/0/${addressIndex}`)
-						.publicKey.toString("hex");
-
-					const { address } = await this.#addressService.fromPublicKey(publicKey);
-
-					addresses.push(address);
-
-					addressCache[`${path}/0/${addressIndex}`] = { address, publicKey };
-				}
-
-				const collections = await Promise.all(
-					chunk(addresses, 50).map((addresses: string[]) =>
-						this.#clientService.wallets({
-							identifiers: [...addresses].map((address: string) => ({ type: "address", value: address })),
-						}),
-					),
-				);
-
-				const batchWalletsCollection = collections.flatMap((collection) => collection.items());
-
-				if (options?.onProgress !== undefined) {
-					for (const item of batchWalletsCollection) {
-						options.onProgress(item);
-					}
-				}
-
-				walletsCollection.push(...batchWalletsCollection);
-
-				hasMore = collections.some((collection) => collection.isNotEmpty());
+				addressCache[`${path}/0/${addressIndex}`] = { address, publicKey };
 			}
+
+			const collections = await Promise.all(
+				chunk(addresses, 50).map((addresses: string[]) =>
+					this.#clientService.wallets({
+						identifiers: [...addresses].map((address: string) => ({ type: "address", value: address })),
+					}),
+				),
+			);
+
+			const batchWalletsCollection = collections.flatMap((collection) => collection.items());
+
+			if (options?.onProgress !== undefined) {
+				for (const item of batchWalletsCollection) {
+					options.onProgress(item);
+				}
+			}
+
+			walletsCollection.push(...batchWalletsCollection);
+
+			hasMore = collections.some((collection) => collection.isNotEmpty());
 
 			page++;
 		} while (hasMore);
