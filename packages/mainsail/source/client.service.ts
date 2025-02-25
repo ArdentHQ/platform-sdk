@@ -158,7 +158,7 @@ export class ClientService extends Services.AbstractClientService {
 		return result;
 	}
 
-	public async evmCall(callData: Contracts.EvmCallData): Promise<Contracts.EvmCallResponse> {
+	public override async evmCall(callData: Contracts.EvmCallData): Promise<Contracts.EvmCallResponse> {
 		try {
 			const response = await this.#request.post(
 				"",
@@ -191,7 +191,7 @@ export class ClientService extends Services.AbstractClientService {
 		}
 	}
 
-	public async getUsernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
+	public override async getUsernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
 		try {
 			let data;
 			try {

@@ -11,10 +11,10 @@ import {
 	WalletIdentifier,
 } from "./client.contract.js";
 import { ConfigRepository } from "./coins.js";
-import { ConfirmedTransactionDataCollection, WalletDataCollection } from "./collections.js";
+import { ConfirmedTransactionDataCollection, UsernameDataCollection, WalletDataCollection } from "./collections.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.contract.js";
 import { IContainer } from "./container.contracts.js";
-import { KeyValuePair, SignedTransactionData, WalletData } from "./contracts.js";
+import { EvmCallData, EvmCallResponse, KeyValuePair, SignedTransactionData, WalletData } from "./contracts.js";
 import { DataTransferObjectService } from "./data-transfer-object.contract.js";
 import { NotImplemented } from "./exceptions.js";
 import { HttpClient } from "./http.js";
@@ -72,5 +72,13 @@ export class AbstractClientService implements ClientService {
 
 	public async broadcast(transactions: SignedTransactionData[]): Promise<BroadcastResponse> {
 		throw new NotImplemented(this.constructor.name, this.broadcast.name);
+	}
+
+	public async evmCall(callData: EvmCallData): Promise<EvmCallResponse> {
+		throw new NotImplemented(this.constructor.name, this.evmCall.name);
+	}
+
+	public async getUsernames(addresses: string[]): Promise<UsernameDataCollection> {
+		throw new NotImplemented(this.constructor.name, this.getUsernames.name);
 	}
 }
