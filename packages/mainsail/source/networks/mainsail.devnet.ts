@@ -6,7 +6,7 @@ const network: Networks.NetworkManifest = {
 	coin: "Mainsail",
 	constants: {
 		epoch: "2023-12-21T00:00:00.000Z",
-		slip44: 1,
+		slip44: 111,
 	},
 	currency: {
 		decimals: 18,
@@ -50,7 +50,7 @@ const network: Networks.NetworkManifest = {
 		chainId: 10_000,
 		// fastDelegateSync: true,
 		nethash: "c481dea3dcc13708364e576dff94dd499692b56cbc646d5acd22a3902297dd51",
-		slip44: 1,
+		slip44: 111,
 		wif: 186,
 	},
 	name: "Devnet",
