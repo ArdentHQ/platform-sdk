@@ -609,6 +609,9 @@ importers:
       '@ardenthq/sdk-fetch':
         specifier: workspace:*
         version: link:../fetch
+      '@ardenthq/sdk-mainsail':
+        specifier: workspace:*
+        version: link:../mainsail
       '@ardenthq/sdk-test':
         specifier: workspace:*
         version: link:../test
