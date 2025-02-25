@@ -26,6 +26,6 @@ export class UsernamesService implements IUsernamesService {
 		if (!registry) {
 			return undefined;
 		}
-		return registry.findByAddress(address.toLowerCase());
+		return registry.findByAddress(address);
 	}
 }

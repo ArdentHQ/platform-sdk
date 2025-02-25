@@ -609,9 +609,6 @@ importers:
       '@ardenthq/sdk-fetch':
         specifier: workspace:*
         version: link:../fetch
-      '@ardenthq/sdk-mainsail':
-        specifier: workspace:*
-        version: link:../mainsail
       '@ardenthq/sdk-test':
         specifier: workspace:*
         version: link:../test
@@ -630,6 +627,9 @@ importers:
       localforage-driver-memory:
         specifier: ^1.0.5
         version: 1.0.5(localforage@1.10.0)
+      sinon:
+        specifier: ^12.0.1
+        version: 12.0.1
 
   packages/sdk:
     dependencies:

@@ -1,7 +1,6 @@
 import { Coins, Helpers } from "@ardenthq/sdk";
 import { ARK } from "@ardenthq/sdk-ark";
 import { Request } from "@ardenthq/sdk-fetch";
-import { Mainsail } from "@ardenthq/sdk-mainsail";
 import { nock } from "@ardenthq/sdk-test";
 
 import { Profile } from "../source";
@@ -16,7 +15,7 @@ export const bootContainer = (): void => {
 	container.flush();
 
 	DriverFactory.make(container, {
-		coins: { ARK, Mainsail },
+		coins: { ARK },
 		httpClient: new Request(),
 		ledgerTransportFactory: async () => {},
 		storage: new StubStorage(),
