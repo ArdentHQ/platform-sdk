@@ -25,7 +25,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	public override async connect(): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
 		this.#transport = new Eth(this.#ledger);
-		console.log("transport", this.#transport)
+		console.log("transport", this.#transport);
 	}
 
 	public override async disconnect(): Promise<void> {
@@ -39,9 +39,9 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
-		const result = await this.#transport.getAddress(path)
-		console.log("[getPublicKey]", result)
-		return result.publicKey
+		const result = await this.#transport.getAddress(path);
+		console.log("[getPublicKey]", result);
+		return result.publicKey;
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
