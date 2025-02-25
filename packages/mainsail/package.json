@@ -1,6 +1,6 @@
 {
 	"name": "@ardenthq/sdk-mainsail",
-	"version": "2.0.0-alpha.52",
+	"version": "2.0.0-alpha.54",
 	"description": "Cross-Platform Utilities for Ardent Applications",
 	"license": "MIT",
 	"contributors": [],
@@ -30,6 +30,7 @@
 		"@ardenthq/sdk-helpers": "workspace:*",
 		"@ardenthq/sdk-intl": "workspace:*",
 		"@arkecosystem/ledger-transport": "^2.0.0",
+		"@ledgerhq/hw-app-eth": "^6.42.7",
 		"@mainsail/container": "0.0.1-evm.14",
 		"@mainsail/contracts": "0.0.1-evm.14",
 		"@mainsail/crypto-address-keccak256": "0.0.1-evm.14",
