@@ -62,7 +62,7 @@ export class TransactionTypeService {
 	}
 
 	public static isMultiPayment(data: TransactionData): boolean {
-		return data.data.startsWith(TransactionTypes.MultiPayment);
+		return data.data.includes(TransactionTypes.MultiPayment.slice(2));
 	}
 
 	public static isUsernameRegistration(data: TransactionData): boolean {

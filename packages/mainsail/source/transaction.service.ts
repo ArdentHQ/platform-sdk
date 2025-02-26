@@ -1,8 +1,7 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
-import { Exceptions } from "@mainsail/contracts";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { ConsensusAbi, UsernamesAbi } from "@mainsail/evm-contracts";
+import { ConsensusAbi, UsernamesAbi, MultiPaymentAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
 
@@ -14,15 +13,9 @@ import { Request } from "./request.js";
 
 const wellKnownContracts = {
 	consensus: "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
+	multiPayment: "0x00EFd0D4639191C49908A7BddbB9A11A994A8527",
 	username: "0x2c1DE3b4Dbb4aDebEbB5dcECAe825bE2a9fc6eb6",
 };
-
-enum GasLimit {
-	Transfer = 21_000,
-	RegisterValidator = 500_000,
-	ResignValidator = 150_000,
-	Vote = 200_000,
-}
 
 interface ValidatedTransferInput extends Services.TransferInput {
 	gasPrice: number;
@@ -185,7 +178,45 @@ export class TransactionService extends Services.AbstractTransactionService {
 	 * @inheritDoc
 	 */
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.multiPayment.name);
+		applyCryptoConfiguration(this.#configCrypto);
+		this.#assertGasFee(input);
+
+		if (!input.data.payments) {
+			throw new Error(
+				`[TransactionService#multiPayment] Expected payments to be defined but received ${typeof input.data
+					.payments}`,
+			);
+		}
+
+		const transaction = this.#app.resolve(EvmCallBuilder);
+
+		const { address } = await this.#signerData(input);
+		const nonce = await this.#generateNonce(address, input);
+
+		const recipients: string[] = [];
+		const amounts: number[] = [];
+
+		for (const payment of input.data.payments) {
+			recipients.push(payment.to);
+			amounts.push(parseUnits(payment.amount, "ark").toNumber());
+		}
+
+		const data = encodeFunctionData({
+			abi: MultiPaymentAbi.abi,
+			args: [recipients, amounts],
+			functionName: "pay",
+		});
+
+		transaction
+			.network(this.#configCrypto.crypto.network.chainId)
+			.gasLimit(input.gasLimit)
+			.recipientAddress(wellKnownContracts.multiPayment)
+			.payload(data.slice(2))
+			.nonce(nonce)
+			.value(amounts.reduce((a, b) => a + b, 0).toString())
+			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
+
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async usernameRegistration(
