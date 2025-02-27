@@ -1,14 +1,12 @@
 import { Collections, DTO } from "@ardenthq/sdk";
 import { describe } from "@ardenthq/sdk-test";
-import { restore, stub } from "sinon";
 
 import { Profile } from "./profile.js";
 import { UsernamesService } from "./usernames.service.js";
 
-describe("UsernamesService", ({ assert, beforeEach, afterEach, it, nock, loader }) => {
+describe("UsernamesService", ({ assert, beforeEach, afterEach, it, nock, loader, stub }) => {
 	let subject: UsernamesService;
 	let profile: Profile;
-	let clientServiceMock: any;
 
 	beforeEach(async () => {
 		nock.fake()
@@ -27,16 +25,15 @@ describe("UsernamesService", ({ assert, beforeEach, afterEach, it, nock, loader 
 			}),
 		]);
 
-		clientServiceMock = {
-			usernames: stub().resolves(usernameDataCollection),
-		};
-
 		profile = new Profile({ avatar: "avatar", data: "", id: "uuid", name: "name" });
 
 		const coinMock = {
-			client: stub().returns(clientServiceMock),
+			client: () => ({
+				usernames: () => usernameDataCollection,
+			}),
 		};
-		stub(profile.coins(), "get").withArgs("Mainsail", "mainsail.devnet").returns(coinMock);
+
+		stub(profile.coins(), "get").returnValue(coinMock);
 
 		subject = new UsernamesService();
 
@@ -46,7 +43,6 @@ describe("UsernamesService", ({ assert, beforeEach, afterEach, it, nock, loader 
 
 	afterEach(() => {
 		nock.cleanAll();
-		restore();
 	});
 
 	it("#username should succeed", async () => {
