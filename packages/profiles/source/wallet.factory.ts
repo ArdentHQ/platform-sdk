@@ -112,7 +112,10 @@ export class WalletFactory implements IWalletFactory {
 	}
 
 	/** {@inheritDoc IWalletFactory.fromAddress} */
-	public async fromAddress({ coin, network, address }: IAddressOptions, options?: { ttl?: number }): Promise<IReadWriteWallet> {
+	public async fromAddress(
+		{ coin, network, address }: IAddressOptions,
+		options?: { ttl?: number },
+	): Promise<IReadWriteWallet> {
 		const wallet: IReadWriteWallet = new Wallet(UUID.random(), {}, this.#profile);
 		wallet.data().set(WalletData.ImportMethod, WalletImportMethod.Address);
 		wallet.data().set(WalletData.Status, WalletFlag.Cold);
