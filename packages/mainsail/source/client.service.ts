@@ -198,7 +198,7 @@ export class ClientService extends Services.AbstractClientService {
 				data = encodeFunctionData({
 					abi: UsernamesAbi.abi,
 					args: [addresses],
-					functionName: "usernames",
+					functionName: "getUsernames",
 				});
 			} catch (encodeError) {
 				throw new Error(`Failed to encode function data: ${(encodeError as Error).message}`);
@@ -214,7 +214,7 @@ export class ClientService extends Services.AbstractClientService {
 				decoded = decodeFunctionResult({
 					abi: UsernamesAbi.abi,
 					data: response.result,
-					functionName: "usernames",
+					functionName: "getUsernames",
 				});
 			} catch (decodeError) {
 				throw new Error(`Failed to decode function result: ${(decodeError as Error).message}`);
