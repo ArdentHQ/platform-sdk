@@ -32,8 +32,8 @@ export class ClientService extends Services.AbstractClientService {
 		return this.dataTransferObjectService.transactions(response.data, this.#createMetaPagination(response));
 	}
 
-	public override async wallet(id: Services.WalletIdentifier, options?: { ttl?: boolean }): Promise<Contracts.WalletData> {
-		const body = await this.#request.get(`wallets/${id.value}`, options);
+	public override async wallet(id: Services.WalletIdentifier, options?: object): Promise<Contracts.WalletData> {
+		const body = await this.#request.get(`wallets/${id.value}`, undefined, "full", options);
 
 		return this.dataTransferObjectService.wallet(body.data);
 	}
