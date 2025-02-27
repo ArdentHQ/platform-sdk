@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Networks } from "@ardenthq/sdk";
+
 import { AppearanceService } from "./appearance.service.js";
 import { Authenticator } from "./authenticator.js";
 import { CoinService } from "./coin.service.js";
@@ -442,8 +443,8 @@ export class Profile implements IProfile {
 	}
 
 	/** {@inheritDoc IProfile.async} */
-	public async sync(): Promise<void> {
-		await this.wallets().restore();
+	public async sync(options?: { networkId?: string, ttl?: number }): Promise<void> {
+		await this.wallets().restore(options);
 	}
 
 	/** {@inheritDoc IProfile.markIntroductoryTutorialAsComplete} */

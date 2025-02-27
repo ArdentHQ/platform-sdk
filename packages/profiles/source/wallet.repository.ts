@@ -289,15 +289,19 @@ export class WalletRepository implements IWalletRepository {
 	}
 
 	/** {@inheritDoc IWalletRepository.restore} */
-	public async restore(): Promise<void> {
+	public async restore(options?: { networkId?: string, ttl?: number }): Promise<void> {
 		const syncWallets = (wallets: object): Promise<IReadWriteWallet[]> =>
-			pqueue([...Object.values(wallets)].map((wallet) => () => this.#restoreWallet(wallet)));
+			pqueue([...Object.values(wallets)].map((wallet) => () => this.#restoreWallet(wallet, { ttl?: options?.ttl })));
 
 		const earlyWallets: Record<string, object> = {};
 		const laterWallets: Record<string, object> = {};
 
 		for (const [id, wallet] of Object.entries(this.#dataRaw)) {
-			const nid: string = wallet.network;
+			const nid: string = data[WalletData.Network]
+
+			if (options?.networkId && nid !== options?.networkId) {
+				continue
+			}
 
 			if (earlyWallets[nid] === undefined) {
 				earlyWallets[nid] = wallet;
@@ -315,7 +319,7 @@ export class WalletRepository implements IWalletRepository {
 		await syncWallets(laterWallets);
 	}
 
-	async #restoreWallet({ id, data }): Promise<void> {
+	async #restoreWallet({ id, data }, options?: { ttl?: number }): Promise<void> {
 		const previousWallet: IReadWriteWallet = this.findById(id);
 
 		if (previousWallet.hasBeenPartiallyRestored()) {
@@ -325,7 +329,7 @@ export class WalletRepository implements IWalletRepository {
 					coin: data[WalletData.Coin],
 					network: data[WalletData.Network],
 					wallet: previousWallet,
-				});
+				}, options);
 			} catch {
 				// If we end up here the wallet had previously been
 				// partially restored but we again failed to fully
@@ -344,12 +348,12 @@ export class WalletRepository implements IWalletRepository {
 		coin: string;
 		network: string;
 		address: string;
-	}): Promise<void> {
+	}, options?: { ttl?: number }): Promise<void> {
 		await retry(
 			async () => {
 				await wallet.mutator().coin(coin, network);
 
-				await wallet.mutator().address({ address });
+				await wallet.mutator().address({ address }, options);
 			},
 			{
 				onFailedAttempt: (error) =>

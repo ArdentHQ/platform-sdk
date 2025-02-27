@@ -78,7 +78,7 @@ export interface IWalletRepository {
 	 * @returns {Promise<void>}
 	 * @memberof IWalletRepository
 	 */
-	restore(): Promise<void>;
+	restore(options?: { networkId?: string, ttl?: number }): Promise<void>;
 
 	/**
 	 * Find a wallet by its ID.
