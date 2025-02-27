@@ -16,7 +16,7 @@ export class WalletSynchroniser implements IWalletSynchroniser {
 	}
 
 	/** {@inheritDoc IWalletSynchroniser.identity} */
-	public async identity(options?: object): Promise<void> {
+	public async identity(options?: { ttl?: number }): Promise<void> {
 		const currentWallet = this.#wallet.getAttributes().get<Contracts.WalletData>("wallet");
 		const currentPublicKey = this.#wallet.data().get<string>(WalletData.PublicKey);
 
