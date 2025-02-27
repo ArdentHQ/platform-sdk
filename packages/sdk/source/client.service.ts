@@ -42,7 +42,7 @@ export class AbstractClientService implements ClientService {
 		throw new NotImplemented(this.constructor.name, this.transactions.name);
 	}
 
-	public async wallet(id: WalletIdentifier): Promise<WalletData> {
+	public async wallet(id: WalletIdentifier,): Promise<WalletData> {
 		throw new NotImplemented(this.constructor.name, this.wallet.name);
 	}
 
