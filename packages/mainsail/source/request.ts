@@ -35,7 +35,7 @@ export class Request {
 
 	public async post(
 		path: string,
-		{ body, searchParams }: { body; searchParams?},
+		{ body, searchParams }: { body; searchParams? },
 		type: Networks.NetworkHostType = "full",
 	): Promise<Contracts.KeyValuePair> {
 		return this.#sendRequest(
