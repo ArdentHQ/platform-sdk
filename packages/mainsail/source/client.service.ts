@@ -191,14 +191,14 @@ export class ClientService extends Services.AbstractClientService {
 		}
 	}
 
-	public override async getUsernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
+	public override async usernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
 		try {
 			let data;
 			try {
 				data = encodeFunctionData({
 					abi: UsernamesAbi.abi,
 					args: [addresses],
-					functionName: "getUsernames",
+					functionName: "usernames",
 				});
 			} catch (encodeError) {
 				throw new Error(`Failed to encode function data: ${(encodeError as Error).message}`);
@@ -214,7 +214,7 @@ export class ClientService extends Services.AbstractClientService {
 				decoded = decodeFunctionResult({
 					abi: UsernamesAbi.abi,
 					data: response.result,
-					functionName: "getUsernames",
+					functionName: "usernames",
 				});
 			} catch (decodeError) {
 				throw new Error(`Failed to decode function result: ${(decodeError as Error).message}`);

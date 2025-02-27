@@ -1,5 +1,5 @@
 import { UsernameDataCollection } from "./usernames.collection.js";
 
 export interface UsernamesService {
-	getUsernames(addresses: string[]): Promise<UsernameDataCollection>;
+	usernames(addresses: string[]): Promise<UsernameDataCollection>;
 }

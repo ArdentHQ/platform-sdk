@@ -78,7 +78,7 @@ export class AbstractClientService implements ClientService {
 		throw new NotImplemented(this.constructor.name, this.evmCall.name);
 	}
 
-	public async getUsernames(addresses: string[]): Promise<UsernameDataCollection> {
-		throw new NotImplemented(this.constructor.name, this.getUsernames.name);
+	public async usernames(addresses: string[]): Promise<UsernameDataCollection> {
+		throw new NotImplemented(this.constructor.name, this.usernames.name);
 	}
 }

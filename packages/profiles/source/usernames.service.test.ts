@@ -28,7 +28,7 @@ describe("UsernamesService", ({ assert, beforeEach, afterEach, it, nock, loader 
 		]);
 
 		clientServiceMock = {
-			getUsernames: stub().resolves(usernameDataCollection),
+			usernames: stub().resolves(usernameDataCollection),
 		};
 
 		profile = new Profile({ avatar: "avatar", data: "", id: "uuid", name: "name" });

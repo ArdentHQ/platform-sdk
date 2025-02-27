@@ -218,8 +218,8 @@ export class ClientService extends Services.AbstractClientService {
 		throw new Exceptions.NotImplemented(this.constructor.name, this.evmCall.name);
 	}
 
-	public override async getUsernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.getUsernames.name);
+	public override async usernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
+		throw new Exceptions.NotImplemented(this.constructor.name, this.usernames.name);
 	}
 
 	#createMetaPagination(body): Services.MetaPagination {

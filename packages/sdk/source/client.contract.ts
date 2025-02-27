@@ -48,7 +48,7 @@ export interface ClientService {
 
 	evmCall(callData: EvmCallData): Promise<EvmCallResponse>;
 
-	getUsernames(addresses: string[]): Promise<UsernameDataCollection>;
+	usernames(addresses: string[]): Promise<UsernameDataCollection>;
 }
 
 export interface ClientPagination {

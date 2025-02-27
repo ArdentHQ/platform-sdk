@@ -8,7 +8,7 @@ describe("UsernamesService", async ({ assert, beforeEach, it, nock }) => {
 	beforeEach(async (context) => {
 		context.subject = await createService(UsernamesService, undefined, (container) => {
 			container.constant(IoC.BindingType.ClientService, {
-				getUsernames: async (addresses: string[]): Promise<Collections.UsernameDataCollection> =>
+				usernames: async (addresses: string[]): Promise<Collections.UsernameDataCollection> =>
 					new Collections.UsernameDataCollection([
 						new DTO.UsernameData({
 							address: "0x93485b57ff3DeD81430D08579142fAe8234c6A17",
@@ -26,7 +26,7 @@ describe("UsernamesService", async ({ assert, beforeEach, it, nock }) => {
 	it("should return a collection of usernames if the request succeeds", async (context) => {
 		const addresses = ["0x93485b57ff3DeD81430D08579142fAe8234c6A17", "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22"];
 
-		const result = await context.subject.getUsernames(addresses);
+		const result = await context.subject.usernames(addresses);
 
 		assert.instance(result, Collections.UsernameDataCollection);
 		assert.length(result.items(), 2);

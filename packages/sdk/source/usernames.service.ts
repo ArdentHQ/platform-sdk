@@ -11,7 +11,7 @@ export class AbstractUsernamesService implements UsernamesService {
 		this.clientService = container.get(BindingType.ClientService);
 	}
 
-	getUsernames(addresses: string[]): Promise<UsernameDataCollection> {
+	usernames(addresses: string[]): Promise<UsernameDataCollection> {
 		return Promise.resolve(new UsernameDataCollection([]));
 	}
 }
