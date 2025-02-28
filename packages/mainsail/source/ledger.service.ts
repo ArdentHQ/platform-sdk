@@ -1,7 +1,6 @@
 import { Buffer } from "buffer";
 import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
-import Eth from "@ledgerhq/hw-app-eth";
 import { Exceptions } from "@mainsail/contracts";
 import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
 
@@ -24,8 +23,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 	public override async connect(): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
-		this.#transport = new Eth(this.#ledger);
-		console.log("[connect]", { transport: this.#transport });
+		throw new Exceptions.NotImplemented(this.constructor.name, this.connect.name);
 	}
 
 	public override async disconnect(): Promise<void> {
