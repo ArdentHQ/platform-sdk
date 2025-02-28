@@ -80,8 +80,8 @@ export abstract class AbstractRequest implements HttpClient {
 		return this;
 	}
 
-	public async get(url: string, query?: object): Promise<HttpResponse> {
-		return this.send("GET", url, { query });
+	public async get(url: string, query?: object, options?: object): Promise<HttpResponse> {
+		return this.send("GET", url, { query }, options);
 	}
 
 	public async head(url: string, query?: object): Promise<HttpResponse> {
@@ -104,5 +104,10 @@ export abstract class AbstractRequest implements HttpClient {
 		return this.send("DELETE", url, { data, query });
 	}
 
-	protected abstract send(method: string, url: string, data?: { query?: object; data?: any }): Promise<HttpResponse>;
+	protected abstract send(
+		method: string,
+		url: string,
+		data?: { query?: object; data?: any },
+		options?: object,
+	): Promise<HttpResponse>;
 }

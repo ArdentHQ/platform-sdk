@@ -25,9 +25,10 @@ export class Request {
 		path: string,
 		query?: Contracts.KeyValuePair,
 		type: Networks.NetworkHostType = "full",
+		options?: object,
 	): Promise<Contracts.KeyValuePair> {
 		return this.#sendRequest(
-			({ host }) => this.#httpClient.get(`${host}/${path}`.replace(/\/$/, ""), query?.searchParams),
+			({ host }) => this.#httpClient.get(`${host}/${path}`.replace(/\/$/, ""), query?.searchParams, options),
 			type,
 		);
 	}

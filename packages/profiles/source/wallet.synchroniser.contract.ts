@@ -14,12 +14,14 @@ export interface IWalletSynchroniser {
 	coin(): Promise<void>;
 
 	/**
-	 * Synchronise the identity.
+	 * Synchronise the wallet identity.
 	 *
+	 * @param {Object} [options]
+	 * @param {number} [options.ttl]
 	 * @return {Promise<void>}
 	 * @memberof IReadWriteWallet
 	 */
-	identity(): Promise<void>;
+	identity(options?: { ttl?: number }): Promise<void>;
 
 	/**
 	 * Synchronise the multi signature.

@@ -32,7 +32,7 @@ export interface ClientService {
 	transaction(id: string): Promise<ConfirmedTransactionData>;
 	transactions(query: ClientTransactionsInput): Promise<ConfirmedTransactionDataCollection>;
 
-	wallet(id: WalletIdentifier): Promise<WalletData>;
+	wallet(id: WalletIdentifier, options?: object): Promise<WalletData>;
 	wallets(query: ClientWalletsInput): Promise<WalletDataCollection>;
 
 	delegate(id: string): Promise<WalletData>;
