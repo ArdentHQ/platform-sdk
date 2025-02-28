@@ -16,6 +16,7 @@ export const Identifiers = {
 	ProfileRepository: Symbol.for("ProfileRepository"),
 	SettingRepository: Symbol.for("SettingRepository"),
 	Storage: Symbol.for("Storage"),
+	UsernamesService: Symbol.for("UsernamesService"),
 	WalletRepository: Symbol.for("WalletRepository"),
 	WalletService: Symbol.for("WalletService"),
 };

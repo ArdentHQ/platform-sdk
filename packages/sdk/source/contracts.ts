@@ -82,4 +82,5 @@ export {
 	TransactionDataMeta,
 	UnspentTransactionData,
 } from "./confirmed-transaction.dto.contract.js";
+export { EvmCallData, EvmCallResponse } from "./evm.contract.js";
 export { RawTransactionData, SignedTransactionData } from "./signed-transaction.dto.contract.js";

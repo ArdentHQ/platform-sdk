@@ -1,4 +1,4 @@
-import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
+import { Collections, Contracts, Exceptions, IoC, Services } from "@ardenthq/sdk";
 import { isNil, uniq } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import dotify from "node-dotify";
@@ -212,6 +212,14 @@ export class ClientService extends Services.AbstractClientService {
 		}
 
 		return result;
+	}
+
+	public override async evmCall(callData: Contracts.EvmCallData): Promise<Contracts.EvmCallResponse> {
+		throw new Exceptions.NotImplemented(this.constructor.name, this.evmCall.name);
+	}
+
+	public override async usernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
+		throw new Exceptions.NotImplemented(this.constructor.name, this.usernames.name);
 	}
 
 	#createMetaPagination(body): Services.MetaPagination {

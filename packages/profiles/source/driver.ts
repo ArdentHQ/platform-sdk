@@ -12,6 +12,7 @@ import { PluginRegistry } from "./plugin-registry.service.js";
 import { IProfile } from "./profile.contract.js";
 import { ProfileSetting } from "./profile.enum.contract.js";
 import { ProfileRepository } from "./profile.repository.js";
+import { UsernamesService } from "./usernames.service.js";
 import { WalletService } from "./wallet.service.js";
 
 export const defaultHostSelector =
@@ -71,5 +72,6 @@ export class DriverFactory {
 		container.singleton(Identifiers.PluginRegistry, PluginRegistry);
 		container.singleton(Identifiers.ProfileRepository, ProfileRepository);
 		container.singleton(Identifiers.WalletService, WalletService);
+		container.singleton(Identifiers.UsernamesService, UsernamesService);
 	}
 }
