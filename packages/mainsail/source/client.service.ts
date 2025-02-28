@@ -1,8 +1,13 @@
-import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
+import { Collections, Contracts, DTO, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { UsernamesAbi } from "@mainsail/evm-contracts";
 import dotify from "node-dotify";
 
+import { decodeFunctionResult, encodeFunctionData } from "viem";
+
 import { Request } from "./request.js";
+import { wellKnownContracts } from "./transaction.service.js";
+
 import { TransactionTypes, trimHexPrefix } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
@@ -153,6 +158,85 @@ export class ClientService extends Services.AbstractClientService {
 		}
 
 		return result;
+	}
+
+	public override async evmCall(callData: Contracts.EvmCallData): Promise<Contracts.EvmCallResponse> {
+		try {
+			const response = await this.#request.post(
+				"",
+				{
+					body: {
+						id: 1,
+						jsonrpc: "2.0",
+						method: "eth_call",
+						params: [
+							{
+								data: callData.data,
+								from: callData.from,
+								to: callData.to,
+							},
+							callData.block || "latest",
+						],
+					},
+				},
+				"evm",
+			);
+
+			return {
+				id: response.id,
+				jsonrpc: response.jsonrpc,
+				result: response.result,
+			};
+		} catch (error) {
+			const errorResponse = (error as any).response?.json();
+			throw new Error(errorResponse?.error?.message || "Failed to make EVM call");
+		}
+	}
+
+	public override async usernames(addresses: string[]): Promise<Collections.UsernameDataCollection> {
+		try {
+			let data;
+			try {
+				data = encodeFunctionData({
+					abi: UsernamesAbi.abi,
+					args: [addresses],
+					functionName: "getUsernames",
+				});
+			} catch (encodeError) {
+				throw new Error(`Failed to encode function data: ${(encodeError as Error).message}`);
+			}
+
+			const response = await this.evmCall({
+				data: data,
+				to: wellKnownContracts.username,
+			});
+
+			let decoded;
+			try {
+				decoded = decodeFunctionResult({
+					abi: UsernamesAbi.abi,
+					data: response.result,
+					functionName: "getUsernames",
+				});
+			} catch (decodeError) {
+				throw new Error(`Failed to decode function result: ${(decodeError as Error).message}`);
+			}
+
+			const usernameDataList = (decoded as any[]).map(
+				(user) =>
+					new DTO.UsernameData({
+						address: user.addr,
+						username: user.username,
+					}),
+			);
+
+			return new Collections.UsernameDataCollection(usernameDataList);
+		} catch (error) {
+			if (error instanceof Error) {
+				throw error;
+			}
+			throw new TypeError("Failed to fetch usernames: Unknown error occurred");
+		}
 	}
 
 	#createMetaPagination(body): Services.MetaPagination {
