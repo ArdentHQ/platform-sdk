@@ -289,18 +289,20 @@ export class WalletRepository implements IWalletRepository {
 	}
 
 	/** {@inheritDoc IWalletRepository.restore} */
-	public async restore(options?: { networkId?: string, ttl?: number }): Promise<void> {
+	public async restore(options?: { networkId?: string; ttl?: number }): Promise<void> {
 		const syncWallets = (wallets: object): Promise<IReadWriteWallet[]> =>
-			pqueue([...Object.values(wallets)].map((wallet) => () => this.#restoreWallet(wallet, { ttl: options?.ttl })));
+			pqueue(
+				[...Object.values(wallets)].map((wallet) => () => this.#restoreWallet(wallet, { ttl: options?.ttl })),
+			);
 
 		const earlyWallets: Record<string, object> = {};
 		const laterWallets: Record<string, object> = {};
 
 		for (const [id, wallet] of Object.entries(this.#dataRaw)) {
-			const nid: string = wallet.data[WalletData.Network]
+			const nid: string = wallet.data[WalletData.Network];
 
 			if (options?.networkId && nid !== options?.networkId) {
-				continue
+				continue;
 			}
 
 			if (earlyWallets[nid] === undefined) {
@@ -324,12 +326,15 @@ export class WalletRepository implements IWalletRepository {
 
 		if (previousWallet.hasBeenPartiallyRestored()) {
 			try {
-				await this.#syncWalletWithNetwork({
-					address: data[WalletData.Address],
-					coin: data[WalletData.Coin],
-					network: data[WalletData.Network],
-					wallet: previousWallet,
-				}, options);
+				await this.#syncWalletWithNetwork(
+					{
+						address: data[WalletData.Address],
+						coin: data[WalletData.Coin],
+						network: data[WalletData.Network],
+						wallet: previousWallet,
+					},
+					options,
+				);
 			} catch {
 				// If we end up here the wallet had previously been
 				// partially restored but we again failed to fully
@@ -338,17 +343,20 @@ export class WalletRepository implements IWalletRepository {
 		}
 	}
 
-	async #syncWalletWithNetwork({
-		address,
-		coin,
-		network,
-		wallet,
-	}: {
-		wallet: IReadWriteWallet;
-		coin: string;
-		network: string;
-		address: string;
-	}, options?: { ttl?: number }): Promise<void> {
+	async #syncWalletWithNetwork(
+		{
+			address,
+			coin,
+			network,
+			wallet,
+		}: {
+			wallet: IReadWriteWallet;
+			coin: string;
+			network: string;
+			address: string;
+		},
+		options?: { ttl?: number },
+	): Promise<void> {
 		await retry(
 			async () => {
 				await wallet.mutator().coin(coin, network);
