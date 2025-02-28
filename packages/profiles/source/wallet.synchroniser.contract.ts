@@ -14,7 +14,7 @@ export interface IWalletSynchroniser {
 	coin(): Promise<void>;
 
 	/**
-	 * Synchronise the identity.
+	 * Synchronise the wallet identity.
 	 *
 	 * @param {Object} [options]
 	 * @param {number} [options.ttl]
