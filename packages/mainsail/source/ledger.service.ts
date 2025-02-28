@@ -8,7 +8,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
 	readonly #addressService!: Services.AddressService;
 	#ledger!: Services.LedgerTransport;
-	#transport!: InstanceType<typeof Eth>;
+	#transport!: unknown;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
