@@ -1,15 +1,14 @@
 import { Coins, Helpers } from "@ardenthq/sdk";
-import { IProfile, IReadWriteWallet } from "../source/contracts";
-
 import { ARK } from "@ardenthq/sdk-ark";
-import { DriverFactory } from "../source/driver";
-import { Profile } from "../source";
 import { Request } from "@ardenthq/sdk-fetch";
-import { StubStorage } from "./stubs/storage";
-import { WalletFactory } from "../source/wallet.factory";
-import { container } from "../source/container";
 import { nock } from "@ardenthq/sdk-test";
 
+import { Profile } from "../source";
+import { container } from "../source/container";
+import { IProfile, IReadWriteWallet } from "../source/contracts";
+import { DriverFactory } from "../source/driver";
+import { WalletFactory } from "../source/wallet.factory";
+import { StubStorage } from "./stubs/storage";
 const coins: Record<string, Coins.Coin> = {};
 
 export const bootContainer = (): void => {

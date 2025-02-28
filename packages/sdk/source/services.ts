@@ -33,6 +33,8 @@ export * from "./signatory.contract.js";
 export * from "./signatory.service.js";
 export * from "./transaction.contract.js";
 export * from "./transaction.service.js";
+export * from "./usernames.contract.js";
+export * from "./usernames.service.js";
 export * from "./wallet-discovery.contract.js";
 export * from "./wallet-discovery.service.js";
 export * from "./wif.contract.js";

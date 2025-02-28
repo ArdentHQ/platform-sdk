@@ -32,6 +32,7 @@ export const BindingType = {
 	SignatoryService: Symbol.for("Coin<SignatoryService>"),
 	Specification: Symbol.for("Coin<Specification>"),
 	TransactionService: Symbol.for("Coin<TransactionService>"),
+	UsernamesService: Symbol.for("Coin<UsernamesService>"),
 	WIFService: Symbol.for("Coin<WIFService>"),
 	WalletDiscoveryService: Symbol.for("Coin<WalletDiscoveryService>"),
 };

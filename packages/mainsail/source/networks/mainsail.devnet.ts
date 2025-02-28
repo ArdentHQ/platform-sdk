@@ -37,6 +37,10 @@ const network: Networks.NetworkManifest = {
 			host: "https://explorer-evm-test.mainsailhq.com",
 			type: "explorer",
 		},
+		{
+			host: "https://dwallets-evm.mainsailhq.com/evm/api",
+			type: "evm",
+		},
 	],
 	id: "mainsail.devnet",
 	importMethods,

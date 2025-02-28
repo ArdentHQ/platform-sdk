@@ -22,6 +22,7 @@ import {
 	AbstractPublicKeyService,
 	AbstractSignatoryService,
 	AbstractTransactionService,
+	AbstractUsernamesService,
 	AbstractWalletDiscoveryService,
 	AbstractWIFService,
 	BigNumberService,
@@ -87,6 +88,9 @@ export class AbstractServiceProvider implements IServiceProvider {
 				BindingType.KnownWalletService,
 				services.KnownWalletService || AbstractKnownWalletService,
 			);
+		}
+		if (container.missing(BindingType.UsernamesService)) {
+			container.singleton(BindingType.UsernamesService, services.UsernamesService || AbstractUsernamesService);
 		}
 
 		if (container.missing(BindingType.LedgerService)) {
