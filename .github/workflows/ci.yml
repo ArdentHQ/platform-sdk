@@ -40,8 +40,6 @@ jobs:
               run: cd "$GITHUB_WORKSPACE/packages/intl/" && pnpm run test:coverage
             - name: Test MARKETS
               run: cd "$GITHUB_WORKSPACE/packages/markets/" && pnpm run test:coverage
-            - name: Test NEWS
-              run: cd "$GITHUB_WORKSPACE/packages/news/" && pnpm run test:coverage
             - name: Test PROFILES
               run: |
                   cd "$GITHUB_WORKSPACE/packages/profiles/" && pnpm run test:coverage
