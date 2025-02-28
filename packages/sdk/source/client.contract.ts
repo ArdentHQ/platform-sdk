@@ -1,9 +1,9 @@
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 
-import { ConfirmedTransactionDataCollection, WalletDataCollection } from "./collections.js";
+import { ConfirmedTransactionDataCollection, UsernameDataCollection, WalletDataCollection } from "./collections.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.contract.js";
-import { KeyValuePair, SignedTransactionData, WalletData } from "./contracts.js";
+import { EvmCallData, EvmCallResponse, KeyValuePair, SignedTransactionData, WalletData } from "./contracts.js";
 import { TransactionType } from "./networks.js";
 
 export type ClientPaginatorCursor = string | number | undefined;
@@ -45,6 +45,10 @@ export interface ClientService {
 	unlockableBalances(id: string): Promise<UnlockTokenResponse>;
 
 	broadcast(transactions: SignedTransactionData[]): Promise<BroadcastResponse>;
+
+	evmCall(callData: EvmCallData): Promise<EvmCallResponse>;
+
+	usernames(addresses: string[]): Promise<UsernameDataCollection>;
 }
 
 export interface ClientPagination {
