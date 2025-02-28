@@ -25,7 +25,7 @@ export interface HttpClient {
 
 	withOptions(options: object): HttpClient;
 
-	get(url: string, query?: object): Promise<HttpResponse>;
+	get(url: string, query?: object, options?: object): Promise<HttpResponse>;
 
 	head(url: string, query?: object): Promise<HttpResponse>;
 

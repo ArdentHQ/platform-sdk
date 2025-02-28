@@ -2,10 +2,12 @@ import { Collections, Contracts, DTO, IoC, Services } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { UsernamesAbi } from "@mainsail/evm-contracts";
 import dotify from "node-dotify";
+
 import { decodeFunctionResult, encodeFunctionData } from "viem";
 
 import { Request } from "./request.js";
 import { wellKnownContracts } from "./transaction.service.js";
+
 import { TransactionTypes, trimHexPrefix } from "./transaction-type.service.js";
 
 export class ClientService extends Services.AbstractClientService {
@@ -35,8 +37,8 @@ export class ClientService extends Services.AbstractClientService {
 		return this.dataTransferObjectService.transactions(response.data, this.#createMetaPagination(response));
 	}
 
-	public override async wallet(id: Services.WalletIdentifier): Promise<Contracts.WalletData> {
-		const body = await this.#request.get(`wallets/${id.value}`);
+	public override async wallet(id: Services.WalletIdentifier, options?: object): Promise<Contracts.WalletData> {
+		const body = await this.#request.get(`wallets/${id.value}`, undefined, "full", options);
 
 		return this.dataTransferObjectService.wallet(body.data);
 	}

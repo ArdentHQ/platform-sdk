@@ -35,7 +35,7 @@ export interface IWalletMutator {
 	 * @return {Promise<void>}
 	 * @memberof IWalletMutator
 	 */
-	address(address: Partial<Services.AddressDataTransferObject>): Promise<void>;
+	address(address: Partial<Services.AddressDataTransferObject>, options?: { ttl?: number }): Promise<void>;
 
 	/**
 	 * Set the avatar.
