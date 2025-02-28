@@ -1,4 +1,4 @@
-import { IoC, Services } from "@ardenthq/sdk";
+import { Collections, IoC, Services } from "@ardenthq/sdk";
 import { describe } from "@ardenthq/sdk-test";
 
 import { createService } from "../test/mocking";
@@ -102,14 +102,14 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 			.query({
 				address: "0x71c3377F6baF114A975A151c4685E600d13636F6",
 				data: "",
-				"timestamp.from": 22076698,
-				"timestamp.to": 31235098,
+				"timestamp.from": 22_076_698,
+				"timestamp.to": 31_235_098,
 			})
 			.reply(200, loader.json(`test/fixtures/client/transactions.json`));
 
 		const result = await context.subject.transactions({
 			identifiers: [{ type: "address", value: "0x71c3377F6baF114A975A151c4685E600d13636F6" }],
-			timestamp: { from: 1725193498, to: 1734351898 },
+			timestamp: { from: 1_725_193_498, to: 1_734_351_898 },
 			type: "transfer",
 		});
 
@@ -265,10 +265,10 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 		assert.equal(result, {
 			accepted: ["accepted-tx"],
-			rejected: ["failed-tx"],
 			errors: {
 				"1": "tx 123 cannot be applied",
 			},
+			rejected: ["failed-tx"],
 		});
 	});
 
@@ -288,10 +288,52 @@ describe("ClientService", async ({ assert, nock, beforeEach, it, loader }) => {
 
 		assert.equal(result, {
 			accepted: ["accepted-tx"],
-			rejected: ["failed-tx"],
 			errors: {
 				"1": "tx 123 cannot be applied",
 			},
+			rejected: ["failed-tx"],
 		});
+	});
+
+	it("should make an EVM call", async (context) => {
+		nock.fake(/.+/).post("/evm/api").reply(200, {
+			id: 1,
+			jsonrpc: "2.0",
+			result: "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000064441524b32300000000000000000000000000000000000000000000000000000",
+		});
+
+		const result = await context.subject.evmCall({
+			data: "0x06fdde03",
+			from: "0x2a74550fC2e741118182B7ab020DC0B7Ed01e1db",
+			to: "0x229597C1CDEF0c1ac974C5aF581b5ef59DF6ecDF",
+		});
+
+		assert.equal(result, {
+			id: 1,
+			jsonrpc: "2.0",
+			result: "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000064441524b32300000000000000000000000000000000000000000000000000000",
+		});
+	});
+
+	it("should retrieve usernames for a list of addresses", async (context) => {
+		const addresses = ["0x93485b57ff3DeD81430D08579142fAe8234c6A17", "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22"];
+
+		nock.fake(/.+/).post("/evm/api").reply(200, {
+			id: 1,
+			jsonrpc: "2.0",
+			result: "0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000006f0182a0cc707b055322ccf6d4cb6a5aff1aeb220000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000f74657374696e67757365726e616d650000000000000000000000000000000000",
+		});
+
+		const result = await context.subject.usernames(addresses);
+
+		assert.instance(result, Collections.UsernameDataCollection);
+
+		const items = result.items();
+
+		assert.equal(items.length, 1);
+
+		const firstItem = items[0];
+		assert.equal(firstItem.address(), "0x6F0182a0cc707b055322CcF6d4CB6a5Aff1aEb22");
+		assert.string(firstItem.username());
 	});
 });
