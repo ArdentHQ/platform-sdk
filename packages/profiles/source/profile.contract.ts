@@ -324,7 +324,7 @@ export interface IProfile {
 	usesPassword(): boolean;
 
 	/**
-	 * Synchronizes the profile with remote data.
+	 * Synchronize the profile.
 	 *
 	 * @param {Object} [options] - Optional settings for synchronization.
 	 * @param {string} [options.networkId]
