@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Networks } from "@ardenthq/sdk";
+
 import {
 	IAppearanceService,
 	IAuthenticator,
@@ -323,12 +324,15 @@ export interface IProfile {
 	usesPassword(): boolean;
 
 	/**
-	 * Synchronise the profile.
+	 * Synchronizes the profile with remote data.
 	 *
-	 * @return {Promise<void>}
+	 * @param {Object} [options] - Optional settings for synchronization.
+	 * @param {string} [options.networkId]
+	 * @param {number} [options.ttl]
+	 * @returns {Promise<void>}
 	 * @memberof IProfile
 	 */
-	sync(): Promise<void>;
+	sync(options?: { networkId?: string; ttl?: number }): Promise<void>;
 
 	/**
 	 * Determine if the profile has been partially restored.
