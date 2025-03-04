@@ -64,6 +64,8 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			network: "ark.devnet",
 		});
 
+		await context.wallet.synchroniser().identity();
+
 		context.subject = new TransactionService(context.wallet);
 	});
 
@@ -126,10 +128,12 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			context.wallet,
 			"citizen door athlete item name various drive onion foster audit board myself",
 		);
+
 		const identity2 = await deriveIdentity(
 			context.wallet,
 			"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
 		);
+
 
 		const id = await context.subject.signMultiSignature({
 			data: {

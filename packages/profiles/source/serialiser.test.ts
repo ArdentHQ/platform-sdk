@@ -114,6 +114,8 @@ describe("WalletSerialiser", ({ beforeAll, beforeEach, assert, loader, each, noc
 			mnemonic: identity.mnemonic,
 			network: "ark.devnet",
 		});
+
+		await context.subject.synchroniser().identity()
 	});
 
 	each(
@@ -125,6 +127,7 @@ describe("WalletSerialiser", ({ beforeAll, beforeEach, assert, loader, each, noc
 			context.subject.data().set(WalletData.Balance, dataset.balance);
 			context.subject.data().set(WalletData.DerivationPath, "1");
 			context.subject.data().set(WalletFlag.Starred, true);
+
 
 			const actual = context.subject.toObject();
 
