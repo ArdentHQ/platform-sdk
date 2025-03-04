@@ -134,7 +134,6 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 			"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
 		);
 
-
 		const id = await context.subject.signMultiSignature({
 			data: {
 				min: 1,

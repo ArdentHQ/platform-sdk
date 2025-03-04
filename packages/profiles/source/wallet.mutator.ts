@@ -78,8 +78,7 @@ export class WalletMutator implements IWalletMutator {
 	}
 
 	/** {@inheritDoc IWalletMutator.address} */
-	public async address(
-		{ address, path, type }: Partial<Services.AddressDataTransferObject>): Promise<void> {
+	public async address({ address, path, type }: Partial<Services.AddressDataTransferObject>): Promise<void> {
 		if (type) {
 			this.#wallet.data().set(WalletData.DerivationType, type);
 		}

@@ -92,7 +92,7 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			network: "ark.devnet",
 		});
 
-		await context.subject.synchroniser().identity()
+		await context.subject.synchroniser().identity();
 	});
 
 	// afterEach(() => jest.restoreAllMocks());
@@ -410,7 +410,7 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 		await context.subject.mutator().coin("ARK", "ark.devnet");
 		await context.subject.mutator().identity(identity.mnemonic);
 
-		await context.subject.synchroniser().identity()
+		await context.subject.synchroniser().identity();
 
 		assert.true(context.subject.hasSyncedWithNetwork());
 	});

@@ -66,7 +66,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			network: "ark.devnet",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
@@ -92,7 +92,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			password: "password",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
 		assert.string(wallet.data().get(WalletData.EncryptedSigningKey));
@@ -215,7 +215,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			network: "ark.devnet",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
@@ -236,7 +236,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			publicKey: "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
@@ -281,7 +281,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			privateKey: "e2511a6022953eb399fbd48f84619c04c894f735aee107b02a7690075ae67617",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
@@ -295,7 +295,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			path: "m/44",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
@@ -308,7 +308,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			wif: "SHA89yQdW3bLFYyCvEBpn7ngYNR8TEojGCC1uAJjT5esJPm1NiG3",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");
@@ -330,7 +330,7 @@ describe("WalletFactory", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			wif: "6PYRydorcUPgUAtyd8KQCPd3YHo3vBAmSkBmwFcbEj7W4wBWoQ4JjxLj2d",
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		assert.is(wallet.address(), "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW");
 		assert.is(wallet.publicKey(), "030fde54605c5d53436217a2849d276376d0b0f12c71219cd62b0a4539e1e75acd");

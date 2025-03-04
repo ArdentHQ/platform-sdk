@@ -28,7 +28,7 @@ export const generateWalletsFromMnemonics = async ({
 			mnemonic,
 		});
 
-		await wallet.synchroniser().identity()
+		await wallet.synchroniser().identity();
 
 		wallets.push({
 			wallet,

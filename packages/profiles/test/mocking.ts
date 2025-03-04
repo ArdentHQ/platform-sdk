@@ -81,7 +81,7 @@ export const importByMnemonic = async (
 		network,
 	});
 
-	await wallet.synchroniser().identity()
+	await wallet.synchroniser().identity();
 
 	profile.wallets().push(wallet);
 
@@ -104,7 +104,7 @@ export const importByAddressWithDerivationPath = async (
 		path,
 	});
 
-	await wallet.synchroniser().identity()
+	await wallet.synchroniser().identity();
 
 	profile.wallets().push(wallet);
 
@@ -119,7 +119,7 @@ export const generateWallet = async (profile: IProfile, coin: string, network: s
 		network,
 	});
 
-	await wallet.synchroniser().identity()
+	await wallet.synchroniser().identity();
 
 	profile.wallets().push(wallet);
 
