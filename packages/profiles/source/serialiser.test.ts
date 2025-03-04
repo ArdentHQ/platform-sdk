@@ -116,6 +116,7 @@ describe("WalletSerialiser", ({ beforeAll, beforeEach, assert, loader, each, noc
 		});
 
 		await context.subject.synchroniser().identity();
+
 	});
 
 	each(
