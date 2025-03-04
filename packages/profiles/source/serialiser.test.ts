@@ -114,6 +114,8 @@ describe("WalletSerialiser", ({ beforeAll, beforeEach, assert, loader, each, noc
 			mnemonic: identity.mnemonic,
 			network: "ark.devnet",
 		});
+
+		await context.subject.synchroniser().identity();
 	});
 
 	each(

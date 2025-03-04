@@ -36,6 +36,8 @@ const importByMnemonic = async (context, mnemonic, coin, network, bip) => {
 		network,
 	});
 
+	await wallet.synchroniser().identity();
+
 	context.subject.push(wallet);
 
 	return wallet;

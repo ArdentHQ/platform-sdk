@@ -73,6 +73,8 @@ describe("WalletSynchroniser", ({ beforeAll, beforeEach, loader, nock, assert, s
 			network: "ark.devnet",
 		});
 
+		await context.wallet.synchroniser().identity();
+
 		context.actsWithMnemonic = context.actsWithMnemonic ?? stub(context.wallet, "actsWithMnemonic");
 	});
 
@@ -88,6 +90,7 @@ describe("WalletSynchroniser", ({ beforeAll, beforeEach, loader, nock, assert, s
 			password: "password",
 		});
 
+		await context.wallet.synchroniser().identity();
 		await assert.resolves(() => new WalletSynchroniser(context.wallet).coin());
 	});
 
@@ -101,6 +104,8 @@ describe("WalletSynchroniser", ({ beforeAll, beforeEach, loader, nock, assert, s
 		await context.wallet
 			.mutator()
 			.identity("nuclear anxiety mandate board property fade chief mule west despair photo fiber");
+
+		await context.wallet.synchroniser().identity();
 
 		await new WalletSynchroniser(context.wallet).multiSignature();
 
