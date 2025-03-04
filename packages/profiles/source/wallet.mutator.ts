@@ -79,9 +79,7 @@ export class WalletMutator implements IWalletMutator {
 
 	/** {@inheritDoc IWalletMutator.address} */
 	public async address(
-		{ address, path, type }: Partial<Services.AddressDataTransferObject>,
-		options?: { ttl?: number },
-	): Promise<void> {
+		{ address, path, type }: Partial<Services.AddressDataTransferObject>): Promise<void> {
 		if (type) {
 			this.#wallet.data().set(WalletData.DerivationType, type);
 		}
@@ -93,8 +91,6 @@ export class WalletMutator implements IWalletMutator {
 		this.#wallet.data().set(WalletData.Address, address);
 
 		this.avatar(this.#wallet.address());
-
-		await this.#wallet.synchroniser().identity({ ttl: options?.ttl });
 	}
 
 	/** {@inheritDoc IWalletMutator.avatar} */
