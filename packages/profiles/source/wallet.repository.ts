@@ -360,7 +360,8 @@ export class WalletRepository implements IWalletRepository {
 		await retry(
 			async () => {
 				await wallet.mutator().coin(coin, network);
-				await wallet.mutator().address({ address }, options);
+				await wallet.mutator().address({ address });
+				await wallet.synchroniser().identity(options);
 			},
 			{
 				onFailedAttempt: (error) =>
