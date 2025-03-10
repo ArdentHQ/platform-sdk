@@ -3,7 +3,7 @@ import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
 import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
-import { LedgerTransportInstance } from "./ledger.service.types.js";
+import { SetupLedgerFactory } from "./ledger.service.types.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
