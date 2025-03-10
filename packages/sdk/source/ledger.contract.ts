@@ -6,7 +6,7 @@ export type LedgerTransportFactory = () => Promise<LedgerTransport>;
 export type LedgerWalletList = Record<string, WalletData>;
 
 export interface LedgerService {
-	connect(): Promise<void>;
+	connect(connect?: (transport: LedgerTransportFactory) => void): Promise<void>;
 
 	disconnect(): Promise<void>;
 

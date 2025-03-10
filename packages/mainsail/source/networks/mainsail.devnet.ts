@@ -1,6 +1,6 @@
-import { explorer, featureFlags, importMethods, transactions } from "./shared.js";
-
 import { Networks } from "@ardenthq/sdk";
+
+import { explorer, featureFlags, importMethods, transactions } from "./shared.js";
 
 const network: Networks.NetworkManifest = {
 	coin: "Mainsail",

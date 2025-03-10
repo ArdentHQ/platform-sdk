@@ -3,12 +3,13 @@ import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
 import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
+import { LedgerTransportFactory } from "@ardenthq/sdk/distribution/esm/ledger.contract.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
 	readonly #addressService!: Services.AddressService;
 	#ledger!: Services.LedgerTransport;
-	#transport!: unknown;
+	#transport!: any;
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -21,9 +22,9 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return this.disconnect();
 	}
 
-	public override async connect(): Promise<void> {
+	public override async connect(transport: (transport: LedgerTransportFactory) => any): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
-		throw new Exceptions.NotImplemented(this.constructor.name, this.connect.name);
+		this.#transport = transport?.(this.#ledger);
 	}
 
 	public override async disconnect(): Promise<void> {
@@ -33,15 +34,18 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getVersion(): Promise<string> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.getVersion.name);
+		// @TODO: fix hardcoded version.
+		return "1"
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.getPublicKey.name);
+		const result = await this.#transport.getAddress(path);
+		return result.publicKey;
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.getExtendedPublicKey.name);
+		// @TODO: revisit.
+		return this.getPublicKey(path)
 	}
 
 	public override async signTransaction(path: string, payload: Buffer): Promise<string> {
