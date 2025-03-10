@@ -5,7 +5,7 @@ import { IContainer } from "./container.contracts.js";
 import { WalletData } from "./contracts.js";
 import { DataTransferObjectService } from "./data-transfer-object.contract.js";
 import { NotImplemented } from "./exceptions.js";
-import { LedgerService, LedgerTransportFactory, LedgerWalletList } from "./ledger.contract.js";
+import { LedgerService, LedgerTransportFactory, LedgerWalletList, SetupLedgerFactory } from "./ledger.contract.js";
 import { BindingType } from "./service-provider.contract.js";
 
 export class AbstractLedgerService implements LedgerService {
@@ -24,7 +24,7 @@ export class AbstractLedgerService implements LedgerService {
 		return this.disconnect();
 	}
 
-	public async connect(): Promise<void> {
+	public async connect(_?: SetupLedgerFactory): Promise<void> {
 		throw new NotImplemented(this.constructor.name, this.connect.name);
 	}
 
