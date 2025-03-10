@@ -3,7 +3,7 @@ import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
 import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
-import { LedgerTransportFactory } from "@ardenthq/sdk/distribution/esm/ledger.contract.js";
+import { LedgerTransportInstance } from "./ledger.service.types.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
@@ -22,9 +22,9 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return this.disconnect();
 	}
 
-	public override async connect(transport: (transport: LedgerTransportFactory) => any): Promise<void> {
+	public override async connect(setupTransport: SetupLedgerFactory): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
-		this.#transport = transport?.(this.#ledger);
+		this.#transport = setupTransport?.(this.#ledger);
 	}
 
 	public override async disconnect(): Promise<void> {
