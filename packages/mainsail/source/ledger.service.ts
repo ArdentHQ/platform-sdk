@@ -35,7 +35,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 	public override async getVersion(): Promise<string> {
 		// @TODO: fix hardcoded version.
-		return "1"
+		return "1";
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
@@ -45,7 +45,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
 		// @TODO: revisit.
-		return this.getPublicKey(path)
+		return this.getPublicKey(path);
 	}
 
 	public override async signTransaction(path: string, payload: Buffer): Promise<string> {

@@ -6,6 +6,6 @@ export interface LedgerDerivationScheme {
 	address?: number;
 }
 
-export type LedgerTransport = any
-export type LedgerTransportInstance = any
-export type SetupLedgerFactory = (transport: LedgerTransport) => LedgerTransportInstance
+export type LedgerTransport = any;
+export type LedgerTransportInstance = any;
+export type SetupLedgerFactory = (transport: LedgerTransport) => LedgerTransportInstance;
