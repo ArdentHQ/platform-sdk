@@ -34,7 +34,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getVersion(): Promise<string> {
-		// @TODO: fix hardcoded version.
+		// @TODO: fix hardcoded number.
 		return "1";
 	}
 
