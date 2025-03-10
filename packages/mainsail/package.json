@@ -58,6 +58,7 @@
 		"lodash.get": "^4.4.2",
 		"lodash.set": "^4.3.2",
 		"node-dotify": "^1.1.0",
+		"typescript-crypto": "link:../../../typescript-crypto",
 		"viem": "^2.21.51"
 	},
 	"devDependencies": {
