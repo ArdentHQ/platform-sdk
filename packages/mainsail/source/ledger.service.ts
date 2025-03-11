@@ -77,8 +77,8 @@ export class LedgerService extends Services.AbstractLedgerService {
 			initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
 		}
 
-		const ledgerWallets: Services.LedgerWalletList = {};
 		const compressedPublicKey = await this.getExtendedPublicKey(path);
+		const ledgerWallets: Services.LedgerWalletList = {};
 
 		for (const addressIndexIterator of createRange(page, pageSize)) {
 			const addressIndex = initialAddressIndex + addressIndexIterator;
