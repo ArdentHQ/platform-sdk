@@ -96,7 +96,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 			});
 		}
 
-		return ledgerWallets
+		return ledgerWallets;
 	}
 
 	public override async isNanoS(): Promise<boolean> {
