@@ -1,17 +1,15 @@
-import { IoC, Services } from "@ardenthq/sdk";
-import { BIP39 } from "@ardenthq/sdk-cryptography";
-import { abort_if, abort_unless } from "@ardenthq/sdk-helpers";
 import { Address, PublicKey } from "typescript-crypto";
+import { abort_if, abort_unless } from "@ardenthq/sdk-helpers";
 
-export class AddressService extends Services.AbstractAddressService {
-	public constructor(container: IoC.IContainer) {
-		super(container);
+import { BIP39 } from "@ardenthq/sdk-cryptography";
+import { Services } from "@ardenthq/sdk";
+
+export class AddressService {
+	public constructor() {
+		//
 	}
 
-	public override async fromMnemonic(
-		mnemonic: string,
-		options?: Services.IdentityOptions,
-	): Promise<Services.AddressDataTransferObject> {
+	public fromMnemonic(mnemonic: string): Services.AddressDataTransferObject {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
@@ -20,27 +18,21 @@ export class AddressService extends Services.AbstractAddressService {
 		};
 	}
 
-	public override async fromPublicKey(
-		publicKey: string,
-		options?: Services.IdentityOptions,
-	): Promise<Services.AddressDataTransferObject> {
+	public fromPublicKey(publicKey: string): Services.AddressDataTransferObject {
 		return {
 			address: Address.fromPublicKey(publicKey),
 			type: "bip39",
 		};
 	}
 
-	public override async fromPrivateKey(
-		privateKey: string,
-		options?: Services.IdentityOptions,
-	): Promise<Services.AddressDataTransferObject> {
+	public fromPrivateKey(privateKey: string): Services.AddressDataTransferObject {
 		return {
 			address: Address.fromPrivateKey(privateKey),
 			type: "bip39",
 		};
 	}
 
-	public override async fromSecret(secret: string): Promise<Services.AddressDataTransferObject> {
+	public fromSecret(secret: string): Services.AddressDataTransferObject {
 		abort_if(BIP39.compatible(secret), "The given value is BIP39 compliant. Please use [fromMnemonic] instead.");
 
 		const publicKey = PublicKey.fromPassphrase(secret);
@@ -50,7 +42,7 @@ export class AddressService extends Services.AbstractAddressService {
 		};
 	}
 
-	public override async validate(address: string): Promise<boolean> {
+	public validate(address: string): boolean {
 		return Address.validate(address);
 	}
 }
