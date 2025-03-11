@@ -8,6 +8,7 @@ import { SetupLedgerFactory } from "./ledger.service.types.js";
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
 	readonly #addressService!: Services.AddressService;
+	readonly #dataTransferObjectService: DataTransferObjectService;
 	#ledger!: Services.LedgerTransport;
 	#transport!: any;
 
@@ -16,6 +17,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 		this.#clientService = container.get(IoC.BindingType.ClientService);
 		this.#addressService = container.get(IoC.BindingType.AddressService);
+		this.#dataTransferObjectService = container.get(IoC.BindingType.DataTransferObjectService);
 	}
 
 	public override async onPreDestroy(): Promise<void> {
@@ -62,69 +64,39 @@ export class LedgerService extends Services.AbstractLedgerService {
 		onProgress?: (wallet: Contracts.WalletData) => void;
 	}): Promise<Services.LedgerWalletList> {
 		const pageSize = 5;
-		let page = 0;
+		const page = 0;
 		const slip44 = this.configRepository.get<number>("network.constants.slip44");
 
-		const addressCache: Record<string, { address: string; publicKey: string }> = {};
+		const addresses: Record<string, { address: string; publicKey: string }> = {};
+		const path = `m/44'/${slip44}'/0'`;
 
-		let hasMore = true;
+		let initialAddressIndex = 0;
 
-		const walletsCollection: Contracts.WalletData[] = [];
+		if (options?.startPath) {
+			// Get the address index from expected format `m/purpose'/coinType'/account'/change/addressIndex`
+			initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
+		}
 
-		do {
-			const addresses: string[] = [];
+		const ledgerWallets: Services.LedgerWalletList = {};
+		const compressedPublicKey = await this.getExtendedPublicKey(path);
 
-			const path = `m/44'/${slip44}'/0'`;
-			let initialAddressIndex = 0;
+		for (const addressIndexIterator of createRange(page, pageSize)) {
+			const addressIndex = initialAddressIndex + addressIndexIterator;
 
-			if (options?.startPath) {
-				// Get the address index from expected format `m/purpose'/coinType'/account'/change/addressIndex`
-				initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
-			}
+			const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
+				.derive(`m/0/${addressIndex}`)
+				.publicKey.toString("hex");
 
-			/**
-			 * @remarks
-			 * This is the new BIP44 compliant derivation which will be used by default.
-			 */
-			const compressedPublicKey = await this.getExtendedPublicKey(path);
+			const { address } = await this.#addressService.fromPublicKey(publicKey);
 
-			for (const addressIndexIterator of createRange(page, pageSize)) {
-				const addressIndex = initialAddressIndex + addressIndexIterator;
-				const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
-					.derive(`m/0/${addressIndex}`)
-					.publicKey.toString("hex");
+			ledgerWallets[`${path}/0/${addressIndex}`] = this.#dataTransferObjectService.wallet({
+				address,
+				balance: 0,
+				publicKey,
+			});
+		}
 
-				const { address } = await this.#addressService.fromPublicKey(publicKey);
-
-				addresses.push(address);
-
-				addressCache[`${path}/0/${addressIndex}`] = { address, publicKey };
-			}
-
-			const collections = await Promise.all(
-				chunk(addresses, 50).map((addresses: string[]) =>
-					this.#clientService.wallets({
-						identifiers: [...addresses].map((address: string) => ({ type: "address", value: address })),
-					}),
-				),
-			);
-
-			const batchWalletsCollection = collections.flatMap((collection) => collection.items());
-
-			if (options?.onProgress !== undefined) {
-				for (const item of batchWalletsCollection) {
-					options.onProgress(item);
-				}
-			}
-
-			walletsCollection.push(...batchWalletsCollection);
-
-			hasMore = collections.some((collection) => collection.isNotEmpty());
-
-			page++;
-		} while (hasMore);
-
-		return this.mapPathsToWallets(addressCache, walletsCollection);
+		return ledgerWallets
 	}
 
 	public override async isNanoS(): Promise<boolean> {
