@@ -8,7 +8,7 @@ import { SetupLedgerFactory } from "./ledger.service.types.js";
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
 	readonly #addressService!: Services.AddressService;
-	readonly #dataTransferObjectService: DataTransferObjectService;
+	readonly #dataTransferObjectService: Services.DataTransferObjectService;
 	#ledger!: Services.LedgerTransport;
 	#transport!: any;
 
