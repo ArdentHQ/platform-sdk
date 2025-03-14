@@ -5,7 +5,7 @@ import { explorer, featureFlags, importMethods, transactions } from "./shared.js
 const network: Networks.NetworkManifest = {
 	coin: "Mainsail",
 	constants: {
-		epoch: "2017-03-21T13:00:00.000Z",
+		epoch: "2023-12-21T00:00:00.000Z",
 		slip44: 111,
 	},
 	currency: {
@@ -22,27 +22,46 @@ const network: Networks.NetworkManifest = {
 	},
 	hosts: [
 		{
-			host: "https://ark-live.arkvault.io/api",
+			host: "https://dwallets-evm.mainsailhq.com/api",
 			type: "full",
+		},
+		{
+			host: "https://dwallets-evm.mainsailhq.com/tx/api",
+			type: "tx",
 		},
 		{
 			host: "https://musig-demo.mainsailhq.com",
 			type: "musig",
 		},
 		{
-			host: "https://live.arkscan.io",
+			host: "https://explorer-evm-test.mainsailhq.com",
 			type: "explorer",
+		},
+		{
+			host: "https://dwallets-evm.mainsailhq.com/evm/api",
+			type: "evm",
 		},
 	],
 	id: "mainsail.mainnet",
 	importMethods,
-	knownWallets: "https://raw.githubusercontent.com/ArkEcosystem/common/master/mainnet/known-wallets-extended.json",
+	knownWallets:
+		"https://raw.githubusercontent.com/ArkEcosystem/common/master/mainsail/devnet/known-wallets-extended.json",
 	meta: {
-		fastDelegateSync: true,
-		nethash: "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988",
+		chainId: 10_000,
+		// fastDelegateSync: true,
+		nethash: "c481dea3dcc13708364e576dff94dd499692b56cbc646d5acd22a3902297dd51",
+		slip44: 111,
+		wif: 186,
 	},
 	name: "Mainnet",
-	transactions,
+	transactions: {
+		...transactions,
+		fees: {
+			ticker: "ARK",
+			type: "dynamic",
+		},
+		multiPaymentRecipients: 128,
+	},
 	type: "live",
 };
 
