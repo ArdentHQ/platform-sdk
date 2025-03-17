@@ -33,6 +33,7 @@ import { CountAggregate } from "./count.aggregate.js";
 import { DataRepository } from "./data.repository.js";
 import { ExchangeTransactionRepository } from "./exchange-transaction.repository.js";
 import { AttributeBag } from "./helpers/attribute-bag.js";
+import { Avatar } from "./helpers/avatar.js";
 import { IHostRepository } from "./host.repository.contract.js";
 import { HostRepository } from "./host.repository.js";
 import { INetworkRepository } from "./network.repository.contract.js";
@@ -270,7 +271,7 @@ export class Profile implements IProfile {
 	}
 
 	/** {@inheritDoc IProfile.avatar} */
-	public avatar(): string | undefined {
+	public avatar(): string {
 		const avatarFromSettings: string | undefined = this.settings().get(ProfileSetting.Avatar);
 
 		if (avatarFromSettings) {
@@ -281,7 +282,7 @@ export class Profile implements IProfile {
 			return this.#attributes.get<string>("avatar");
 		}
 
-		return undefined;
+		return Avatar.make(this.name());
 	}
 
 	/** {@inheritDoc IProfile.appearance} */

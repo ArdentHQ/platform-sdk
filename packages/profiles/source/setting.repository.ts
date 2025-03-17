@@ -34,7 +34,7 @@ export class SettingRepository implements ISettingRepository {
 	}
 
 	/** {@inheritDoc ISettingRepository.set} */
-	public set(key: string, value: string | number | boolean | object | undefined): void {
+	public set(key: string, value: string | number | boolean | object): void {
 		/* istanbul ignore next */
 		if (this.#isUnknownKey(key)) {
 			/* istanbul ignore next */
