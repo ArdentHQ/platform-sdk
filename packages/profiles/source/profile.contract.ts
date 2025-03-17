@@ -115,7 +115,7 @@ export interface IProfile {
 	 * @return {string}
 	 * @memberof IProfile
 	 */
-	avatar(): string;
+	avatar(): string | undefined;
 
 	/**
 	 * Get the appearance service instance.

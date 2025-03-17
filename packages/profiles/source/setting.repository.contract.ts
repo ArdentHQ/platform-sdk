@@ -39,7 +39,7 @@ export interface ISettingRepository {
 	 * @param {(string | number | boolean | object)} value
 	 * @memberof ISettingRepository
 	 */
-	set(key: string, value: string | number | boolean | object): void;
+	set(key: string, value: string | number | boolean | object | undefined): void;
 
 	/**
 	 * Fill the storage with settings data.
