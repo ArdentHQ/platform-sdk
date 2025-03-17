@@ -49,7 +49,7 @@ const network: Networks.NetworkManifest = {
 	meta: {
 		chainId: 10_000,
 		// fastDelegateSync: true,
-		nethash: "c481dea3dcc13708364e576dff94dd499692b56cbc646d5acd22a3902297dd51",
+		nethash: "a7206fa9d82a0896ddb26839e36eb75d4bb6da64a5e85eaf5d46a5435bef1fa5",
 		slip44: 111,
 		wif: 186,
 	},
