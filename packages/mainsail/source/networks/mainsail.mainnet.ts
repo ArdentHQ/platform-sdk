@@ -57,7 +57,7 @@ const network: Networks.NetworkManifest = {
 	transactions: {
 		...transactions,
 		fees: {
-			ticker: "ARK",
+			ticker: "MARK",
 			type: "dynamic",
 		},
 		multiPaymentRecipients: 128,
