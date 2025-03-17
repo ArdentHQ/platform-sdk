@@ -30,11 +30,8 @@ export class Avatar {
 		const colorIndex = Math.floor(rng() * COLORS.length);
 		const selectedColor = COLORS[colorIndex];
 
-		const svg = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-                <rect width="100" height="100" fill="#${selectedColor}"/>
-            </svg>
-        `.trim();
+		const svg =
+			`<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="#${selectedColor}"/></svg>`;
 
 		memory[seed] = svg;
 		return svg;
