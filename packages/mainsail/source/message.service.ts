@@ -1,21 +1,24 @@
-import { Hash as ARK } from "./crypto/hash.js";
-import { Hash } from "@ardenthq/sdk-cryptography";
+import { Message } from "@arkecosystem/typescript-crypto";
 import { Services } from "@ardenthq/sdk";
 
-export class MessageService extends Services.AbstractMessageService {
-	public override async sign(input: Services.MessageInput): Promise<Services.SignedMessage> {
+export class MessageService {
+	public async sign(input: Services.MessageInput): Promise<Services.SignedMessage> {
+		const signedMessage = await Message.sign(input.message, input.signatory.privateKey());
+
 		return {
-			message: input.message,
-			signatory: input.signatory.publicKey(),
-			signature: ARK.signSchnorr(Hash.sha256(input.message), {
-				publicKey: input.signatory.publicKey(),
-				privateKey: input.signatory.privateKey(),
-				compressed: false,
-			}),
+			message: signedMessage.message,
+			signatory: signedMessage.publicKey,
+			signature: signedMessage.signature,
 		};
 	}
 
-	public override async verify(input: Services.SignedMessage): Promise<boolean> {
-		return ARK.verifySchnorr(Hash.sha256(input.message), input.signature, input.signatory);
+	public verify(input: Services.SignedMessage): boolean {
+		const message = new Message({
+			publicKey: input.signatory,
+			signature: input.signature,
+			message: input.message,
+		});
+
+		return message.verify();
 	}
 }

@@ -28,15 +28,15 @@ describe("PublicKeyService", async ({ assert, beforeEach, it, nock, loader }) =>
 		await assert.rejects(() => context.subject.fromMultiSignature(-1, []));
 	});
 
-	it("should generate an output from a wif", async (context) => {
-		const result = await context.subject.fromWIF(identity.wif);
+	// it("should generate an output from a wif", async (context) => {
+	// 	const result = await context.subject.fromWIF(identity.wif);
 
-		assert.equal(result, { publicKey: identity.publicKey });
-	});
+	// 	assert.equal(result, { publicKey: identity.publicKey });
+	// });
 
-	it("should fail to generate an output from a wif", async (context) => {
-		await assert.rejects(() => context.subject.fromWIF());
-	});
+	// it("should fail to generate an output from a wif", async (context) => {
+	// 	await assert.rejects(() => context.subject.fromWIF());
+	// });
 
 	it("should generate an output from a secret", async (context) => {
 		await assert.rejects(

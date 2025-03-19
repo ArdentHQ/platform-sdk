@@ -1,9 +1,8 @@
-import { Signatories } from "@ardenthq/sdk";
-import { describe } from "@ardenthq/sdk-test";
-
-import { identity } from "../test/fixtures/identity";
-import { createService } from "../test/mocking";
 import { MessageService } from "./message.service.js";
+import { Signatories } from "@ardenthq/sdk";
+import { createService } from "../test/mocking";
+import { describe } from "@ardenthq/sdk-test";
+import { identity } from "../test/fixtures/identity";
 
 describe("MessageService", async ({ assert, beforeEach, it, nock, loader }) => {
 	beforeEach(async (context) => {
