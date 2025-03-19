@@ -1,13 +1,13 @@
 import { Buffer } from "buffer";
-import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
+import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
-import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
+import { createRange } from "./ledger.service.helpers.js";
 import { SetupLedgerFactory } from "./ledger.service.types.js";
+import { AddressService } from "./address.service.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
-	readonly #clientService!: Services.ClientService;
-	readonly #addressService!: Services.AddressService;
+	readonly #addressService!: AddressService;
 	readonly #dataTransferObjectService: Services.DataTransferObjectService;
 	#ledger!: Services.LedgerTransport;
 	#transport!: any;
@@ -15,8 +15,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
-		this.#clientService = container.get(IoC.BindingType.ClientService);
-		this.#addressService = container.get(IoC.BindingType.AddressService);
+		this.#addressService = new AddressService();
 		this.#dataTransferObjectService = container.get(IoC.BindingType.DataTransferObjectService);
 	}
 
@@ -87,7 +86,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 				.derive(`m/0/${addressIndex}`)
 				.publicKey.toString("hex");
 
-			const { address } = await this.#addressService.fromPublicKey(publicKey);
+			const { address } = this.#addressService.fromPublicKey(publicKey);
 
 			ledgerWallets[`${path}/0/${addressIndex}`] = this.#dataTransferObjectService.wallet({
 				address,

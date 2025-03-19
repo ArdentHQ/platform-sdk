@@ -1,13 +1,7 @@
 import { IoC, Services, Signatories } from "@ardenthq/sdk";
-import { describe } from "@ardenthq/sdk-test";
 
-import { createService } from "../test/mocking";
-import { identity } from "../test/wallets";
-import { AddressService } from "./address.service.js";
 import { ClientService } from "./client.service.js";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
-import { formatUnits } from "./helpers/format-units.js";
-import { parseUnits } from "./helpers/parse-units.js";
 import { KeyPairService } from "./key-pair.service.js";
 import { LedgerService } from "./ledger.service.js";
 import { MultiSignatureService } from "./multi-signature.service.js";
@@ -16,6 +10,11 @@ import { PublicKeyService } from "./public-key.service.js";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { TransactionService } from "./transaction.service.js";
 import { WalletData } from "./wallet.dto.js";
+import { createService } from "../test/mocking";
+import { describe } from "@ardenthq/sdk-test";
+import { formatUnits } from "./helpers/format-units.js";
+import { identity } from "../test/wallets";
+import { parseUnits } from "./helpers/parse-units.js";
 
 describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) => {
 	beforeAll(async (context) => {
@@ -28,7 +27,6 @@ describe("TransactionService", async ({ assert, beforeAll, nock, it, loader }) =
 				WalletData,
 			});
 			container.singleton(IoC.BindingType.DataTransferObjectService, Services.AbstractDataTransferObjectService);
-			container.singleton(IoC.BindingType.AddressService, AddressService);
 			container.singleton(IoC.BindingType.ClientService, ClientService);
 			container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
 			container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
