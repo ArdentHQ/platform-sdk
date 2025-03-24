@@ -1,6 +1,6 @@
 import { describe } from "@ardenthq/sdk-test";
 
-import { data, passphrase } from "../../../test/crypto/identity.json";
+import { data, passphrase } from "../../../test/crypto/identity.json" with { type: "json" };
 import { configManager } from "../managers/config.js";
 import { Address } from "./address.js";
 import { Keys } from "./keys.js";

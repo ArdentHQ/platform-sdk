@@ -21,7 +21,7 @@ import fs from "fs-extra";
 import { identity } from "../test/fixtures/identity";
 import { importByMnemonic } from "../test/mocking";
 import { resolve } from "path";
-import storageData from "../test/fixtures/env-storage.json";
+import storageData from "../test/fixtures/env-storage.json" with { type: "json" };
 
 const makeSubject = async (context) => {
 	context.subject = new Environment({

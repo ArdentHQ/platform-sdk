@@ -2,10 +2,10 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
 
-import CryptoConfiguration from "../test/fixtures/client/cryptoConfiguration.json";
-import Fixture from "../test/fixtures/client/transaction.json";
-import MultipaymentFixtures from "../test/fixtures/client/transactions.json";
-import VoteFixtures from "../test/fixtures/client/votes.json";
+import CryptoConfiguration from "../test/fixtures/client/cryptoConfiguration.json" with { type: "json" };
+import Fixture from "../test/fixtures/client/transaction.json" with { type: "json" };
+import MultipaymentFixtures from "../test/fixtures/client/transactions.json" with { type: "json" };
+import VoteFixtures from "../test/fixtures/client/votes.json" with { type: "json" };
 import { createService } from "../test/mocking";
 import { ConfirmedTransactionData } from "./confirmed-transaction.dto.js";
 

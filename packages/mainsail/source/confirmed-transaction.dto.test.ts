@@ -3,11 +3,11 @@ import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
 
-import TransferFixture from "../test/fixtures/client/transfer-transaction.json";
-import UnvoteFixture from "../test/fixtures/client/unvote-transaction.json";
-import ValidatorRegistrationFixture from "../test/fixtures/client/validator-registration-transaction.json";
-import ValidatorResignationFixture from "../test/fixtures/client/validator-resignation-transaction.json";
-import VoteFixture from "../test/fixtures/client/vote-transaction.json";
+import TransferFixture from "../test/fixtures/client/transfer-transaction.json" with { type: "json" };
+import UnvoteFixture from "../test/fixtures/client/unvote-transaction.json" with { type: "json" };
+import ValidatorRegistrationFixture from "../test/fixtures/client/validator-registration-transaction.json" with { type: "json" };
+import ValidatorResignationFixture from "../test/fixtures/client/validator-resignation-transaction.json" with { type: "json" };
+import VoteFixture from "../test/fixtures/client/vote-transaction.json" with { type: "json" };
 import { createService } from "../test/mocking";
 import { AddressService } from "./address.service";
 import { BindingType } from "./coin.contract";

@@ -1,7 +1,7 @@
 import { describe } from "@ardenthq/sdk-test";
 import { WIF } from "@ardenthq/sdk-cryptography";
 
-import { data, passphrase } from "../../../test/crypto/identity.json";
+import { data, passphrase } from "../../../test/crypto/identity.json" with { type: "json" };
 import { Address } from "./address.js";
 import { Keys } from "./keys.js";
 

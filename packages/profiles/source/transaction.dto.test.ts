@@ -3,7 +3,7 @@ import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
 
 import { identity } from "../test/fixtures/identity";
-import { data as secondWallet } from "../test/fixtures/wallets/D5sRKWckH4rE1hQ9eeMeHAepgyC3cvJtwb.json";
+import { data as secondWallet} from "../test/fixtures/wallets/D5sRKWckH4rE1hQ9eeMeHAepgyC3cvJtwb.json" with { type: "json" };
 import { bootContainer, importByMnemonic } from "../test/mocking";
 import { container } from "./container";
 import { Identifiers } from "./container.models";

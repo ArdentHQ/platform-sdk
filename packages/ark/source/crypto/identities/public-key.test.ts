@@ -1,6 +1,6 @@
 import { describe } from "@ardenthq/sdk-test";
 
-import { data, passphrase } from "../../../test/crypto/identity.json";
+import { data, passphrase } from "../../../test/crypto/identity.json" with { type: "json" };
 import { PublicKey } from "./public-key.js";
 
 const publicKeys = {
