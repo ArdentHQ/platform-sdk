@@ -1,16 +1,21 @@
-import { Buffer } from "buffer";
-import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
+import { Contracts, IoC, Services } from "@ardenthq/sdk";
+import { BIP44 } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
-import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
+
+import { Interfaces } from "./crypto/index.js";
+import { createRange } from "./ledger.service.helpers.js";
 import { SetupLedgerFactory } from "./ledger.service.types.js";
+import { HDKey } from "@ardenthq/sdk-cryptography";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
 	readonly #addressService!: Services.AddressService;
 	readonly #dataTransferObjectService: Services.DataTransferObjectService;
 	#ledger!: Services.LedgerTransport;
+	#ethLedgerService!: any;
 	#transport!: any;
+
+	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -24,9 +29,15 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return this.disconnect();
 	}
 
-	public override async connect(setupTransport: SetupLedgerFactory): Promise<void> {
+	public override async connect(setupTransport?: SetupLedgerFactory): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
-		this.#transport = setupTransport?.(this.#ledger);
+
+		if (setupTransport) {
+			const data = setupTransport?.(this.#ledger);
+
+			this.#transport = data?.transport
+			this.#ethLedgerService = data?.ledgerService
+		}
 	}
 
 	public override async disconnect(): Promise<void> {
@@ -42,6 +53,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 	public override async getPublicKey(path: string): Promise<string> {
 		const result = await this.#transport.getAddress(path);
+		console.log("getPublicKey", { path, result })
 		return result.publicKey;
 	}
 
@@ -50,8 +62,13 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return this.getPublicKey(path);
 	}
 
-	public override async signTransaction(path: string, payload: Buffer): Promise<string> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.signTransaction.name);
+	public override async signTransaction(path: string, serialized: string): Promise<string> {
+		const resolution = await this.#ethLedgerService.resolveTransaction(serialized, {}, {
+			domain: { chainId: 10_000 }
+		});
+
+		const signature = await this.#transport.signTransaction(path, serialized, resolution);
+		return signature
 	}
 
 	public override async signMessage(path: string, payload: string): Promise<string> {
@@ -77,17 +94,22 @@ export class LedgerService extends Services.AbstractLedgerService {
 			initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
 		}
 
-		const compressedPublicKey = await this.getExtendedPublicKey(path);
+		const compressedPublicKey = await this.getExtendedPublicKey("m/44'/111'/0'/0/0");
 		const ledgerWallets: Services.LedgerWalletList = {};
 
 		for (const addressIndexIterator of createRange(page, pageSize)) {
 			const addressIndex = initialAddressIndex + addressIndexIterator;
+			console.log({ addressIndex: `m/0/${addressIndex}` })
 
-			const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
+			const p: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
 				.derive(`m/0/${addressIndex}`)
 				.publicKey.toString("hex");
 
+			console.log({ p })
+			const publicKey = compressedPublicKey
 			const { address } = await this.#addressService.fromPublicKey(publicKey);
+
+			console.log({ address, compressedPublicKey, publicKey })
 
 			ledgerWallets[`${path}/0/${addressIndex}`] = this.#dataTransferObjectService.wallet({
 				address,
@@ -95,6 +117,8 @@ export class LedgerService extends Services.AbstractLedgerService {
 				publicKey,
 			});
 		}
+
+		console.log({ ledgerWallets })
 
 		return ledgerWallets;
 	}

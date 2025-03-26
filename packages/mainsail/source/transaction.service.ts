@@ -1,7 +1,9 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
+import { HDKey } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
+import { Utils } from "@mainsail/crypto-transaction";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { ConsensusAbi, UsernamesAbi, MultiPaymentAbi } from "@mainsail/evm-contracts";
+import { ConsensusAbi, MultiPaymentAbi, UsernamesAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
 
@@ -86,7 +88,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
-		const { address } = await this.#signerData(input);
+		const { address, publicKey } = await this.#signerData(input);
+		console.log("transfer", address, { input })
 		const nonce = await this.#generateNonce(address, input);
 
 		transaction
@@ -94,11 +97,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.gasLimit(input.gasLimit)
 			.recipientAddress(input.data.to)
 			.payload("")
-			.nonce(nonce)
+			.nonce(0)
 			.value(parseUnits(input.data.amount, "ark").valueOf())
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
-		return this.#buildTransaction(input, transaction);
+		return this.#buildTransaction(input, transaction, { address, publicKey });
 	}
 
 	public override async validatorRegistration(
@@ -344,12 +347,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			publicKey = (await this.#publicKeyService.fromWIF(input.signatory.signingKey())).publicKey;
 		}
 
-		if (input.signatory.actsWithLedger()) {
-			await this.#ledgerService.connect();
-
-			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
-			address = (await this.#addressService.fromPublicKey(publicKey)).address;
-		}
 
 		if (input.signatory.actsWithMultiSignature()) {
 			address = (
@@ -358,6 +355,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 					publicKeys: input.signatory.asset().publicKeys,
 				})
 			).address;
+		}
+
+		if (input.signatory.actsWithLedger()) {
+			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
+			address = (await this.#addressService.fromPublicKey(publicKey)).address;
 		}
 
 		return { address, publicKey };
@@ -376,6 +378,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	async #buildTransaction(
 		input: Services.TransactionInputs,
 		transaction: any,
+		meta?: object,
 	): Promise<Contracts.SignedTransactionData> {
 		let signedTransactionBuilder;
 
@@ -406,7 +409,40 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		const signedTransaction = await signedTransactionBuilder?.build();
+		if (input.signatory.actsWithLedger()) {
+			const signingKey = input.signatory.signingKey()
+			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
+			const signature = await this.#ledgerService.signTransaction(signingKey, serialized.toString("hex"))
+
+			console.log({ data: transaction.data, meta, signature })
+			signedTransactionBuilder = await transaction.sign(`${signature.r}${signature.s}${signature.v}`);
+
+			const pubKey: string = HDKey.fromCompressedPublicKey(meta.publicKey)
+				.derive(`m/0/0`)
+				.publicKey.toString("hex");
+			console.log({ meta, pubKey })
+
+			signedTransactionBuilder.data = {
+				...signedTransactionBuilder.data,
+				...signature,
+				senderAddress: meta.address,
+				senderPublicKey: pubKey,
+				v: 27
+			}
+
+			console.log({ signedTransactionBuilder })
+		}
+
+		const signedTransaction = await signedTransactionBuilder?.build(signedTransactionBuilder.data)
+
+		const id = signedTransaction.data.id
+		signedTransaction.data = {
+			...signedTransactionBuilder.data,
+			id,
+			v: 27
+		}
+
+		console.log("2", { signedTransaction })
 
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 	}

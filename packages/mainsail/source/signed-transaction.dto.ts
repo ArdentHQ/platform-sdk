@@ -14,8 +14,7 @@ import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
-	implements Contracts.SignedTransactionData
-{
+	implements Contracts.SignedTransactionData {
 	#app: Application;
 
 	public constructor(container: IoC.Container) {
@@ -187,6 +186,7 @@ export class SignedTransactionData
 	}
 
 	public override async toBroadcast() {
+		console.log({ broadcastData: this.broadcastData })
 		const serialized = await this.#app.resolve(Utils).toBytes(this.broadcastData);
 
 		return serialized.toString("hex");
