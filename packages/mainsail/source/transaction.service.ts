@@ -6,7 +6,6 @@ import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
 import { ConsensusAbi, MultiPaymentAbi, UsernamesAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
-import { Address, PrivateKey, PublicKey, TransferBuilder, UnitConverter } from "@arkecosystem/typescript-crypto";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
@@ -98,7 +97,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.gasLimit(input.gasLimit)
 			.recipientAddress(input.data.to)
 			.payload("")
-			.nonce(nonce)
+			.nonce(0)
 			.value(parseUnits(input.data.amount, "ark").valueOf())
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
@@ -415,48 +414,23 @@ export class TransactionService extends Services.AbstractTransactionService {
 			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
 			const signature = await this.#ledgerService.signTransaction(signingKey, serialized.toString("hex"))
 
-			//transaction
-			//	.network(this.#configCrypto.crypto.network.chainId)
-			//	.gasLimit(input.gasLimit)
-			//	.recipientAddress(input.data.to)
-			//	.payload("")
-			//	.nonce(0)
-			//	.value(parseUnits(input.data.amount, "ark").valueOf())
-			//	.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
+			console.log({ data: transaction.data, meta, signature })
+			signedTransactionBuilder = await transaction.sign(`${signature.r}${signature.s}${signature.v}`);
 
-			const nonce = await this.#generateNonce(address, input);
-			const builder = await TransferBuilder
-				.new()
-				.recipientAddress(input.data.to)
-				.value(UnitConverter.parseUnits(input.data.amount, "ark").toString())
-				.gasPrice(UnitConverter.parseUnits(input.gasPrice, "gwei").toString())
-				.gasLimit(input.gasLimit)
-				.nonce(nonce);
+			const pubKey: string = HDKey.fromCompressedPublicKey(meta.publicKey)
+				.derive(`m/0/0`)
+				.publicKey.toString("hex");
+			console.log({ meta, pubKey })
 
-			builder.transaction.data["r"] = signature.r
-			builder.transaction.data["s"] = signature.s
-			builder.transaction.data["v"] = signature.v
-			builder.transaction.data["id"] = builder.transaction.getId();
+			signedTransactionBuilder.data = {
+				...signedTransactionBuilder.data,
+				...signature,
+				senderAddress: meta.address,
+				senderPublicKey: pubKey,
+				v: 27
+			}
 
-			console.log({ builder })
-
-			//console.log({ data: transaction.data, meta, signature })
-			//signedTransactionBuilder = await transaction.sign(`${signature.r}${signature.s}${signature.v}`);
-			//
-			//const pubKey: string = HDKey.fromCompressedPublicKey(meta.publicKey)
-			//	.derive(`m/0/0`)
-			//	.publicKey.toString("hex");
-			//console.log({ meta, pubKey })
-			//
-			//signedTransactionBuilder.data = {
-			//	...signedTransactionBuilder.data,
-			//	...signature,
-			//	senderAddress: meta.address,
-			//	senderPublicKey: pubKey,
-			//	v: 27
-			//}
-			//
-			//console.log({ signedTransactionBuilder })
+			console.log({ signedTransactionBuilder })
 		}
 
 		const signedTransaction = await signedTransactionBuilder?.build(signedTransactionBuilder.data)
