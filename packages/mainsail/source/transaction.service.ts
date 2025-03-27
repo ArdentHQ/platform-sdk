@@ -97,7 +97,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.gasLimit(input.gasLimit)
 			.recipientAddress(input.data.to)
 			.payload("")
-			.nonce(0)
+			.nonce(nonce)
 			.value(parseUnits(input.data.amount, "ark").valueOf())
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
