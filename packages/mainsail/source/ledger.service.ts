@@ -1,11 +1,10 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BIP44 } from "@ardenthq/sdk-cryptography";
+import { BIP44 , HDKey } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
 
 import { Interfaces } from "./crypto/index.js";
 import { createRange } from "./ledger.service.helpers.js";
 import { SetupLedgerFactory } from "./ledger.service.types.js";
-import { HDKey } from "@ardenthq/sdk-cryptography";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
@@ -67,8 +66,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 			domain: { chainId: 10_000 }
 		});
 
-		const signature = await this.#transport.signTransaction(path, serialized, resolution);
-		return signature
+		return await this.#transport.signTransaction(path, serialized, resolution)
 	}
 
 	public override async signMessage(path: string, payload: string): Promise<string> {
@@ -94,10 +92,10 @@ export class LedgerService extends Services.AbstractLedgerService {
 			initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
 		}
 
-		const compressedPublicKey = await this.getExtendedPublicKey("m/44'/111'/0'/0/0");
 		const ledgerWallets: Services.LedgerWalletList = {};
-
 		for (const addressIndexIterator of createRange(page, pageSize)) {
+			const compressedPublicKey = await this.getExtendedPublicKey("m/44'/111'/0'/0/0");
+
 			const addressIndex = initialAddressIndex + addressIndexIterator;
 			console.log({ addressIndex: `m/0/${addressIndex}` })
 
