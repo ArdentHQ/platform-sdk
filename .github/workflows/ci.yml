@@ -29,7 +29,7 @@ jobs:
                   pnpm install
                   pnpm run build
             - name: Test ARK
-              run: cd "$GITHUB_WORKSPACE/packages/ark/" && pnpm run test:coverage
+              run: cd "$GITHUB_WORKSPACE/packages/ark/" && pnpm install && pnpm run build && pnpm run test:coverage
             - name: Test CRYPTOGRAPHY
               run: cd "$GITHUB_WORKSPACE/packages/cryptography/" && pnpm run test:coverage
             - name: Test FETCH
