@@ -115,8 +115,6 @@ export class LedgerService extends Services.AbstractLedgerService {
 			});
 		}
 
-		console.log({ ledgerWallets })
-
 		return ledgerWallets;
 	}
 

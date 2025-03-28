@@ -87,7 +87,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
-		const { address, publicKey } = await this.#signerData(input);
+		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
 
 		transaction
@@ -99,7 +99,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.value(parseUnits(input.data.amount, "ark").valueOf())
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
-		return this.#buildTransaction(input, transaction, { address, publicKey });
+		return this.#buildTransaction(input, transaction);
 	}
 
 	public override async validatorRegistration(
@@ -356,8 +356,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithLedger()) {
-			const extendedPublicKey = await this.#ledgerService.getExtendedPublicKey(input.signatory.signingKey());
-			publicKey = await this.#ledgerService.getPublicKey(extendedPublicKey);
+			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
 			address = (await this.#addressService.fromPublicKey(publicKey)).address;
 		}
 
@@ -374,11 +373,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return wallet.nonce().toFixed(0);
 	}
 
-	async #buildTransaction(
-		input: Services.TransactionInputs,
-		transaction: any,
-		meta?: object,
-	): Promise<Contracts.SignedTransactionData> {
+	async #buildTransaction(input: Services.TransactionInputs, transaction: any): Promise<Contracts.SignedTransactionData> {
 		let signedTransactionBuilder;
 
 		if (input.signatory.actsWithMnemonic()) {
@@ -413,15 +408,15 @@ export class TransactionService extends Services.AbstractTransactionService {
 			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
 			const signature = await this.#ledgerService.signTransaction(signingKey, serialized.toString("hex"))
 
-			const senderPublicKey = meta.publicKey
-			const senderAddress = meta.address
+			const senderPublicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
+			const senderAddress = (await this.#addressService.fromPublicKey(publicKey)).address;
 
 			transaction.data = {
 				...transaction.data,
 				...signature,
 				senderAddress,
 				senderPublicKey,
-				v: 27 // Ledger returns 00 and an error is thrown when it's lower from mainsail: {"message":"data/v must be >= 27","type":"TransactionSchemaError"}
+				v: 27 // Ledger returns 00 and but mainsail throws a validation error when lower than 27: {"message":"data/v must be >= 27","type":"TransactionSchemaError"}
 			}
 
 			// Reassign public key to match the signer, as `build` changes it.
