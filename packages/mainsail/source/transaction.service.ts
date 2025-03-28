@@ -406,10 +406,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		if (input.signatory.actsWithLedger()) {
 			const signingKey = input.signatory.signingKey()
 			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
-			const signature = await this.#ledgerService.signTransaction(signingKey, serialized.toString("hex"))
+			const signature = await this.#ledgerService.sign(signingKey, serialized.toString("hex"))
 
 			const senderPublicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
-			const senderAddress = (await this.#addressService.fromPublicKey(publicKey)).address;
+			const senderAddress = (await this.#addressService.fromPublicKey(senderPublicKey)).address;
 
 			transaction.data = {
 				...transaction.data,

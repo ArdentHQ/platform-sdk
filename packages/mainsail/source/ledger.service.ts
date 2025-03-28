@@ -4,7 +4,7 @@ import { Exceptions } from "@mainsail/contracts";
 
 import { Interfaces } from "./crypto/index.js";
 import { createRange } from "./ledger.service.helpers.js";
-import { SetupLedgerFactory } from "./ledger.service.types.js";
+import { LedgerSignature, SetupLedgerFactory } from "./ledger.service.types.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
@@ -70,7 +70,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return result.publicKey;
 	}
 
-	public override async signTransaction(path: string, serialized: string): Promise<string> {
+	public override async sign(path: string, serialized: string | Buffer): Promise<LedgerSignature> {
 		const resolution = await this.#ethLedgerService.resolveTransaction(serialized, {}, {
 			domain: { chainId: 10_000 }
 		});
