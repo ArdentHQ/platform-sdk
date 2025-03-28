@@ -22,14 +22,13 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                   node-version: "20"
-                  cache: "pnpm"
             - name: Build
               run: |
                   pnpm install -g ultra-runner
                   pnpm install
                   pnpm run build
             - name: Test ARK
-              run: cd "$GITHUB_WORKSPACE/packages/ark/" && pnpm install && pnpm run build && pnpm run test:coverage
+              run: cd "$GITHUB_WORKSPACE/packages/ark/" && pnpm install --no-experimental-require-module --no-experimental-detect-module && pnpm run build --no-experimental-require-module --no-experimental-detect-module && pnpm run test:coverage --no-experimental-require-module --no-experimental-detect-module
             - name: Test CRYPTOGRAPHY
               run: cd "$GITHUB_WORKSPACE/packages/cryptography/" && pnpm run test:coverage
             - name: Test FETCH
