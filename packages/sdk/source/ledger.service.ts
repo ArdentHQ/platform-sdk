@@ -44,7 +44,7 @@ export class AbstractLedgerService implements LedgerService {
 		throw new NotImplemented(this.constructor.name, this.getExtendedPublicKey.name);
 	}
 
-	public async signTransaction(path: string, payload: string): Promise<{ r: string, s: string, v: string }> {
+	public async signTransaction(path: string, payload: Buffer): Promise<string> {
 		throw new NotImplemented(this.constructor.name, this.signTransaction.name);
 	}
 

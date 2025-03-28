@@ -70,7 +70,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return result.publicKey;
 	}
 
-	public override async signTransaction(path: string, serialized: string): Promise<{ r: string, s: string, v: string }> {
+	public override async signTransaction(path: string, serialized: string): Promise<string> {
 		const resolution = await this.#ethLedgerService.resolveTransaction(serialized, {}, {
 			domain: { chainId: 10_000 }
 		});
