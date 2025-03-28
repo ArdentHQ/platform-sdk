@@ -1,5 +1,4 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { HDKey } from "@ardenthq/sdk-cryptography";
 import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Utils } from "@mainsail/crypto-transaction";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
@@ -358,8 +357,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithLedger()) {
+			const extendedPublicKey = await this.#ledgerService.getExtendedPublicKey(input.signatory.signingKey());
 			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
 			address = (await this.#addressService.fromPublicKey(publicKey)).address;
+			console.log({ address })
 		}
 
 		return { address, publicKey };
@@ -414,14 +415,13 @@ export class TransactionService extends Services.AbstractTransactionService {
 			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
 			const signature = await this.#ledgerService.signTransaction(signingKey, serialized.toString("hex"))
 
-			const senderPublicKey = HDKey.fromCompressedPublicKey(meta.publicKey)
-				.derive(`m/0/0`)
-				.publicKey.toString("hex");
+			const senderPublicKey = meta.publicKey
+			const senderAddress = meta.address
 
 			transaction.data = {
 				...transaction.data,
 				...signature,
-				senderAddress: meta.address,
+				senderAddress,
 				senderPublicKey,
 				v: 27 // Ledger returns 00 and an error is thrown when it's lower from mainsail: {"message":"data/v must be >= 27","type":"TransactionSchemaError"}
 			}
@@ -429,7 +429,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// Reassign public key to match the signer, as `build` changes it.
 			const signedTransaction = await transaction?.build(transaction.data)
 			signedTransaction.data.senderPublicKey = senderPublicKey
-			signedTransaction.data.senderAddress = meta.address
+			signedTransaction.data.senderAddress = senderAddress
 
 			return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 		}
