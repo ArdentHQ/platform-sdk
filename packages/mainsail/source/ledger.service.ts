@@ -104,13 +104,11 @@ export class LedgerService extends Services.AbstractLedgerService {
 		const ledgerWallets: Services.LedgerWalletList = {};
 		for (const addressIndexIterator of createRange(page, pageSize)) {
 			const publicKey = await this.getPublicKey(path)
-			const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`
+			const derivationPathKey = `m/${this.#extractAddressIndexFromPath(path)}`
 
 			const { address } = await this.#addressService.fromPublicKey(publicKey);
 
-			console.log({ address, derivationPath, publicKey })
-
-			ledgerWallets[derivationPath] = this.#dataTransferObjectService.wallet({
+			ledgerWallets[derivationPathKey] = this.#dataTransferObjectService.wallet({
 				address,
 				balance: 0,
 				publicKey,

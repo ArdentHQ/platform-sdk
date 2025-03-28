@@ -88,7 +88,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const transaction = this.#app.resolve(EvmCallBuilder);
 
 		const { address, publicKey } = await this.#signerData(input);
-		console.log("transfer", address, { input })
 		const nonce = await this.#generateNonce(address, input);
 
 		transaction
@@ -358,9 +357,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		if (input.signatory.actsWithLedger()) {
 			const extendedPublicKey = await this.#ledgerService.getExtendedPublicKey(input.signatory.signingKey());
-			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
+			publicKey = await this.#ledgerService.getPublicKey(extendedPublicKey);
 			address = (await this.#addressService.fromPublicKey(publicKey)).address;
-			console.log({ address })
 		}
 
 		return { address, publicKey };
