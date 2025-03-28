@@ -40,7 +40,7 @@ importers:
         version: 5.4.0(eslint@8.3.0)(typescript@4.5.2)
       babel-loader:
         specifier: ^8.2.3
-        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4)
       big-integer:
         specifier: ^1.6.51
         version: 1.6.51
@@ -88,13 +88,13 @@ importers:
         version: 2.0.0(@typescript-eslint/eslint-plugin@5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)
       node-polyfill-webpack-plugin:
         specifier: ^1.1.4
-        version: 1.1.4(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 1.1.4(webpack@5.64.4)
       prettier:
         specifier: ^2.4.1
         version: 2.4.1
       resolve-typescript-plugin:
         specifier: ^1.1.1
-        version: 1.1.1(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 1.1.1(webpack@5.64.4)
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -103,7 +103,7 @@ importers:
         version: 1.53.1
       ts-loader:
         specifier: ^9.2.6
-        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4)
       ts-morph:
         specifier: ^12.0.0
         version: 12.0.0
@@ -698,8 +698,8 @@ importers:
         specifier: ^12.0.1
         version: 12.0.1
       string-kit:
-        specifier: ~0.16.0
-        version: 0.16.0
+        specifier: ~0.19.2
+        version: 0.19.2
       uvu:
         specifier: ^0.5.3
         version: 0.5.3
@@ -3641,6 +3641,7 @@ packages:
 
   lodash.clone@4.5.0:
     resolution: {integrity: sha512-GhrVeweiTD6uTmmn5hV/lzgCQhccwReIVRLHp7LT4SopOjqEZ5BbX8b5WWEtAKasjmy8hR7ZPwsYlxRCku5odg==}
+    deprecated: This package is deprecated. Use structuredClone instead.
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -4531,8 +4532,8 @@ packages:
     resolution: {integrity: sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==}
     engines: {node: '>=4'}
 
-  string-kit@0.16.0:
-    resolution: {integrity: sha512-xiJvm0KiJrOYDFzANh/LnMXEujnveaxcmspx9rg4r5qaIvex9b77h7fa6Ba+/0kEZXMvYcOS6Y7vJzK8lAUbUg==}
+  string-kit@0.19.2:
+    resolution: {integrity: sha512-o5rhsZy4WS76+uMc4fkcQYM7dcdxe8wKCoLeLqCcGZxbUmtawkBE8G0JS6ooBnBOy+j1MpZ1IgWIuojIr71vPw==}
     engines: {node: '>=14.15.0'}
 
   string-width@4.2.3:
@@ -6712,17 +6713,17 @@ snapshots:
       '@webassemblyjs/ast': 1.11.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))':
+  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)':
     dependencies:
       webpack: 5.64.4(webpack-cli@4.9.1)
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
+  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1)':
     dependencies:
       envinfo: 7.8.1
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
+  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1)':
     dependencies:
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
@@ -6890,7 +6891,7 @@ snapshots:
 
   axobject-query@2.2.0: {}
 
-  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1)):
+  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4):
     dependencies:
       '@babel/core': 7.16.5
       find-cache-dir: 3.3.2
@@ -8828,7 +8829,7 @@ snapshots:
       - bluebird
       - supports-color
 
-  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4(webpack-cli@4.9.1)):
+  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4):
     dependencies:
       assert: 2.0.0
       browserify-zlib: 0.2.0
@@ -9224,7 +9225,7 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-typescript-plugin@1.1.1(webpack@5.64.4(webpack-cli@4.9.1)):
+  resolve-typescript-plugin@1.1.1(webpack@5.64.4):
     dependencies:
       tslib: 2.3.1
       webpack: 5.64.4(webpack-cli@4.9.1)
@@ -9492,7 +9493,7 @@ snapshots:
 
   strict-uri-encode@2.0.0: {}
 
-  string-kit@0.16.0: {}
+  string-kit@0.19.2: {}
 
   string-width@4.2.3:
     dependencies:
@@ -9561,7 +9562,7 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1)):
+  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4):
     dependencies:
       jest-worker: 27.3.1
       schema-utils: 3.1.1
@@ -9615,7 +9616,7 @@ snapshots:
 
   totalist@2.0.0: {}
 
-  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1)):
+  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.8.3
@@ -9854,9 +9855,9 @@ snapshots:
   webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4):
     dependencies:
       '@discoveryjs/json-ext': 0.5.5
-      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))
-      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
-      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
+      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)
+      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1)
+      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1)
       colorette: 2.0.16
       commander: 7.2.0
       execa: 5.1.1
@@ -9899,7 +9900,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1))
+      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4)
       watchpack: 2.3.0
       webpack-sources: 3.2.2
     optionalDependencies:
