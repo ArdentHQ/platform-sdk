@@ -1,5 +1,5 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BIP44 , HDKey } from "@ardenthq/sdk-cryptography";
+import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
 
 import { Interfaces } from "./crypto/index.js";
@@ -15,6 +15,10 @@ export class LedgerService extends Services.AbstractLedgerService {
 	#transport!: any;
 
 	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
+
+	#extractAddressIndexFromPath(path: string): string {
+		return path.split('/').slice(-2).join('/');
+	}
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -51,14 +55,19 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
-		const result = await this.#transport.getAddress(path);
-		console.log("getPublicKey", { path, result })
-		return result.publicKey;
+		const publicKey = await this.getExtendedPublicKey(path)
+		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`
+
+		const pubKey: string = HDKey.fromCompressedPublicKey(publicKey)
+			.derive(derivationPath)
+			.publicKey.toString("hex");
+
+		return pubKey
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
-		// @TODO: revisit.
-		return this.getPublicKey(path);
+		const result = await this.#transport.getAddress(path);
+		return result.publicKey;
 	}
 
 	public override async signTransaction(path: string, serialized: string): Promise<string> {
@@ -94,22 +103,14 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 		const ledgerWallets: Services.LedgerWalletList = {};
 		for (const addressIndexIterator of createRange(page, pageSize)) {
-			const compressedPublicKey = await this.getExtendedPublicKey("m/44'/111'/0'/0/0");
+			const publicKey = await this.getPublicKey(path)
+			const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`
 
-			const addressIndex = initialAddressIndex + addressIndexIterator;
-			console.log({ addressIndex: `m/0/${addressIndex}` })
-
-			const p: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
-				.derive(`m/0/${addressIndex}`)
-				.publicKey.toString("hex");
-
-			console.log({ p })
-			const publicKey = compressedPublicKey
 			const { address } = await this.#addressService.fromPublicKey(publicKey);
 
-			console.log({ address, compressedPublicKey, publicKey })
+			console.log({ address, derivationPath, publicKey })
 
-			ledgerWallets[`${path}/0/${addressIndex}`] = this.#dataTransferObjectService.wallet({
+			ledgerWallets[derivationPath] = this.#dataTransferObjectService.wallet({
 				address,
 				balance: 0,
 				publicKey,
