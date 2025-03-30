@@ -58,9 +58,12 @@ export class LedgerService extends Services.AbstractLedgerService {
 		const publicKey = await this.getExtendedPublicKey(path)
 		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`
 
+		console.log({ derivationPath })
 		const pubKey: string = HDKey.fromCompressedPublicKey(publicKey)
 			.derive(derivationPath)
 			.publicKey.toString("hex");
+
+		console.log({ pubKey })
 
 		return pubKey
 	}
@@ -104,8 +107,9 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 		const ledgerWallets: Services.LedgerWalletList = {};
 		for (const addressIndexIterator of createRange(page, pageSize)) {
-			const publicKey = await this.getPublicKey(path)
-			const derivationPathKey = `m/${this.#extractAddressIndexFromPath(path)}`
+			const derivationPath = `${path}/${addressIndexIterator}`
+			const publicKey = await this.getPublicKey(derivationPath)
+			const derivationPathKey = `m/${this.#extractAddressIndexFromPath(derivationPath)}`
 
 			const { address } = await this.#addressService.fromPublicKey(publicKey);
 
