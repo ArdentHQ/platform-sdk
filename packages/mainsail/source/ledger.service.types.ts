@@ -9,4 +9,4 @@ export interface LedgerDerivationScheme {
 export type LedgerTransport = any;
 export type LedgerTransportInstance = any;
 export type SetupLedgerFactory = (transport: LedgerTransport) => LedgerTransportInstance;
-export type LedgerSignature = { r: string, v: string, s: string }
+export type LedgerSignature = { r: string; v: string; s: string };

@@ -7,7 +7,7 @@ export type LedgerWalletList = Record<string, WalletData>;
 
 export type LedgerTransportInstance = any;
 export type SetupLedgerFactory = (transport: LedgerTransport) => LedgerTransportInstance;
-export type LedgerSignature = { r: string, s: string, v: string };
+export type LedgerSignature = { r: string; s: string; v: string };
 
 export interface LedgerService {
 	connect(setupLedgerFactory?: SetupLedgerFactory): Promise<void>;

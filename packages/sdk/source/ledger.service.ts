@@ -5,7 +5,13 @@ import { IContainer } from "./container.contracts.js";
 import { WalletData } from "./contracts.js";
 import { DataTransferObjectService } from "./data-transfer-object.contract.js";
 import { NotImplemented } from "./exceptions.js";
-import { LedgerService, LedgerSignature, LedgerTransportFactory, LedgerWalletList, SetupLedgerFactory } from "./ledger.contract.js";
+import {
+	LedgerService,
+	LedgerSignature,
+	LedgerTransportFactory,
+	LedgerWalletList,
+	SetupLedgerFactory,
+} from "./ledger.contract.js";
 import { BindingType } from "./service-provider.contract.js";
 
 export class AbstractLedgerService implements LedgerService {

@@ -17,7 +17,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
 
 	#extractAddressIndexFromPath(path: string): string {
-		return path.split('/').slice(-2).join('/');
+		return path.split("/").slice(-2).join("/");
 	}
 
 	public constructor(container: IoC.IContainer) {
@@ -38,8 +38,8 @@ export class LedgerService extends Services.AbstractLedgerService {
 		if (setupTransport) {
 			const data = setupTransport?.(this.#ledger);
 
-			this.#transport = data?.transport
-			this.#ethLedgerService = data?.ledgerService
+			this.#transport = data?.transport;
+			this.#ethLedgerService = data?.ledgerService;
 		}
 	}
 
@@ -55,14 +55,14 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
-		const publicKey = await this.getExtendedPublicKey(path)
-		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`
+		const publicKey = await this.getExtendedPublicKey(path);
+		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
 
 		const pubKey: string = HDKey.fromCompressedPublicKey(publicKey)
 			.derive(derivationPath)
 			.publicKey.toString("hex");
 
-		return pubKey
+		return pubKey;
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
@@ -71,11 +71,15 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async sign(path: string, serialized: string | Buffer): Promise<LedgerSignature> {
-		const resolution = await this.#ethLedgerService.resolveTransaction(serialized, {}, {
-			domain: { chainId: 10_000 }
-		});
+		const resolution = await this.#ethLedgerService.resolveTransaction(
+			serialized,
+			{},
+			{
+				domain: { chainId: 10_000 },
+			},
+		);
 
-		return await this.#transport.signTransaction(path, serialized, resolution)
+		return await this.#transport.signTransaction(path, serialized, resolution);
 	}
 
 	public override async signMessage(path: string, payload: string): Promise<string> {

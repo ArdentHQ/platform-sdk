@@ -345,7 +345,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			publicKey = (await this.#publicKeyService.fromWIF(input.signatory.signingKey())).publicKey;
 		}
 
-
 		if (input.signatory.actsWithMultiSignature()) {
 			address = (
 				await this.#addressService.fromMultiSignature({
@@ -374,7 +373,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 		return wallet.nonce().toFixed(0);
 	}
 
-	async #buildTransaction(input: Services.TransactionInputs, transaction: any): Promise<Contracts.SignedTransactionData> {
+	async #buildTransaction(
+		input: Services.TransactionInputs,
+		transaction: any,
+	): Promise<Contracts.SignedTransactionData> {
 		let signedTransactionBuilder;
 
 		if (input.signatory.actsWithMnemonic()) {
@@ -410,25 +412,25 @@ export class TransactionService extends Services.AbstractTransactionService {
 			const senderAddress = (await this.#addressService.fromPublicKey(extendedPublicKey)).address;
 
 			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
-			const signature = await this.#ledgerService.sign(input.signatory.signingKey(), serialized.toString("hex"))
+			const signature = await this.#ledgerService.sign(input.signatory.signingKey(), serialized.toString("hex"));
 
 			transaction.data = {
 				...transaction.data,
 				...signature,
 				senderAddress,
 				senderPublicKey,
-				v: 27 // Ledger returns 00 and but mainsail throws a validation error when lower than 27: {"message":"data/v must be >= 27","type":"TransactionSchemaError"}
-			}
+				v: 27, // Ledger returns 00 and but mainsail throws a validation error when lower than 27: {"message":"data/v must be >= 27","type":"TransactionSchemaError"}
+			};
 
 			// Reassign public key to match the signer, as `build` changes it.
-			const signedTransaction = await transaction?.build(transaction.data)
-			signedTransaction.data.senderPublicKey = senderPublicKey
-			signedTransaction.data.senderAddress = senderAddress
+			const signedTransaction = await transaction?.build(transaction.data);
+			signedTransaction.data.senderPublicKey = senderPublicKey;
+			signedTransaction.data.senderAddress = senderAddress;
 
 			return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 		}
 
-		const signedTransaction = await transaction?.build(transaction.data)
+		const signedTransaction = await transaction?.build(transaction.data);
 
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 	}
