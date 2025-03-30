@@ -89,6 +89,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
+		console.log({ address })
 
 		transaction
 			.network(this.#configCrypto.crypto.network.chainId)

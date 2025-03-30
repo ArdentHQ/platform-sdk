@@ -66,6 +66,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
+		console.log("getAddress", path, this.#transport)
 		const result = await this.#transport.getAddress(path);
 		return result.publicKey;
 	}
