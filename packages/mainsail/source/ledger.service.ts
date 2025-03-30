@@ -55,8 +55,8 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
-		const publicKey = await this.getExtendedPublicKey(path);
 		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
+		const publicKey = await this.getExtendedPublicKey(path);
 
 		const pubKey: string = HDKey.fromCompressedPublicKey(publicKey)
 			.derive(derivationPath)
