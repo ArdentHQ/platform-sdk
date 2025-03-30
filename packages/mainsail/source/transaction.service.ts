@@ -89,7 +89,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		const { address } = await this.#signerData(input);
 		const nonce = await this.#generateNonce(address, input);
-		console.log({ address })
 
 		transaction
 			.network(this.#configCrypto.crypto.network.chainId)
@@ -358,7 +357,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		if (input.signatory.actsWithLedger()) {
 			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
-			address = (await this.#addressService.fromPublicKey(publicKey)).address;
+			const extendedPublicKey = await this.#ledgerService.getExtendedPublicKey(input.signatory.signingKey());
+			address = (await this.#addressService.fromPublicKey(extendedPublicKey)).address;
 		}
 
 		return { address, publicKey };
@@ -405,11 +405,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.signatory.actsWithLedger()) {
+			const senderPublicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
+			const extendedPublicKey = await this.#ledgerService.getExtendedPublicKey(input.signatory.signingKey());
+			const senderAddress = (await this.#addressService.fromPublicKey(extendedPublicKey)).address;
+
 			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
 			const signature = await this.#ledgerService.sign(input.signatory.signingKey(), serialized.toString("hex"))
-
-			const senderPublicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
-			const senderAddress = (await this.#addressService.fromPublicKey(senderPublicKey)).address;
 
 			transaction.data = {
 				...transaction.data,
