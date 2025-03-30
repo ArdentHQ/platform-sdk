@@ -58,18 +58,14 @@ export class LedgerService extends Services.AbstractLedgerService {
 		const publicKey = await this.getExtendedPublicKey(path)
 		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`
 
-		console.log({ derivationPath })
 		const pubKey: string = HDKey.fromCompressedPublicKey(publicKey)
 			.derive(derivationPath)
 			.publicKey.toString("hex");
-
-		console.log({ pubKey })
 
 		return pubKey
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
-		console.log("getAddress", path, this.#transport)
 		const result = await this.#transport.getAddress(path);
 		return result.publicKey;
 	}
@@ -106,19 +102,20 @@ export class LedgerService extends Services.AbstractLedgerService {
 		}
 
 		const ledgerWallets: Services.LedgerWalletList = {};
+
 		for (const addressIndexIterator of createRange(page, pageSize)) {
-			const derivationPath = `${path}/${addressIndexIterator}`
-			const publicKey = await this.getPublicKey(derivationPath)
-			const derivationPathKey = `m/0/${addressIndexIterator}`
+			const addressIndex = initialAddressIndex + addressIndexIterator;
+			const publicKey = await this.getPublicKey(`${path}/0/${addressIndex}`);
 
 			const { address } = await this.#addressService.fromPublicKey(publicKey);
 
-			ledgerWallets[derivationPathKey] = this.#dataTransferObjectService.wallet({
+			ledgerWallets[`${path}/0/${addressIndex}`] = this.#dataTransferObjectService.wallet({
 				address,
 				balance: 0,
 				publicKey,
 			});
 		}
+
 
 		return ledgerWallets;
 	}
