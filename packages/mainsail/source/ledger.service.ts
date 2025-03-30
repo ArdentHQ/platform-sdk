@@ -109,7 +109,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 		for (const addressIndexIterator of createRange(page, pageSize)) {
 			const derivationPath = `${path}/${addressIndexIterator}`
 			const publicKey = await this.getPublicKey(derivationPath)
-			const derivationPathKey = `m/${this.#extractAddressIndexFromPath(derivationPath)}`
+			const derivationPathKey = `m/0/${addressIndexIterator}`
 
 			const { address } = await this.#addressService.fromPublicKey(publicKey);
 
