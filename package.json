@@ -54,7 +54,7 @@
 		"ultra-runner": "^3.10.5",
 		"uvu": "^0.5.2",
 		"watchlist": "~0.3.1",
-		"webpack": "^5.64.4",
+		"webpack": "^5.98.0",
 		"webpack-bundle-analyzer": "^4.5.0",
 		"webpack-cli": "^4.9.1"
 	},
