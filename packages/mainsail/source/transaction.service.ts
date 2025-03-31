@@ -419,7 +419,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 				...signature,
 				senderAddress,
 				senderPublicKey,
-				v: 27, // Ledger returns 00 and but mainsail throws a validation error when lower than 27: {"message":"data/v must be >= 27","type":"TransactionSchemaError"}
+				v: Number.parseInt(signature.v), // Ledger returns 00 and but mainsail throws a validation error when lower than 27: {"message":"data/v must be >= 27","type":"TransactionSchemaError"}
 			};
 
 			// Reassign public key to match the signer, as `build` changes it.
