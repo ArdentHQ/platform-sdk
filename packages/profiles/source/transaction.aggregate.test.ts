@@ -2,7 +2,6 @@ import { describe } from "@ardenthq/sdk-test";
 
 import { identity } from "../test/fixtures/identity";
 import { bootContainer, importByMnemonic } from "../test/mocking";
-// eslint-disable-line import/no-namespace
 import { Profile } from "./profile";
 import { TransactionAggregate } from "./transaction.aggregate";
 import { ExtendedConfirmedTransactionDataCollection } from "./transaction.collection";
@@ -231,7 +230,7 @@ describe("TransactionAggregate", ({ each, loader, afterEach, beforeAll, beforeEa
 
 			await context.subject[dataset]({
 				identifiers: [
-					{ type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", networkId: "ark.devnet" },
+					{ networkId: "ark.devnet", type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW" },
 				],
 			});
 
@@ -254,7 +253,7 @@ describe("TransactionAggregate", ({ each, loader, afterEach, beforeAll, beforeEa
 
 			await context.subject[dataset]({
 				identifiers: [
-					{ type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW", networkId: "ark.mainnet" },
+					{ networkId: "ark.mainnet", type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW" },
 				],
 			});
 
@@ -287,4 +286,111 @@ describe("TransactionAggregate", ({ each, loader, afterEach, beforeAll, beforeEa
 		context.subject.flush();
 	}, datasets);
 	*/
+
+	each(
+		"should aggregate and filter transactions based on provided senderId (%s)",
+		async ({ context, dataset }) => {
+			nock.fake()
+				.get("/api/transactions")
+				.query(true)
+				.reply(200, loader.json("test/fixtures/client/transactions.json"));
+
+			const indexSpy = spy(wallet.transactionIndex(), dataset);
+
+			await context.subject[dataset]({
+				senderId: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			});
+
+			assert.true(indexSpy.calledOnce);
+
+			indexSpy.restore();
+		},
+		datasets,
+	);
+
+	each(
+		"should not aggregate transactions if senderId does not match any wallet (%s)",
+		async ({ context, dataset }) => {
+			nock.fake()
+				.get("/api/transactions")
+				.query(true)
+				.reply(200, loader.json("test/fixtures/client/transactions.json"));
+
+			const indexSpy = spy(wallet.transactionIndex(), dataset);
+
+			await context.subject[dataset]({
+				senderId: "nonexistentAddress",
+			});
+
+			assert.true(indexSpy.notCalled);
+
+			indexSpy.restore();
+		},
+		datasets,
+	);
+
+	each(
+		"should aggregate and filter transactions based on provided recipientId (%s)",
+		async ({ context, dataset }) => {
+			nock.fake()
+				.get("/api/transactions")
+				.query(true)
+				.reply(200, loader.json("test/fixtures/client/transactions.json"));
+
+			const indexSpy = spy(wallet.transactionIndex(), dataset);
+
+			await context.subject[dataset]({
+				recipientId: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW",
+			});
+
+			assert.true(indexSpy.calledOnce);
+
+			indexSpy.restore();
+		},
+		datasets,
+	);
+
+	each(
+		"should not aggregate transactions if recipientId does not match any wallet (%s)",
+		async ({ context, dataset }) => {
+			nock.fake()
+				.get("/api/transactions")
+				.query(true)
+				.reply(200, loader.json("test/fixtures/client/transactions.json"));
+
+			const indexSpy = spy(wallet.transactionIndex(), dataset);
+
+			await context.subject[dataset]({
+				recipientId: "nonexistentAddress",
+			});
+
+			assert.true(indexSpy.notCalled);
+
+			indexSpy.restore();
+		},
+		datasets,
+	);
+
+	each(
+		"should prioritize identifiers over senderId and recipientId (%s)",
+		async ({ context, dataset }) => {
+			nock.fake()
+				.get("/api/transactions")
+				.query(true)
+				.reply(200, loader.json("test/fixtures/client/transactions.json"));
+
+			const indexSpy = spy(wallet.transactionIndex(), dataset);
+
+			await context.subject[dataset]({
+				identifiers: [{ type: "address", value: "D6i8P5N44rFto6M6RALyUXLLs7Q1A1WREW" }],
+				recipientId: "anotherAddress",
+				senderId: "anotherAddress",
+			});
+
+			assert.true(indexSpy.calledOnce);
+
+			indexSpy.restore();
+		},
+		datasets,
+	);
 });
