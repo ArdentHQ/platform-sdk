@@ -1,10 +1,8 @@
-import { Collections, Services } from "@ardenthq/sdk";
+import { Services } from "@ardenthq/sdk";
 
 import { IProfile, IReadWriteWallet, ITransactionAggregate } from "./contracts.js";
-import { promiseAllSettledByKey } from "./helpers/promise.js";
 import { AggregateQuery } from "./transaction.aggregate.contract.js";
 import { ExtendedConfirmedTransactionDataCollection } from "./transaction.collection.js";
-import { ExtendedConfirmedTransactionData } from "./transaction.dto.js";
 
 type HistoryMethod = string;
 type HistoryWallet = ExtendedConfirmedTransactionDataCollection;
@@ -50,7 +48,7 @@ export class TransactionAggregate implements ITransactionAggregate {
 	}
 
 	async #aggregate(method: string, query: AggregateQuery): Promise<ExtendedConfirmedTransactionDataCollection> {
-		const syncedWallets: IReadWriteWallet[] = this.#getWallets(query.identifiers);
+		const syncedWallets: IReadWriteWallet[] = this.#getWallets(query);
 
 		if (syncedWallets.length === 0) {
 			return new ExtendedConfirmedTransactionDataCollection([], {
@@ -112,12 +110,27 @@ export class TransactionAggregate implements ITransactionAggregate {
 		});
 	}
 
-	#getWallets(identifiers: Services.WalletIdentifier[] = []): IReadWriteWallet[] {
+	#getWallets(query: AggregateQuery): IReadWriteWallet[] {
 		return this.#profile
 			.wallets()
 			.values()
 			.filter((wallet: IReadWriteWallet) => {
-				const match =
+				if (!wallet.hasSyncedWithNetwork()) {
+					return false;
+				}
+
+				const identifiers = query.identifiers;
+
+				if (identifiers === undefined) {
+					const identifier = query.senderId ?? query.recipientId;
+
+					if (typeof identifier === "string") {
+						return [wallet.address(), wallet.publicKey()].includes(identifier);
+					}
+				}
+
+				return (
+					identifiers === undefined ||
 					identifiers.length === 0 ||
 					identifiers.some(({ type, value, networkId }: Services.WalletIdentifier) => {
 						const networkMatch = networkId ? networkId === wallet.networkId() : true;
@@ -133,8 +146,8 @@ export class TransactionAggregate implements ITransactionAggregate {
 
 						/* istanbul ignore next */
 						return false;
-					});
-				return match && wallet.hasSyncedWithNetwork();
+					})
+				);
 			});
 	}
 }
