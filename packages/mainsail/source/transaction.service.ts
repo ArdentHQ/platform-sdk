@@ -419,7 +419,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 				...signature,
 				senderAddress,
 				senderPublicKey,
-				v: 27, // @TODO: remove it on mainsail evm.16
+				v: parseInt(signature.v) + 27, // @TODO: remove it on mainsail evm.16
 			};
 
 			// Reassign public key to match the signer, as `build` changes it.
