@@ -1,7 +1,8 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BigNumber } from "@ardenthq/sdk-helpers";
+import { Utils } from "@mainsail/crypto-transaction";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
-import { ConsensusAbi, UsernamesAbi, MultiPaymentAbi } from "@mainsail/evm-contracts";
+import { ConsensusAbi, MultiPaymentAbi, UsernamesAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
 import { encodeFunctionData } from "viem";
 
@@ -344,13 +345,6 @@ export class TransactionService extends Services.AbstractTransactionService {
 			publicKey = (await this.#publicKeyService.fromWIF(input.signatory.signingKey())).publicKey;
 		}
 
-		if (input.signatory.actsWithLedger()) {
-			await this.#ledgerService.connect();
-
-			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
-			address = (await this.#addressService.fromPublicKey(publicKey)).address;
-		}
-
 		if (input.signatory.actsWithMultiSignature()) {
 			address = (
 				await this.#addressService.fromMultiSignature({
@@ -358,6 +352,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 					publicKeys: input.signatory.asset().publicKeys,
 				})
 			).address;
+		}
+
+		if (input.signatory.actsWithLedger()) {
+			publicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
+			const extendedPublicKey = await this.#ledgerService.getExtendedPublicKey(input.signatory.signingKey());
+			address = (await this.#addressService.fromPublicKey(extendedPublicKey)).address;
 		}
 
 		return { address, publicKey };
@@ -406,7 +406,31 @@ export class TransactionService extends Services.AbstractTransactionService {
 			// transaction.secondSign(input.signatory.confirmKey());
 		}
 
-		const signedTransaction = await signedTransactionBuilder?.build();
+		if (input.signatory.actsWithLedger()) {
+			const senderPublicKey = await this.#ledgerService.getPublicKey(input.signatory.signingKey());
+			const extendedPublicKey = await this.#ledgerService.getExtendedPublicKey(input.signatory.signingKey());
+			const senderAddress = (await this.#addressService.fromPublicKey(extendedPublicKey)).address;
+
+			const serialized = await this.#app.resolve(Utils).toBytes(transaction.data);
+			const signature = await this.#ledgerService.sign(input.signatory.signingKey(), serialized.toString("hex"));
+
+			transaction.data = {
+				...transaction.data,
+				...signature,
+				senderAddress,
+				senderPublicKey,
+				v: parseInt(signature.v) + 27, // @TODO: remove it on mainsail evm.16
+			};
+
+			// Reassign public key to match the signer, as `build` changes it.
+			const signedTransaction = await transaction?.build(transaction.data);
+			signedTransaction.data.senderPublicKey = senderPublicKey;
+			signedTransaction.data.senderAddress = senderAddress;
+
+			return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
+		}
+
+		const signedTransaction = await transaction?.build(transaction.data);
 
 		return this.dataTransferObjectService.signedTransaction(signedTransaction.id!, signedTransaction.data);
 	}

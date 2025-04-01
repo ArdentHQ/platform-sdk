@@ -1,16 +1,24 @@
-import { Buffer } from "buffer";
-import { Collections, Contracts, IoC, Services } from "@ardenthq/sdk";
+import { Contracts, IoC, Services } from "@ardenthq/sdk";
 import { BIP44, HDKey } from "@ardenthq/sdk-cryptography";
 import { Exceptions } from "@mainsail/contracts";
-import { chunk, createRange, formatLedgerDerivationPath } from "./ledger.service.helpers.js";
-import { SetupLedgerFactory } from "./ledger.service.types.js";
+
+import { Interfaces } from "./crypto/index.js";
+import { createRange } from "./ledger.service.helpers.js";
+import { LedgerSignature, SetupLedgerFactory } from "./ledger.service.types.js";
 
 export class LedgerService extends Services.AbstractLedgerService {
 	readonly #clientService!: Services.ClientService;
 	readonly #addressService!: Services.AddressService;
 	readonly #dataTransferObjectService: Services.DataTransferObjectService;
 	#ledger!: Services.LedgerTransport;
+	#ethLedgerService!: any;
 	#transport!: any;
+
+	#configCrypto!: { crypto: Interfaces.NetworkConfig; height: number };
+
+	#extractAddressIndexFromPath(path: string): string {
+		return path.split("/").slice(-2).join("/");
+	}
 
 	public constructor(container: IoC.IContainer) {
 		super(container);
@@ -24,9 +32,15 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return this.disconnect();
 	}
 
-	public override async connect(setupTransport: SetupLedgerFactory): Promise<void> {
+	public override async connect(setupTransport?: SetupLedgerFactory): Promise<void> {
 		this.#ledger = await this.ledgerTransportFactory();
-		this.#transport = setupTransport?.(this.#ledger);
+
+		if (setupTransport) {
+			const data = setupTransport?.(this.#ledger);
+
+			this.#transport = data?.transport;
+			this.#ethLedgerService = data?.ledgerService;
+		}
 	}
 
 	public override async disconnect(): Promise<void> {
@@ -41,17 +55,31 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getPublicKey(path: string): Promise<string> {
+		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
+		const publicKey = await this.getExtendedPublicKey(path);
+
+		const pubKey: string = HDKey.fromCompressedPublicKey(publicKey)
+			.derive(derivationPath)
+			.publicKey.toString("hex");
+
+		return pubKey;
+	}
+
+	public override async getExtendedPublicKey(path: string): Promise<string> {
 		const result = await this.#transport.getAddress(path);
 		return result.publicKey;
 	}
 
-	public override async getExtendedPublicKey(path: string): Promise<string> {
-		// @TODO: revisit.
-		return this.getPublicKey(path);
-	}
+	public override async sign(path: string, serialized: string | Buffer): Promise<LedgerSignature> {
+		const resolution = await this.#ethLedgerService.resolveTransaction(
+			serialized,
+			{},
+			{
+				domain: { chainId: 10_000 },
+			},
+		);
 
-	public override async signTransaction(path: string, payload: Buffer): Promise<string> {
-		throw new Exceptions.NotImplemented(this.constructor.name, this.signTransaction.name);
+		return await this.#transport.signTransaction(path, serialized, resolution);
 	}
 
 	public override async signMessage(path: string, payload: string): Promise<string> {
@@ -77,17 +105,14 @@ export class LedgerService extends Services.AbstractLedgerService {
 			initialAddressIndex = BIP44.parse(options.startPath).addressIndex + 1;
 		}
 
-		const compressedPublicKey = await this.getExtendedPublicKey(path);
 		const ledgerWallets: Services.LedgerWalletList = {};
 
 		for (const addressIndexIterator of createRange(page, pageSize)) {
 			const addressIndex = initialAddressIndex + addressIndexIterator;
+			const publicKey = await this.getPublicKey(`${path}/0/${addressIndex}`);
+			const extendedPublicKey = await this.getExtendedPublicKey(`${path}/0/${addressIndex}`);
 
-			const publicKey: string = HDKey.fromCompressedPublicKey(compressedPublicKey)
-				.derive(`m/0/${addressIndex}`)
-				.publicKey.toString("hex");
-
-			const { address } = await this.#addressService.fromPublicKey(publicKey);
+			const { address } = await this.#addressService.fromPublicKey(extendedPublicKey);
 
 			ledgerWallets[`${path}/0/${addressIndex}`] = this.#dataTransferObjectService.wallet({
 				address,
