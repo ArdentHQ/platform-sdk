@@ -38,7 +38,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 		} catch (error) {
 			if (error?.message?.includes?.("busy") && retryCount < 3) {
 				await new Promise(resolve => setTimeout(resolve, 500));
-				return await this.getExtendedPublicKey(path, retryCount + 1);
+				return await this.#getExtendedPublicKeyWithRetry(path, retryCount + 1);
 			}
 			throw new Error(error);
 		}
