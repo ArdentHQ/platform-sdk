@@ -29,6 +29,7 @@ export interface LedgerService {
 	scan(options?: {
 		useLegacy: boolean;
 		startPath?: string;
+		pageSize?: number;
 		onProgress?: (wallet: WalletData) => void;
 	}): Promise<Record<string, WalletData>>;
 

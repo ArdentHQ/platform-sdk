@@ -20,6 +20,17 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return path.split("/").slice(-2).join("/");
 	}
 
+	async #getPublicKeys(path: string): Promise<{ extendedPublicKey: string, publicKey: string }> {
+		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
+		const extendedPublicKey = await this.getExtendedPublicKey(path);
+
+		const publicKey: string = HDKey.fromCompressedPublicKey(extendedPublicKey)
+			.derive(derivationPath)
+			.publicKey.toString("hex");
+
+		return { extendedPublicKey, publicKey }
+	}
+
 	public constructor(container: IoC.IContainer) {
 		super(container);
 
@@ -66,8 +77,17 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
-		const result = await this.#transport.getAddress(path);
-		return result.publicKey;
+		try {
+			const result = await this.#transport.getAddress(path);
+			return result.publicKey;
+		} catch (error) {
+			if (error?.message?.includes?.("busy")) {
+				await new Promise((resolve) => setTimeout(resolve, 500));
+				return await this.getExtendedPublicKey(path);
+			}
+
+			throw new Error(error);
+		}
 	}
 
 	public override async sign(path: string, serialized: string | Buffer): Promise<LedgerSignature> {
@@ -89,6 +109,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	public override async scan(options?: {
 		useLegacy: boolean;
 		startPath?: string;
+		pageSize?: number
 		onProgress?: (wallet: Contracts.WalletData) => void;
 	}): Promise<Services.LedgerWalletList> {
 		const pageSize = 5;
@@ -107,10 +128,9 @@ export class LedgerService extends Services.AbstractLedgerService {
 
 		const ledgerWallets: Services.LedgerWalletList = {};
 
-		for (const addressIndexIterator of createRange(page, pageSize)) {
+		for (const addressIndexIterator of createRange(page, options?.pageSize ?? pageSize)) {
 			const addressIndex = initialAddressIndex + addressIndexIterator;
-			const publicKey = await this.getPublicKey(`${path}/0/${addressIndex}`);
-			const extendedPublicKey = await this.getExtendedPublicKey(`${path}/0/${addressIndex}`);
+			const { extendedPublicKey, publicKey } = await this.#getPublicKeys(`${path}/0/${addressIndex}`);
 
 			const { address } = await this.#addressService.fromPublicKey(extendedPublicKey);
 
@@ -120,7 +140,6 @@ export class LedgerService extends Services.AbstractLedgerService {
 				publicKey,
 			});
 		}
-
 		return ledgerWallets;
 	}
 
