@@ -21,8 +21,8 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	async #getPublicKeys(path: string): Promise<{ extendedPublicKey: string; publicKey: string }> {
-		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
 		const extendedPublicKey = await this.getExtendedPublicKey(path);
+		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
 
 		const publicKey: string = HDKey.fromCompressedPublicKey(extendedPublicKey)
 			.derive(derivationPath)
