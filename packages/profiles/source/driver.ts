@@ -3,7 +3,7 @@ import { Coins, Helpers, IoC, Networks } from "@ardenthq/sdk";
 import { Identifiers } from "./container.models.js";
 import { DataRepository } from "./data.repository.js";
 import { DelegateService } from "./delegate.service.js";
-import { EnvironmentOptions } from "./environment.models.js";
+import { EnvironmentOptions, NetworkHostSelectorFactory } from "./environment.models.js";
 import { ExchangeRateService } from "./exchange-rate.service.js";
 import { StorageFactory } from "./factory.storage.js";
 import { FeeService } from "./fee.service.js";
@@ -15,7 +15,7 @@ import { ProfileRepository } from "./profile.repository.js";
 import { UsernamesService } from "./usernames.service.js";
 import { WalletService } from "./wallet.service.js";
 
-export const defaultHostSelector =
+export const defaultHostSelector: NetworkHostSelectorFactory =
 	(profile: IProfile) => (configRepository: Coins.ConfigRepository, type?: Networks.NetworkHostType) => {
 		type ??= "full";
 
