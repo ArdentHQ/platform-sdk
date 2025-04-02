@@ -20,7 +20,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 		return path.split("/").slice(-2).join("/");
 	}
 
-	async #getPublicKeys(path: string): Promise<{ extendedPublicKey: string, publicKey: string }> {
+	async #getPublicKeys(path: string): Promise<{ extendedPublicKey: string; publicKey: string }> {
 		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
 		const extendedPublicKey = await this.getExtendedPublicKey(path);
 
@@ -28,7 +28,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 			.derive(derivationPath)
 			.publicKey.toString("hex");
 
-		return { extendedPublicKey, publicKey }
+		return { extendedPublicKey, publicKey };
 	}
 
 	public constructor(container: IoC.IContainer) {
@@ -109,7 +109,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	public override async scan(options?: {
 		useLegacy: boolean;
 		startPath?: string;
-		pageSize?: number
+		pageSize?: number;
 		onProgress?: (wallet: Contracts.WalletData) => void;
 	}): Promise<Services.LedgerWalletList> {
 		const pageSize = 5;
