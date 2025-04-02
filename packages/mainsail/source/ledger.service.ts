@@ -21,14 +21,27 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	async #getPublicKeys(path: string): Promise<{ extendedPublicKey: string; publicKey: string }> {
-		const extendedPublicKey = await this.getExtendedPublicKey(path);
 		const derivationPath = `m/${this.#extractAddressIndexFromPath(path)}`;
+		const extendedPublicKey = await this.getExtendedPublicKey(path);
 
 		const publicKey: string = HDKey.fromCompressedPublicKey(extendedPublicKey)
 			.derive(derivationPath)
 			.publicKey.toString("hex");
 
 		return { extendedPublicKey, publicKey };
+	}
+
+	async #getExtendedPublicKeyWithRetry(path: string, retryCount = 0): Promise<string> {
+		try {
+			const result = await this.#transport.getAddress(path);
+			return result.publicKey;
+		} catch (error) {
+			if (error?.message?.includes?.("busy") && retryCount < 3) {
+				await new Promise(resolve => setTimeout(resolve, 500));
+				return await this.getExtendedPublicKey(path, retryCount + 1);
+			}
+			throw new Error(error);
+		}
 	}
 
 	public constructor(container: IoC.IContainer) {
@@ -77,17 +90,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
-		try {
-			const result = await this.#transport.getAddress(path);
-			return result.publicKey;
-		} catch (error) {
-			if (error?.message?.includes?.("busy")) {
-				await new Promise((resolve) => setTimeout(resolve, 500));
-				return await this.getExtendedPublicKey(path);
-			}
-
-			throw new Error(error);
-		}
+		return this.#getExtendedPublicKeyWithRetry(path, 0)
 	}
 
 	public override async sign(path: string, serialized: string | Buffer): Promise<LedgerSignature> {
