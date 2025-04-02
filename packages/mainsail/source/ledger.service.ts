@@ -90,7 +90,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	}
 
 	public override async getExtendedPublicKey(path: string): Promise<string> {
-		return this.#getExtendedPublicKeyWithRetry(path, 0)
+		return this.#getExtendedPublicKeyWithRetry(path);
 	}
 
 	public override async sign(path: string, serialized: string | Buffer): Promise<LedgerSignature> {
