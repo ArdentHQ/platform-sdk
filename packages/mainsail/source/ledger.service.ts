@@ -36,8 +36,8 @@ export class LedgerService extends Services.AbstractLedgerService {
 			const result = await this.#transport.getAddress(path);
 			return result.publicKey;
 		} catch (error) {
-			if (error?.message?.includes?.("busy") && retryCount < 3) {
-				await new Promise((resolve) => setTimeout(resolve, 500));
+			if (error?.message?.includes?.("busy") && retryCount < 5) {
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 				return await this.#getExtendedPublicKeyWithRetry(path, retryCount + 1);
 			}
 			throw new Error(error);
