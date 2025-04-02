@@ -56,6 +56,7 @@ export class LedgerService extends Services.AbstractLedgerService {
 	public override async scan(options?: {
 		useLegacy: boolean;
 		startPath?: string;
+		pageSize?: number;
 		onProgress?: (wallet: Contracts.WalletData) => void;
 	}): Promise<Services.LedgerWalletList> {
 		const pageSize = 5;
