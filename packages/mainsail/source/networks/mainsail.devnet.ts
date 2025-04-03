@@ -11,7 +11,7 @@ const network: Networks.NetworkManifest = {
 	currency: {
 		decimals: 18,
 		symbol: "TѦ",
-		ticker: "ARK",
+		ticker: "DARK",
 	},
 	explorer,
 	featureFlags,
