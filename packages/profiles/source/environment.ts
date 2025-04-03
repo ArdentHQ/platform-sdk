@@ -276,7 +276,6 @@ export class Environment {
 	public hostSelector(profile: IProfile): Networks.NetworkHostSelector {
 		const hostSelector: NetworkHostSelectorFactory = container.get(Identifiers.NetworkHostSelectorFactory);
 
-		console.log({ hostSelector });
 		return hostSelector(profile);
 	}
 }
