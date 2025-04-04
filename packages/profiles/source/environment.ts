@@ -11,12 +11,19 @@ import {
 	IFeeService,
 	IKnownWalletService,
 	IPluginRegistry,
+	IProfile,
 	IProfileRepository,
 	IUsernamesService,
 	IWalletService,
 } from "./contracts.js";
 import { DriverFactory } from "./driver.js";
-import { CoinList, EnvironmentOptions, Storage, StorageData } from "./environment.models.js";
+import {
+	CoinList,
+	EnvironmentOptions,
+	NetworkHostSelectorFactory,
+	Storage,
+	StorageData,
+} from "./environment.models.js";
 
 export class Environment {
 	#storage: StorageData | undefined;
@@ -258,5 +265,17 @@ export class Environment {
 	public setMigrations(schemas: object, version: string): void {
 		container.constant(Identifiers.MigrationSchemas, schemas);
 		container.constant(Identifiers.MigrationVersion, version);
+	}
+
+	/**
+	 * Get the host selector function.
+	 *
+	 * @returns {Function}
+	 * @memberof Environment
+	 */
+	public hostSelector(profile: IProfile): Networks.NetworkHostSelector {
+		const hostSelector: NetworkHostSelectorFactory = container.get(Identifiers.NetworkHostSelectorFactory);
+
+		return hostSelector(profile);
 	}
 }
