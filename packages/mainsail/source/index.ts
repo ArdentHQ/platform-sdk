@@ -19,6 +19,7 @@ import { TransactionService } from "./transaction.service.js";
 import { WalletData } from "./wallet.dto.js";
 import { WIFService } from "./wif.service.js";
 
+export { configManager } from "./crypto/managers/config.js";
 export * from "./crypto/managers/network.js";
 export * from "./helpers/format-units.js";
 export * from "./helpers/parse-units.js";
