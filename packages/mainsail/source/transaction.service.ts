@@ -11,6 +11,7 @@ import { applyCryptoConfiguration } from "./config.js";
 import { Interfaces } from "./crypto/index.js";
 import { parseUnits } from "./helpers/parse-units.js";
 import { Request } from "./request.js";
+import Big from "big.js";
 
 const wellKnownContracts = {
 	consensus: "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
@@ -214,7 +215,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.multiPayment)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.value(amounts.reduce((a, b) => a + b, 0).toString())
+			.value(BigNumber.sum(amounts).toString())
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
