@@ -22,7 +22,7 @@ const network: Networks.NetworkManifest = {
 	},
 	hosts: [
 		{
-			host: "https://mwallets-evm.mainsailhq.com/api",
+			host: "https://dwallets-evm.mainsailhq.com/api",
 			type: "full",
 		},
 		{
