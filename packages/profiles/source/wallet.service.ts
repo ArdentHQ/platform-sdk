@@ -8,8 +8,10 @@ export class WalletService implements IWalletService {
 			profile
 				.availableNetworks()
 				.filter((network) => {
-					return (network.meta().enabled === undefined || network.meta().enabled === true)
-						&& (!networkIds || networkIds?.includes(network.id()));
+					return (
+						(network.meta().enabled === undefined || network.meta().enabled === true) &&
+						(!networkIds || networkIds?.includes(network.id()))
+					);
 				})
 				.map((network) => network.id()),
 		);
