@@ -3,11 +3,14 @@ import { pqueueSettled } from "./helpers/queue.js";
 
 export class WalletService implements IWalletService {
 	/** {@inheritDoc IWalletService.syncByProfile} */
-	public async syncByProfile(profile: IProfile): Promise<void> {
+	public async syncByProfile(profile: IProfile, networkIds?: string[]): Promise<void> {
 		const availableNetworkIds = new Set(
 			profile
 				.availableNetworks()
-				.filter((network) => network.meta().enabled === undefined || network.meta().enabled === true)
+				.filter((network) => {
+					return (network.meta().enabled === undefined || network.meta().enabled === true)
+						&& (!networkIds || networkIds?.includes(network.id()));
+				})
 				.map((network) => network.id()),
 		);
 
