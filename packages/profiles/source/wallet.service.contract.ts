@@ -11,8 +11,9 @@ export interface IWalletService {
 	 * Synchronise all wallets for the given profile.
 	 *
 	 * @param {IProfile} profile
+	 * @param {Array<string>|undefined}networkIds
 	 * @return {Promise<void>}
 	 * @memberof IWalletService
 	 */
-	syncByProfile(profile: IProfile): Promise<void>;
+	syncByProfile(profile: IProfile, networkIds?: string[]): Promise<void>;
 }
