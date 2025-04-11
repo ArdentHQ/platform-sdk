@@ -214,7 +214,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.multiPayment)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.value(amounts.reduce((a, b) => a + b, 0).toString())
+			.value(BigNumber.sum(amounts).toString())
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
