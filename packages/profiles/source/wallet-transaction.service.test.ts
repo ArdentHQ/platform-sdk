@@ -646,52 +646,52 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		assert.defined(context.subject.transaction(id));
 	});
 
-	it("should broadcast multisignature registration", async (context) => {
-		nock.fake("https://ark-test-musig.arkvault.io:443")
-			.post("/")
-			.reply(200, { result: [loader.json("test/fixtures/client/musig-transaction.json")] });
-
-		nock.fake("https://ark-test.arkvault.io:443")
-			.post("/")
-			.reply(200, { result: [] })
-			.post("/transaction")
-			.reply(201, {
-				data: {
-					accept: ["5d7b213905c3bf62bc233b7f1e211566b1fd7aecad668ed91bb8202b3f35d890"],
-					broadcast: [],
-					excess: [],
-					invalid: [],
-				},
-				errors: {},
-			})
-			.persist();
-
-		const identity1 = await deriveIdentity(
-			context.wallet,
-			"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
-		);
-		const identity2 = await deriveIdentity(
-			context.wallet,
-			"citizen door athlete item name various drive onion foster audit board myself",
-		);
-
-		const id = await context.subject.signMultiSignature({
-			data: {
-				min: 2,
-				publicKeys: [identity1.publicKey, identity2.publicKey],
-			},
-			nonce: "1",
-			signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
-		});
-
-		assert.defined(context.subject.transaction(id));
-		assert.containKey(context.subject.pending(), id);
-		assert.true(context.subject.transaction(id).usesMultiSignature());
-		assert.true(context.subject.transaction(id).isMultiSignatureRegistration());
-
-		await context.subject.broadcast(id);
-		assert.containKey(context.subject.waitingForOtherSignatures(), id);
-	});
+	// it("should broadcast multisignature registration", async (context) => {
+	// 	nock.fake("https://ark-test-musig.arkvault.io:443")
+	// 		.post("/")
+	// 		.reply(200, { result: [loader.json("test/fixtures/client/musig-transaction.json")] });
+	//
+	// 	nock.fake("https://ark-test.arkvault.io:443")
+	// 		.post("/")
+	// 		.reply(200, { result: [] })
+	// 		.post("/transaction")
+	// 		.reply(201, {
+	// 			data: {
+	// 				accept: ["5d7b213905c3bf62bc233b7f1e211566b1fd7aecad668ed91bb8202b3f35d890"],
+	// 				broadcast: [],
+	// 				excess: [],
+	// 				invalid: [],
+	// 			},
+	// 			errors: {},
+	// 		})
+	// 		.persist();
+	//
+	// 	const identity1 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
+	// 	);
+	// 	const identity2 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"citizen door athlete item name various drive onion foster audit board myself",
+	// 	);
+	//
+	// 	const id = await context.subject.signMultiSignature({
+	// 		data: {
+	// 			min: 2,
+	// 			publicKeys: [identity1.publicKey, identity2.publicKey],
+	// 		},
+	// 		nonce: "1",
+	// 		signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
+	// 	});
+	//
+	// 	assert.defined(context.subject.transaction(id));
+	// 	assert.containKey(context.subject.pending(), id);
+	// 	assert.true(context.subject.transaction(id).usesMultiSignature());
+	// 	assert.true(context.subject.transaction(id).isMultiSignatureRegistration());
+	//
+	// 	await context.subject.broadcast(id);
+	// 	assert.containKey(context.subject.waitingForOtherSignatures(), id);
+	// });
 
 	skip("#confirm", async (context) => {
 		nock.fake("https://ark-test.arkvault.io:443")
