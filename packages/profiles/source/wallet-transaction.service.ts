@@ -418,11 +418,8 @@ export class TransactionService implements ITransactionService {
 		// When we are working with Multi-Signatures we need to sign them in split through
 		// broadcasting and fetching them multiple times until all participants have signed
 		// the transaction. Once the transaction is fully signed we can mark it as finished.
-		if (transaction.isMultiSignatureRegistration() || transaction.usesMultiSignature()) {
-			this.#pending[transaction.id()] = transaction;
-		} else {
-			this.#signed[transaction.id()] = transaction;
-		}
+
+		this.#signed[transaction.id()] = transaction;
 
 		return transaction.id();
 	}

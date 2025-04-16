@@ -165,7 +165,7 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public usesMultiSignature(): boolean {
-		return this.#data.usesMultiSignature();
+		return false;
 	}
 
 	public total(): number {
