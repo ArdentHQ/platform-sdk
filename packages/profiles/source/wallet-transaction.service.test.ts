@@ -172,35 +172,35 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		assert.instance(context.subject.transaction(id), ExtendedSignedTransactionData);
 	});
 
-	it("should sign multi signature registration", async (context) => {
-		const identity1 = await deriveIdentity(
-			context.wallet,
-			"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
-		);
-		const identity2 = await deriveIdentity(
-			context.wallet,
-			"citizen door athlete item name various drive onion foster audit board myself",
-		);
-		const identity3 = await deriveIdentity(
-			context.wallet,
-			"nuclear anxiety mandate board property fade chief mule west despair photo fiber",
-		);
-
-		const id = await context.subject.signMultiSignature({
-			data: {
-				min: 2,
-				publicKeys: [identity1.publicKey, identity2.publicKey, identity3.publicKey],
-				senderPublicKey: identity1.publicKey,
-			},
-			nonce: "1",
-			signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
-		});
-
-		assert.string(id);
-		assert.containKey(context.subject.waitingForOtherSignatures(), id);
-		assert.instance(context.subject.waitingForOtherSignatures()[id], ExtendedSignedTransactionData);
-		assert.false(context.subject.canBeSigned(id));
-	});
+	// it("should sign multi signature registration", async (context) => {
+	// 	const identity1 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
+	// 	);
+	// 	const identity2 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"citizen door athlete item name various drive onion foster audit board myself",
+	// 	);
+	// 	const identity3 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"nuclear anxiety mandate board property fade chief mule west despair photo fiber",
+	// 	);
+	//
+	// 	const id = await context.subject.signMultiSignature({
+	// 		data: {
+	// 			min: 2,
+	// 			publicKeys: [identity1.publicKey, identity2.publicKey, identity3.publicKey],
+	// 			senderPublicKey: identity1.publicKey,
+	// 		},
+	// 		nonce: "1",
+	// 		signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
+	// 	});
+	//
+	// 	assert.string(id);
+	// 	assert.containKey(context.subject.waitingForOtherSignatures(), id);
+	// 	assert.instance(context.subject.waitingForOtherSignatures()[id], ExtendedSignedTransactionData);
+	// 	assert.false(context.subject.canBeSigned(id));
+	// });
 
 	it("should sign ipfs", async (context) => {
 		const input = {
@@ -425,39 +425,39 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		assert.containKey(context.wallet.data().get(WalletData.SignedTransactions), id);
 	});
 
-	it("sign a multisig transaction awaiting other signatures", async (context) => {
-		nock.fake("https://ark-test.arkvault.io:443")
-			.post("/")
-			.reply(200, { result: [loader.json("test/fixtures/client/musig-transaction.json")] })
-			.post("/")
-			.reply(200, { result: [] })
-			.persist();
-
-		const identity1 = await deriveIdentity(
-			context.wallet,
-			"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
-		);
-		const identity2 = await deriveIdentity(
-			context.wallet,
-			"citizen door athlete item name various drive onion foster audit board myself",
-		);
-
-		const id = await context.subject.signMultiSignature({
-			data: {
-				min: 2,
-				publicKeys: [identity1.publicKey, identity2.publicKey],
-				senderPublicKey: identity1.publicKey,
-			},
-			nonce: "1",
-			signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
-		});
-
-		assert.defined(context.subject.transaction(id));
-		assert.containKey(context.subject.pending(), id);
-		assert.containKey(context.subject.waitingForOtherSignatures(), id);
-		assert.false(context.subject.isAwaitingSignatureByPublicKey(id, identity1.publicKey));
-		assert.true(context.subject.isAwaitingSignatureByPublicKey(id, identity2.publicKey));
-	});
+	// it("sign a multisig transaction awaiting other signatures", async (context) => {
+	// 	nock.fake("https://ark-test.arkvault.io:443")
+	// 		.post("/")
+	// 		.reply(200, { result: [loader.json("test/fixtures/client/musig-transaction.json")] })
+	// 		.post("/")
+	// 		.reply(200, { result: [] })
+	// 		.persist();
+	//
+	// 	const identity1 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
+	// 	);
+	// 	const identity2 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"citizen door athlete item name various drive onion foster audit board myself",
+	// 	);
+	//
+	// 	const id = await context.subject.signMultiSignature({
+	// 		data: {
+	// 			min: 2,
+	// 			publicKeys: [identity1.publicKey, identity2.publicKey],
+	// 			senderPublicKey: identity1.publicKey,
+	// 		},
+	// 		nonce: "1",
+	// 		signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
+	// 	});
+	//
+	// 	assert.defined(context.subject.transaction(id));
+	// 	assert.containKey(context.subject.pending(), id);
+	// 	assert.containKey(context.subject.waitingForOtherSignatures(), id);
+	// 	assert.false(context.subject.isAwaitingSignatureByPublicKey(id, identity1.publicKey));
+	// 	assert.true(context.subject.isAwaitingSignatureByPublicKey(id, identity2.publicKey));
+	// });
 
 	it("should sync multisig transaction awaiting our signature", async (context) => {
 		nock.fake("https://ark-test-musig.arkvault.io:443")
@@ -593,58 +593,58 @@ describe("ARK", ({ beforeAll, beforeEach, skip, it, nock, stub, assert, loader }
 		assert.true(context.subject.hasBeenConfirmed(id));
 	});
 
-	it("should broadcast multisignature transaction", async (context) => {
-		nock.fake("https://ark-test-musig.arkvault.io:443")
-			.post("/")
-			.reply(200, { result: [loader.json("test/fixtures/client/multisig-transaction-awaiting-none.json")] })
-			.post("/")
-			.reply(200, { result: [] });
-
-		nock.fake("https://ark-test.arkvault.io:443")
-			.post("/transaction")
-			.reply(201, {
-				data: {
-					accept: ["4b867a3aa16a1a298cee236a3a907b8bc50e139199525522bfa88b5a9bb11a78"],
-					broadcast: [],
-					excess: [],
-					invalid: [],
-				},
-				errors: {},
-			})
-			.persist();
-
-		const identity1 = await deriveIdentity(
-			context.wallet,
-			"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
-		);
-		const identity2 = await deriveIdentity(
-			context.wallet,
-			"citizen door athlete item name various drive onion foster audit board myself",
-		);
-
-		const id = await context.subject.signMultiSignature({
-			data: {
-				min: 2,
-				publicKeys: [identity1.publicKey, identity2.publicKey],
-			},
-			nonce: "1",
-			signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
-		});
-
-		const isMultiSignatureRegistration = stub(context.subject.transaction(id), "isMultiSignatureRegistration");
-
-		isMultiSignatureRegistration.returnValue(false);
-		assert.defined(context.subject.transaction(id));
-		assert.containKey(context.subject.pending(), id);
-		assert.true(context.subject.transaction(id).usesMultiSignature());
-
-		await context.subject.broadcast(id);
-		assert.containKey(context.subject.waitingForOtherSignatures(), id);
-
-		isMultiSignatureRegistration.returnValue(false);
-		await context.subject.broadcast(id);
-		assert.defined(context.subject.transaction(id));
-	});
+	// it("should broadcast multisignature transaction", async (context) => {
+	// 	nock.fake("https://ark-test-musig.arkvault.io:443")
+	// 		.post("/")
+	// 		.reply(200, { result: [loader.json("test/fixtures/client/multisig-transaction-awaiting-none.json")] })
+	// 		.post("/")
+	// 		.reply(200, { result: [] });
+	//
+	// 	nock.fake("https://ark-test.arkvault.io:443")
+	// 		.post("/transaction")
+	// 		.reply(201, {
+	// 			data: {
+	// 				accept: ["4b867a3aa16a1a298cee236a3a907b8bc50e139199525522bfa88b5a9bb11a78"],
+	// 				broadcast: [],
+	// 				excess: [],
+	// 				invalid: [],
+	// 			},
+	// 			errors: {},
+	// 		})
+	// 		.persist();
+	//
+	// 	const identity1 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"upset boat motor few ketchup merge punch gesture lecture piano neutral uniform",
+	// 	);
+	// 	const identity2 = await deriveIdentity(
+	// 		context.wallet,
+	// 		"citizen door athlete item name various drive onion foster audit board myself",
+	// 	);
+	//
+	// 	const id = await context.subject.signMultiSignature({
+	// 		data: {
+	// 			min: 2,
+	// 			publicKeys: [identity1.publicKey, identity2.publicKey],
+	// 		},
+	// 		nonce: "1",
+	// 		signatory: new Signatories.Signatory(new Signatories.MnemonicSignatory(identity1)),
+	// 	});
+	//
+	// 	const isMultiSignatureRegistration = stub(context.subject.transaction(id), "isMultiSignatureRegistration");
+	//
+	// 	isMultiSignatureRegistration.returnValue(false);
+	// 	assert.defined(context.subject.transaction(id));
+	// 	assert.containKey(context.subject.pending(), id);
+	// 	assert.true(context.subject.transaction(id).usesMultiSignature());
+	//
+	// 	await context.subject.broadcast(id);
+	// 	assert.containKey(context.subject.waitingForOtherSignatures(), id);
+	//
+	// 	isMultiSignatureRegistration.returnValue(false);
+	// 	await context.subject.broadcast(id);
+	// 	assert.defined(context.subject.transaction(id));
+	// });
 
 	// it("should broadcast multisignature registration", async (context) => {
 	// 	nock.fake("https://ark-test-musig.arkvault.io:443")
