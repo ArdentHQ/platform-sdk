@@ -1,6 +1,6 @@
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
-import { BigNumber } from "./bignumber.js";
 import { CurrencyFormatter } from "./currency-formatter";
 
 describe("CurrencyFormatter", async ({ assert, it, nock, loader }) => {
