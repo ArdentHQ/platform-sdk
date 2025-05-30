@@ -1,15 +1,39 @@
 {
   avg: BigNumber {
     '0'
+    ---
+    c: [
+      0,
+    ],
+    e: 0,
+    s: 1,
   },
   isDynamic: true,
   max: BigNumber {
     '500000000'
+    ---
+    c: [
+      500000000,
+    ],
+    e: 8,
+    s: 1,
   },
   min: BigNumber {
     '0'
+    ---
+    c: [
+      0,
+    ],
+    e: 0,
+    s: 1,
   },
   static: BigNumber {
     '500000000'
+    ---
+    c: [
+      500000000,
+    ],
+    e: 8,
+    s: 1,
   },
 }
