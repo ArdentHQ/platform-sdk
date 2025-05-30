@@ -43,10 +43,7 @@ export class WalletAggregate implements IWalletAggregate {
 		return this.#profile
 			.wallets()
 			.valuesWithCoin()
-			.reduce(
-				(total: BigNumber, wallet: IReadWriteWallet) => total.plus(wallet.convertedBalance()),
-				ZERO,
-			)
+			.reduce((total: BigNumber, wallet: IReadWriteWallet) => total.plus(wallet.convertedBalance()), ZERO)
 			.toNumber();
 	}
 

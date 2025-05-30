@@ -1,4 +1,3 @@
-
 import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { IMultiSignatureAsset, ITransactionData } from "../../interfaces/index.js";

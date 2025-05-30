@@ -26,18 +26,18 @@ export const ONE = new BigNumber(1);
  * @returns {BigNumber}
  */
 export const toSatoshi = (value: NumberLike, decimals?: number): BigNumber => {
-    const powerOfTen = new BigNumber(10).exponentiatedBy(decimals ?? 8);
-    return new BigNumber(value).multipliedBy(powerOfTen).decimalPlaces(0);
-}
+	const powerOfTen = new BigNumber(10).exponentiatedBy(decimals ?? 8);
+	return new BigNumber(value).multipliedBy(powerOfTen).decimalPlaces(0);
+};
 
 /**
- * Divides the current value by one satoshi and rounds it to the given amount of decimals. 
+ * Divides the current value by one satoshi and rounds it to the given amount of decimals.
  *
  * @param {NumberLike} value
- * @param {number} [decimals] 
+ * @param {number} [decimals]
  * @returns {number}
  */
 export const toHuman = (value: NumberLike, decimals?: number): number => {
-    const powerOfTen = new BigNumber(10).exponentiatedBy(decimals ?? 8);
-    return new BigNumber(value).dividedBy(powerOfTen).toNumber();
-}
+	const powerOfTen = new BigNumber(10).exponentiatedBy(decimals ?? 8);
+	return new BigNumber(value).dividedBy(powerOfTen).toNumber();
+};

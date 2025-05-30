@@ -36,7 +36,7 @@ const createSubject = (wallet, properties, klass) => {
 		setMeta: (key, value) => {
 			meta = value;
 		},
-		timestamp: () => { },
+		timestamp: () => {},
 		toObject: () => ({}),
 		type: () => "some type",
 		...properties,
@@ -104,7 +104,7 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 			context.wallet,
 			{
 				...context.subject,
-				blockId: () => { },
+				blockId: () => {},
 			},
 			ExtendedConfirmedTransactionData,
 		);

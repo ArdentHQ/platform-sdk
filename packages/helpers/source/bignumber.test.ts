@@ -1,4 +1,4 @@
-import { toHuman, toSatoshi } from '@ardenthq/sdk-helpers';
+import { toHuman, toSatoshi } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
 import { BigNumber } from "bignumber.js";
 
@@ -8,10 +8,7 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 	beforeEach((context) => (context.subject = new BigNumber(1)));
 
 	it("#toString should use the exponential notation up to the 35th number", () => {
-		assert.is(
-			new BigNumber("33653665000000000000000000000000000").toString(),
-			"3.3653665e+34",
-		);
+		assert.is(new BigNumber("33653665000000000000000000000000000").toString(), "3.3653665e+34");
 	});
 
 	it("#toString should use the exponential notation above of the 35th number", () => {

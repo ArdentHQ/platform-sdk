@@ -8,7 +8,8 @@ import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
-	implements Contracts.SignedTransactionData {
+	implements Contracts.SignedTransactionData
+{
 	public override sender(): string {
 		return Identities.Address.fromPublicKey(this.signedData.senderPublicKey);
 	}

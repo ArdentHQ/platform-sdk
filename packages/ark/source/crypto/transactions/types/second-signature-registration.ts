@@ -1,5 +1,5 @@
 import { ByteBuffer } from "@ardenthq/sdk-helpers";
-import { BigNumber } from "bignumber.js"
+import { BigNumber } from "bignumber.js";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { ISerializeOptions } from "../../interfaces/index.js";

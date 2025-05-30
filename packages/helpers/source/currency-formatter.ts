@@ -31,15 +31,9 @@ export class CurrencyFormatter {
 		},
 	): string {
 		if (options.fromSubUnit) {
-			return this.subToUnit(value)
-				.decimalPlaces(options.decimals)
-				.times(price)
-				.toFixed(0);
+			return this.subToUnit(value).decimalPlaces(options.decimals).times(price).toFixed(0);
 		}
 
-		return new BigNumber(value)
-			.decimalPlaces(options.decimals)
-			.times(price)
-			.toFixed(0);
+		return new BigNumber(value).decimalPlaces(options.decimals).times(price).toFixed(0);
 	}
 }

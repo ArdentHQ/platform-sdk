@@ -20,7 +20,7 @@ import {
 export class Validator {
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
 
-	private constructor(options: Record<string, any>) { }
+	private constructor(options: Record<string, any>) {}
 
 	public static make(options: Record<string, any> = {}): Validator {
 		return new Validator(options);

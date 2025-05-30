@@ -127,9 +127,7 @@ export const createMusigRegistrationFixture = ({
 	if (wallet.network().id() === "ark.devnet") {
 		return {
 			data: {
-
 				amount: "0",
-
 
 				asset: {
 					multiSignature: {

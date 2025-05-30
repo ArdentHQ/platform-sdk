@@ -228,5 +228,5 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.data.asset.lock.expiration.value;
 	}
 
-	public override async normalizeData(): Promise<void> { }
+	public override async normalizeData(): Promise<void> {}
 }
