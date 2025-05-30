@@ -1,5 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { CURRENCIES, Money, Numeral } from "@ardenthq/sdk-intl";
+import { BigNumber } from "bignumber.js";
 
 interface CurrencyFormatOptions {
 	locale?: string;
@@ -30,8 +30,8 @@ export class Currency {
 
 		let money =
 			decimals === 2
-				? Money.make(Math.round(BigNumber.make(Math.abs(value)).times(100).toNumber()), ticker)
-				: Money.make(BigNumber.make(Math.abs(value)).times(100).decimalPlaces(0).toNumber(), ticker);
+				? Money.make(Math.round(new BigNumber(Math.abs(value)).times(100).toNumber()), ticker)
+				: Money.make(new BigNumber(Math.abs(value)).times(100).decimalPlaces(0).toNumber(), ticker);
 
 		if (options.locale) {
 			money = money.setLocale(options.locale);

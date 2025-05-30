@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 
 import { Contracts, DTO } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { toHuman, ZERO } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { BigNumber } from "bignumber.js";
 
-import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
 import { container } from "./container.js";
 import { Identifiers } from "./container.models.js";
 import { IExchangeRateService, IReadWriteWallet } from "./contracts.js";
@@ -40,7 +40,7 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public amount(): number {
-		return this.#data.amount().toHuman();
+		return toHuman(this.#data.amount());
 	}
 
 	public convertedAmount(): number {
@@ -48,7 +48,7 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public fee(): number {
-		return this.#data.fee().toHuman();
+		return toHuman(this.#data.fee());
 	}
 
 	public convertedFee(): number {
@@ -240,18 +240,16 @@ export class ExtendedSignedTransactionData {
 
 	// @ts-ignore
 	public payments(): { recipientId: string; amount: number }[] {
-		return this.#data.payments().map((payment) => {
-			return {
-				amount: payment.amount.toHuman(),
-				recipientId: payment.recipientId,
-			};
-		});
+		return this.#data.payments().map((payment) => ({
+			amount: toHuman(payment.amount),
+			recipientId: payment.recipientId,
+		}));
 	}
 
 	public recipients(): ExtendedTransactionRecipient[] {
 		return this.#data.recipients().map((payment: { address: string; amount: BigNumber }) => ({
 			address: payment.address,
-			amount: payment.amount.toHuman(),
+			amount: toHuman(payment.amount),
 		}));
 	}
 
@@ -272,7 +270,7 @@ export class ExtendedSignedTransactionData {
 	}
 
 	public confirmations(): BigNumber {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	public isConfirmed(): boolean {

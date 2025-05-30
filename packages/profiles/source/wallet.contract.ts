@@ -1,5 +1,5 @@
 import { Coins, Contracts, Networks, Services } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import {
 	IDataRepository,

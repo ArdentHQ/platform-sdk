@@ -1,6 +1,7 @@
 import { Coins, Contracts, Exceptions, Networks, Services } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { BigNumber } from "bignumber.js";
 
 import { container } from "./container.js";
 import { Identifiers } from "./container.models.js";
@@ -162,7 +163,7 @@ export class Wallet implements IReadWriteWallet {
 		const value: Contracts.WalletBalance | undefined = this.data().get(WalletData.Balance);
 
 		if (value && value[type]) {
-			return +BigNumber.make(value[type] as BigNumber, this.#decimals()).toHuman();
+			return +new BigNumber(value[type] as BigNumber).decimalPlaces(this.#decimals()).toNumber();
 		}
 
 		return 0;
@@ -184,10 +185,10 @@ export class Wallet implements IReadWriteWallet {
 		const value: string | undefined = this.data().get(WalletData.Sequence);
 
 		if (value === undefined) {
-			return BigNumber.ZERO;
+			return ZERO;
 		}
 
-		return BigNumber.make(value, this.#decimals());
+		return new BigNumber(value).decimalPlaces(this.#decimals());
 	}
 
 	/** {@inheritDoc IReadWriteWallet.avatar} */
@@ -682,13 +683,13 @@ export class Wallet implements IReadWriteWallet {
 
 		/* istanbul ignore next */
 		this.data().set(WalletData.Balance, {
-			available: BigNumber.make(balance?.available || 0, this.#decimals()),
-			fees: BigNumber.make(balance?.fees || 0, this.#decimals()),
+			available: new BigNumber(balance?.available || 0).decimalPlaces(this.#decimals()),
+			fees: new BigNumber(balance?.fees || 0).decimalPlaces(this.#decimals()),
 		});
 
 		this.data().set(
 			WalletData.Sequence,
-			BigNumber.make(this.data().get<string>(WalletData.Sequence) || BigNumber.ZERO, this.#decimals()),
+			new BigNumber(this.data().get<string>(WalletData.Sequence) || ZERO).decimalPlaces(this.#decimals()),
 		);
 	}
 

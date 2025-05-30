@@ -1,3 +1,4 @@
+import { toHuman } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
 
 import { bootContainer } from "../test/mocking";
@@ -53,9 +54,9 @@ describe("FeeService", ({ beforeEach, loader, nock, it, assert }) => {
 
 		const fees = context.subject.findByType("ARK", "ark.devnet", "transfer");
 
-		assert.is(fees.min.toHuman(), 0.003_57);
-		assert.is(fees.avg.toHuman(), 0.1);
-		assert.is(fees.max.toHuman(), 0.1);
-		assert.is(fees.static.toHuman(), 0.1);
+		assert.is(toHuman(fees.min), 0.003_57);
+		assert.is(toHuman(fees.avg), 0.1);
+		assert.is(toHuman(fees.max), 0.1);
+		assert.is(toHuman(fees.static), 0.1);
 	});
 });

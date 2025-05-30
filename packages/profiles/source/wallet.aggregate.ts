@@ -1,4 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { toHuman, ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { IProfile, IReadWriteWallet, IWalletAggregate } from "./contracts.js";
 
@@ -13,7 +14,7 @@ export class WalletAggregate implements IWalletAggregate {
 
 	/** {@inheritDoc IWalletAggregate.balance} */
 	public balance(networkType: NetworkType = "live"): number {
-		return +this.balancesByNetworkType()[networkType].toHuman();
+		return +toHuman(this.balancesByNetworkType()[networkType]);
 	}
 
 	/** {@inheritDoc IWalletAggregate.balancesByNetworkType} */
@@ -31,8 +32,8 @@ export class WalletAggregate implements IWalletAggregate {
 					};
 				},
 				{
-					live: BigNumber.ZERO,
-					test: BigNumber.ZERO,
+					live: ZERO,
+					test: ZERO,
 				},
 			);
 	}
@@ -44,7 +45,7 @@ export class WalletAggregate implements IWalletAggregate {
 			.valuesWithCoin()
 			.reduce(
 				(total: BigNumber, wallet: IReadWriteWallet) => total.plus(wallet.convertedBalance()),
-				BigNumber.ZERO,
+				ZERO,
 			)
 			.toNumber();
 	}
@@ -64,12 +65,12 @@ export class WalletAggregate implements IWalletAggregate {
 			if (matchingWallets.length > 0) {
 				const totalByCoin: BigNumber = matchingWallets.reduce(
 					(total: BigNumber, wallet: IReadWriteWallet) => total.plus(wallet.balance()),
-					BigNumber.ZERO,
+					ZERO,
 				);
 
 				result[coin] = {
 					percentage:
-						totalByProfile === 0 ? "0.00" : totalByCoin.divide(totalByProfile).times(100).toFixed(2),
+						totalByProfile === 0 ? "0.00" : totalByCoin.dividedBy(totalByProfile).times(100).toFixed(2),
 					total: totalByCoin.toString(),
 				};
 			}

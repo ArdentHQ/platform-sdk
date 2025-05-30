@@ -1,5 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { identity } from "../test/fixtures/identity";
 import { bootContainer } from "../test/mocking";
@@ -14,28 +14,28 @@ describe("WalletSerialiser", ({ beforeAll, beforeEach, assert, loader, each, noc
 			{
 				available: Number.NaN,
 				fees: Number.NaN,
-				locked: BigNumber.make(3),
-				lockedUnvotes: BigNumber.make(3),
-				lockedVotes: BigNumber.make(3),
+				locked: new BigNumber(3),
+				lockedUnvotes: new BigNumber(3),
+				lockedVotes: new BigNumber(3),
 				tokens: {
-					ARK: BigNumber.make(4),
-					BTC: BigNumber.make(5),
-					ETH: BigNumber.make(6),
+					ARK: new BigNumber(4),
+					BTC: new BigNumber(5),
+					ETH: new BigNumber(6),
 				},
 			},
 		],
 		[
 			456,
 			{
-				available: BigNumber.make(1),
-				fees: BigNumber.make(2),
-				locked: BigNumber.make(3),
-				lockedUnvotes: BigNumber.make(3),
-				lockedVotes: BigNumber.make(3),
+				available: new BigNumber(1),
+				fees: new BigNumber(2),
+				locked: new BigNumber(3),
+				lockedUnvotes: new BigNumber(3),
+				lockedVotes: new BigNumber(3),
 				tokens: {
-					ARK: BigNumber.make(4),
-					BTC: BigNumber.make(5),
-					ETH: BigNumber.make(6),
+					ARK: new BigNumber(4),
+					BTC: new BigNumber(5),
+					ETH: new BigNumber(6),
 				},
 			},
 		],

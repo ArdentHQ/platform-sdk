@@ -1,7 +1,7 @@
 import { Coins } from "@ardenthq/sdk";
 import { UUID } from "@ardenthq/sdk-cryptography";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { identity } from "../test/fixtures/identity";
 import { bootContainer, importByMnemonic } from "../test/mocking";
@@ -165,7 +165,7 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 	});
 
 	it("should have a nonce", (context) => {
-		assert.equal(context.subject.nonce(), BigNumber.make("111932"));
+		assert.equal(context.subject.nonce(), new BigNumber("111932"));
 
 		context.subject.data().set(WalletData.Sequence, undefined);
 
@@ -446,6 +446,7 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			ENCRYPTED_CONFIRM_KEY: undefined,
 			ENCRYPTED_SIGNING_KEY: undefined,
 			IMPORT_METHOD: "BIP39.MNEMONIC",
+			IS_PRIMARY: false,
 			LEDGER_MODEL: undefined,
 			NETWORK: "ark.devnet",
 			PENDING_MULTISIGNATURE_TRANSACTIONS: {},
@@ -457,7 +458,6 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			VOTES: [],
 			VOTES_AVAILABLE: 0,
 			VOTES_USED: 0,
-			IS_PRIMARY: false,
 		});
 		assert.object(actual.settings);
 		assert.string(actual.settings.AVATAR);

@@ -1,5 +1,6 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { identity } from "../test/fixtures/identity";
 import { bootContainer, importByMnemonic } from "../test/mocking";
@@ -43,8 +44,8 @@ describe("WalletAggregate", ({ beforeAll, nock, assert, it, stub, loader }) => {
 
 	it("#balancesByNetworkType", async (context) => {
 		assert.equal(context.subject.balancesByNetworkType(), {
-			live: BigNumber.ZERO,
-			test: BigNumber.make("55827093444556"),
+			live: ZERO,
+			test: new BigNumber("55827093444556"),
 		});
 	});
 

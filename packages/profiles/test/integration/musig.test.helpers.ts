@@ -1,4 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
+
 import { IProfile } from "../../source/profile.contract";
 import { IReadWriteWallet } from "../../source/wallet.contract";
 import { mnemonics as testMnemonics } from "../fixtures/identity";
@@ -24,15 +25,15 @@ export const generateWalletsFromMnemonics = async ({
 	for (const mnemonic of mnemonics) {
 		const wallet = await profile.walletFactory().fromMnemonicWithBIP39({
 			coin: coinId,
-			network: networkId,
 			mnemonic,
+			network: networkId,
 		});
 
 		await wallet.synchroniser().identity();
 
 		wallets.push({
-			wallet,
 			mnemonic,
+			wallet,
 		});
 	}
 
@@ -51,7 +52,7 @@ export const generateWallets = async ({
 	networkId: string;
 }) => {
 	const mnemonics = testMnemonics[networkId].slice(0, numberOfWallets);
-	const wallets = await generateWalletsFromMnemonics({ profile, coinId, networkId, mnemonics });
+	const wallets = await generateWalletsFromMnemonics({ coinId, mnemonics, networkId, profile });
 	const publicKeys = wallets.map(({ wallet }) => wallet.publicKey()) as string[];
 
 	return {
@@ -80,24 +81,24 @@ export const generateRegistrationTransactionData = async ({
 
 	if (wallet.wallet.network().id() === "ark.devnet") {
 		transactionData = {
-			nonce: wallet.wallet.nonce().plus(1).toString(),
-			fee: 5,
-			signatory: await wallet.wallet.coin().signatory().mnemonic(wallet.mnemonic),
 			data: {
-				senderPublicKey: wallet.wallet.publicKey(),
-				publicKeys,
 				min: minSignatures,
+				publicKeys,
+				senderPublicKey: wallet.wallet.publicKey(),
 			},
+			fee: 5,
+			nonce: wallet.wallet.nonce().plus(1).toString(),
+			signatory: await wallet.wallet.coin().signatory().mnemonic(wallet.mnemonic),
 			timestamp,
 		};
 	}
 
-	const fee = BigNumber.make(transactionData.fee)
+	const fee = new BigNumber(transactionData.fee)
 		.times([...publicKeys, ...mandatoryKeys, ...optionalKeys].length)
 		.plus(transactionData.fee);
 	transactionData.fee = fee.toNumber();
 
-	return { transactionData, fee };
+	return { fee, transactionData };
 };
 
 export const createMusigRegistrationFixture = ({
@@ -126,33 +127,38 @@ export const createMusigRegistrationFixture = ({
 	if (wallet.network().id() === "ark.devnet") {
 		return {
 			data: {
-				id: uuid,
-				version: 2,
-				type: 4,
-				// Make sure fee is enough to avoid side-effects in wallet statuses (isAwaitingOurSignature, isAwaitingOtherSignatures etc)
-				fee: fee || "1500000000",
-				senderPublicKey: wallet.publicKey(),
-				typeGroup: 1,
-				nonce: wallet.nonce().plus(1).toString(),
-				signatures,
+
 				amount: "0",
+
+
 				asset: {
 					multiSignature: {
-						publicKeys,
 						min,
+						publicKeys,
 					},
 				},
+
+				// Make sure fee is enough to avoid side-effects in wallet statuses (isAwaitingOurSignature, isAwaitingOtherSignatures etc)
+				fee: fee || "1500000000",
+
+				id: uuid,
 				multiSignature: {
-					publicKeys,
 					min,
+					publicKeys,
 				},
+				nonce: wallet.nonce().plus(1).toString(),
+				senderPublicKey: wallet.publicKey(),
 				signature,
-			},
-			multisigAsset: {
-				publicKeys,
-				min,
+				signatures,
+				type: 4,
+				typeGroup: 1,
+				version: 2,
 			},
 			id: uuid,
+			multisigAsset: {
+				min,
+				publicKeys,
+			},
 			timestampReceived: timestamp,
 		};
 	}
@@ -163,10 +169,10 @@ export const createMusigRegistrationFixture = ({
 export const mockMusigServer = (nock, url) => {
 	const mockResponse: Record<string, any> = {
 		delete: { result: [] },
-		store: { result: { id: undefined } },
-		show: { result: { id: undefined } },
-		ready: { result: [] },
 		pending: { result: [] },
+		ready: { result: [] },
+		show: { result: { id: undefined } },
+		store: { result: { id: undefined } },
 	};
 
 	nock.fake(url)

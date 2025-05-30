@@ -2,7 +2,8 @@
 
 import { Coins, Contracts } from "@ardenthq/sdk";
 import { DateTime } from "@ardenthq/sdk-intl";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { toHuman } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { IExchangeRateService, IReadWriteWallet } from "./contracts.js";
 import { container } from "./container.js";
@@ -55,12 +56,12 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 	// @ts-ignore
 	public recipients(): ExtendedTransactionRecipient[] {
 		/* istanbul ignore next */
-		return this.#data.recipients().map(({ address, amount }) => ({ address, amount: amount.toHuman() }));
+		return this.#data.recipients().map(({ address, amount }) => ({ address, amount: toHuman(amount) }));
 	}
 
 	// @ts-ignore
 	public amount(): number {
-		return this.#data.amount().toHuman();
+		return toHuman(this.#data.amount());
 	}
 
 	public convertedAmount(): number {
@@ -69,7 +70,7 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 
 	// @ts-ignore
 	public fee(): number {
-		return this.#data.fee().toHuman();
+		return toHuman(this.#data.fee());
 	}
 
 	public convertedFee(): number {
@@ -224,7 +225,7 @@ export class ExtendedConfirmedTransactionData implements Contracts.ConfirmedTran
 			.map((payment) => {
 				return {
 					recipientId: payment.recipientId,
-					amount: payment.amount.toHuman(),
+					amount: toHuman(payment.amount),
 				};
 			});
 	}

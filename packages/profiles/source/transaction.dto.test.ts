@@ -1,6 +1,6 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { identity } from "../test/fixtures/identity";
 import { data as secondWallet } from "../test/fixtures/wallets/D5sRKWckH4rE1hQ9eeMeHAepgyC3cvJtwb.json";
@@ -17,12 +17,12 @@ const createSubject = (wallet, properties, klass) => {
 	let meta = "some meta";
 
 	return new klass(wallet, {
-		amount: () => BigNumber.make(18e8, 8),
+		amount: () => new BigNumber(18e8).decimalPlaces(8),
 		asset: () => ({}),
 		blockId: () => "transactionBlockId",
 		bridgechainId: () => "bridgechainId",
-		confirmations: () => BigNumber.make(20),
-		fee: () => BigNumber.make(2e8, 8),
+		confirmations: () => new BigNumber(20),
+		fee: () => new BigNumber(2e8).decimalPlaces(8),
 		getMeta: () => meta,
 		id: () => "transactionId",
 		inputs: () => [],
@@ -36,7 +36,7 @@ const createSubject = (wallet, properties, klass) => {
 		setMeta: (key, value) => {
 			meta = value;
 		},
-		timestamp: () => {},
+		timestamp: () => { },
 		toObject: () => ({}),
 		type: () => "some type",
 		...properties,
@@ -104,7 +104,7 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 			context.wallet,
 			{
 				...context.subject,
-				blockId: () => {},
+				blockId: () => { },
 			},
 			ExtendedConfirmedTransactionData,
 		);
@@ -121,7 +121,7 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 	});
 
 	it("should have confirmations", (context) => {
-		assert.equal(context.subject.confirmations(), BigNumber.make(20));
+		assert.equal(context.subject.confirmations(), new BigNumber(20));
 	});
 
 	it("should have a sender", (context) => {
@@ -145,7 +145,7 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 		const subject = createSubject(
 			context.wallet,
 			{
-				amount: () => BigNumber.make(10e8, 8),
+				amount: () => new BigNumber(10e8).decimalPlaces(8),
 				timestamp: () => DateTime.make(),
 			},
 			ExtendedConfirmedTransactionData,
@@ -168,7 +168,7 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 		const subject = createSubject(
 			context.wallet,
 			{
-				fee: () => BigNumber.make(10e8, 8),
+				fee: () => new BigNumber(10e8).decimalPlaces(8),
 				timestamp: () => DateTime.make(),
 			},
 			ExtendedConfirmedTransactionData,
@@ -311,8 +311,8 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 
 	it("should have a total for unsent", (context) => {
 		const subject = new ExtendedConfirmedTransactionData(context.wallet, {
-			amount: () => BigNumber.make(18e8, 8),
-			fee: () => BigNumber.make(2e8, 8),
+			amount: () => new BigNumber(18e8).decimalPlaces(8),
+			fee: () => new BigNumber(2e8).decimalPlaces(8),
 			isMultiPayment: () => false,
 			isReturn: () => false,
 			isSent: () => false,
@@ -323,23 +323,23 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 
 	it("should calculate total amount of the multi payments for unsent", (context) => {
 		const subject = new ExtendedConfirmedTransactionData(context.wallet, {
-			amount: () => BigNumber.make(18e8, 8),
-			fee: () => BigNumber.make(2e8, 8),
+			amount: () => new BigNumber(18e8).decimalPlaces(8),
+			fee: () => new BigNumber(2e8).decimalPlaces(8),
 			isMultiPayment: () => true,
 			isReturn: () => false,
 			isSent: () => false,
 			recipients: () => [
 				{
 					address: context.wallet.address(),
-					amount: BigNumber.make(5e8, 8),
+					amount: new BigNumber(5e8).decimalPlaces(8),
 				},
 				{
 					address: secondWallet.address,
-					amount: BigNumber.make(6e8, 8),
+					amount: new BigNumber(6e8).decimalPlaces(8),
 				},
 				{
 					address: context.wallet.address(),
-					amount: BigNumber.make(7e8, 8),
+					amount: new BigNumber(7e8).decimalPlaces(8),
 				},
 			],
 		});
@@ -352,8 +352,8 @@ describe("ExtendedConfirmedTransactionData", ({ beforeEach, it, assert, stub, sp
 		const subject = createSubject(
 			context.wallet,
 			{
-				amount: () => BigNumber.make(10e8, 8),
-				fee: () => BigNumber.make(5e8, 8),
+				amount: () => new BigNumber(10e8).decimalPlaces(8),
+				fee: () => new BigNumber(5e8).decimalPlaces(8),
 				timestamp: () => DateTime.make(),
 			},
 			ExtendedConfirmedTransactionData,
