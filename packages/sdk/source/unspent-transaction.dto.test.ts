@@ -1,6 +1,6 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { UnspentTransactionData } from "./unspent-transaction.dto.js";
 
@@ -14,7 +14,7 @@ describe("UnspentTransactionData", ({ assert, it, nock, loader }) => {
 	});
 
 	it("should have an amount", () => {
-		assert.instance(new UnspentTransactionData({ amount: BigNumber.make(1) }).amount(), BigNumber);
+		assert.instance(new UnspentTransactionData({ amount: new BigNumber(1) }).amount(), BigNumber);
 	});
 
 	it("should have addresses", () => {

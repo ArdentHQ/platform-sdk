@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import { describe } from "@ardenthq/sdk-test";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { Container } from "./container.js";
 import { BigNumberService } from "./big-number.service.js";
@@ -23,7 +23,7 @@ class Transaction extends AbstractConfirmedTransactionData {
 	}
 
 	confirmations() {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	sender() {
@@ -39,11 +39,11 @@ class Transaction extends AbstractConfirmedTransactionData {
 	}
 
 	amount() {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	fee() {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	memo() {
@@ -120,7 +120,7 @@ describe("AbstractConfirmedTransactionData", ({ assert, beforeEach, it, stub }) 
 	});
 
 	it("should have a confirmations", (context) => {
-		assert.is(context.subject.configure({ key: "value" }).confirmations(), BigNumber.ZERO);
+		assert.is(context.subject.configure({ key: "value" }).confirmations(), ZERO);
 	});
 
 	it("should have a sender", (context) => {
@@ -136,11 +136,11 @@ describe("AbstractConfirmedTransactionData", ({ assert, beforeEach, it, stub }) 
 	});
 
 	it("should have a amount", (context) => {
-		assert.equal(context.subject.configure({ key: "value" }).amount(), BigNumber.ZERO);
+		assert.equal(context.subject.configure({ key: "value" }).amount(), ZERO);
 	});
 
 	it("should have a fee", (context) => {
-		assert.equal(context.subject.configure({ key: "value" }).fee(), BigNumber.ZERO);
+		assert.equal(context.subject.configure({ key: "value" }).fee(), ZERO);
 	});
 
 	it("should have a memo", (context) => {

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* eslint-disable import/order */
 
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { strict as assert } from "assert";
 
@@ -105,7 +105,7 @@ export class AbstractSignedTransactionData implements SignedTransactionData {
 	}
 
 	public fee(): BigNumber {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	public memo(): string | undefined {

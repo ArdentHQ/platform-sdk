@@ -3,7 +3,9 @@
 import { describe } from "@ardenthq/sdk-test";
 
 import { DateTime } from "@ardenthq/sdk-intl";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
+
 import { AbstractSignedTransactionData } from "./signed-transaction.dto.js";
 
 class Transaction extends AbstractSignedTransactionData {
@@ -16,11 +18,11 @@ class Transaction extends AbstractSignedTransactionData {
 	}
 
 	amount() {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	fee() {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	timestamp() {
@@ -31,7 +33,7 @@ class Transaction extends AbstractSignedTransactionData {
 describe("AbstractSignedTransactionData", ({ assert, beforeEach, it }) => {
 	beforeEach((context) => {
 		// @ts-ignore - we don't need any bindings in this test
-		context.subject = new Transaction({ get() {} });
+		context.subject = new Transaction({ get() { } });
 	});
 
 	it("should get attributes", (context) => {
@@ -61,11 +63,11 @@ describe("AbstractSignedTransactionData", ({ assert, beforeEach, it }) => {
 	});
 
 	it("should have an amount", (context) => {
-		assert.equal(context.subject.configure("id", { key: "value" }, "").amount(), BigNumber.ZERO);
+		assert.equal(context.subject.configure("id", { key: "value" }, "").amount(), ZERO);
 	});
 
 	it("should have a fee", (context) => {
-		assert.equal(context.subject.configure("id", { key: "value" }, "").fee(), BigNumber.ZERO);
+		assert.equal(context.subject.configure("id", { key: "value" }, "").fee(), ZERO);
 	});
 
 	it("should have a timestamp", (context) => {
@@ -95,10 +97,10 @@ describe("AbstractSignedTransactionData", ({ assert, beforeEach, it }) => {
 					},
 					{
 						key: "value",
-						amount: BigNumber.make(0),
-						fee: BigNumber.make(10),
+						amount: ZERO,
+						fee: new BigNumber(10),
 						timestamp: DateTime.make(),
-						bigint: BigNumber.make(10).toBigInt(),
+						bigint: BigInt(new BigNumber(10).toString()),
 						map: new Map([[1, "one"]]),
 					},
 				)
@@ -112,10 +114,10 @@ describe("AbstractSignedTransactionData", ({ assert, beforeEach, it }) => {
 					"id",
 					{
 						key: "value",
-						amount: BigNumber.make(0),
-						fee: BigNumber.make(10),
+						amount: ZERO,
+						fee: new BigNumber(10),
 						timestamp: DateTime.make(),
-						bigint: BigNumber.make(10).toBigInt(),
+						bigint: BigInt(new BigNumber(10).toString()),
 						map: new Map([[1, "one"]]),
 					},
 					"",

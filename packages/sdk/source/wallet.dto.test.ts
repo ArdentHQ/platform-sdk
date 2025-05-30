@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import { describe } from "@ardenthq/sdk-test";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { AbstractWalletData } from "./wallet.dto.js";
 
@@ -20,14 +20,14 @@ class Wallet extends AbstractWalletData {
 
 	balance() {
 		return {
-			total: BigNumber.ZERO,
-			available: BigNumber.ZERO,
-			fees: BigNumber.ZERO,
+			total: ZERO,
+			available: ZERO,
+			fees: ZERO,
 		};
 	}
 
 	nonce() {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	secondPublicKey() {
@@ -43,7 +43,7 @@ class Wallet extends AbstractWalletData {
 	}
 
 	votes() {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	isDelegate() {
@@ -66,7 +66,7 @@ class Wallet extends AbstractWalletData {
 describe("AbstractWalletData", ({ assert, beforeEach, it }) => {
 	beforeEach((context) => {
 		// @ts-ignore - we don't need any bindings in this test
-		context.subject = new Wallet({ get() {} });
+		context.subject = new Wallet({ get() { } });
 	});
 
 	it("#address", (context) => {
@@ -82,7 +82,7 @@ describe("AbstractWalletData", ({ assert, beforeEach, it }) => {
 	});
 
 	it("#nonce", (context) => {
-		assert.equal(context.subject.fill({ key: "value" }).nonce(), BigNumber.ZERO);
+		assert.equal(context.subject.fill({ key: "value" }).nonce(), ZERO);
 	});
 
 	it("#secondPublicKey", (context) => {
@@ -98,7 +98,7 @@ describe("AbstractWalletData", ({ assert, beforeEach, it }) => {
 	});
 
 	it("#votes", (context) => {
-		assert.equal(context.subject.fill({ key: "value" }).votes(), BigNumber.ZERO);
+		assert.equal(context.subject.fill({ key: "value" }).votes(), ZERO);
 	});
 
 	it("#isDelegate", (context) => {

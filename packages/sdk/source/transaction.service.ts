@@ -1,33 +1,33 @@
 /* istanbul ignore file */
 
-import { BigNumber, NumberLike } from "@ardenthq/sdk-helpers";
+import { NumberLike, toSatoshi } from "@ardenthq/sdk-helpers";
+
+import { BigNumberService } from "./big-number.service.js";
+import { ClientService } from "./client.contract.js";
+import { ConfigRepository } from "./coins.js";
+import { IContainer } from "./container.contracts.js";
+import { SignedTransactionData } from "./contracts.js";
+import { DataTransferObjectService } from "./data-transfer-object.contract.js";
+import { NotImplemented } from "./exceptions.js";
+import { HttpClient } from "./http.js";
+import { NetworkHostSelector } from "./network.models.js";
+import { BindingType } from "./service-provider.contract.js";
 import {
-	TransactionService as Contract,
 	DelegateRegistrationInput,
 	DelegateResignationInput,
 	IpfsInput,
 	MultiPaymentInput,
 	MultiSignatureInput,
 	SecondSignatureInput,
+	TransactionService as Contract,
 	TransferInput,
 	UnlockTokenInput,
 	UsernameRegistrationInput,
 	UsernameResignationInput,
 	ValidatorRegistrationInput,
-	VoteInput,
 	ValidatorResignationInput,
+	VoteInput,
 } from "./transaction.contract.js";
-
-import { BigNumberService } from "./big-number.service.js";
-import { BindingType } from "./service-provider.contract.js";
-import { ClientService } from "./client.contract.js";
-import { ConfigRepository } from "./coins.js";
-import { DataTransferObjectService } from "./data-transfer-object.contract.js";
-import { HttpClient } from "./http.js";
-import { IContainer } from "./container.contracts.js";
-import { NetworkHostSelector } from "./network.models.js";
-import { NotImplemented } from "./exceptions.js";
-import { SignedTransactionData } from "./contracts.js";
 
 export class AbstractTransactionService implements Contract {
 	protected readonly bigNumberService: BigNumberService;
@@ -104,7 +104,7 @@ export class AbstractTransactionService implements Contract {
 		return undefined;
 	}
 
-	protected toSatoshi(value: NumberLike): BigNumber {
-		return this.bigNumberService.make(value).toSatoshi();
+	protected toSatoshi(value: NumberLike, decimals?: number): BigNumber {
+		return toSatoshi(value, decimals);
 	}
 }

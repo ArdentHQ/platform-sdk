@@ -1,7 +1,8 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
-import { BigNumber, Censor } from "@ardenthq/sdk-helpers";
+import { Censor, toHuman, ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 import { DateTime } from "@ardenthq/sdk-intl";
 import emoji from "node-emoji";
 
@@ -103,7 +104,7 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	}
 
 	public confirmations(): BigNumber {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	public sender(): string {
@@ -338,9 +339,9 @@ export abstract class AbstractConfirmedTransactionData implements ConfirmedTrans
 	public toHuman(): KeyValuePair {
 		return {
 			...this.toObject(),
-			amount: this.amount().toHuman(),
+			amount: toHuman(this.amount()),
 			confirmations: this.confirmations().toString(),
-			fee: this.fee().toHuman(),
+			fee: toHuman(this.fee()),
 			timestamp: this.timestamp()?.toISOString(),
 		};
 	}

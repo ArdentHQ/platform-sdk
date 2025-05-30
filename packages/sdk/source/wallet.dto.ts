@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { toHuman, ZERO } from "@ardenthq/sdk-helpers";
 
 import { BigNumberService } from "./big-number.service.js";
 import { IContainer } from "./container.contracts.js";
@@ -40,7 +40,7 @@ export class AbstractWalletData {
 	}
 
 	public nonce(): BigNumber {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	// Second Signature
@@ -122,21 +122,21 @@ export class AbstractWalletData {
 			locked?: number | undefined;
 			tokens?: Record<string, number> | undefined;
 		} = {
-			available: available.toHuman(),
-			fees: fees.toHuman(),
+			available: toHuman(available),
+			fees: toHuman(fees),
 			locked: undefined,
 			tokens: undefined,
 		};
 
 		if (locked) {
-			balance.locked = locked.toHuman();
+			balance.locked = toHuman(locked);
 		}
 
 		if (tokens) {
 			balance.tokens = {};
 
 			for (const [key, value] of Object.entries(tokens)) {
-				balance.tokens[key] = value.toHuman();
+				balance.tokens[key] = toHuman(value);
 			}
 		}
 
