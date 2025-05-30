@@ -31,6 +31,7 @@
 		"@ardenthq/sdk-helpers": "workspace:*",
 		"@ardenthq/sdk-intl": "workspace:*",
 		"@ardenthq/sdk-markets": "workspace:*",
+		"bignumber.js": "^9.3.0",
 		"joi": "^17.5.0",
 		"localforage": "^1.10.0",
 		"node-cache": "^5.1.2",

@@ -40,7 +40,7 @@ importers:
         version: 5.4.0(eslint@8.3.0)(typescript@4.5.2)
       babel-loader:
         specifier: ^8.2.3
-        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 8.2.3(@babel/core@7.16.5)(webpack@5.64.4)
       big-integer:
         specifier: ^1.6.51
         version: 1.6.51
@@ -88,13 +88,13 @@ importers:
         version: 2.0.0(@typescript-eslint/eslint-plugin@5.4.0(@typescript-eslint/parser@5.4.0(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)(typescript@4.5.2))(eslint@8.3.0)
       node-polyfill-webpack-plugin:
         specifier: ^1.1.4
-        version: 1.1.4(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 1.1.4(webpack@5.64.4)
       prettier:
         specifier: ^2.4.1
         version: 2.4.1
       resolve-typescript-plugin:
         specifier: ^1.1.1
-        version: 1.1.1(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 1.1.1(webpack@5.64.4)
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -103,7 +103,7 @@ importers:
         version: 1.53.1
       ts-loader:
         specifier: ^9.2.6
-        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1))
+        version: 9.2.6(typescript@4.5.2)(webpack@5.64.4)
       ts-morph:
         specifier: ^12.0.0
         version: 12.0.0
@@ -118,7 +118,7 @@ importers:
         version: 3.10.5
       uvu:
         specifier: ^0.5.2
-        version: 0.5.2
+        version: 0.5.3
       watchlist:
         specifier: ~0.3.1
         version: 0.3.1
@@ -158,6 +158,9 @@ importers:
       ajv-keywords:
         specifier: 5.1.0
         version: 5.1.0(ajv@8.12.0)
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
       bip39:
         specifier: 3.0.4
         version: 3.0.4
@@ -311,9 +314,9 @@ importers:
       bad-words:
         specifier: ^3.0.4
         version: 3.0.4
-      big.js:
-        specifier: ^6.1.1
-        version: 6.1.1
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
       censorify-it:
         specifier: ^3.0.2
         version: 3.0.2
@@ -331,7 +334,7 @@ importers:
         version: 3.1.3
       joi:
         specifier: ^17.5.0
-        version: 17.5.0
+        version: 17.12.2
       qrcode:
         specifier: ^1.5.0
         version: 1.5.0
@@ -470,6 +473,9 @@ importers:
       ajv-keywords:
         specifier: 3.4.1
         version: 3.4.1(ajv@6.12.6)
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
       bip39:
         specifier: 3.0.4
         version: 3.0.4
@@ -550,9 +556,12 @@ importers:
       '@ardenthq/sdk-markets':
         specifier: workspace:*
         version: link:../markets
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
       joi:
         specifier: ^17.5.0
-        version: 17.5.0
+        version: 17.12.2
       localforage:
         specifier: ^1.10.0
         version: 1.10.0
@@ -570,7 +579,7 @@ importers:
         version: 3.0.5
       semver:
         specifier: ^7.3.5
-        version: 7.3.5
+        version: 7.6.0
       type-fest:
         specifier: ^2.9.0
         version: 2.9.0
@@ -614,6 +623,9 @@ importers:
       bent:
         specifier: ^7.3
         version: 7.3.12
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
       bip39:
         specifier: ^3.0.4
         version: 3.0.4
@@ -625,7 +637,7 @@ importers:
         version: 1.10.7
       joi:
         specifier: ^17.5.0
-        version: 17.5.0
+        version: 17.12.2
       node-emoji:
         specifier: ^1.11.0
         version: 1.11.0
@@ -660,6 +672,9 @@ importers:
       '@ardenthq/sdk-helpers':
         specifier: workspace:*
         version: link:../helpers
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
       concordance:
         specifier: ~5.0.4
         version: 5.0.4
@@ -1371,9 +1386,6 @@ packages:
   '@hapi/hoek@11.0.4':
     resolution: {integrity: sha512-PnsP5d4q7289pS2T2EgGz147BFJ2Jpb4yrEdkpz2IhgEUzos1S7HTl7ezWh1yfYzYlj89KzLdCRkqsP6SIryeQ==}
 
-  '@hapi/hoek@9.2.1':
-    resolution: {integrity: sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw==}
-
   '@hapi/hoek@9.3.0':
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
 
@@ -1620,14 +1632,8 @@ packages:
   '@scure/bip39@1.4.0':
     resolution: {integrity: sha512-BEEm6p8IueV/ZTfQLp/0vhw4NPnT9oWf5+28nvmeUICjP99f4vr2d+qc7AVGDDtwRep6ifR43Yed9ERVmiITzw==}
 
-  '@sideway/address@4.1.3':
-    resolution: {integrity: sha512-8ncEUtmnTsMmL7z1YPB47kPUq7LpKWJNFPsRzHiIajGC5uXlWGn+AmkYPcHNl8S4tcEGx+cnORnNYaw2wvL+LQ==}
-
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
-
-  '@sideway/formula@3.0.0':
-    resolution: {integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==}
 
   '@sideway/formula@3.0.1':
     resolution: {integrity: sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==}
@@ -2122,11 +2128,11 @@ packages:
   big.js@5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
 
-  big.js@6.1.1:
-    resolution: {integrity: sha512-1vObw81a8ylZO5ePrtMay0n018TcftpTA5HFKDaSuiUDBo8biRBtjIobw60OpwuvrGk+FsxKamqN4cnmj/eXdg==}
-
   bigi@1.4.2:
     resolution: {integrity: sha512-ddkU+dFIuEIW8lE7ZwdIAf2UPoM90eaprg5m3YXAVVTmKlqV/9BX4A2M8BOK2yOq6/VgZFVhK6QAxJebhlbhzw==}
+
+  bignumber.js@9.3.0:
+    resolution: {integrity: sha512-EM7aMFTXbptt/wZdMlBv2t8IViwQL+h6SLHosp8Yf0dqJMTnY6iL32opnAB6kAdL0SZPuvcAzFr31o0c/R3/RA==}
 
   bip39@3.0.4:
     resolution: {integrity: sha512-YZKQlb752TrUWqHWj7XAwCSjYEgGAk+/Aas3V7NyjQeZYsztO8JnQUaCWhcnL4T+jL8nvB8typ2jRPzTlgugNw==}
@@ -3476,9 +3482,6 @@ packages:
   joi@17.12.2:
     resolution: {integrity: sha512-RonXAIzCiHLc8ss3Ibuz45u28GOsWE1UpfDXLbN/9NKbL4tCJf8TWYVKsoYuuh+sAUt7fsSNpA+r2+TBA6Wjmw==}
 
-  joi@17.5.0:
-    resolution: {integrity: sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==}
-
   js-string-escape@1.0.1:
     resolution: {integrity: sha512-Smw4xcfIQ5LVjAOuJCvN/zIodzA/BBSsluuoSykP+lUvScIi4U6RJLfwHet5cxFnCswUjISV8oAXaqaJDY3chg==}
     engines: {node: '>= 0.8'}
@@ -3613,6 +3616,7 @@ packages:
 
   lodash.clone@4.5.0:
     resolution: {integrity: sha512-GhrVeweiTD6uTmmn5hV/lzgCQhccwReIVRLHp7LT4SopOjqEZ5BbX8b5WWEtAKasjmy8hR7ZPwsYlxRCku5odg==}
+    deprecated: This package is deprecated. Use structuredClone instead.
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -4623,10 +4627,6 @@ packages:
     resolution: {integrity: sha512-gduQwd1rOdDMGxFG1gEvhV88Oirdo2p+KjoYFU7k2g+i7n6AFFbDQ5kMPUsW0pNbfQsB/cwXvT1i4Bue0s9g5g==}
     engines: {node: '>=6'}
 
-  totalist@2.0.0:
-    resolution: {integrity: sha512-+Y17F0YzxfACxTyjfhnJQEe7afPA0GSpYlFkl2VFMxYP7jshQf9gXV7cH47EfToBumFThfKBvfAcoUn6fdNeRQ==}
-    engines: {node: '>=6'}
-
   ts-loader@9.2.6:
     resolution: {integrity: sha512-QMTC4UFzHmu9wU2VHZEmWWE9cUajjfcdcws+Gh7FhiO+Dy0RnR1bNz0YCHqhI0yRowCE9arVnNxYHqELOy9Hjw==}
     engines: {node: '>=12.0.0'}
@@ -4786,11 +4786,6 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    hasBin: true
-
-  uvu@0.5.2:
-    resolution: {integrity: sha512-m2hLe7I2eROhh+tm3WE5cTo/Cv3WQA7Oc9f7JB6uWv+/zVKvfAm53bMyOoGOSZeQ7Ov2Fu9pLhFr7p07bnT20w==}
-    engines: {node: '>=8'}
     hasBin: true
 
   uvu@0.5.3:
@@ -5911,8 +5906,6 @@ snapshots:
 
   '@hapi/hoek@11.0.4': {}
 
-  '@hapi/hoek@9.2.1': {}
-
   '@hapi/hoek@9.3.0': {}
 
   '@hapi/iron@7.0.1':
@@ -5981,7 +5974,7 @@ snapshots:
 
   '@hapi/topo@5.1.0':
     dependencies:
-      '@hapi/hoek': 9.2.1
+      '@hapi/hoek': 9.3.0
 
   '@hapi/topo@6.0.2':
     dependencies:
@@ -6390,15 +6383,9 @@ snapshots:
       '@noble/hashes': 1.5.0
       '@scure/base': 1.1.9
 
-  '@sideway/address@4.1.3':
-    dependencies:
-      '@hapi/hoek': 9.2.1
-
   '@sideway/address@4.1.5':
     dependencies:
       '@hapi/hoek': 9.3.0
-
-  '@sideway/formula@3.0.0': {}
 
   '@sideway/formula@3.0.1': {}
 
@@ -6670,17 +6657,17 @@ snapshots:
       '@webassemblyjs/ast': 1.11.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))':
+  '@webpack-cli/configtest@1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)':
     dependencies:
       webpack: 5.64.4(webpack-cli@4.9.1)
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
+  '@webpack-cli/info@1.4.0(webpack-cli@4.9.1)':
     dependencies:
       envinfo: 7.8.1
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
-  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))':
+  '@webpack-cli/serve@1.6.0(webpack-cli@4.9.1)':
     dependencies:
       webpack-cli: 4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4)
 
@@ -6848,7 +6835,7 @@ snapshots:
 
   axobject-query@2.2.0: {}
 
-  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4(webpack-cli@4.9.1)):
+  babel-loader@8.2.3(@babel/core@7.16.5)(webpack@5.64.4):
     dependencies:
       '@babel/core': 7.16.5
       find-cache-dir: 3.3.2
@@ -6928,9 +6915,9 @@ snapshots:
 
   big.js@5.2.2: {}
 
-  big.js@6.1.1: {}
-
   bigi@1.4.2: {}
+
+  bignumber.js@9.3.0: {}
 
   bip39@3.0.4:
     dependencies:
@@ -8404,14 +8391,6 @@ snapshots:
       '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
 
-  joi@17.5.0:
-    dependencies:
-      '@hapi/hoek': 9.2.1
-      '@hapi/topo': 5.1.0
-      '@sideway/address': 4.1.3
-      '@sideway/formula': 3.0.0
-      '@sideway/pinpoint': 2.0.0
-
   js-string-escape@1.0.1: {}
 
   js-tokens@4.0.0: {}
@@ -8784,7 +8763,7 @@ snapshots:
       - bluebird
       - supports-color
 
-  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4(webpack-cli@4.9.1)):
+  node-polyfill-webpack-plugin@1.1.4(webpack@5.64.4):
     dependencies:
       assert: 2.0.0
       browserify-zlib: 0.2.0
@@ -9180,7 +9159,7 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-typescript-plugin@1.1.1(webpack@5.64.4(webpack-cli@4.9.1)):
+  resolve-typescript-plugin@1.1.1(webpack@5.64.4):
     dependencies:
       tslib: 2.3.1
       webpack: 5.64.4(webpack-cli@4.9.1)
@@ -9510,7 +9489,7 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1)):
+  terser-webpack-plugin@5.2.5(acorn@8.6.0)(webpack@5.64.4):
     dependencies:
       jest-worker: 27.3.1
       schema-utils: 3.1.1
@@ -9562,9 +9541,7 @@ snapshots:
 
   totalist@1.1.0: {}
 
-  totalist@2.0.0: {}
-
-  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4(webpack-cli@4.9.1)):
+  ts-loader@9.2.6(typescript@4.5.2)(webpack@5.64.4):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.8.3
@@ -9723,14 +9700,6 @@ snapshots:
 
   uuid@8.3.2: {}
 
-  uvu@0.5.2:
-    dependencies:
-      dequal: 2.0.2
-      diff: 5.0.0
-      kleur: 4.1.4
-      sade: 1.7.4
-      totalist: 2.0.0
-
   uvu@0.5.3:
     dependencies:
       dequal: 2.0.2
@@ -9803,9 +9772,9 @@ snapshots:
   webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4):
     dependencies:
       '@discoveryjs/json-ext': 0.5.5
-      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))(webpack@5.64.4(webpack-cli@4.9.1))
-      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
-      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1(webpack-bundle-analyzer@4.5.0)(webpack@5.64.4))
+      '@webpack-cli/configtest': 1.1.0(webpack-cli@4.9.1)(webpack@5.64.4)
+      '@webpack-cli/info': 1.4.0(webpack-cli@4.9.1)
+      '@webpack-cli/serve': 1.6.0(webpack-cli@4.9.1)
       colorette: 2.0.16
       commander: 7.2.0
       execa: 5.1.1
@@ -9848,7 +9817,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4(webpack-cli@4.9.1))
+      terser-webpack-plugin: 5.2.5(acorn@8.6.0)(webpack@5.64.4)
       watchpack: 2.3.0
       webpack-sources: 3.2.2
     optionalDependencies:

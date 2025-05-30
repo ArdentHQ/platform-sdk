@@ -50,6 +50,7 @@
 		"@mainsail/validation": "0.0.1-evm.14",
 		"ajv": "6.12.6",
 		"ajv-keywords": "3.4.1",
+		"bignumber.js": "^9.3.0",
 		"bip39": "3.0.4",
 		"dayjs": "1.10.7",
 		"deepmerge": "4.2.2",

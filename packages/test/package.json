@@ -26,6 +26,7 @@
 	},
 	"dependencies": {
 		"@ardenthq/sdk-helpers": "workspace:*",
+		"bignumber.js": "^9.3.0",
 		"concordance": "~5.0.4",
 		"kleur": "~4.1.4",
 		"nock": "^13.2.2",
