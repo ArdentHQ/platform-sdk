@@ -1,4 +1,6 @@
-import { BigNumber, NumberLike } from "./bignumber.js";
+import BigNumber from "bignumber.js";
+
+import { NumberLike } from "./bignumber.helpers.js";
 
 export class CurrencyFormatter {
 	// todo: implement generic formatting method
@@ -9,29 +11,29 @@ export class CurrencyFormatter {
 	}
 
 	public static toBuilder(value: NumberLike, decimals = 8): BigNumber {
-		return BigNumber.make(value, decimals);
+		return new BigNumber(value, decimals);
 	}
 
 	public static subToUnit(value: NumberLike, decimals = 8): BigNumber {
-		return BigNumber.make(value, decimals).denominated(decimals);
+		return new BigNumber(value, decimals).dividedBy(10 ** decimals);
 	}
 
 	public static unitToSub(value: NumberLike, decimals = 8): BigNumber {
-		return BigNumber.make(value, decimals).times(BigNumber.powerOfTen(decimals));
+		return new BigNumber(value, decimals).times(10 ** decimals);
 	}
 
 	public static cryptoToCurrency(
 		value: NumberLike,
 		price: NumberLike,
-		options: { fromSubUnit: boolean; decimals: number } = {
-			fromSubUnit: true,
+		options: { decimals: number; fromSubUnit: boolean } = {
 			decimals: 2,
+			fromSubUnit: true,
 		},
 	): string {
 		if (options.fromSubUnit) {
-			return this.subToUnit(value).decimalPlaces(options.decimals).times(price).toFixed();
+			return this.subToUnit(value).decimalPlaces(options.decimals).times(price).toFixed(0);
 		}
 
-		return BigNumber.make(value).decimalPlaces(options.decimals).times(price).toFixed();
+		return new BigNumber(value).decimalPlaces(options.decimals).times(price).toFixed(0);
 	}
 }

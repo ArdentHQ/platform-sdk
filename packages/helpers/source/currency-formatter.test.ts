@@ -1,6 +1,6 @@
 import { describe } from "@ardenthq/sdk-test";
 
-import { BigNumber } from "./bignumber";
+import { BigNumber } from "./bignumber.js";
 import { CurrencyFormatter } from "./currency-formatter";
 
 describe("CurrencyFormatter", async ({ assert, it, nock, loader }) => {
@@ -25,6 +25,6 @@ describe("CurrencyFormatter", async ({ assert, it, nock, loader }) => {
 	});
 
 	it("should should convert a unit with a multiplier", () => {
-		assert.is(CurrencyFormatter.cryptoToCurrency(10, 5, { fromSubUnit: false, decimals: 8 }), "50");
+		assert.is(CurrencyFormatter.cryptoToCurrency(10, 5, { decimals: 8, fromSubUnit: false }), "50");
 	});
 });
