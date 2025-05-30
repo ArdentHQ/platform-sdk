@@ -1,6 +1,7 @@
-import { Contracts, DTO, Exceptions } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { Contracts, DTO } from "@ardenthq/sdk";
+import { ZERO } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionTypeService } from "./transaction-type.service.js";
 
@@ -18,7 +19,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override confirmations(): BigNumber {
-		return BigNumber.make(this.data.confirmations);
+		return new BigNumber(this.data.confirmations);
 	}
 
 	public override sender(): string {
@@ -36,25 +37,29 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 		return this.data.asset.payments.map((payment: { recipientId: string; amount: BigNumber }) => ({
 			address: payment.recipientId,
-			amount: this.bigNumberService.make(payment.amount),
+			amount: new BigNumber(payment.amount),
 		}));
 	}
 
 	public override amount(): BigNumber {
 		if (this.isMultiPayment()) {
-			const amount = BigNumber.sum(this.data.asset.payments.map(({ amount }) => amount));
-			return this.bigNumberService.make(amount);
+			let amount = ZERO;
+			for (const payment of this.data.asset.payments) {
+				amount = amount.plus(payment.amount);
+			}
+
+			return new BigNumber(amount);
 		}
 
-		return this.bigNumberService.make(this.data.amount);
+		return new BigNumber(this.data.amount);
 	}
 
 	public override fee(): BigNumber {
-		return this.bigNumberService.make(this.data.fee);
+		return new BigNumber(this.data.fee);
 	}
 
 	public override nonce(): BigNumber {
-		return this.data.nonce;
+		return new BigNumber(this.data.nonce);
 	}
 
 	public override asset(): Record<string, unknown> {
@@ -187,7 +192,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	public override payments(): { recipientId: string; amount: BigNumber }[] {
 		return this.data.asset.payments.map((payment: { recipientId: string; amount: BigNumber }) => ({
 			address: payment.recipientId,
-			amount: this.bigNumberService.make(payment.amount),
+			amount: new BigNumber(payment.amount),
 		}));
 	}
 
@@ -223,5 +228,5 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 		return this.data.asset.lock.expiration.value;
 	}
 
-	public override async normalizeData(): Promise<void> {}
+	public override async normalizeData(): Promise<void> { }
 }

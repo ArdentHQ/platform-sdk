@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { ITransactionData } from "../../interfaces/index.js";
 import { IpfsTransaction } from "../types/index.js";
@@ -11,7 +11,7 @@ export class IPFSBuilder extends TransactionBuilder<IPFSBuilder> {
 		this.data.type = IpfsTransaction.type;
 		this.data.typeGroup = IpfsTransaction.typeGroup;
 		this.data.fee = IpfsTransaction.staticFee();
-		this.data.amount = BigNumber.ZERO;
+		this.data.amount = ZERO;
 		this.data.asset = {};
 	}
 

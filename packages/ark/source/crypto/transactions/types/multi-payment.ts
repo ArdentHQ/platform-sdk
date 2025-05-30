@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer, ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { Address } from "../../identities/address.js";
@@ -12,7 +13,7 @@ export abstract class MultiPaymentTransaction extends Transaction {
 	public static override type: number = TransactionType.MultiPayment;
 	public static override key = "multiPayment";
 
-	protected static override defaultStaticFee: BigNumber = BigNumber.make("10000000");
+	protected static override defaultStaticFee: BigNumber = new BigNumber("10000000");
 
 	public static override getSchema(): schemas.TransactionSchema {
 		return schemas.multiPayment;
@@ -34,7 +35,7 @@ export abstract class MultiPaymentTransaction extends Transaction {
 			buf.writeUInt16LE(data.asset.payments.length);
 
 			for (const payment of data.asset.payments) {
-				buf.writeBigUInt64LE(payment.amount.toBigInt());
+				buf.writeBigUInt64LE(BigInt(payment.amount.toString()));
 				buf.writeBuffer(Address.toBuffer(payment.recipientId));
 			}
 
@@ -49,14 +50,14 @@ export abstract class MultiPaymentTransaction extends Transaction {
 		const payments: IMultiPaymentItem[] = [];
 		const total: number = buf.readUInt16LE();
 
-		for (let j = 0; j < total; j++) {
+		for (let index = 0; index < total; index++) {
 			payments.push({
-				amount: BigNumber.make(buf.readBigUInt64LE().toString()),
+				amount: new BigNumber(buf.readBigUInt64LE().toString()),
 				recipientId: Address.fromBuffer(buf.readBuffer(21)),
 			});
 		}
 
-		data.amount = BigNumber.ZERO;
+		data.amount = ZERO;
 		data.asset = { payments };
 	}
 }

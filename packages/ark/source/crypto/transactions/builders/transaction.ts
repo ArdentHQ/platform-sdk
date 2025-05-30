@@ -1,4 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionTypeGroup } from "../../enums.js";
 import { MissingTransactionSignatureError, VendorFieldLengthExceededError } from "../../errors.js";
@@ -21,7 +22,7 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 	public constructor() {
 		this.data = {
 			id: undefined,
-			nonce: BigNumber.ZERO,
+			nonce: ZERO,
 			typeGroup: TransactionTypeGroup.Test,
 			version: 0x02,
 		} as ITransactionData;
@@ -45,7 +46,7 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 
 	public nonce(nonce: string): TBuilder {
 		if (nonce) {
-			this.data.nonce = BigNumber.make(nonce);
+			this.data.nonce = new BigNumber(nonce);
 		}
 
 		return this.instance();
@@ -59,14 +60,14 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 
 	public fee(fee: string): TBuilder {
 		if (fee) {
-			this.data.fee = BigNumber.make(fee);
+			this.data.fee = new BigNumber(fee);
 		}
 
 		return this.instance();
 	}
 
 	public amount(amount: string): TBuilder {
-		this.data.amount = BigNumber.make(amount);
+		this.data.amount = new BigNumber(amount);
 
 		return this.instance();
 	}

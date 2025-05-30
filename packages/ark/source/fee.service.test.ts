@@ -1,4 +1,5 @@
 import { IoC, Services, Signatories } from "@ardenthq/sdk";
+import { toHuman } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
 
 import { identity } from "../test/fixtures/identity.js";
@@ -84,7 +85,7 @@ describe("FeeService", async ({ assert, nock, it, loader }) => {
 					container.singleton(IoC.BindingType.ClientService, ClientService);
 					container.singleton(IoC.BindingType.FeeService, FeeService);
 					container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
-					container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
+					container.constant(IoC.BindingType.LedgerTransportFactory, async () => { });
 					container.singleton(IoC.BindingType.LedgerService, LedgerService);
 					container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
 					container.singleton(IoC.BindingType.MultiSignatureService, MultiSignatureService);
@@ -116,9 +117,9 @@ describe("FeeService", async ({ assert, nock, it, loader }) => {
 			}),
 		);
 
-		const b = await (await createService(FeeService, "ark.devnet")).calculate({ type: 1, data: () => ({}) });
+		const b = await (await createService(FeeService, "ark.devnet")).calculate({ data: () => ({}), type: 1 });
 
-		assert.is(a.toHuman(), 50); // Signatures + Base 5
-		assert.is(b.toHuman(), 0);
+		assert.is(toHuman(a), 50); // Signatures + Base 5
+		assert.is(toHuman(b), 0);
 	});
 });

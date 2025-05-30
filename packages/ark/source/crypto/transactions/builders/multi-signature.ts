@@ -1,4 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { IMultiSignatureAsset, ITransactionData } from "../../interfaces/index.js";
 import { MultiSignatureRegistrationTransaction } from "../types/index.js";
@@ -11,8 +12,8 @@ export class MultiSignatureBuilder extends TransactionBuilder<MultiSignatureBuil
 		this.data.type = MultiSignatureRegistrationTransaction.type;
 		this.data.typeGroup = MultiSignatureRegistrationTransaction.typeGroup;
 		this.data.version = 2;
-		this.data.fee = BigNumber.ZERO;
-		this.data.amount = BigNumber.ZERO;
+		this.data.fee = ZERO;
+		this.data.amount = ZERO;
 		this.data.recipientId = undefined;
 		this.data.senderPublicKey = undefined;
 		this.data.asset = { multiSignature: { min: 0, publicKeys: [] } };

@@ -1,15 +1,14 @@
 import { Contracts, DTO } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
-import { DateTime } from "@ardenthq/sdk-intl";
-
 import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
+import { DateTime } from "@ardenthq/sdk-intl";
+import { BigNumber } from "bignumber.js";
+
 import { Identities } from "./crypto/index.js";
 import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
-	implements Contracts.SignedTransactionData
-{
+	implements Contracts.SignedTransactionData {
 	public override sender(): string {
 		return Identities.Address.fromPublicKey(this.signedData.senderPublicKey);
 	}
@@ -20,23 +19,23 @@ export class SignedTransactionData
 
 	public override amount(): BigNumber {
 		if (this.isMultiPayment()) {
-			return this.bigNumberService.make(
-				BigNumber.sum(this.signedData.asset.payments.map(({ amount }) => amount)),
+			return new BigNumber(
+				this.signedData.asset.payments.reduce((sum, { amount }) => sum.plus(amount), new BigNumber(0)),
 			);
 		}
 
-		return this.bigNumberService.make(this.signedData.amount);
+		return new BigNumber(this.signedData.amount);
 	}
 
 	public override payments(): MultiPaymentItem[] {
 		return this.signedData.asset.payments.map((payment: MultiPaymentItem) => ({
 			address: payment.recipientId,
-			amount: this.bigNumberService.make(payment.amount),
+			amount: new BigNumber(payment.amount),
 		}));
 	}
 
 	public override fee(): BigNumber {
-		return this.bigNumberService.make(this.signedData.fee);
+		return new BigNumber(this.signedData.fee);
 	}
 
 	public override memo(): string | undefined {
@@ -44,7 +43,7 @@ export class SignedTransactionData
 	}
 
 	public override nonce(): BigNumber {
-		return this.signedData.nonce;
+		return new BigNumber(this.signedData.nonce);
 	}
 
 	public override timestamp(): DateTime {

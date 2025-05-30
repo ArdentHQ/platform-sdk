@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { Address } from "../../identities/address.js";
@@ -11,7 +12,7 @@ export abstract class TransferTransaction extends Transaction {
 	public static override type: number = TransactionType.Transfer;
 	public static override key = "transfer";
 
-	protected static override defaultStaticFee: BigNumber = BigNumber.make("10000000");
+	protected static override defaultStaticFee: BigNumber = new BigNumber("10000000");
 
 	public static override getSchema(): schemas.TransactionSchema {
 		return schemas.transfer;
@@ -24,7 +25,7 @@ export abstract class TransferTransaction extends Transaction {
 	public serialize(options?: ISerializeOptions): ByteBuffer | undefined {
 		const { data } = this;
 		const buff: ByteBuffer = new ByteBuffer(Buffer.alloc(33));
-		buff.writeBigUInt64LE(data.amount.toBigInt());
+		buff.writeBigUInt64LE(BigInt(data.amount.toString()));
 		buff.writeUInt32LE(data.expiration || 0);
 
 		if (data.recipientId) {
@@ -36,7 +37,7 @@ export abstract class TransferTransaction extends Transaction {
 
 	public deserialize(buf: ByteBuffer): void {
 		const { data } = this;
-		data.amount = BigNumber.make(buf.readBigUInt64LE().toString());
+		data.amount = new BigNumber(buf.readBigUInt64LE().toString());
 		data.expiration = buf.readUInt32LE();
 		data.recipientId = Address.fromBuffer(buf.readBuffer(21));
 	}

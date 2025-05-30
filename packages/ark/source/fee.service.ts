@@ -1,5 +1,6 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { Request } from "./request.js";
 
@@ -47,14 +48,14 @@ export class FeeService extends Services.AbstractFeeService {
 			return multiSignature.static.times(transaction.data().asset.multiSignature.publicKeys.length + 1);
 		}
 
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	#transform(type: string, typeGroup: number, staticFees: object, dynamicFees: object): Services.TransactionFee {
 		const dynamicFee = (dynamicFees[typeGroup] ?? staticFees[typeGroup])[type] ?? "0";
-		let minimumFee = this.bigNumberService.make(dynamicFee?.min ?? "0");
-		let averageFee = this.bigNumberService.make(dynamicFee?.avg ?? "0");
-		const maximumFee = this.bigNumberService.make(staticFees[typeGroup][type] ?? "0");
+		let minimumFee = new BigNumber(dynamicFee?.min ?? "0");
+		let averageFee = new BigNumber(dynamicFee?.avg ?? "0");
+		const maximumFee = new BigNumber(staticFees[typeGroup][type] ?? "0");
 
 		if (type === "multiPayment") {
 			minimumFee = maximumFee;

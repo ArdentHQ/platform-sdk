@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer, ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { DuplicateParticipantInMultiSignatureError, InvalidTransactionBytesError } from "../errors.js";
 import { IDeserializeOptions, ITransaction, ITransactionData } from "../interfaces/index.js";
@@ -30,11 +31,11 @@ export class Deserializer {
 		transaction.network = buf.readUInt8();
 		transaction.typeGroup = buf.readUInt32LE();
 		transaction.type = buf.readUInt16LE();
-		transaction.nonce = BigNumber.make(buf.readBigUInt64LE());
+		transaction.nonce = new BigNumber(buf.readBigUInt64LE());
 
 		transaction.senderPublicKey = buf.readBuffer(33).toString("hex");
-		transaction.fee = BigNumber.make(buf.readBigUInt64LE().toString());
-		transaction.amount = BigNumber.ZERO;
+		transaction.fee = new BigNumber(buf.readBigUInt64LE().toString());
+		transaction.amount = ZERO;
 	}
 
 	private static deserializeVendorField(transaction: ITransaction, buf: ByteBuffer): void {
@@ -116,7 +117,7 @@ export class Deserializer {
 
 				const count: number = buf.getRemainderLength() / 65;
 				const publicKeyIndexes: { [index: number]: boolean } = {};
-				for (let i = 0; i < count; i++) {
+				for (let index = 0; index < count; index++) {
 					const multiSignaturePart: string = buf.readBuffer(65).toString("hex");
 					const publicKeyIndex: number = Number.parseInt(multiSignaturePart.slice(0, 2), 16);
 

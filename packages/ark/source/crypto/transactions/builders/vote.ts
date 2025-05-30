@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { ITransactionData } from "../../interfaces/index.js";
 import { VoteTransaction } from "../types/index.js";
@@ -11,7 +11,7 @@ export class VoteBuilder extends TransactionBuilder<VoteBuilder> {
 		this.data.type = VoteTransaction.type;
 		this.data.typeGroup = VoteTransaction.typeGroup;
 		this.data.fee = VoteTransaction.staticFee();
-		this.data.amount = BigNumber.ZERO;
+		this.data.amount = ZERO;
 		this.data.recipientId = undefined;
 		this.data.senderPublicKey = undefined;
 		this.data.asset = { votes: [] };

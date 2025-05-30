@@ -59,14 +59,14 @@ export class Serializer {
 		buf.writeUInt16LE(transaction.type);
 
 		if (transaction.nonce) {
-			buf.writeBigInt64LE(transaction.nonce.toBigInt());
+			buf.writeBigInt64LE(BigInt(transaction.nonce.toString()));
 		}
 
 		if (transaction.senderPublicKey) {
 			buf.writeBuffer(Buffer.from(transaction.senderPublicKey, "hex"));
 		}
 
-		buf.writeBigInt64LE(transaction.fee.toBigInt());
+		buf.writeBigInt64LE(BigInt(transaction.fee.toString()));
 	}
 
 	private static serializeVendorField(transaction: ITransaction, buf: ByteBuffer): void {

@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { Keys } from "../../identities/index.js";
 import { ITransactionAsset, ITransactionData } from "../../interfaces/index.js";
@@ -12,7 +12,7 @@ export class SecondSignatureBuilder extends TransactionBuilder<SecondSignatureBu
 		this.data.type = SecondSignatureRegistrationTransaction.type;
 		this.data.typeGroup = SecondSignatureRegistrationTransaction.typeGroup;
 		this.data.fee = SecondSignatureRegistrationTransaction.staticFee();
-		this.data.amount = BigNumber.ZERO;
+		this.data.amount = ZERO;
 		this.data.recipientId = undefined;
 		this.data.senderPublicKey = undefined;
 		this.data.asset = { signature: {} } as ITransactionAsset;

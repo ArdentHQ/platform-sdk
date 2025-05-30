@@ -1,5 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { createService } from "../test/mocking";
 import { WalletData } from "./wallet.dto.js";
@@ -96,11 +96,11 @@ for (const network of ["mainnet", "devnet"]) {
 		});
 
 		it("should have a balance", (context) => {
-			assert.equal(context.subject.balance().available, BigNumber.make("55827093444556"));
+			assert.equal(context.subject.balance().available, new BigNumber("55827093444556"));
 		});
 
 		it("should have a nonce", (context) => {
-			assert.equal(context.subject.nonce(), BigNumber.make("111932"));
+			assert.equal(context.subject.nonce(), new BigNumber("111932"));
 		});
 
 		it("should have a secondary public key", (context) => {
@@ -116,7 +116,7 @@ for (const network of ["mainnet", "devnet"]) {
 		});
 
 		it("should have a votes", (context) => {
-			assert.equal(context.subject.votes(), network === "devnet" ? BigNumber.make("57037342430760") : undefined);
+			assert.equal(context.subject.votes(), network === "devnet" ? new BigNumber("57037342430760") : undefined);
 		});
 
 		it("should determine if it is a delegate", async (context) => {

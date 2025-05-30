@@ -1,6 +1,7 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { createService } from "../test/mocking";
 import { SignedTransactionData } from "./signed-transaction.dto.js";
@@ -36,7 +37,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 	});
 
 	it("should have an amount", (context) => {
-		assert.equal(context.subject.amount(), BigNumber.make("12500000000000000"));
+		assert.equal(context.subject.amount(), new BigNumber("12500000000000000"));
 	});
 
 	it("should have an amount for MultiPayment", (context) => {
@@ -65,7 +66,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 			"",
 		);
 
-		assert.equal(context.subject.amount(), BigNumber.make("25000000000000000"));
+		assert.equal(context.subject.amount(), new BigNumber("25000000000000000"));
 	});
 
 	it("should have votes/unvotes", (context) => {
@@ -90,7 +91,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 	});
 
 	it("should have a fee", (context) => {
-		assert.equal(context.subject.fee(), BigNumber.ZERO);
+		assert.equal(context.subject.fee(), ZERO);
 	});
 
 	it("should have a timestamp", (context) => {

@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer, ZERO } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionTypeGroup } from "../../enums.js";
 import { NotImplemented } from "../../errors.js";
@@ -20,7 +21,7 @@ export abstract class Transaction implements ITransaction {
 	public static version = 2;
 	public static key: string | undefined = undefined;
 
-	protected static defaultStaticFee: BigNumber = BigNumber.ZERO;
+	protected static defaultStaticFee: BigNumber = ZERO;
 
 	public isVerified = false;
 	public data!: ITransactionData;
@@ -38,7 +39,7 @@ export abstract class Transaction implements ITransaction {
 			const fee: any = milestones.fees.staticFees[this.key];
 
 			if (fee !== undefined) {
-				return BigNumber.make(fee);
+				return new BigNumber(fee);
 			}
 		}
 

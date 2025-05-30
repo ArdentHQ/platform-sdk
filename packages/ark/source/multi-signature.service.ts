@@ -1,7 +1,8 @@
 import { Contracts, Http, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { UUID } from "@ardenthq/sdk-cryptography";
-import { uniq, BigNumber } from "@ardenthq/sdk-helpers";
+import { uniq } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { BigNumber } from "bignumber.js";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
@@ -182,7 +183,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		const bigNumbers = ["amount", "fee", "nonce"];
 		for (const key of bigNumbers) {
 			if (result[key]) {
-				result[key] = BigNumber.make(result[key]);
+				result[key] = new BigNumber(result[key]);
 			}
 		}
 
@@ -193,7 +194,7 @@ export class MultiSignatureService extends Services.AbstractMultiSignatureServic
 		// Ensure multipayment amounts are big numbers.
 		if (Array.isArray(result.asset?.payments)) {
 			for (const payment of result.asset.payments) {
-				payment.amount = BigNumber.make(payment.amount);
+				payment.amount = new BigNumber(payment.amount);
 			}
 		}
 

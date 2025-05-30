@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { IMultiSignatureAsset, ISerializeOptions, ITransactionData } from "../../interfaces/index.js";
@@ -11,7 +12,7 @@ export class MultiSignatureRegistrationTransaction extends Transaction {
 	public static override type: number = TransactionType.MultiSignature;
 	public static override key = "multiSignature";
 
-	protected static override defaultStaticFee: BigNumber = BigNumber.make("500000000");
+	protected static override defaultStaticFee: BigNumber = new BigNumber("500000000");
 
 	public static override getSchema(): schemas.TransactionSchema {
 		return schemas.multiSignature;
@@ -47,11 +48,11 @@ export class MultiSignatureRegistrationTransaction extends Transaction {
 	public deserialize(buf: ByteBuffer): void {
 		const { data } = this;
 
-		const multiSignature: IMultiSignatureAsset = { publicKeys: [], min: 0 };
+		const multiSignature: IMultiSignatureAsset = { min: 0, publicKeys: [] };
 		multiSignature.min = buf.readUInt8();
 
 		const count = buf.readUInt8();
-		for (let i = 0; i < count; i++) {
+		for (let index = 0; index < count; index++) {
 			const publicKey = buf.readBuffer(33).toString("hex");
 			multiSignature.publicKeys.push(publicKey);
 		}

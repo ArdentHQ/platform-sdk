@@ -1,29 +1,26 @@
-import { TransactionSchema } from "../transactions/types/schemas.js";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
-import { ISchemaValidationResult, ITransaction } from "../interfaces/index.js";
-
-import { maxVendorFieldLength } from "../utils.js";
 import { TransactionType, TransactionTypeGroup } from "../enums.js";
-import { ITransactionData } from "../interfaces/index.js";
+import { ISchemaValidationResult, ITransactionData } from "../interfaces/index.js";
 import { configManager } from "../managers/config.js";
-
+import { TransactionSchema } from "../transactions/types/schemas.js";
+import { maxVendorFieldLength } from "../utils.js";
 import {
-	transfer as validateTransferSchema,
 	delegateRegistration as validateDelegateRegistrationSchema,
 	delegateResignation as validateDelegateResignationSchema,
-	secondSignature as validateSecondSignatureSchema,
-	vote as validateVoteSchema,
 	ipfs as validateIpfsSchema,
 	multiPayment as validateMultiPaymentSchema,
 	multiSignature as validateMultisignatureSchema,
 	multiSignatureLegacy as validateMultisignatureLegacySchema,
+	secondSignature as validateSecondSignatureSchema,
+	transfer as validateTransferSchema,
+	vote as validateVoteSchema,
 } from "./validators/source/index.js";
 
 export class Validator {
 	private readonly transactionSchemas: Map<string, TransactionSchema> = new Map<string, TransactionSchema>();
 
-	private constructor(options: Record<string, any>) {}
+	private constructor(options: Record<string, any>) { }
 
 	public static make(options: Record<string, any> = {}): Validator {
 		return new Validator(options);
@@ -141,7 +138,7 @@ export class Validator {
 			return true;
 		}
 
-		return new RegExp(/^[a-z0-9!@$&_.]+$/).test(data.asset.delegate.username);
+		return new RegExp(/^[\d!$&.@_a-z]+$/).test(data.asset.delegate.username);
 	}
 
 	private validateTransactionId(data: ITransactionData): boolean {
@@ -185,7 +182,7 @@ export class Validator {
 			return false;
 		}
 
-		if (data.asset.multiSignature.publicKeys.length < 1 || data.asset.multiSignature.publicKeys.length > 16) {
+		if (data.asset.multiSignature.publicKeys.length === 0 || data.asset.multiSignature.publicKeys.length > 16) {
 			return false;
 		}
 
@@ -205,7 +202,7 @@ export class Validator {
 	}
 
 	private validateSignatures(data: ITransactionData): boolean {
-		if (!data.signatures || data.signatures.length < 1) {
+		if (!data.signatures || data.signatures.length === 0) {
 			return true;
 		}
 
@@ -262,15 +259,15 @@ export class Validator {
 	}
 
 	private validateAlphanumeric(string: string): boolean {
-		return new RegExp(/^[a-zA-Z0-9]+$/).test(string);
+		return new RegExp(/^[\dA-Za-z]+$/).test(string);
 	}
 
 	private validateBase58(string: string): boolean {
-		return new RegExp(/^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/).test(string);
+		return new RegExp(/^[1-9A-HJ-NP-Za-km-z]+$/).test(string);
 	}
 
 	private validateHex(string: string): boolean {
-		return new RegExp(/^[0123456789A-Fa-f]+$/).test(string);
+		return new RegExp(/^[\dA-Fa-f]+$/).test(string);
 	}
 
 	private validateVoteAddresses = (data: ITransactionData): boolean => {
@@ -278,7 +275,7 @@ export class Validator {
 			return false;
 		}
 
-		return data.asset.votes.every((vote) => new RegExp(/^[+|-][a-zA-Z0-9]{66}$/).test(vote));
+		return data.asset.votes.every((vote) => new RegExp(/^[+|-][\dA-Za-z]{66}$/).test(vote));
 	};
 
 	private validateBignumber(schema: { minimum?: number; maximum?: number }, data?: BigNumber | number): boolean {
@@ -292,7 +289,7 @@ export class Validator {
 		let bignum: BigNumber;
 
 		try {
-			bignum = BigNumber.make(data);
+			bignum = new BigNumber(data);
 		} catch {
 			return false;
 		}

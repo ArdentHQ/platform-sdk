@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { ITransactionData } from "../../interfaces/index.js";
 import { TransferTransaction } from "../types/index.js";
@@ -11,7 +11,7 @@ export class TransferBuilder extends TransactionBuilder<TransferBuilder> {
 		this.data.type = TransferTransaction.type;
 		this.data.typeGroup = TransferTransaction.typeGroup;
 		this.data.fee = TransferTransaction.staticFee();
-		this.data.amount = BigNumber.ZERO;
+		this.data.amount = ZERO;
 		this.data.recipientId = undefined;
 		this.data.senderPublicKey = undefined;
 		this.data.expiration = 0;

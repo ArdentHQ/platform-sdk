@@ -1,6 +1,6 @@
 import { IoC, Services, Signatories } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { createService } from "../test/mocking.js";
 import { AddressService } from "./address.service.js";
@@ -28,7 +28,7 @@ describe("MultiSignatureService", async ({ assert, nock, beforeAll, beforeEach, 
 			container.singleton(IoC.BindingType.ClientService, ClientService);
 			container.factory(MultiSignatureSigner);
 			container.singleton(IoC.BindingType.KeyPairService, KeyPairService);
-			container.constant(IoC.BindingType.LedgerTransportFactory, async () => {});
+			container.constant(IoC.BindingType.LedgerTransportFactory, async () => { });
 			container.singleton(IoC.BindingType.LedgerService, LedgerService);
 			container.singleton(IoC.BindingType.PublicKeyService, PublicKeyService);
 		});

@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 export interface ITransaction {
 	readonly id: string | undefined;

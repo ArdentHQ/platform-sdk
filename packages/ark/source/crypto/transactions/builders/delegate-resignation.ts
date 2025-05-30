@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { ITransactionData } from "../../interfaces/index.js";
 import { DelegateResignationTransaction } from "../types/index.js";
@@ -12,7 +12,7 @@ export class DelegateResignationBuilder extends TransactionBuilder<DelegateResig
 		this.data.typeGroup = DelegateResignationTransaction.typeGroup;
 		this.data.version = 2;
 		this.data.fee = DelegateResignationTransaction.staticFee();
-		this.data.amount = BigNumber.ZERO;
+		this.data.amount = ZERO;
 		this.data.senderPublicKey = undefined;
 	}
 

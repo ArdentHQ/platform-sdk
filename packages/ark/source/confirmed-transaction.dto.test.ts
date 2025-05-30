@@ -1,6 +1,7 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
+import BigNumber from "bignumber.js";
 
 import CryptoConfiguration from "../test/fixtures/client/cryptoConfiguration.json";
 import Fixture from "../test/fixtures/client/transaction.json";
@@ -30,7 +31,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	});
 
 	it("should have a number of confirmations", (context) => {
-		assert.equal(context.subject.confirmations(), BigNumber.make(4_636_121));
+		assert.equal(context.subject.confirmations(), new BigNumber(4_636_121));
 	});
 
 	it("should have a sender", (context) => {
@@ -50,15 +51,15 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	});
 
 	it("should have an amount", async (context) => {
-		assert.equal(context.subject.amount(), BigNumber.make("12500000000000000"));
+		assert.equal(context.subject.amount(), new BigNumber("12500000000000000"));
 
 		context.subject = await createService(ConfirmedTransactionData);
 		context.subject.configure(MultipaymentFixtures.data[0]);
-		assert.equal(context.subject.amount(), BigNumber.make("799999999"));
+		assert.equal(context.subject.amount(), new BigNumber("799999999"));
 	});
 
 	it("should have a fee", (context) => {
-		assert.equal(context.subject.fee(), BigNumber.ZERO);
+		assert.equal(context.subject.fee(), ZERO);
 	});
 
 	it("should determine if the transction is confirmed", (context) => {
@@ -86,7 +87,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 		stub(context.subject, "isTransfer").returnValueOnce(false);
 		stub(context.subject, "isMultiPayment").returnValueOnce(true);
 		stub(context.subject, "recipients").returnValueOnce([
-			{ address: context.subject.sender(), amount: BigNumber.ZERO },
+			{ address: context.subject.sender(), amount: ZERO },
 		]);
 
 		assert.is(context.subject.isReturn(), true);
@@ -96,7 +97,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 		stub(context.subject, "isTransfer").returnValueOnce(false);
 		stub(context.subject, "isMultiPayment").returnValueOnce(true);
 		stub(context.subject, "recipients").returnValueOnce([
-			{ address: context.subject.recipient(), amount: BigNumber.ZERO },
+			{ address: context.subject.recipient(), amount: ZERO },
 		]);
 
 		assert.false(context.subject.isReturn());

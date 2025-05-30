@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { MaximumPaymentCountExceededError, MinimumPaymentCountSubceededError } from "../../errors.js";
 import { ITransactionData } from "../../interfaces/index.js";
@@ -17,7 +17,7 @@ export class MultiPaymentBuilder extends TransactionBuilder<MultiPaymentBuilder>
 		this.data.asset = {
 			payments: [],
 		};
-		this.data.amount = BigNumber.make(0);
+		this.data.amount = new BigNumber(0);
 	}
 
 	public addPayment(recipientId: string, amount: string): MultiPaymentBuilder {
@@ -28,7 +28,7 @@ export class MultiPaymentBuilder extends TransactionBuilder<MultiPaymentBuilder>
 			}
 
 			this.data.asset.payments.push({
-				amount: BigNumber.make(amount),
+				amount: new BigNumber(amount),
 				recipientId,
 			});
 		}

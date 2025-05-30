@@ -1,6 +1,7 @@
 import { Contracts, IoC, Services, Signatories } from "@ardenthq/sdk";
 import { BIP39 } from "@ardenthq/sdk-cryptography";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { toSatoshi } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { BindingType } from "./coin.contract.js";
 import { applyCryptoConfiguration } from "./config.js";
@@ -158,7 +159,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 	public override async multiPayment(input: Services.MultiPaymentInput): Promise<Contracts.SignedTransactionData> {
 		return this.#createFromData("multiPayment", input, ({ transaction, data }) => {
 			for (const payment of data.payments) {
-				transaction.addPayment(payment.to, this.toSatoshi(payment.amount).toString());
+				transaction.addPayment(payment.to, toSatoshi(payment.amount).toString());
 			}
 
 			if (data.memo) {
@@ -177,7 +178,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const { data: blockchain } = await this.#request.get("blockchain");
 		const { data: configuration } = await this.#request.get("node/configuration");
 
-		return BigNumber.make(blockchain.block.height)
+		return new BigNumber(blockchain.block.height)
 			.plus((value ? Number(value) : 5) * configuration.constants.activeDelegates)
 			.toString();
 	}
@@ -239,11 +240,11 @@ export class TransactionService extends Services.AbstractTransactionService {
 		}
 
 		if (input.data && input.data.amount) {
-			transaction.amount(this.toSatoshi(input.data.amount).toString());
+			transaction.amount(toSatoshi(input.data.amount).toString());
 		}
 
 		if (input.fee) {
-			transaction.fee(this.toSatoshi(input.fee).toString());
+			transaction.fee(toSatoshi(input.fee).toString());
 		}
 
 		try {

@@ -1,5 +1,6 @@
 import { Base58 } from "@ardenthq/sdk-cryptography";
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { ISerializeOptions } from "../../interfaces/index.js";
@@ -12,7 +13,7 @@ export abstract class IpfsTransaction extends Transaction {
 	public static override type: number = TransactionType.Ipfs;
 	public static override key = "ipfs";
 
-	protected static override defaultStaticFee: BigNumber = BigNumber.make("500000000");
+	protected static override defaultStaticFee: BigNumber = new BigNumber("500000000");
 
 	public static override getSchema(): schemas.TransactionSchema {
 		return schemas.ipfs;

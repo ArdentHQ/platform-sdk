@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { ITransactionAsset, ITransactionData } from "../../interfaces/index.js";
 import { DelegateRegistrationTransaction } from "../types/index.js";
@@ -11,7 +11,7 @@ export class DelegateRegistrationBuilder extends TransactionBuilder<DelegateRegi
 		this.data.type = DelegateRegistrationTransaction.type;
 		this.data.typeGroup = DelegateRegistrationTransaction.typeGroup;
 		this.data.fee = DelegateRegistrationTransaction.staticFee();
-		this.data.amount = BigNumber.ZERO;
+		this.data.amount = ZERO;
 		this.data.recipientId = undefined;
 		this.data.senderPublicKey = undefined;
 		this.data.asset = { delegate: {} } as ITransactionAsset;

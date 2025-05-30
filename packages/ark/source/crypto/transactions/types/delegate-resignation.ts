@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { ISerializeOptions } from "../../interfaces/index.js";
@@ -11,7 +12,7 @@ export abstract class DelegateResignationTransaction extends Transaction {
 	public static override type: number = TransactionType.DelegateResignation;
 	public static override key = "delegateResignation";
 
-	protected static override defaultStaticFee: BigNumber = BigNumber.make("2500000000");
+	protected static override defaultStaticFee: BigNumber = new BigNumber("2500000000");
 
 	public static override getSchema(): schemas.TransactionSchema {
 		return schemas.delegateResignation;

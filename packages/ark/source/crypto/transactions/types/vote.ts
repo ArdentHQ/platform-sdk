@@ -1,4 +1,5 @@
-import { BigNumber, ByteBuffer } from "@ardenthq/sdk-helpers";
+import { ByteBuffer } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { TransactionType, TransactionTypeGroup } from "../../enums.js";
 import { ISerializeOptions } from "../../interfaces/index.js";
@@ -10,7 +11,7 @@ export class VoteTransaction extends Transaction {
 	public static override type: number = TransactionType.Vote;
 	public static override key = "vote";
 
-	protected static override defaultStaticFee: BigNumber = BigNumber.make("100000000");
+	protected static override defaultStaticFee: BigNumber = new BigNumber("100000000");
 
 	public static override getSchema(): schemas.TransactionSchema {
 		return schemas.vote;
@@ -36,7 +37,7 @@ export class VoteTransaction extends Transaction {
 		const votelength: number = buf.readUInt8();
 		data.asset = { votes: [] };
 
-		for (let i = 0; i < votelength; i++) {
+		for (let index = 0; index < votelength; index++) {
 			let vote: string = buf.readBuffer(34).toString("hex");
 			vote = (vote[1] === "1" ? "+" : "-") + vote.slice(2);
 
