@@ -14,7 +14,7 @@ export class WalletAggregate implements IWalletAggregate {
 
 	/** {@inheritDoc IWalletAggregate.balance} */
 	public balance(networkType: NetworkType = "live"): number {
-		return +toHuman(this.balancesByNetworkType()[networkType]);
+		return +toHuman(this.balancesByNetworkType()[networkType], 0);
 	}
 
 	/** {@inheritDoc IWalletAggregate.balancesByNetworkType} */

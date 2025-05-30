@@ -1,5 +1,5 @@
 import { Coins, Contracts, Exceptions, Networks, Services } from "@ardenthq/sdk";
-import { ZERO } from "@ardenthq/sdk-helpers";
+import { toHuman, ZERO } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { BigNumber } from "bignumber.js";
 
@@ -160,10 +160,10 @@ export class Wallet implements IReadWriteWallet {
 
 	/** {@inheritDoc IReadWriteWallet.balance} */
 	public balance(type: WalletBalanceType = "available"): number {
-		const value: Contracts.WalletBalance | undefined = this.data().get(WalletData.Balance);
+		const value = this.data().get<Contracts.WalletBalance>(WalletData.Balance);
 
-		if (value && value[type]) {
-			return +new BigNumber(value[type] as BigNumber).decimalPlaces(this.#decimals()).toNumber();
+		if (value && value[type] != undefined) {
+			return toHuman(new BigNumber(value[type] as BigNumber), this.#decimals());
 		}
 
 		return 0;

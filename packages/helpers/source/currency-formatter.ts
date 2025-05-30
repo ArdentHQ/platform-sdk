@@ -15,11 +15,11 @@ export class CurrencyFormatter {
 	}
 
 	public static subToUnit(value: NumberLike, decimals = 8): BigNumber {
-		return new BigNumber(value, decimals).dividedBy(10 ** decimals);
+		return new BigNumber(value).dividedBy(10 ** decimals);
 	}
 
 	public static unitToSub(value: NumberLike, decimals = 8): BigNumber {
-		return new BigNumber(value, decimals).times(10 ** decimals);
+		return new BigNumber(value).times(10 ** decimals);
 	}
 
 	public static cryptoToCurrency(
@@ -31,9 +31,15 @@ export class CurrencyFormatter {
 		},
 	): string {
 		if (options.fromSubUnit) {
-			return this.subToUnit(value).decimalPlaces(options.decimals).times(price).toFixed(0);
+			return this.subToUnit(value)
+				.decimalPlaces(options.decimals)
+				.times(price)
+				.toFixed(0);
 		}
 
-		return new BigNumber(value).decimalPlaces(options.decimals).times(price).toFixed(0);
+		return new BigNumber(value)
+			.decimalPlaces(options.decimals)
+			.times(price)
+			.toFixed(0);
 	}
 }

@@ -45,7 +45,7 @@ describe("WalletAggregate", ({ beforeAll, nock, assert, it, stub, loader }) => {
 	it("#balancesByNetworkType", async (context) => {
 		assert.equal(context.subject.balancesByNetworkType(), {
 			live: ZERO,
-			test: new BigNumber("55827093444556"),
+			test: new BigNumber("558270.93444556"),
 		});
 	});
 

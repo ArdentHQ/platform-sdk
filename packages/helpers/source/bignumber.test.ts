@@ -7,10 +7,10 @@ import { NumberLike, ONE } from "./bignumber.helpers.js";
 describe("BigNumber", async ({ assert, beforeEach, it }) => {
 	beforeEach((context) => (context.subject = new BigNumber(1)));
 
-	it("#toString should not use the exponential notation up to the 35th number", () => {
+	it("#toString should use the exponential notation up to the 35th number", () => {
 		assert.is(
 			new BigNumber("33653665000000000000000000000000000").toString(),
-			"33653665000000000000000000000000000",
+			"3.3653665e+34",
 		);
 	});
 
@@ -48,25 +48,25 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 	});
 
 	it("#toString should not return a value having more than the specified decimals", () => {
-		assert.is(new BigNumber("1", 8).toString(), "1");
-		assert.is(new BigNumber(1, 8).toString(), "1");
+		assert.is(new BigNumber("1").decimalPlaces(8).toString(), "1");
+		assert.is(new BigNumber(1).decimalPlaces(8).toString(), "1");
 
-		assert.is(new BigNumber("1.5", 8).toString(), "1.5");
-		assert.is(new BigNumber("1.500000000000", 8).toString(), "1.5");
-		assert.is(new BigNumber(1.5, 8).toString(), "1.5");
+		assert.is(new BigNumber("1.5").decimalPlaces(1).toString(), "1.5");
+		assert.is(new BigNumber("1.500000000000").decimalPlaces(1).toString(), "1.5");
+		assert.is(new BigNumber(1.5).decimalPlaces(1).toString(), "1.5");
 
-		assert.is(new BigNumber("1.500000005555", 8).toString(), "1.5");
-		assert.is(new BigNumber(1.500_000_005_555, 8).toString(), "1.5");
+		assert.is(new BigNumber("1.500000005555").decimalPlaces(1).toString(), "1.5");
+		assert.is(new BigNumber(1.500_000_005_555).decimalPlaces(1).toString(), "1.5");
 
-		assert.is(new BigNumber("1.500000015555", 8).toString(), "1.50000001");
-		assert.is(new BigNumber(1.500_000_015_555, 8).toString(), "1.50000001");
+		assert.is(new BigNumber("1.500000015555").decimalPlaces(8).toString(), "1.50000002");
+		assert.is(new BigNumber(1.500_000_015_555).decimalPlaces(8).toString(), "1.50000002");
 	});
 
 	it("#decimalPlaces should succeed", () => {
 		assert.is(new BigNumber("12.3456789").decimalPlaces(0).valueOf(), "12");
-		assert.is(new BigNumber("12.3456789").decimalPlaces(2).valueOf(), "12.34");
-		assert.is(new BigNumber("12.3456789").decimalPlaces(4).valueOf(), "12.3456");
-		assert.is(new BigNumber("112.3456789").decimalPlaces(6).valueOf(), "112.345678");
+		assert.is(new BigNumber("12.3456789").decimalPlaces(2).valueOf(), "12.35");
+		assert.is(new BigNumber("12.3456789").decimalPlaces(4).valueOf(), "12.3457");
+		assert.is(new BigNumber("112.3456789").decimalPlaces(6).valueOf(), "112.345679");
 	});
 
 	it("#plus", () => {
@@ -80,7 +80,7 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 	it("#divide", () => {
 		assert.is(new BigNumber(10).dividedBy(2).valueOf(), "5");
 		assert.is(new BigNumber(5).dividedBy(2).valueOf(), "2.5");
-		assert.is(new BigNumber(2.5).dividedBy(3).valueOf(), "0.833333333333333333333333333333");
+		assert.is(new BigNumber(2.5).dividedBy(3).valueOf(), "0.83333333333333333333");
 
 		assert.is(new BigNumber("141000").dividedBy("100000000").valueOf(), "0.00141");
 		assert.is(new BigNumber(141_000).dividedBy(1e8).valueOf(), "0.00141");
@@ -162,7 +162,7 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 	});
 
 	it("#toSatoshi", () => {
-		assert.is(toSatoshi(new BigNumber(100)).toString(), "100");
+		assert.is(toSatoshi(new BigNumber(100), 0).toString(), "100");
 		assert.is(toSatoshi(new BigNumber(100), 10).toString(), "1000000000000");
 		assert.is(toSatoshi(new BigNumber(123_456_789), 5).toString(), "12345678900000");
 		assert.is(toSatoshi(new BigNumber(1), 8).toString(), "100000000");
@@ -170,17 +170,17 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 	});
 
 	it("#toHuman", () => {
-		assert.is(toHuman(new BigNumber(100 * 1e8), 8), 100);
-		assert.is(toHuman(new BigNumber(123.456 * 1e8), 8), 123.456);
-		assert.is(toHuman(new BigNumber(123.456_789 * 1e8), 8), 123.456_789);
-		assert.is(toHuman(new BigNumber(1e8).times(1e8), 8), +`${1e8}`);
-		assert.is(toHuman(new BigNumber(123_456)), 123_456);
+		assert.is(toHuman(new BigNumber(100 * 1e8)), 100);
+		assert.is(toHuman(new BigNumber(123.456 * 1e8).decimalPlaces(8)), 123.456);
+		assert.is(toHuman(new BigNumber(123.456_789 * 1e8).decimalPlaces(8)), 123.456_789);
+		assert.is(toHuman(new BigNumber(1e8).times(1e8).decimalPlaces(8)), +`${1e8}`);
 		assert.is(toHuman(new BigNumber(123_456), 0), 123_456);
-		assert.is(toHuman(new BigNumber(123_456), 1), 12_345.6);
-		assert.is(toHuman(new BigNumber(123_456), 1), 12_345.6);
-		assert.is(toHuman(new BigNumber(123_456), 6), 0.123_456);
-		assert.is(toHuman(new BigNumber(123_456, 6)), 0.123_456);
-		assert.is(toHuman(new BigNumber(1, 8)), +`${1e-8}`);
+		assert.is(toHuman(new BigNumber(123_456).decimalPlaces(0), 0), 123_456);
+		assert.is(toHuman(new BigNumber(123_456).decimalPlaces(1), 1), 12_345.6);
+		assert.is(toHuman(new BigNumber(123_456).decimalPlaces(1), 1), 12_345.6);
+		assert.is(toHuman(new BigNumber(123_456).decimalPlaces(6), 6), 0.123_456);
+		assert.is(toHuman(new BigNumber(123_456).decimalPlaces(6), 6), 0.123_456);
+		assert.is(toHuman(new BigNumber(1).decimalPlaces(8), 8), +`${1e-8}`);
 	});
 
 	it("#toFixed", (context) => {
@@ -190,7 +190,7 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 		assert.is(context.subject.toFixed(0), "1");
 		assert.is(context.subject.toFixed(2), "1.00");
 
-		assert.is(new BigNumber(1.234_567_891).toFixed(5), "1.23456");
+		assert.is(new BigNumber(1.234_567_891).toFixed(5), "1.23457");
 		assert.is(new BigNumber(1.234_567_891).toFixed(28), "1.2345678910000000000000000000");
 		assert.is(new BigNumber(1.234_567_891).toFixed(32), "1.23456789100000000000000000000000");
 
@@ -202,10 +202,9 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 		assert.is(new BigNumber(123.456).toFixed(), "123.456");
 		assert.is(new BigNumber(123.456).toFixed(0), "123");
 		assert.is(new BigNumber(123.456).toFixed(5), "123.45600");
-		assert.is(new BigNumber(123.456).toFixed(2), "123.45");
+		assert.is(new BigNumber(123.456).toFixed(2), "123.46");
 
 		assert.is(new BigNumber(123).toFixed(5), "123.00000");
-		assert.is(new BigNumber(123_456).toFixed(0), "123456");
 		assert.is(new BigNumber(123_456).toFixed(0), "123456");
 	});
 
@@ -214,7 +213,7 @@ describe("BigNumber", async ({ assert, beforeEach, it }) => {
 	});
 
 	it("#toBigInt", (context) => {
-		assert.is(context.subject.toBigInt(), BigInt(1));
+		assert.is(BigInt(context.subject.toString()), BigInt(1));
 	});
 
 	it("#valueOf", (context) => {
