@@ -1,4 +1,4 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 import { describe } from "./describe";
 
@@ -15,9 +15,9 @@ describe("assert", ({ assert, it, schema }) => {
 	});
 
 	it("determines if two numbers are equal", () => {
-		assert.equal(BigNumber.make(10), BigNumber.make(10));
+		assert.equal(new BigNumber(10), new BigNumber(10));
 
-		assert.not.equal(BigNumber.make(10), BigNumber.make(15));
+		assert.not.equal(new BigNumber(10), new BigNumber(15));
 	});
 
 	it("does match the given object", () => {

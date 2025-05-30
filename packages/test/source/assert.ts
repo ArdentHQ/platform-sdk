@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "fs";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 import { format } from "concordance";
 import { join } from "path";
 import * as uvu from "uvu/assert";
