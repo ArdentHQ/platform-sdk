@@ -1,7 +1,7 @@
 import { IoC } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import TransferFixture from "../test/fixtures/client/transfer-transaction.json";
 import UnvoteFixture from "../test/fixtures/client/unvote-transaction.json";
@@ -40,7 +40,7 @@ describe("ConfirmedTransactionData", async ({ assert, beforeEach, it, stub }) =>
 	});
 
 	it("should have a number of confirmations", (context) => {
-		assert.equal(context.subject.confirmations(), BigNumber.make(202));
+		assert.equal(context.subject.confirmations(), new BigNumber(202));
 	});
 
 	it("should have a sender", (context) => {

@@ -1,5 +1,6 @@
 import { Contracts, DTO } from "@ardenthq/sdk";
-import { BigNumber, get, has } from "@ardenthq/sdk-helpers";
+import { get, has } from "@ardenthq/sdk-helpers";
+import { BigNumber } from "bignumber.js";
 
 export class WalletData extends DTO.AbstractWalletData implements Contracts.WalletData {
 	public override primaryKey(): string {
@@ -16,14 +17,14 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 
 	public override balance(): Contracts.WalletBalance {
 		return {
-			available: this.bigNumberService.make(this.data.balance ?? 0),
-			fees: this.bigNumberService.make(this.data.balance ?? 0),
-			total: this.bigNumberService.make(this.data.balance ?? 0),
+			available: new BigNumber(this.data.balance ?? 0),
+			fees: new BigNumber(this.data.balance ?? 0),
+			total: new BigNumber(this.data.balance ?? 0),
 		};
 	}
 
 	public override nonce(): BigNumber {
-		return BigNumber.make(this.data.nonce ?? 0);
+		return new BigNumber(this.data.nonce ?? 0);
 	}
 
 	public override secondPublicKey(): string | undefined {
@@ -49,7 +50,7 @@ export class WalletData extends DTO.AbstractWalletData implements Contracts.Wall
 			return undefined;
 		}
 
-		return BigNumber.make(balance);
+		return new BigNumber(balance);
 	}
 
 	public override multiSignature(): Contracts.WalletMultiSignature {

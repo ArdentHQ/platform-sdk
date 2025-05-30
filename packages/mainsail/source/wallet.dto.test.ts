@@ -1,5 +1,5 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { createService } from "../test/mocking";
 import { WalletData } from "./wallet.dto.js";
@@ -54,11 +54,11 @@ for (const network of ["devnet"]) {
 		});
 
 		it("should have a balance", (context) => {
-			assert.equal(context.subject.balance().available, BigNumber.make("2362976566037735849161603"));
+			assert.equal(context.subject.balance().available, new BigNumber("2362976566037735849161603"));
 		});
 
 		it("should have a nonce", (context) => {
-			assert.equal(context.subject.nonce(), BigNumber.make("2"));
+			assert.equal(context.subject.nonce(), new BigNumber("2"));
 		});
 
 		it("should have a secondary public key", (context) => {
@@ -75,7 +75,7 @@ for (const network of ["devnet"]) {
 		});
 
 		it("should have a votes", (context) => {
-			assert.equal(context.subject.votes(), BigNumber.make("2362976566037735849161603"));
+			assert.equal(context.subject.votes(), new BigNumber("2362976566037735849161603"));
 		});
 
 		it("should determine if it is a resigned validator", async (context) => {

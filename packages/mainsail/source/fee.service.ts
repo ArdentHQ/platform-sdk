@@ -1,5 +1,5 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
+import { ZERO } from "@ardenthq/sdk-helpers";
 
 import { formatUnits } from "./helpers/format-units.js";
 import { Request } from "./request.js";
@@ -45,7 +45,7 @@ export class FeeService extends Services.AbstractFeeService {
 		transaction: Contracts.RawTransactionData,
 		options?: Services.TransactionFeeOptions,
 	): Promise<BigNumber> {
-		return BigNumber.ZERO;
+		return ZERO;
 	}
 
 	#transform(dynamicFees: Fees): Services.TransactionFee {
@@ -54,7 +54,7 @@ export class FeeService extends Services.AbstractFeeService {
 			isDynamic: true,
 			max: formatUnits(dynamicFees?.max ?? "0", "gwei"),
 			min: formatUnits(dynamicFees?.min ?? "0", "gwei"),
-			static: BigNumber.make("0"),
+			static: ZERO,
 		};
 	}
 }

@@ -1,10 +1,10 @@
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
+import { BigNumber } from "bignumber.js";
 
 import { createService } from "../test/mocking";
-import { SignedTransactionData } from "./signed-transaction.dto.js";
 import { formatUnits } from "./helpers/format-units";
+import { SignedTransactionData } from "./signed-transaction.dto.js";
 
 describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }) => {
 	beforeAll(async (context) => {
@@ -14,7 +14,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 			"309808271bac6852d1ec46f473187a0ad8dfc5716f329557db00b647fe388cd2",
 			{
 				data: "",
-				gasLimit: 21000,
+				gasLimit: 21_000,
 				gasPrice: 5,
 				id: "309808271bac6852d1ec46f473187a0ad8dfc5716f329557db00b647fe388cd2",
 				recipientAddress: "0x71c3377F6baF114A975A151c4685E600d13636F6",
@@ -40,7 +40,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 	});
 
 	it("should have an amount", (context) => {
-		assert.equal(context.subject.amount(), BigNumber.make("12500000000000000"));
+		assert.equal(context.subject.amount(), new BigNumber("12500000000000000"));
 	});
 
 	// @TODO: fix when MultiPayment implemented
@@ -82,13 +82,13 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 				data: "0x6dd7d8ea000000000000000000000000c3bbe9b1cee1ff85ad72b87414b0e9b7f2366763",
 				gasLimit: "200000",
 				gasPrice: "5",
+				gasUsed: 149_433,
 				id: "83951ebb85d9e7c99c801f56436646df0ea4d9d7f0e42bd34386a1cd41d13624",
 				nonce: "1",
 				recipient: "0x535B3D7A252fa034Ed71F0C53ec0C6F784cB64E1",
 				senderAddress: "0x71c3377F6baF114A975A151c4685E600d13636F6",
 				senderPublicKey: "0266e0fd7186193eda55e328184fdaab9f7d4a6c867c25ef03a497fd683cae7788",
 				timestamp: 1_734_115_643_424,
-				gasUsed: 149433,
 			},
 			"",
 		);
@@ -97,7 +97,7 @@ describe("SignedTransactionData", async ({ assert, beforeAll, it, nock, loader }
 	});
 
 	it("should have a fee", (context) => {
-		assert.equal(context.subject.fee(), formatUnits(BigNumber.make(1_000_000).toString(), "ark"));
+		assert.equal(context.subject.fee(), formatUnits(new BigNumber(1_000_000).toString(), "ark"));
 	});
 
 	it("should have a timestamp", (context) => {

@@ -1,9 +1,9 @@
 import { Contracts, DTO, Exceptions, IoC } from "@ardenthq/sdk";
 import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract.js";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
 import { Utils } from "@mainsail/crypto-transaction";
 import { Application } from "@mainsail/kernel";
+import { BigNumber } from "bignumber.js";
 import { Hex } from "viem";
 
 import { BindingType } from "./coin.contract.js";
@@ -14,8 +14,7 @@ import { TransactionTypeService } from "./transaction-type.service.js";
 
 export class SignedTransactionData
 	extends DTO.AbstractSignedTransactionData
-	implements Contracts.SignedTransactionData
-{
+	implements Contracts.SignedTransactionData {
 	#app: Application;
 
 	public constructor(container: IoC.Container) {
@@ -38,10 +37,10 @@ export class SignedTransactionData
 
 	public override amount(): BigNumber {
 		if (this.isMultiPayment()) {
-			return BigNumber.sum(this.payments().map(({ amount }) => amount));
+			return this.payments().reduce((accumulator, { amount }) => accumulator.plus(amount), new BigNumber(0));
 		}
 
-		return this.bigNumberService.make(this.signedData.value);
+		return new BigNumber(this.signedData.value);
 	}
 
 	public override fee(): BigNumber {

@@ -1,7 +1,7 @@
 import { Contracts, DTO, Exceptions, IoC, Services } from "@ardenthq/sdk";
 import { MultiPaymentItem } from "@ardenthq/sdk/source/confirmed-transaction.dto.contract";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { DateTime } from "@ardenthq/sdk-intl";
+import { BigNumber } from "bignumber.js";
 
 import { BindingType } from "./coin.contract.js";
 import { AbiType, decodeFunctionData } from "./helpers/decode-function-data.js";
@@ -34,7 +34,7 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 	}
 
 	public override confirmations(): BigNumber {
-		return BigNumber.make(this.data.confirmations);
+		return new BigNumber(this.data.confirmations);
 	}
 
 	public override sender(): string {
@@ -58,10 +58,10 @@ export class ConfirmedTransactionData extends DTO.AbstractConfirmedTransactionDa
 
 	public override amount(): BigNumber {
 		if (this.isMultiPayment()) {
-			return BigNumber.sum(this.payments().map(({ amount }) => amount));
+			return this.payments().reduce((accumulator, { amount }) => accumulator.plus(amount), new BigNumber(0));
 		}
 
-		return this.bigNumberService.make(this.data.amount);
+		return new BigNumber(this.data.amount);
 	}
 
 	public override fee(): BigNumber {

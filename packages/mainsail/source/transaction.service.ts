@@ -1,9 +1,9 @@
 import { Contracts, IoC, Services } from "@ardenthq/sdk";
-import { BigNumber } from "@ardenthq/sdk-helpers";
 import { Utils } from "@mainsail/crypto-transaction";
 import { EvmCallBuilder } from "@mainsail/crypto-transaction-evm-call";
 import { ConsensusAbi, MultiPaymentAbi, UsernamesAbi } from "@mainsail/evm-contracts";
 import { Application } from "@mainsail/kernel";
+import { BigNumber } from "bignumber.js";
 import { encodeFunctionData } from "viem";
 
 import { BindingType } from "./coin.contract.js";
@@ -214,7 +214,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 			.recipientAddress(wellKnownContracts.multiPayment)
 			.payload(data.slice(2))
 			.nonce(nonce)
-			.value(BigNumber.sum(amounts).toString())
+			.value(new BigNumber(amounts.reduce((a, b) => a + b, 0)).toString())
 			.gasPrice(parseUnits(input.gasPrice, "gwei").toNumber());
 
 		return this.#buildTransaction(input, transaction);
@@ -321,7 +321,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const { data: blockchain } = await this.#request.get("blockchain");
 		const { data: configuration } = await this.#request.get("node/configuration");
 
-		return BigNumber.make(blockchain.block.height)
+		return new BigNumber(blockchain.block.height)
 			.plus((value ? Number(value) : 5) * configuration.constants.activeValidators)
 			.toString();
 	}
@@ -419,7 +419,7 @@ export class TransactionService extends Services.AbstractTransactionService {
 				...signature,
 				senderAddress,
 				senderPublicKey,
-				v: parseInt(signature.v) + 27, // @TODO: remove it on mainsail evm.16
+				v: Number.parseInt(signature.v) + 27, // @TODO: remove it on mainsail evm.16
 			};
 
 			// Reassign public key to match the signer, as `build` changes it.
