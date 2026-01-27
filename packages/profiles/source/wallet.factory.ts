@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { Enums } from "@ardenthq/sdk";
-import { BIP38, BIP39, UUID } from "@ardenthq/sdk-cryptography";
+import { BIP38, BIP39, UUID, secp256k1, HDKey } from "@ardenthq/sdk-cryptography";
 
 import {
 	IAddressOptions,
@@ -75,12 +75,26 @@ export class WalletFactory implements IWalletFactory {
 
 	/** {@inheritDoc IWalletFactory.fromMnemonicWithBIP44} */
 	public async fromMnemonicWithBIP44(options: IMnemonicDerivativeOptions): Promise<IReadWriteWallet> {
-		return this.#fromMnemonicWithDerivative({
-			derivationType: "bip44",
-			featureFlag: Enums.FeatureFlag.AddressMnemonicBip44,
-			importMethod: WalletImportMethod.BIP44.MNEMONIC,
-			options,
-		});
+		const path = "m/44'/111'/0'/0/0";
+
+		const seed = BIP39.toSeed(options.mnemonic);
+
+		const hd = HDKey.fromSeed(seed);
+		const child = hd.derive(path);
+
+		const publicKey = secp256k1.publicKeyCreate(child.privateKey, true).toString("hex");
+
+		const wallet: IReadWriteWallet = new Wallet(UUID.random(), {}, this.#profile);
+		wallet.data().set(WalletData.ImportMethod, WalletImportMethod.BIP44.MNEMONIC);
+		wallet.data().set(WalletData.PublicKey, publicKey);
+		wallet.data().set(WalletData.Status, WalletFlag.Cold);
+
+		await wallet.mutator().coin(options.coin, options.network);
+
+		const address = await wallet.coin().address().fromPublicKey(publicKey);
+		await wallet.mutator().address(address);
+
+		return wallet;
 	}
 
 	/** {@inheritDoc IWalletFactory.fromMnemonicWithBIP49} */
