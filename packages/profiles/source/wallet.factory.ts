@@ -79,7 +79,7 @@ export class WalletFactory implements IWalletFactory {
 
 		const seed = BIP39.toSeed(options.mnemonic);
 
-		const hd = HDKey.fromSeed(seed);
+		const hd = HDKey.fromSeed(Buffer.from(seed));
 		const child = hd.derive(path);
 
 		const publicKey = secp256k1.publicKeyCreate(child.privateKey, true).toString("hex");
