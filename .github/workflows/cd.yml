@@ -16,13 +16,13 @@ jobs:
             group: ${{ github.head_ref }}-publish
             cancel-in-progress: true
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Cache pnpm modules
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               env:
                   cache-name: cache-pnpm-modules
               with:
@@ -30,7 +30,7 @@ jobs:
                   key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
                   restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
             - name: Install pnpm
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v3
               with:
                   version: 8.15.9
             - name: Install dependencies

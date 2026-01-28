@@ -75,7 +75,18 @@ export class WalletFactory implements IWalletFactory {
 
 	/** {@inheritDoc IWalletFactory.fromMnemonicWithBIP44} */
 	public async fromMnemonicWithBIP44(options: IMnemonicDerivativeOptions): Promise<IReadWriteWallet> {
-		const path = "m/44'/111'/0'/0/0";
+		const wallet: IReadWriteWallet = new Wallet(UUID.random(), {}, this.#profile);
+		wallet.data().set(WalletData.ImportMethod, WalletImportMethod.BIP44.MNEMONIC);
+		wallet.data().set(WalletData.Status, WalletFlag.Cold);
+
+		await wallet.mutator().coin(options.coin, options.network);
+
+		const slip = wallet.config().get("network.constants.slip44");
+		const account = options.levels.account ?? 0;
+		const change = options.levels.change ?? 0;
+		const addressIndex= options.levels.address_index ?? 0;
+
+		const path = `m/44'/${slip}'/${account}'/${change}/${addressIndex}`;
 
 		const seed = BIP39.toSeed(options.mnemonic);
 
@@ -84,12 +95,7 @@ export class WalletFactory implements IWalletFactory {
 
 		const publicKey = secp256k1.publicKeyCreate(child.privateKey, true).toString("hex");
 
-		const wallet: IReadWriteWallet = new Wallet(UUID.random(), {}, this.#profile);
-		wallet.data().set(WalletData.ImportMethod, WalletImportMethod.BIP44.MNEMONIC);
 		wallet.data().set(WalletData.PublicKey, publicKey);
-		wallet.data().set(WalletData.Status, WalletFlag.Cold);
-
-		await wallet.mutator().coin(options.coin, options.network);
 
 		const address = await wallet.coin().address().fromPublicKey(publicKey);
 		await wallet.mutator().address(address);
