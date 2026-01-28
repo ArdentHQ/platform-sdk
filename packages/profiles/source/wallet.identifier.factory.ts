@@ -12,7 +12,7 @@ export class WalletIdentifierFactory {
 			return this.#address(wallet);
 		}
 
-		if (wallet.actsWithMnemonic()) {
+		if (wallet.actsWithMnemonic() || wallet.actsWithBip44Mnemonic()) {
 			return this.#addressOrPublicKey(wallet);
 		}
 
@@ -20,7 +20,7 @@ export class WalletIdentifierFactory {
 			return this.#addressOrPublicKey(wallet);
 		}
 
-		if (wallet.actsWithMnemonicWithEncryption()) {
+		if (wallet.actsWithMnemonicWithEncryption() || wallet.actsWithBip44MnemonicWithEncryption()) {
 			return this.#addressOrPublicKey(wallet);
 		}
 
