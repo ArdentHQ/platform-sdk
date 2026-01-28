@@ -616,7 +616,6 @@ export class Wallet implements IReadWriteWallet {
 	public actsWithMnemonicWithEncryption(): boolean {
 		return [
 			WalletImportMethod.BIP39.MNEMONIC_WITH_ENCRYPTION,
-			WalletImportMethod.BIP44.MNEMONIC_WITH_ENCRYPTION,
 			WalletImportMethod.BIP49.MNEMONIC_WITH_ENCRYPTION,
 			WalletImportMethod.BIP84.MNEMONIC_WITH_ENCRYPTION,
 		].includes(this.data().get(WalletData.ImportMethod)!);
