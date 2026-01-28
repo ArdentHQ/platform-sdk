@@ -84,7 +84,7 @@ export class WalletFactory implements IWalletFactory {
 		const slip = wallet.config().get("network.constants.slip44");
 		const account = options.levels.account ?? 0;
 		const change = options.levels.change ?? 0;
-		const addressIndex= options.levels.addressIndex ?? 0;
+		const addressIndex = options.levels.addressIndex ?? 0;
 
 		const path = `m/44'/${slip}'/${account}'/${change}/${addressIndex}`;
 
