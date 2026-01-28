@@ -18,11 +18,12 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 	public override async fromMnemonic(
 		mnemonic: string,
 		options?: Services.IdentityOptions,
+		path?: string,
 	): Promise<Services.PublicKeyDataTransferObject> {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
-			publicKey: BasePublicKey.fromPassphrase(mnemonic),
+			publicKey: BasePublicKey.fromPassphrase(mnemonic, path),
 		};
 	}
 

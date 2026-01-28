@@ -20,11 +20,12 @@ export class AddressService extends Services.AbstractAddressService {
 	public override async fromMnemonic(
 		mnemonic: string,
 		options?: Services.IdentityOptions,
+		path?: string,
 	): Promise<Services.AddressDataTransferObject> {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
-			address: BaseAddress.fromPassphrase(mnemonic, this.#config.network),
+			address: BaseAddress.fromPassphrase(mnemonic, this.#config.network, path),
 			type: "bip39",
 		};
 	}

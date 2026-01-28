@@ -312,7 +312,7 @@ export class Wallet implements IReadWriteWallet {
 
 	/** {@inheritDoc IReadWriteWallet.isLedger} */
 	public isLedger(): boolean {
-		return this.data().get(WalletData.DerivationPath) !== undefined;
+		return this.data().get(WalletData.DerivationPath) !== undefined && this.data().get(WalletData.AddressIndex) === undefined;
 	}
 
 	/** {@inheritDoc IReadWriteWallet.isLedgerNanoX} */

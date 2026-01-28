@@ -88,18 +88,12 @@ export class WalletFactory implements IWalletFactory {
 
 		const path = `m/44'/${slip}'/${account}'/${change}/${addressIndex}`;
 
-		const seed = BIP39.toSeed(options.mnemonic);
-
-		const hd = HDKey.fromSeed(Buffer.from(seed));
-		const child = hd.derive(path);
-
-		const publicKey = secp256k1.publicKeyCreate(child.privateKey, true).toString("hex");
-
-		wallet.data().set(WalletData.PublicKey, publicKey);
 		wallet.data().set(WalletData.AddressIndex, addressIndex);
+		wallet.data().set(WalletData.DerivationPath, path);
 
-		const address = await wallet.coin().address().fromPublicKey(publicKey);
-		await wallet.mutator().address(address);
+		const address = (await wallet.coin().address().fromMnemonic(options.mnemonic, undefined, path)).address;
+
+		await wallet.mutator().address({ address });
 
 		return wallet;
 	}

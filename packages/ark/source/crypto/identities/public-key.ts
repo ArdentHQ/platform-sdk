@@ -7,8 +7,10 @@ import { InvalidMultiSignatureAssetError, PublicKeyError } from "./errors.js";
 import { Keys } from "./keys.js";
 
 export class PublicKey {
-	public static fromPassphrase(passphrase: string): string {
-		return Keys.fromPassphrase(passphrase).publicKey;
+	public static fromPassphrase(passphrase: string, path?: string): string {
+		return path
+			? Keys.fromBip44Mnemonic(passphrase, path).publicKey
+			: Keys.fromPassphrase(passphrase).publicKey;
 	}
 
 	public static fromWIF(wif: string, network?: Network): string {
