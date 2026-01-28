@@ -17,7 +17,7 @@ export class AbstractPublicKeyService implements PublicKeyService {
 		this.hostSelector = container.get(BindingType.NetworkHostSelector);
 	}
 
-	public async fromMnemonic(mnemonic: string, options?: IdentityOptions): Promise<PublicKeyDataTransferObject> {
+	public async fromMnemonic(mnemonic: string, options?: IdentityOptions, path?: string): Promise<PublicKeyDataTransferObject> {
 		throw new NotImplemented(this.constructor.name, this.fromMultiSignature.name);
 	}
 
