@@ -17,7 +17,11 @@ export class AbstractAddressService implements AddressService {
 		this.hostSelector = container.get(BindingType.NetworkHostSelector);
 	}
 
-	public async fromMnemonic(mnemonic: string, options?: IdentityOptions, path?: string): Promise<AddressDataTransferObject> {
+	public async fromMnemonic(
+		mnemonic: string,
+		options?: IdentityOptions,
+		path?: string,
+	): Promise<AddressDataTransferObject> {
 		throw new NotImplemented(this.constructor.name, this.fromMultiSignature.name);
 	}
 
