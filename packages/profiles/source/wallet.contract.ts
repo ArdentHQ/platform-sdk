@@ -689,6 +689,22 @@ export interface IReadWriteWallet {
 	actsWithMnemonic(): boolean;
 
 	/**
+	 * Determines if the wallet has been imported with a BIP44 mnemonic
+	 *
+	 * @return {*}  {boolean}
+	 * @memberof IReadWriteWallet
+	 */
+	actsWithBip44Mnemonic(): boolean;
+
+	/**
+	 * Determines if the wallet has been imported with a BIP44 mnemonic with encryption
+	 *
+	 * @return {*}  {boolean}
+	 * @memberof IReadWriteWallet
+	 */
+	actsWithBip44MnemonicWithEncryption(): boolean;
+
+	/**
 	 * Determines if the wallet has been imported with a address.
 	 *
 	 * @return {*}  {boolean}

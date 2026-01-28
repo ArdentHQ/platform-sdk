@@ -96,14 +96,10 @@ export class WalletFactory implements IWalletFactory {
 		const publicKey = secp256k1.publicKeyCreate(child.privateKey, true).toString("hex");
 
 		wallet.data().set(WalletData.PublicKey, publicKey);
+		wallet.data().set(WalletData.AddressIndex, addressIndex);
 
 		const address = await wallet.coin().address().fromPublicKey(publicKey);
 		await wallet.mutator().address(address);
-
-		if (options.password) {
-			wallet.data().set(WalletData.ImportMethod, WalletImportMethod.BIP44.MNEMONIC_WITH_ENCRYPTION);
-			await wallet.signingKey().set(options.mnemonic, options.password);
-		}
 
 		return wallet;
 	}

@@ -30,6 +30,7 @@ export enum WalletData {
 	LedgerModel = "LEDGER_MODEL",
 	Status = "STATUS",
 	IsPrimary = "IS_PRIMARY",
+	AddressIndex = "Address_Index",
 }
 
 /**
