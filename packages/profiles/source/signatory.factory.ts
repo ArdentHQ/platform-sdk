@@ -51,11 +51,9 @@ export class SignatoryFactory implements ISignatoryFactory {
 				return this.#wallet.signatory().secret(await this.#wallet.signingKey().get(encryptionPassword));
 			}
 
-			return this.#wallet.signatory().mnemonic(
-				await this.#wallet.signingKey().get(encryptionPassword),
-				undefined,
-				path,
-			);
+			return this.#wallet
+				.signatory()
+				.mnemonic(await this.#wallet.signingKey().get(encryptionPassword), undefined, path);
 		}
 
 		if (this.#wallet.isMultiSignature()) {
