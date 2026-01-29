@@ -111,9 +111,8 @@ export class Signatory {
 	}
 
 	public path(): string {
-		const path = this.#signatory.path();
-		if (path) {
-			return path;
+		if (this.#signatory instanceof MnemonicSignatory && this.#signatory.path()) {
+			return this.#signatory.path() as string;
 		}
 
 		if (this.#signatory instanceof LedgerSignatory) {
