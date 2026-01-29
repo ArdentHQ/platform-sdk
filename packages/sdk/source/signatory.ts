@@ -111,6 +111,11 @@ export class Signatory {
 	}
 
 	public path(): string {
+		const path = this.#signatory.path();
+		if (path) {
+			return path;
+		}
+
 		if (this.#signatory instanceof LedgerSignatory) {
 			return this.#signatory.signingKey();
 		}
@@ -152,6 +157,10 @@ export class Signatory {
 
 	public actsWithMnemonic(): boolean {
 		return this.#signatory instanceof MnemonicSignatory;
+	}
+
+	public actsWithBip44Mnemonic(): boolean {
+		return this.#signatory instanceof MnemonicSignatory && this.#signatory.path() !== undefined;
 	}
 
 	public actsWithConfirmationMnemonic(): boolean {

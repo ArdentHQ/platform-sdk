@@ -97,8 +97,8 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 		return this.instance();
 	}
 
-	public sign(passphrase: string): TBuilder {
-		const keys: IKeyPair = Keys.fromPassphrase(passphrase);
+	public sign(passphrase: string, path?: string): TBuilder {
+		const keys: IKeyPair = path ? Keys.fromBip44Mnemonic(passphrase, path) : Keys.fromPassphrase(passphrase);
 		return this.signWithKeyPair(keys);
 	}
 

@@ -32,14 +32,15 @@ export class AbstractSignatoryService implements SignatoryService {
 		this.#publicKeyService = container.get(BindingType.PublicKeyService);
 	}
 
-	public async mnemonic(mnemonic: string, options?: IdentityOptions): Promise<Signatory> {
+	public async mnemonic(mnemonic: string, options?: IdentityOptions, path?: string): Promise<Signatory> {
 		return new Signatory(
 			new MnemonicSignatory({
-				address: (await this.#addressService.fromMnemonic(mnemonic, options)).address,
+				address: (await this.#addressService.fromMnemonic(mnemonic, options, path)).address,
 				options,
-				privateKey: (await this.#privateKeyService.fromMnemonic(mnemonic, options)).privateKey,
-				publicKey: (await this.#publicKeyService.fromMnemonic(mnemonic, options)).publicKey,
+				privateKey: (await this.#privateKeyService.fromMnemonic(mnemonic, options, path)).privateKey,
+				publicKey: (await this.#publicKeyService.fromMnemonic(mnemonic, options, path)).publicKey,
 				signingKey: mnemonic,
+				path,
 			}),
 			options?.multiSignature,
 		);

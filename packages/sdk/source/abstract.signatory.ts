@@ -6,6 +6,7 @@ export abstract class AbstractSignatory {
 	readonly #publicKey: string;
 	readonly #privateKey: string;
 	readonly #options?: IdentityOptions;
+	readonly #path?: string;
 
 	public constructor({
 		signingKey,
@@ -13,18 +14,21 @@ export abstract class AbstractSignatory {
 		publicKey,
 		privateKey,
 		options,
+		path,
 	}: {
 		signingKey: string;
 		address: string;
 		publicKey: string;
 		privateKey: string;
 		options?: IdentityOptions;
+		path?: string;
 	}) {
 		this.#signingKey = signingKey.normalize("NFD");
 		this.#address = address;
 		this.#publicKey = publicKey;
 		this.#privateKey = privateKey;
 		this.#options = options;
+		this.#path = path;
 	}
 
 	public signingKey(): string {
@@ -45,5 +49,9 @@ export abstract class AbstractSignatory {
 
 	public options(): IdentityOptions | undefined {
 		return this.#options;
+	}
+
+	public path(): string | undefined {
+		return this.#path;
 	}
 }

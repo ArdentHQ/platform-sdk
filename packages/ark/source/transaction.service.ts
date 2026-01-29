@@ -195,9 +195,24 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const transaction = Transactions.BuilderFactory[type]();
 		transaction.version(2);
 
-		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
-			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
-			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
+		const path = input.signatory.actsWithBip44Mnemonic() ? input.signatory.path() : undefined;
+
+		if (
+			input.signatory.actsWithMnemonic() ||
+			input.signatory.actsWithConfirmationMnemonic() ||
+			input.signatory.actsWithBip44Mnemonic()
+		) {
+			address = (
+				await this.#addressService.fromMnemonic(input.signatory.signingKey(), undefined, path)
+			).address;
+
+			senderPublicKey = (
+				await this.#publicKeyService.fromMnemonic(
+					input.signatory.signingKey(),
+					undefined,
+					path,
+				)
+			).publicKey;
 		}
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
@@ -311,8 +326,8 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#ledgerService.disconnect();
 		}
 
-		if (input.signatory.actsWithMnemonic()) {
-			transaction.sign(input.signatory.signingKey());
+		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithBip44Mnemonic()) {
+			transaction.sign(input.signatory.signingKey(), path);
 		}
 
 		if (input.signatory.actsWithConfirmationMnemonic()) {
