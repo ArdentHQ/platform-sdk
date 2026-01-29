@@ -202,17 +202,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 			input.signatory.actsWithConfirmationMnemonic() ||
 			input.signatory.actsWithBip44Mnemonic()
 		) {
-			address = (
-				await this.#addressService.fromMnemonic(input.signatory.signingKey(), undefined, path)
-			).address;
+			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey(), undefined, path)).address;
 
-			senderPublicKey = (
-				await this.#publicKeyService.fromMnemonic(
-					input.signatory.signingKey(),
-					undefined,
-					path,
-				)
-			).publicKey;
+			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey(), undefined, path))
+				.publicKey;
 		}
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
