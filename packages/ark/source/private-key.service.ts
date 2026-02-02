@@ -18,12 +18,22 @@ export class PrivateKeyService extends Services.AbstractPrivateKeyService {
 	public override async fromMnemonic(
 		mnemonic: string,
 		options?: Services.IdentityOptions,
-		path?: string,
 	): Promise<Services.PrivateKeyDataTransferObject> {
 		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
 
 		return {
-			privateKey: BasePrivateKey.fromPassphrase(mnemonic, path),
+			privateKey: BasePrivateKey.fromPassphrase(mnemonic),
+		};
+	}
+
+	public override async fromBip44Mnemonic(
+		mnemonic: string,
+		path: string,
+	): Promise<Services.PrivateKeyDataTransferObject> {
+		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
+
+		return {
+			privateKey: BasePrivateKey.fromBip44Mnemonic(mnemonic, path),
 		};
 	}
 
