@@ -91,7 +91,7 @@ export class WalletFactory implements IWalletFactory {
 		wallet.data().set(WalletData.AddressIndex, addressIndex);
 		wallet.data().set(WalletData.DerivationPath, path);
 
-		const address = (await wallet.coin().address().fromMnemonic(options.mnemonic, undefined, path)).address;
+		const address = (await wallet.coin().address().fromBip44Mnemonic(options.mnemonic, path)).address;
 
 		await wallet.mutator().address({ address });
 

@@ -5,6 +5,8 @@ import { Signatory } from "./signatories.js";
 export interface SignatoryService {
 	mnemonic(mnemonic: string, options?: IdentityOptions, path?: string): Promise<Signatory>;
 
+	bip44mnemonic(mnemonic: string, path?: string): Promise<Signatory>;
+
 	confirmationMnemonic(mnemonic: string, confirmation: string, options?: IdentityOptions): Promise<Signatory>;
 
 	wif(mnemonic: string): Promise<Signatory>;

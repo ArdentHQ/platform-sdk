@@ -7,7 +7,7 @@ export interface PrivateKeyDataTransferObject {
 
 export interface PrivateKeyService {
 	fromMnemonic(mnemonic: string, options?: IdentityOptions): Promise<PrivateKeyDataTransferObject>;
-	fromBip44Mnemonic(mnemonic: string, path?: string): Promise<PrivateKeyDataTransferObject>;
+	fromBip44Mnemonic(mnemonic: string, path: string): Promise<PrivateKeyDataTransferObject>;
 	fromWIF(wif: string): Promise<PrivateKeyDataTransferObject>;
 	fromSecret(secret: string): Promise<PrivateKeyDataTransferObject>;
 }

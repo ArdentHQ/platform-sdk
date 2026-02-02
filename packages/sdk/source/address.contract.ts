@@ -8,7 +8,7 @@ export interface AddressDataTransferObject {
 
 export interface AddressService {
 	fromMnemonic(mnemonic: string, options?: IdentityOptions): Promise<AddressDataTransferObject>;
-	fromBip44Mnemonic(mnemonic: string, path?: string): Promise<AddressDataTransferObject>;
+	fromBip44Mnemonic(mnemonic: string, path: string): Promise<AddressDataTransferObject>;
 	fromMultiSignature(
 		input: MultisignatureAddressInput,
 		options?: IdentityOptions,
