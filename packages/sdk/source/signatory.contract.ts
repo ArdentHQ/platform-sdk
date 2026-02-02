@@ -3,7 +3,7 @@ import { IdentityOptions } from "./shared.contract.js";
 import { Signatory } from "./signatories.js";
 
 export interface SignatoryService {
-	mnemonic(mnemonic: string, options?: IdentityOptions, path?: string): Promise<Signatory>;
+	mnemonic(mnemonic: string, options?: IdentityOptions): Promise<Signatory>;
 
 	bip44mnemonic(mnemonic: string, path?: string): Promise<Signatory>;
 
