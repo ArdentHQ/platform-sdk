@@ -35,12 +35,11 @@ export class AbstractSignatoryService implements SignatoryService {
 	public async mnemonic(mnemonic: string, options?: IdentityOptions): Promise<Signatory> {
 		return new Signatory(
 			new MnemonicSignatory({
-				address: (await this.#addressService.fromMnemonic(mnemonic, options, path)).address,
+				address: (await this.#addressService.fromMnemonic(mnemonic, options)).address,
 				options,
-				privateKey: (await this.#privateKeyService.fromMnemonic(mnemonic, options, path)).privateKey,
-				publicKey: (await this.#publicKeyService.fromMnemonic(mnemonic, options, path)).publicKey,
+				privateKey: (await this.#privateKeyService.fromMnemonic(mnemonic, options)).privateKey,
+				publicKey: (await this.#publicKeyService.fromMnemonic(mnemonic, options)).publicKey,
 				signingKey: mnemonic,
-				path,
 			}),
 			options?.multiSignature,
 		);
