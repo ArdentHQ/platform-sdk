@@ -102,6 +102,11 @@ export abstract class TransactionBuilder<TBuilder extends TransactionBuilder<TBu
 		return this.signWithKeyPair(keys);
 	}
 
+	public signWithBip44Mnemonic(mnemonic: string, path: string): TBuilder {
+		const keys: IKeyPair = Keys.fromBip44Mnemonic(mnemonic, path);
+		return this.signWithKeyPair(keys);
+	}
+
 	public signWithWif(wif: string, networkWif?: number): TBuilder {
 		const keys: IKeyPair = Keys.fromWIF(wif);
 

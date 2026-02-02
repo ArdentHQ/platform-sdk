@@ -321,8 +321,12 @@ export class TransactionService extends Services.AbstractTransactionService {
 			await this.#ledgerService.disconnect();
 		}
 
-		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithBip44Mnemonic()) {
-			transaction.sign(input.signatory.signingKey(), path);
+		if (input.signatory.actsWithMnemonic()) {
+			transaction.sign(input.signatory.signingKey());
+		}
+
+		if (input.signatory.actsWithBip44Mnemonic()) {
+			transaction.signWithBip44Mnemonic(input.signatory.signingKey(), input.signatory.path());
 		}
 
 		if (input.signatory.actsWithConfirmationMnemonic()) {
