@@ -7,8 +7,12 @@ import { getPubKeyHash } from "./helpers.js";
 import { PublicKey } from "./public-key.js";
 
 export class Address {
-	public static fromPassphrase(passphrase: string, network?: Network, path?: string): string {
-		return Address.fromPublicKey(PublicKey.fromPassphrase(passphrase, path), network);
+	public static fromPassphrase(passphrase: string, network?: Network): string {
+		return Address.fromPublicKey(PublicKey.fromPassphrase(passphrase), network);
+	}
+
+	public static fromBip44Mnemonic(mnemonic: string, path: string, network?: Network): string {
+		return Address.fromPublicKey(PublicKey.fromBip44Mnemonic(mnemonic, path), network);
 	}
 
 	public static fromPublicKey(publicKey: string, network?: Network): string {

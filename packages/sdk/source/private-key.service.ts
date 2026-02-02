@@ -17,11 +17,11 @@ export class AbstractPrivateKeyService implements PrivateKeyService {
 		this.hostSelector = container.get(BindingType.NetworkHostSelector);
 	}
 
-	public async fromMnemonic(
-		mnemonic: string,
-		options?: IdentityOptions,
-		path?: string,
-	): Promise<PrivateKeyDataTransferObject> {
+	public async fromMnemonic(mnemonic: string, options?: IdentityOptions): Promise<PrivateKeyDataTransferObject> {
+		throw new NotImplemented(this.constructor.name, this.fromMnemonic.name);
+	}
+
+	public async fromBip44Mnemonic(mnemonic: string, path: string): Promise<PrivateKeyDataTransferObject> {
 		throw new NotImplemented(this.constructor.name, this.fromMnemonic.name);
 	}
 

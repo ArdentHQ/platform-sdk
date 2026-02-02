@@ -195,16 +195,18 @@ export class TransactionService extends Services.AbstractTransactionService {
 		const transaction = Transactions.BuilderFactory[type]();
 		transaction.version(2);
 
-		const path = input.signatory.actsWithBip44Mnemonic() ? input.signatory.path() : undefined;
+		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
+			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
 
-		if (
-			input.signatory.actsWithMnemonic() ||
-			input.signatory.actsWithConfirmationMnemonic() ||
-			input.signatory.actsWithBip44Mnemonic()
-		) {
-			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey(), undefined, path)).address;
+			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
+		}
 
-			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey(), undefined, path))
+		if (input.signatory.actsWithBip44Mnemonic()) {
+			const path = input.signatory.path();
+
+			address = (await this.#addressService.fromBip44Mnemonic(input.signatory.signingKey(), path)).address;
+
+			senderPublicKey = (await this.#publicKeyService.fromBip44Mnemonic(input.signatory.signingKey(), path))
 				.publicKey;
 		}
 

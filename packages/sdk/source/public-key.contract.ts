@@ -7,6 +7,7 @@ export interface PublicKeyDataTransferObject {
 
 export interface PublicKeyService {
 	fromMnemonic(mnemonic: string, options?: IdentityOptions, path?: string): Promise<PublicKeyDataTransferObject>;
+	fromBip44Mnemonic(mnemonic: string, path: string): Promise<PublicKeyDataTransferObject>;
 	fromMultiSignature(min: number, publicKeys: string[]): Promise<PublicKeyDataTransferObject>;
 	fromWIF(wif: string): Promise<PublicKeyDataTransferObject>;
 	fromSecret(secret: string): Promise<PublicKeyDataTransferObject>;

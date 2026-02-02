@@ -27,6 +27,17 @@ export class PublicKeyService extends Services.AbstractPublicKeyService {
 		};
 	}
 
+	public override async fromBip44Mnemonic(
+		mnemonic: string,
+		path: string,
+	): Promise<Services.PublicKeyDataTransferObject> {
+		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
+
+		return {
+			publicKey: BasePublicKey.fromBip44Mnemonic(mnemonic, path),
+		};
+	}
+
 	public override async fromMultiSignature(
 		min: number,
 		publicKeys: string[],
