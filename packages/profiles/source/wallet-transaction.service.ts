@@ -441,7 +441,10 @@ export class TransactionService implements ITransactionService {
 	}
 
 	async #syncPendingMultiSignatures(): Promise<void> {
-		const transactions = await this.#wallet.coin().multiSignature().allWithPendingState(this.#getPublicKey());
+		const transactions = await this.#wallet
+			.coin()
+			.multiSignature()
+			.allWithPendingState(this.#getPublicKey());
 
 		this.#pending = {};
 
@@ -453,7 +456,10 @@ export class TransactionService implements ITransactionService {
 	}
 
 	async #syncReadyMultiSignatures(): Promise<void> {
-		const transactions = await this.#wallet.coin().multiSignature().allWithReadyState(this.#getPublicKey());
+		const transactions = await this.#wallet
+			.coin()
+			.multiSignature()
+			.allWithReadyState(this.#getPublicKey());
 
 		this.#signed = {};
 
