@@ -24,8 +24,12 @@ export class SignatoryFactory implements ISignatoryFactory {
 			return this.#wallet.signatory().confirmationMnemonic(mnemonic, secondMnemonic);
 		}
 
+		if (mnemonic && path) {
+			return this.#wallet.signatory().bip44Mnemonic(mnemonic, path);
+		}
+
 		if (mnemonic) {
-			return this.#wallet.signatory().mnemonic(mnemonic, undefined, path);
+			return this.#wallet.signatory().mnemonic(mnemonic);
 		}
 
 		if (encryptionPassword) {
