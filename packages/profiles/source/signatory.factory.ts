@@ -58,7 +58,7 @@ export class SignatoryFactory implements ISignatoryFactory {
 			if (this.#wallet.actsWithBip44MnemonicWithEncryption()) {
 				return this.#wallet
 					.signatory()
-					.bip44Mnemonic(await this.#wallet.signingKey().get(encryptionPassword), path);
+					.bip44Mnemonic(await this.#wallet.signingKey().get(encryptionPassword), path as string);
 			}
 
 			return this.#wallet.signatory().mnemonic(await this.#wallet.signingKey().get(encryptionPassword));
