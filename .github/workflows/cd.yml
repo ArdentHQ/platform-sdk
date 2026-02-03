@@ -21,6 +21,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
+                  registry-url: "https://registry.npmjs.org"
             - name: Cache pnpm modules
               uses: actions/cache@v3
               env:
@@ -37,3 +38,5 @@ jobs:
               run: pnpm install
             - name: Publish
               run: bash scripts/publish.sh ${{ secrets.NPM_AUTH_TOKEN }}
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
