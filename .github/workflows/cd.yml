@@ -19,11 +19,13 @@ jobs:
             cancel-in-progress: true
         steps:
             - uses: actions/checkout@v3
+
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
                   registry-url: "https://registry.npmjs.org"
+
             - name: Cache pnpm modules
               uses: actions/cache@v3
               env:
@@ -32,12 +34,22 @@ jobs:
                   path: ~/.pnpm-store
                   key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
                   restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+
             - name: Install pnpm
               uses: pnpm/action-setup@v3
               with:
                   version: 8.15.9
+
             - name: Install dependencies
               run: pnpm install
+
+            - name: Build
+              run: |
+                  pnpm i
+                  pnpm run build
+                  pnpm run rebuild
+                  pnpm run build:all
+
             - name: Publish
               run: bash scripts/publish.sh ${{ secrets.NPM_AUTH_TOKEN }}
               env:
