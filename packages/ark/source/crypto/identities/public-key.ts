@@ -11,6 +11,10 @@ export class PublicKey {
 		return Keys.fromPassphrase(passphrase).publicKey;
 	}
 
+	public static fromBip44Mnemonic(passphrase: string, path: string): string {
+		return Keys.fromBip44Mnemonic(passphrase, path).publicKey;
+	}
+
 	public static fromWIF(wif: string, network?: Network): string {
 		return Keys.fromWIF(wif, network).publicKey;
 	}

@@ -8,6 +8,7 @@ export interface SignatoryInput {
 	secondSecret?: string;
 	wif?: string;
 	privateKey?: string;
+	path?: string;
 }
 
 export interface ISignatoryFactory {

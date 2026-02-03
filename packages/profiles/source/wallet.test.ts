@@ -454,6 +454,7 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			VOTES_AVAILABLE: 0,
 			VOTES_USED: 0,
 			IS_PRIMARY: false,
+			ADDRESS_INDEX: undefined,
 		});
 		assert.object(actual.settings);
 		assert.string(actual.settings.AVATAR);

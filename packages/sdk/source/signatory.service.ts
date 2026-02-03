@@ -45,6 +45,18 @@ export class AbstractSignatoryService implements SignatoryService {
 		);
 	}
 
+	public async bip44Mnemonic(mnemonic: string, path: string): Promise<Signatory> {
+		return new Signatory(
+			new MnemonicSignatory({
+				address: (await this.#addressService.fromBip44Mnemonic(mnemonic, path)).address,
+				privateKey: (await this.#privateKeyService.fromBip44Mnemonic(mnemonic, path)).privateKey,
+				publicKey: (await this.#publicKeyService.fromBip44Mnemonic(mnemonic, path)).publicKey,
+				signingKey: mnemonic,
+				path,
+			}),
+		);
+	}
+
 	public async confirmationMnemonic(
 		signingKey: string,
 		confirmKey: string,

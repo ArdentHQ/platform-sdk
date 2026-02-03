@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { Enums } from "@ardenthq/sdk";
-import { BIP38, BIP39, UUID } from "@ardenthq/sdk-cryptography";
+import { BIP38, BIP39, UUID, secp256k1, HDKey } from "@ardenthq/sdk-cryptography";
 
 import {
 	IAddressOptions,
@@ -75,12 +75,32 @@ export class WalletFactory implements IWalletFactory {
 
 	/** {@inheritDoc IWalletFactory.fromMnemonicWithBIP44} */
 	public async fromMnemonicWithBIP44(options: IMnemonicDerivativeOptions): Promise<IReadWriteWallet> {
-		return this.#fromMnemonicWithDerivative({
-			derivationType: "bip44",
-			featureFlag: Enums.FeatureFlag.AddressMnemonicBip44,
-			importMethod: WalletImportMethod.BIP44.MNEMONIC,
-			options,
-		});
+		const wallet: IReadWriteWallet = new Wallet(UUID.random(), {}, this.#profile);
+		wallet.data().set(WalletData.ImportMethod, WalletImportMethod.BIP44.MNEMONIC);
+		wallet.data().set(WalletData.Status, WalletFlag.Cold);
+
+		await wallet.mutator().coin(options.coin, options.network);
+
+		const slip = wallet.config().get("network.constants.slip44");
+		const account = options.levels.account ?? 0;
+		const change = options.levels.change ?? 0;
+		const addressIndex = options.levels.addressIndex ?? 0;
+
+		const path = `m/44'/${slip}'/${account}'/${change}/${addressIndex}`;
+
+		wallet.data().set(WalletData.AddressIndex, addressIndex);
+		wallet.data().set(WalletData.DerivationPath, path);
+
+		const address = (await wallet.coin().address().fromBip44Mnemonic(options.mnemonic, path)).address;
+
+		await wallet.mutator().address({ address });
+
+		if (options.password) {
+			wallet.data().set(WalletData.ImportMethod, WalletImportMethod.BIP44.MNEMONIC_WITH_ENCRYPTION);
+			await wallet.signingKey().set(options.mnemonic, options.password);
+		}
+
+		return wallet;
 	}
 
 	/** {@inheritDoc IWalletFactory.fromMnemonicWithBIP49} */

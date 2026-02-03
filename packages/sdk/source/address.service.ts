@@ -21,6 +21,10 @@ export class AbstractAddressService implements AddressService {
 		throw new NotImplemented(this.constructor.name, this.fromMultiSignature.name);
 	}
 
+	public async fromBip44Mnemonic(mnemonic: string, path: string): Promise<AddressDataTransferObject> {
+		throw new NotImplemented(this.constructor.name, this.fromMultiSignature.name);
+	}
+
 	public async fromMultiSignature(
 		input: MultisignatureAddressInput,
 		options?: IdentityOptions,

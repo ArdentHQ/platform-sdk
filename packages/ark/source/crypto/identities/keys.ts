@@ -1,4 +1,4 @@
-import { Hash, secp256k1, WIF } from "@ardenthq/sdk-cryptography";
+import { Hash, secp256k1, WIF, BIP39, HDKey } from "@ardenthq/sdk-cryptography";
 
 import { Network } from "../interfaces/networks.js";
 import { KeyPair } from "./contracts.js";
@@ -8,6 +8,15 @@ import { getWIF } from "./helpers.js";
 export class Keys {
 	public static fromPassphrase(passphrase: string, compressed = true): KeyPair {
 		return Keys.fromPrivateKey(Hash.sha256(Buffer.from(passphrase, "utf8")), compressed);
+	}
+
+	public static fromBip44Mnemonic(mnemonic: string, path: string, compressed = true): KeyPair {
+		const seed = BIP39.toSeed(mnemonic);
+
+		const hd = HDKey.fromSeed(Buffer.from(seed));
+		const child = hd.derive(path);
+
+		return Keys.fromPrivateKey(child.privateKey, compressed);
 	}
 
 	public static fromPrivateKey(privateKey: Buffer | string, compressed = true): KeyPair {

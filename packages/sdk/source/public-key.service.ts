@@ -21,6 +21,10 @@ export class AbstractPublicKeyService implements PublicKeyService {
 		throw new NotImplemented(this.constructor.name, this.fromMultiSignature.name);
 	}
 
+	public async fromBip44Mnemonic(mnemonic: string, path: string): Promise<PublicKeyDataTransferObject> {
+		throw new NotImplemented(this.constructor.name, this.fromMultiSignature.name);
+	}
+
 	public async fromMultiSignature(min: number, publicKeys: string[]): Promise<PublicKeyDataTransferObject> {
 		throw new NotImplemented(this.constructor.name, this.fromMultiSignature.name);
 	}

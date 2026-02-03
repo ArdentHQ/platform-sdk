@@ -312,7 +312,10 @@ export class Wallet implements IReadWriteWallet {
 
 	/** {@inheritDoc IReadWriteWallet.isLedger} */
 	public isLedger(): boolean {
-		return this.data().get(WalletData.DerivationPath) !== undefined;
+		return (
+			this.data().get(WalletData.DerivationPath) !== undefined &&
+			this.data().get(WalletData.AddressIndex) === undefined
+		);
 	}
 
 	/** {@inheritDoc IReadWriteWallet.isLedgerNanoX} */
@@ -573,10 +576,19 @@ export class Wallet implements IReadWriteWallet {
 	public actsWithMnemonic(): boolean {
 		return [
 			WalletImportMethod.BIP39.MNEMONIC,
-			WalletImportMethod.BIP44.MNEMONIC,
 			WalletImportMethod.BIP49.MNEMONIC,
 			WalletImportMethod.BIP84.MNEMONIC,
 		].includes(this.data().get(WalletData.ImportMethod)!);
+	}
+
+	/** {@inheritDoc IReadWriteWallet.actsWithBip44Mnemonic} */
+	public actsWithBip44Mnemonic(): boolean {
+		return this.data().get(WalletData.ImportMethod) === WalletImportMethod.BIP44.MNEMONIC;
+	}
+
+	/** {@inheritDoc IReadWriteWallet.actsWithBip44Mnemonic} */
+	public actsWithBip44MnemonicWithEncryption(): boolean {
+		return this.data().get(WalletData.ImportMethod) === WalletImportMethod.BIP44.MNEMONIC_WITH_ENCRYPTION;
 	}
 
 	/** {@inheritDoc IReadWriteWallet.actsWithAddress} */
@@ -607,7 +619,6 @@ export class Wallet implements IReadWriteWallet {
 	public actsWithMnemonicWithEncryption(): boolean {
 		return [
 			WalletImportMethod.BIP39.MNEMONIC_WITH_ENCRYPTION,
-			WalletImportMethod.BIP44.MNEMONIC_WITH_ENCRYPTION,
 			WalletImportMethod.BIP49.MNEMONIC_WITH_ENCRYPTION,
 			WalletImportMethod.BIP84.MNEMONIC_WITH_ENCRYPTION,
 		].includes(this.data().get(WalletData.ImportMethod)!);

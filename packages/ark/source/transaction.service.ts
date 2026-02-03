@@ -197,7 +197,17 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		if (input.signatory.actsWithMnemonic() || input.signatory.actsWithConfirmationMnemonic()) {
 			address = (await this.#addressService.fromMnemonic(input.signatory.signingKey())).address;
+
 			senderPublicKey = (await this.#publicKeyService.fromMnemonic(input.signatory.signingKey())).publicKey;
+		}
+
+		if (input.signatory.actsWithBip44Mnemonic()) {
+			const path = input.signatory.path();
+
+			address = (await this.#addressService.fromBip44Mnemonic(input.signatory.signingKey(), path)).address;
+
+			senderPublicKey = (await this.#publicKeyService.fromBip44Mnemonic(input.signatory.signingKey(), path))
+				.publicKey;
 		}
 
 		if (input.signatory.actsWithSecret() || input.signatory.actsWithConfirmationSecret()) {
@@ -313,6 +323,10 @@ export class TransactionService extends Services.AbstractTransactionService {
 
 		if (input.signatory.actsWithMnemonic()) {
 			transaction.sign(input.signatory.signingKey());
+		}
+
+		if (input.signatory.actsWithBip44Mnemonic()) {
+			transaction.signWithBip44Mnemonic(input.signatory.signingKey(), input.signatory.path());
 		}
 
 		if (input.signatory.actsWithConfirmationMnemonic()) {

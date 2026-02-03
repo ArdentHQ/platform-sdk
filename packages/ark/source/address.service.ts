@@ -29,6 +29,18 @@ export class AddressService extends Services.AbstractAddressService {
 		};
 	}
 
+	public override async fromBip44Mnemonic(
+		mnemonic: string,
+		path: string,
+	): Promise<Services.AddressDataTransferObject> {
+		abort_unless(BIP39.compatible(mnemonic), "The given value is not BIP39 compliant.");
+
+		return {
+			address: BaseAddress.fromBip44Mnemonic(mnemonic, path, this.#config.network),
+			type: "bip44",
+		};
+	}
+
 	public override async fromMultiSignature({
 		min,
 		publicKeys,

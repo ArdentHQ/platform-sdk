@@ -21,6 +21,10 @@ export class AbstractPrivateKeyService implements PrivateKeyService {
 		throw new NotImplemented(this.constructor.name, this.fromMnemonic.name);
 	}
 
+	public async fromBip44Mnemonic(mnemonic: string, path: string): Promise<PrivateKeyDataTransferObject> {
+		throw new NotImplemented(this.constructor.name, this.fromMnemonic.name);
+	}
+
 	public async fromWIF(wif: string): Promise<PrivateKeyDataTransferObject> {
 		throw new NotImplemented(this.constructor.name, this.fromWIF.name);
 	}
