@@ -1,6 +1,6 @@
 {
 	"name": "@ardenthq/sdk",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"description": "Cross-Platform Utilities for Ardent Applications",
 	"license": "MIT",
 	"contributors": [],
