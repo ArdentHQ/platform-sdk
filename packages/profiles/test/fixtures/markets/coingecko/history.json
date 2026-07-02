@@ -1,0 +1,11 @@
+{
+	"id": "arken-world",
+	"symbol": "ark",
+	"name": "Arken World",
+	"market_data": {
+		"current_price": {
+			"usd": 0.47,
+			"btc": 0.00005048
+		}
+	}
+}

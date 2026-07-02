@@ -31,10 +31,13 @@ describeWithContext(
 				.reply(200, loader.json("test/fixtures/client/wallet.json"))
 				.get("/api/wallets/DQzosAzwyYStw2bUeUTCUnqiMonEz9ER2o")
 				.reply(200, loader.json("test/fixtures/client/wallet.json"))
-				// CryptoCompare
-				.get("/data/histoday")
+
+				// CoinGecko
+				.get("/coins/list")
+				.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
+				.get("/coins/arken-world/market_chart")
 				.query(true)
-				.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
+				.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 				.persist();
 
 			const profileRepository = container.get(Identifiers.ProfileRepository);

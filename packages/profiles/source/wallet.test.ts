@@ -70,10 +70,13 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			.get("/api/transactions")
 			.query(true)
 			.reply(200, () => loader.json("test/fixtures/client/transactions.json"))
-			// CryptoCompare
-			.get("/data/histoday")
+
+			// CoinGecko
+			.get("/coins/list")
+			.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
+			.get("/coins/arken-world/market_chart")
 			.query(true)
-			.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
+			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
 
 		// Make sure we don't persist any data between runs

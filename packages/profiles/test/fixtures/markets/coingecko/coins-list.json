@@ -1,0 +1,17 @@
+[
+	{
+		"id": "ark-ark",
+		"symbol": "ark",
+		"name": "ARK"
+	},
+	{
+		"id": "bitcoin",
+		"symbol": "btc",
+		"name": "Bitcoin"
+	},
+	{
+		"id": "ethereum",
+		"symbol": "eth",
+		"name": "Ethereum"
+	}
+]
