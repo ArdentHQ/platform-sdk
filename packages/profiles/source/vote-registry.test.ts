@@ -57,10 +57,12 @@ describe("VoteRegistry", ({ beforeAll, beforeEach, loader, nock, assert, it }) =
 			.get("/api/transactions")
 			.query(true)
 			.reply(200, loader.json("test/fixtures/client/transactions.json"))
-			// CryptoCompare
-			.get("/data/histoday")
+			// CoinGecko
+			.get("/api/v3/coins/list")
+			.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
+			.get("/api/v3/coins/ark/market_chart")
 			.query(true)
-			.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
+			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
 
 		const profileRepository = container.get(Identifiers.ProfileRepository);

@@ -8,7 +8,6 @@ import {
 } from "./contracts/index.js";
 import { CoinCap } from "./drivers/coincap/index.js";
 import { CoinGecko } from "./drivers/coingecko/index.js";
-import { CryptoCompare } from "./drivers/cryptocompare/index.js";
 
 /**
  * Normalises the communication with Market Data Providers.
@@ -49,7 +48,6 @@ export class MarketService {
 			{
 				coincap: new CoinCap(httpClient),
 				coingecko: new CoinGecko(httpClient),
-				cryptocompare: new CryptoCompare(httpClient),
 			}[name.toLowerCase()]!,
 		);
 	}
