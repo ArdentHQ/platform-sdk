@@ -28,10 +28,9 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 			.reply(200, loader.json("test/fixtures/client/delegates-1.json"))
 			.get("/api/delegates?page=2")
 			.reply(200, loader.json("test/fixtures/client/delegates-2.json"))
-			// CryptoCompare
-			.get("/data/histoday")
-			.query(true)
-			.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
+			// CoinGecko
+			.get("/api/v3/coins/list")
+			.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
 			.persist();
 
 		const profileRepository = new ProfileRepository();
@@ -50,7 +49,7 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 		container.constant(Identifiers.ExchangeRateService, context.subject);
 
 		context.profile = await profileRepository.create("John Doe");
-		context.profile.settings().set(ProfileSetting.MarketProvider, "cryptocompare");
+		context.profile.settings().set(ProfileSetting.MarketProvider, "coingecko");
 
 		context.wallet = await importByMnemonic(context.profile, identity.mnemonic, "ARK", "ark.devnet");
 		context.wallet.data().set(WalletData.Balance, { available: 1e8, fees: 1e8 });
@@ -61,9 +60,12 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 
 	it("should sync a coin for specific profile with wallets argument", async (context) => {
 		nock.fake()
-			.get("/data/dayAvg")
+			.get("/api/v3/coins/dark/history")
 			.query(true)
-			.reply(200, { BTC: 0.000_050_48, ConversionType: { conversionSymbol: "", type: "direct" } })
+			.reply(200, { market_data: { current_price: { btc: 0.000_050_48 } } })
+			.get("/api/v3/coins/dark/market_chart")
+			.query(true)
+			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
 
 		await context.subject.syncAll(context.profile, "DARK");
@@ -75,9 +77,12 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 
 	it("should sync a coin for specific profile without wallets argument", async (context) => {
 		nock.fake()
-			.get("/data/dayAvg")
+			.get("/api/v3/coins/dark/history")
 			.query(true)
-			.reply(200, { BTC: 0.000_021_34, ConversionType: { conversionSymbol: "", type: "direct" } })
+			.reply(200, { market_data: { current_price: { btc: 0.000_021_34 } } })
+			.get("/api/v3/coins/dark/market_chart")
+			.query(true)
+			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
 
 		await context.subject.syncAll(context.profile, "DARK");
@@ -97,12 +102,15 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 
 	it("should store exchange rates and currency in profile wallets if undefined", async (context) => {
 		nock.fake()
-			.get("/data/dayAvg")
+			.get("/api/v3/coins/dark/history")
 			.query(true)
-			.reply(200, { BTC: 0.000_050_48, ConversionType: { conversionSymbol: "", type: "direct" } })
+			.reply(200, { market_data: { current_price: { btc: 0.000_050_48 } } })
+			.get("/api/v3/coins/dark/market_chart")
+			.query(true)
+			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
 
-		context.profile.settings().set(ProfileSetting.MarketProvider, "cryptocompare");
+		context.profile.settings().set(ProfileSetting.MarketProvider, "coingecko");
 
 		await context.subject.syncAll(context.profile, "DARK");
 		assert.is(context.wallet.convertedBalance(), 0.000_050_48);
@@ -110,20 +118,23 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 
 	it("should cache historic exchange rates", async (context) => {
 		nock.fake()
-			.get("/data/dayAvg")
+			.get("/api/v3/coins/dark/history")
 			.query(true)
-			.reply(200, { BTC: 0.000_050_48, ConversionType: { conversionSymbol: "", type: "direct" } })
+			.reply(200, { market_data: { current_price: { btc: 0.000_050_48 } } })
+			.get("/api/v3/coins/dark/market_chart")
+			.query(true)
+			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
 
-		context.profile.settings().set(ProfileSetting.MarketProvider, "cryptocompare");
+		context.profile.settings().set(ProfileSetting.MarketProvider, "coingecko");
 
 		await context.subject.syncAll(context.profile, "DARK");
 		assert.is(context.wallet.convertedBalance(), 0.000_050_48);
 
 		nock.fake()
-			.get("/data/dayAvg")
+			.get("/api/v3/coins/dark/history")
 			.query(true)
-			.reply(200, { BTC: 0.000_055_55, ConversionType: { conversionSymbol: "", type: "direct" } })
+			.reply(200, { market_data: { current_price: { btc: 0.000_055_55 } } })
 			.persist();
 
 		await context.subject.syncAll(context.profile, "DARK");

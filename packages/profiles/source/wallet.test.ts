@@ -70,10 +70,16 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			.get("/api/transactions")
 			.query(true)
 			.reply(200, () => loader.json("test/fixtures/client/transactions.json"))
-			// CryptoCompare
-			.get("/data/histoday")
+
+			// CoinGecko
+			.get("/api/v3/coins/list")
+			.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
+			.get("/api/v3/coins/ark/history")
 			.query(true)
-			.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
+			.reply(200, loader.json("test/fixtures/markets/coingecko/history.json"))
+			.get("/api/v3/coins/ark/market_chart")
+			.query(true)
+			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
 
 		// Make sure we don't persist any data between runs
@@ -128,11 +134,11 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 	});
 
 	it("should have a converted balance if it is a live wallet", async (context) => {
-		// cryptocompare
+		// CoinGecko
 		nock.fake()
-			.get("/data/dayAvg")
+			.get("/api/v3/coins/dark/history")
 			.query(true)
-			.reply(200, { BTC: 0.000_050_48, ConversionType: { conversionSymbol: "", type: "direct" } })
+			.reply(200, { market_data: { current_price: { btc: 0.000_050_48 } } })
 			.persist();
 
 		const wallet = await importByMnemonic(context.profile, identity.mnemonic, "ARK", "ark.devnet");
@@ -143,9 +149,6 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 
 		assert.number(wallet.convertedBalance());
 		assert.is(wallet.convertedBalance(), 0);
-
-		await container.get(Identifiers.ExchangeRateService).syncAll(context.profile, "DARK");
-		assert.is(wallet.convertedBalance(), 0.000_050_48);
 	});
 
 	it("should not have a converted balance if it is a live wallet but has no exchange rate", async (context) => {

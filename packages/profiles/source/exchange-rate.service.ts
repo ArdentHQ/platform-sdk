@@ -38,7 +38,7 @@ export class ExchangeRateService implements IExchangeRateService {
 		).historicalPrice({
 			currency: exchangeCurrency,
 			dateFormat: "YYYY-MM-DD",
-			days: 2000,
+			days: 365,
 			token: currency,
 			// @TODO: this might cause issues with certain providers. Should allow for an "all" option to aggregate all pages without knowing the specific number
 			type: "day",

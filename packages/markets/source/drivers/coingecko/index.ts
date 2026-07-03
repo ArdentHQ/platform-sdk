@@ -48,6 +48,7 @@ export class CoinGecko implements PriceTracker {
 	 * @memberof PriceTracker
 	 */
 	readonly #host: string = "https://api.coingecko.com/api/v3";
+	readonly #maxDays: number = 365;
 
 	/**
 	 * Creates an instance of PriceTracker.
@@ -90,7 +91,7 @@ export class CoinGecko implements PriceTracker {
 
 		const body = await this.#get(`coins/${tokenId}/market_chart`, {
 			vs_currency: options.currency,
-			days: options.days,
+			days: Math.min(options.days, this.#maxDays),
 		});
 
 		return new HistoricalPriceTransformer(body).transform(options);
@@ -151,7 +152,7 @@ export class CoinGecko implements PriceTracker {
 
 		for (const value of Object.values(body)) {
 			// @ts-ignore
-			this.tokenLookup[value.symbol.toUpperCase()] = value.id;
+			this.tokenLookup[value.id.toUpperCase()] = value.id;
 		}
 
 		return this.tokenLookup[token.toUpperCase()];

@@ -61,10 +61,6 @@ describe("WIF", ({ beforeAll, beforeEach, each, nock, assert, it, loader }) => {
 			.get("/api/transactions")
 			.query(true)
 			.reply(200, loader.json("test/fixtures/client/transactions.json"))
-			// CryptoCompare
-			.get("/data/histoday")
-			.query(true)
-			.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
 			.persist();
 
 		const profileRepository: IProfileRepository = container.get(Identifiers.ProfileRepository);

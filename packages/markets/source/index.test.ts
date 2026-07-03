@@ -4,7 +4,7 @@ import { Request } from "@ardenthq/sdk-fetch";
 import { PriceTracker } from "../test/stubs/tracker";
 import { MarketService } from "./index";
 
-for (const adapter of ["cryptocompare", "coingecko", "coincap"]) {
+for (const adapter of ["coingecko", "coincap"]) {
 	describe(`MarketService(${adapter})`, async ({ beforeEach, it, stub }) => {
 		const token = "ARK";
 		const currency = "USD";

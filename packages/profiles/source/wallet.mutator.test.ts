@@ -59,10 +59,6 @@ describe("WalletMutator", ({ beforeAll, beforeEach, loader, nock, assert, stub, 
 			.get("/api/transactions")
 			.query(true)
 			.reply(200, loader.json("test/fixtures/client/transactions.json"))
-			// CryptoCompare
-			.get("/data/histoday")
-			.query(true)
-			.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
 			.persist();
 
 		const profileRepository = container.get(Identifiers.ProfileRepository);
