@@ -35,16 +35,16 @@ describeWithContext(
 				// CoinGecko
 				.get("/api/v3/coins/list")
 				.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
-				.get("/api/v3/coins/arken-world/history")
+				.get("/api/v3/coins/ark/history")
 				.query(true)
 				.reply(200, loader.json("test/fixtures/markets/coingecko/history.json"))
-				.get("/api/v3/coins/ark-ark/history")
+				.get("/api/v3/coins/ark/history")
 				.query(true)
 				.reply(200, loader.json("test/fixtures/markets/coingecko/history-ark.json"))
-				.get("/api/v3/coins/arken-world/market_chart")
+				.get("/api/v3/coins/ark/market_chart")
 				.query(true)
 				.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
-				.get("/api/v3/coins/ark-ark/market_chart")
+				.get("/api/v3/coins/ark/market_chart")
 				.query(true)
 				.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 				.persist();
@@ -61,12 +61,6 @@ describeWithContext(
 		});
 
 		it("should aggregate the balances of all wallets", async (context) => {
-			nock.fake()
-				.get("/data/dayAvg")
-				.query(true)
-				.reply(200, { BTC: 0.000_050_48, ConversionType: { conversionSymbol: "", type: "direct" } })
-				.persist();
-
 			const [a, b, c] = await Promise.all([
 				importByMnemonic(
 					context.profile,

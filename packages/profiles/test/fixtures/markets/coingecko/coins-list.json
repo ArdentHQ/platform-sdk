@@ -1,13 +1,8 @@
 [
 	{
-		"id": "ark-ark",
+		"id": "ark",
 		"symbol": "ark",
 		"name": "ARK"
-	},
-	{
-		"id": "arken-world",
-		"symbol": "dark",
-		"name": "Dark"
 	},
 	{
 		"id": "bitcoin",
@@ -18,5 +13,10 @@
 		"id": "ethereum",
 		"symbol": "eth",
 		"name": "Ethereum"
+	},
+	{
+		"id": "dark",
+		"symbol": "dark",
+		"name": "Dark"
 	}
 ]

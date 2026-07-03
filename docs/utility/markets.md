@@ -1,6 +1,6 @@
 # Markets
 
-This is a CoinGecko Client for the Platform SDK. The implementation makes use of [CoinCap](/docs/sdk/markets/coincap), [CoinGecko](/docs/sdk/markets/coingecko) and [CryptoCompare](/docs/sdk/markets/cryptocompare) and adheres to the contracts laid out in the [specification](/docs/specification.md).
+This is a CoinGecko Client for the Platform SDK. The implementation makes use of [CoinCap](/docs/sdk/markets/coincap), [CoinGecko](/docs/sdk/markets/coingecko) and adheres to the contracts laid out in the [specification](/docs/specification.md).
 
 ## Installation
 
@@ -15,7 +15,7 @@ pnpm install @ardenthq/markets
 ```typescript
 import { MarketService } from "@ardenthq/markets";
 
-MarketService.make("cryptocompare", new Request());
+MarketService.make("coingecko", new Request());
 ```
 
 ### Verify if the given currency exists on the service

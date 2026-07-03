@@ -63,20 +63,22 @@ const beforeEachCallback = async (context, { loader, nock, stub }) => {
 		.reply(200, loader.json("test/fixtures/client/delegates-2.json"))
 		.get("/api/ipfs/QmR45FmbVVrixReBwJkhEKde2qwHYaQzGxu4ZoDeswuF9c")
 		.reply(200, { data: "ipfs-content" })
-		// CryptoCompare
-		.get("/data/dayAvg")
+		// CoinGecko
+		.get("/api/v3/coins/list")
+		.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
+		.get("/api/v3/coins/dark/history")
 		.query(true)
-		.reply(200, { BTC: 0.000_050_48, ConversionType: { conversionSymbol: "", type: "direct" } })
-		.get("/data/histoday")
+		.reply(200, loader.json("test/fixtures/markets/coingecko/history.json"))
+		.get("/api/v3/coins/dark/market_chart")
 		.query(true)
-		.reply(200, loader.json("test/fixtures/markets/cryptocompare/historical.json"))
+		.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 		.persist();
 
 	context.profile = new Profile({ avatar: "avatar", data: "", id: "profile-id", name: "name" });
 
 	context.profile.settings().set(ProfileSetting.Name, "John Doe");
 	context.profile.settings().set(ProfileSetting.ExchangeCurrency, "BTC");
-	context.profile.settings().set(ProfileSetting.MarketProvider, "cryptocompare");
+	context.profile.settings().set(ProfileSetting.MarketProvider, "coingecko");
 
 	context.wallet = await importByMnemonic(context.profile, mnemonic, "ARK", "ark.devnet");
 
