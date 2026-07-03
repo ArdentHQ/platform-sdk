@@ -5,6 +5,11 @@
 		"name": "ARK"
 	},
 	{
+		"id": "arken-world",
+		"symbol": "dark",
+		"name": "Dark"
+	},
+	{
 		"id": "bitcoin",
 		"symbol": "btc",
 		"name": "Bitcoin"

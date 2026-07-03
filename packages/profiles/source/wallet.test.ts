@@ -72,9 +72,12 @@ describe("Wallet", ({ beforeAll, beforeEach, loader, nock, assert, stub, it }) =
 			.reply(200, () => loader.json("test/fixtures/client/transactions.json"))
 
 			// CoinGecko
-			.get("/coins/list")
+			.get("/api/v3/coins/list")
 			.reply(200, loader.json("test/fixtures/markets/coingecko/coins-list.json"))
-			.get("/coins/arken-world/market_chart")
+			.get("/api/v3/coins/arken-world/history")
+			.query(true)
+			.reply(200, loader.json("test/fixtures/markets/coingecko/history.json"))
+			.get("/api/v3/coins/arken-world/market_chart")
 			.query(true)
 			.reply(200, loader.json("test/fixtures/markets/coingecko/market-chart.json"))
 			.persist();
