@@ -11,6 +11,7 @@ import { Storage } from "./environment.models.js";
 export class ExchangeRateService implements IExchangeRateService {
 	readonly #storageKey: string = "EXCHANGE_RATE_SERVICE";
 	readonly #dataRepository: DataRepository = new DataRepository();
+	readonly #marketProviders: Record<string, MarketService> = {};
 
 	/** {@inheritDoc IExchangeRateService.syncAll} */
 	public async syncAll(profile: IProfile, currency: string): Promise<void> {
@@ -32,10 +33,10 @@ export class ExchangeRateService implements IExchangeRateService {
 			return;
 		}
 
-		const historicalRates = await MarketService.make(
-			profile.settings().get(ProfileSetting.MarketProvider) as string,
-			container.get(Identifiers.HttpClient),
-		).historicalPrice({
+		const provider = profile.settings().get(ProfileSetting.MarketProvider) as string;
+		const marketService = this.#resolveMarketService(provider);
+
+		const historicalRates = await marketService.historicalPrice({
 			currency: exchangeCurrency,
 			dateFormat: "YYYY-MM-DD",
 			days: 365,
@@ -88,13 +89,30 @@ export class ExchangeRateService implements IExchangeRateService {
 		return this.#dataRepository.has(`${currency}.${exchangeCurrency}.${yesterday}`);
 	}
 
+	/**
+	 * Resolves or creates a cached MarketService for the given provider name.
+	 *
+	 * @private
+	 * @param {string} provider
+	 * @returns {MarketService}
+	 * @memberof ExchangeRateService
+	 */
+	#resolveMarketService(provider: string): MarketService {
+		if (!this.#marketProviders[provider]) {
+			this.#marketProviders[provider] = MarketService.make(provider, container.get(Identifiers.HttpClient));
+		}
+
+		console.log("fetching cached market provider");
+		return this.#marketProviders[provider];
+	}
+
 	async #fetchDailyRate(profile: IProfile, currency: string, exchangeCurrency: string): Promise<void> {
+		const provider = profile.settings().get(ProfileSetting.MarketProvider) as string;
+		const marketService = this.#resolveMarketService(provider);
+
 		this.#dataRepository.set(
 			`${currency}.${exchangeCurrency}.${DateTime.make().format("YYYY-MM-DD")}`,
-			await MarketService.make(
-				profile.settings().get(ProfileSetting.MarketProvider) as string,
-				container.get(Identifiers.HttpClient),
-			).dailyAverage(currency, exchangeCurrency, +Date.now()),
+			await marketService.dailyAverage(currency, exchangeCurrency, +Date.now()),
 		);
 	}
 }
