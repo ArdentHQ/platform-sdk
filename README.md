@@ -52,4 +52,4 @@ This project exists thanks to all the people who [contribute](../../contributors
 
 ## License
 
-[MIT](LICENSE) © [Ardent](https://ardenthq.com)
+[MIT](https://opensource.org/license/MIT) © [Ardent](https://ardenthq.com)
