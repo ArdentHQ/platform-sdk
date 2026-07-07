@@ -102,7 +102,6 @@ export class ExchangeRateService implements IExchangeRateService {
 			this.#marketProviders[provider] = MarketService.make(provider, container.get(Identifiers.HttpClient));
 		}
 
-		console.log("fetching cached market provider");
 		return this.#marketProviders[provider];
 	}
 
