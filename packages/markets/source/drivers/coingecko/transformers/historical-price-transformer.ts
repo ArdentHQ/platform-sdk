@@ -35,15 +35,14 @@ export class HistoricalPriceTransformer implements HistoricalTransformer {
 	 */
 	public transform(options: Record<string, any>): HistoricalData {
 		// CoinGecko returns hourly points for ranges up to 90 days and daily points beyond that,
-		// so points are grouped into buckets of the requested interval instead of relying on a fixed step.
-		const bucketFormat = options.type === "hour" ? "YYYY-MM-DD HH" : "YYYY-MM-DD";
+		// so points are grouped per UTC day instead of relying on a fixed step.
 		const datasets = new Map<string, [number, number]>();
 
 		for (const [timestamp, price] of this.data.prices) {
-			const bucket = DateTime.make(timestamp).format(bucketFormat);
+			const day = DateTime.make(timestamp).format("YYYY-MM-DD");
 
-			if (!datasets.has(bucket)) {
-				datasets.set(bucket, [timestamp, price]);
+			if (!datasets.has(day)) {
+				datasets.set(day, [timestamp, price]);
 			}
 		}
 

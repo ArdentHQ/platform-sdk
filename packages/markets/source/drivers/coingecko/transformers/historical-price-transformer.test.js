@@ -35,13 +35,4 @@ describe("HistoricalPriceTransformer", async ({ assert, it, nock, loader }) => {
 		assert.equal(result.labels, ["2025-10-14", "2025-10-15"]);
 		assert.equal(result.datasets, [0, 24]);
 	});
-
-	it("should keep one point per hour for hourly intervals", async () => {
-		const prices = [0, 1, 2].map((index) => [START + index * HOUR, index]);
-
-		const result = new HistoricalPriceTransformer({ prices }).transform({ dateFormat: "HH:mm", type: "hour" });
-
-		assert.equal(result.labels, ["00:00", "01:00", "02:00"]);
-		assert.equal(result.datasets, [0, 1, 2]);
-	});
 });
