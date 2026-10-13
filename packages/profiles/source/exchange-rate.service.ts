@@ -9,7 +9,8 @@ import { DataRepository } from "./data.repository";
 import { Storage } from "./environment.models.js";
 
 export class ExchangeRateService implements IExchangeRateService {
-	readonly #storageKey: string = "EXCHANGE_RATE_SERVICE";
+	readonly #storageKey: string = "EXCHANGE_RATE_SERVICE_V2";
+	readonly #legacyStorageKeys: string[] = ["EXCHANGE_RATE_SERVICE"];
 	readonly #dataRepository: DataRepository = new DataRepository();
 	readonly #marketProviders: Record<string, MarketService> = {};
 
@@ -74,9 +75,13 @@ export class ExchangeRateService implements IExchangeRateService {
 
 	/** {@inheritDoc IExchangeRateService.restore} */
 	public async restore(): Promise<void> {
-		const entries: object | undefined | null = await container
-			.get<Storage>(Identifiers.Storage)
-			.get(this.#storageKey);
+		const storage = container.get<Storage>(Identifiers.Storage);
+
+		for (const legacyStorageKey of this.#legacyStorageKeys) {
+			await storage.forget(legacyStorageKey);
+		}
+
+		const entries: object | undefined | null = await storage.get(this.#storageKey);
 
 		if (entries !== undefined && entries !== null) {
 			this.#dataRepository.fill(entries);

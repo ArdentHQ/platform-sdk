@@ -1,3 +1,4 @@
+import { DateTime } from "@ardenthq/sdk-intl";
 import { describe } from "@ardenthq/sdk-test";
 
 import { identity } from "../test/fixtures/identity";
@@ -72,7 +73,7 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 
 		assert.is(context.wallet.convertedBalance(), 0.000_050_48);
 		const allStorage = await container.get(Identifiers.Storage).all();
-		assert.object(allStorage.EXCHANGE_RATE_SERVICE);
+		assert.object(allStorage.EXCHANGE_RATE_SERVICE_V2);
 	});
 
 	it("should sync a coin for specific profile without wallets argument", async (context) => {
@@ -142,15 +143,31 @@ describe("ExchangeRateService", ({ beforeEach, afterEach, it, assert, nock, load
 		assert.is(context.wallet.convertedBalance(), 0.000_050_48);
 	});
 
+	it("should ignore and remove exchange rates stored under the legacy key", async (context) => {
+		const storage = container.get(Identifiers.Storage);
+		const yesterday = DateTime.make().subDays(1).format("YYYY-MM-DD");
+
+		await storage.set("EXCHANGE_RATE_SERVICE", { DARK: { BTC: { [yesterday]: 1 } } });
+
+		const forgetSpy = stub(storage, "forget").resolvedValue(undefined);
+
+		await context.subject.restore();
+
+		forgetSpy.calledWith("EXCHANGE_RATE_SERVICE");
+		assert.is(context.subject.exchange("DARK", "BTC", DateTime.make().subDays(1), 1), 0);
+
+		forgetSpy.restore();
+	});
+
 	it("should handle restore", async (context) => {
 		await assert.resolves(() => context.subject.restore());
 
-		assert.object(await container.get(Identifiers.Storage).get("EXCHANGE_RATE_SERVICE"));
+		assert.object(await container.get(Identifiers.Storage).get("EXCHANGE_RATE_SERVICE_V2"));
 
-		container.get(Identifiers.Storage).set("EXCHANGE_RATE_SERVICE", null);
+		container.get(Identifiers.Storage).set("EXCHANGE_RATE_SERVICE_V2", null);
 		await assert.resolves(() => context.subject.restore());
 
-		container.get(Identifiers.Storage).set("EXCHANGE_RATE_SERVICE", undefined);
+		container.get(Identifiers.Storage).set("EXCHANGE_RATE_SERVICE_V2", undefined);
 		await assert.resolves(() => context.subject.restore());
 	});
 });
