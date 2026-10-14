@@ -34,15 +34,23 @@ export class HistoricalPriceTransformer implements HistoricalTransformer {
 	 * @memberof HistoricalPriceTransformer
 	 */
 	public transform(options: Record<string, any>): HistoricalData {
-		const datasets = {};
-		for (let i = 0; i < this.data.prices.length; i += 24) {
-			datasets[this.data.prices[i][0]] = this.data.prices[i][1];
+		// CoinGecko returns hourly points for ranges up to 90 days and daily points beyond that,
+		// so points are grouped per UTC day instead of relying on a fixed step.
+		const datasets = new Map<string, [number, number]>();
+
+		for (const [timestamp, price] of this.data.prices) {
+			const day = DateTime.make(timestamp).format("YYYY-MM-DD");
+
+			if (!datasets.has(day)) {
+				datasets.set(day, [timestamp, price]);
+			}
 		}
 
-		const datasetValues: number[] = Object.values(datasets);
+		const points = [...datasets.values()];
+		const datasetValues: number[] = points.map(([, price]) => price);
 
 		return {
-			labels: Object.keys(datasets).map((time) => DateTime.make(time).format(options.dateFormat)),
+			labels: points.map(([timestamp]) => DateTime.make(timestamp).format(options.dateFormat)),
 			datasets: datasetValues,
 			min: Math.min(...datasetValues),
 			max: Math.max(...datasetValues),
