@@ -307,7 +307,7 @@ describe("Environment", ({ beforeEach, it, assert, nock, loader }) => {
 			storage: new StubStorage(),
 		});
 
-		container.get(Identifiers.Storage).set("EXCHANGE_RATE_SERVICE", {});
+		container.get(Identifiers.Storage).set("EXCHANGE_RATE_SERVICE_V2", {});
 
 		assert.undefined(await environment.verify({ data: {}, profiles: {} }));
 		assert.undefined(await environment.boot());
