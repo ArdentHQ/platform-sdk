@@ -226,8 +226,8 @@ importers:
         specifier: ^6.6.1
         version: 6.6.1
       hdkey:
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.1.0
+        version: 2.1.0
       micro-base:
         specifier: ^0.10.2
         version: 0.10.2
@@ -2550,8 +2550,8 @@ packages:
   hash.js@1.1.7:
     resolution: {integrity: sha512-taOaskGt4z4SOANNseOviYDvjEJinIkRgmp7LbKP2YTTmVxWBl87s/uzK9r+44BclBSp2X7K1hqeNfz9JbBeXA==}
 
-  hdkey@2.0.1:
-    resolution: {integrity: sha512-c+tl9PHG9/XkGgG0tD7CJpRVaE0jfZizDNmnErUAKQ4EjQSOcOUcV3EN9ZEZS8pZ4usaeiiK0H7stzuzna8feA==}
+  hdkey@2.1.0:
+    resolution: {integrity: sha512-i9Wzi0Dy49bNS4tXXeGeu0vIcn86xXdPQUpEYg+SO1YiO8HtomjmmRMaRyqL0r59QfcD4PfVbSF3qmsWFwAemA==}
 
   hmac-drbg@1.0.1:
     resolution: {integrity: sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg==}
@@ -6240,9 +6240,10 @@ snapshots:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
 
-  hdkey@2.0.1:
+  hdkey@2.1.0:
     dependencies:
       bs58check: 2.1.2
+      ripemd160: 2.0.2
       safe-buffer: 5.2.1
       secp256k1: 4.0.5
 
