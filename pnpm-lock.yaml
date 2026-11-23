@@ -241,8 +241,8 @@ importers:
         specifier: ^1.18.0
         version: 1.18.0
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.1
+        version: 11.1.1
     devDependencies:
       '@ardenthq/sdk-test':
         specifier: workspace:*
@@ -268,9 +268,6 @@ importers:
       '@types/node':
         specifier: ^17.0.8
         version: 17.0.8
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@types/wif':
         specifier: ^2.0.2
         version: 2.0.2
@@ -546,8 +543,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.1
+        version: 11.1.1
     devDependencies:
       '@ardenthq/sdk-test':
         specifier: workspace:*
@@ -1396,9 +1393,6 @@ packages:
 
   '@types/sinon@10.0.6':
     resolution: {integrity: sha512-6EF+wzMWvBNeGrfP3Nx60hhx+FfwSg1JJBLAAP/IdIUq0EYkqCYf70VT3PhuhPX9eLD+Dp+lNdpb/ZeHG8Yezg==}
-
-  '@types/uuid@8.3.4':
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
 
   '@types/wif@2.0.2':
     resolution: {integrity: sha512-IiIuBeJzlh4LWJ7kVTrX0nwB60OG0vvGTaWC/SgSbVFw7uYUTF6gEuvDZ1goWkeirekJDD58Y8g7NljQh2fNkA==}
@@ -3897,9 +3891,8 @@ packages:
   util@0.12.4:
     resolution: {integrity: sha512-bxZ9qtSlGUWSOy9Qa9Xgk11kSslpuZwaxCg4sNIDj6FLucDab2JxnHwyNTCpHMtK1MjoQiWQ6DiUMZYbSrO+Sw==}
 
-  uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+  uuid@11.1.1:
+    resolution: {integrity: sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==}
     hasBin: true
 
   uvu@0.5.2:
@@ -5073,8 +5066,6 @@ snapshots:
   '@types/sinon@10.0.6':
     dependencies:
       '@sinonjs/fake-timers': 7.1.2
-
-  '@types/uuid@8.3.4': {}
 
   '@types/wif@2.0.2':
     dependencies:
@@ -7706,7 +7697,7 @@ snapshots:
       safe-buffer: 5.2.1
       which-typed-array: 1.1.7
 
-  uuid@8.3.2: {}
+  uuid@11.1.1: {}
 
   uvu@0.5.2:
     dependencies:
