@@ -562,8 +562,8 @@ importers:
         specifier: ~4.1.4
         version: 4.1.4
       nock:
-        specifier: ^13.2.2
-        version: 13.2.2
+        specifier: ^13.5.6
+        version: 13.5.6
       sinon:
         specifier: ^12.0.1
         version: 12.0.1
@@ -2967,9 +2967,6 @@ packages:
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
-  lodash.set@4.3.2:
-    resolution: {integrity: sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==}
-
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
@@ -3086,8 +3083,8 @@ packages:
   nise@5.1.0:
     resolution: {integrity: sha512-W5WlHu+wvo3PaKLsJJkgPup2LrsXCcm7AWwyNZkUnn5rwPkuPBi3Iwk5SQtN0mv+K65k7nKKjwNQ30wg3wLAQQ==}
 
-  nock@13.2.2:
-    resolution: {integrity: sha512-PcBHuvl9i6zfaJ50A7LS55oU+nFLv8htXIhffJO+FxyfibdZ4jEvd9kTuvkrJireBFIGMZ+oUIRpMK5gU9h//g==}
+  nock@13.5.6:
+    resolution: {integrity: sha512-o2zOYiCpzRqSzPj0Zt/dQ/DqZeYoaQ7TUonc/xUPjCGl9WeHpNbxgVvOquXYAaJzI0M9BXV3HTzG0p8IUAbBTQ==}
     engines: {node: '>= 10.13'}
 
   node-addon-api@5.1.0:
@@ -6778,8 +6775,6 @@ snapshots:
 
   lodash.merge@4.6.2: {}
 
-  lodash.set@4.3.2: {}
-
   lodash@4.17.21: {}
 
   lru-cache@6.0.0:
@@ -6877,11 +6872,10 @@ snapshots:
       just-extend: 4.2.1
       path-to-regexp: 1.8.0
 
-  nock@13.2.2:
+  nock@13.5.6:
     dependencies:
       debug: 4.3.2
       json-stringify-safe: 5.0.1
-      lodash.set: 4.3.2
       propagate: 2.0.1
     transitivePeerDependencies:
       - supports-color
