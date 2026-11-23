@@ -1,6 +1,5 @@
+import { get, set } from "@ardenthq/sdk-helpers";
 import deepmerge from "deepmerge";
-import get from "lodash.get";
-import set from "lodash.set";
 
 import { InvalidMilestoneConfigurationError } from "../errors.js";
 import { IMilestone } from "../interfaces/index.js";

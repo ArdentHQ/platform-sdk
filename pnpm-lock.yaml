@@ -173,12 +173,6 @@ importers:
       is-url-superb:
         specifier: ^6.1.0
         version: 6.1.0
-      lodash.get:
-        specifier: ^4.4.2
-        version: 4.4.2
-      lodash.set:
-        specifier: ^4.3.2
-        version: 4.3.2
       node-dotify:
         specifier: ^1.1.0
         version: 1.1.0
