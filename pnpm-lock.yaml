@@ -321,8 +321,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3
       joi:
-        specifier: ^17.5.0
-        version: 17.5.0
+        specifier: ^17.13.9
+        version: 17.13.9
       qrcode:
         specifier: ^1.5.0
         version: 1.5.0
@@ -449,8 +449,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       joi:
-        specifier: ^17.5.0
-        version: 17.5.0
+        specifier: ^17.13.9
+        version: 17.13.9
       localforage:
         specifier: ^1.10.0
         version: 1.10.0
@@ -519,8 +519,8 @@ importers:
         specifier: ^1.10.7
         version: 1.10.7
       joi:
-        specifier: ^17.5.0
-        version: 17.5.0
+        specifier: ^17.13.9
+        version: 17.13.9
       node-emoji:
         specifier: ^1.11.0
         version: 1.11.0
@@ -1195,8 +1195,8 @@ packages:
   '@hapi/bourne@2.0.0':
     resolution: {integrity: sha512-WEezM1FWztfbzqIUbsDzFRVMxSoLy3HugVcux6KDDtTqzPsLE8NDRHfXvev66aH1i2oOKKar3/XDjbvh/OUBdg==}
 
-  '@hapi/hoek@9.2.1':
-    resolution: {integrity: sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw==}
+  '@hapi/hoek@9.3.0':
+    resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
 
   '@hapi/topo@5.1.0':
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
@@ -1277,11 +1277,11 @@ packages:
   '@polka/url@1.0.0-next.21':
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
 
-  '@sideway/address@4.1.3':
-    resolution: {integrity: sha512-8ncEUtmnTsMmL7z1YPB47kPUq7LpKWJNFPsRzHiIajGC5uXlWGn+AmkYPcHNl8S4tcEGx+cnORnNYaw2wvL+LQ==}
+  '@sideway/address@4.1.5':
+    resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
 
-  '@sideway/formula@3.0.0':
-    resolution: {integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==}
+  '@sideway/formula@3.0.1':
+    resolution: {integrity: sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==}
 
   '@sideway/pinpoint@2.0.0':
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
@@ -2837,8 +2837,8 @@ packages:
     resolution: {integrity: sha512-ks3WCzsiZaOPJl/oMsDjaf0TRiSv7ctNgs0FqRr2nARsovz6AWWy4oLElwcquGSz692DzgZQrCLScPNs5YlC4g==}
     engines: {node: '>= 10.13.0'}
 
-  joi@17.5.0:
-    resolution: {integrity: sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==}
+  joi@17.13.9:
+    resolution: {integrity: sha512-llFCT2rVtfwgBCaIqxtjim+iHqrgss4ONiGSYiiGH9jnjWq90ppSRffqmqKvwpa8W+YfILyQV6XyGcegXX2T4g==}
 
   js-string-escape@1.0.1:
     resolution: {integrity: sha512-Smw4xcfIQ5LVjAOuJCvN/zIodzA/BBSsluuoSykP+lUvScIi4U6RJLfwHet5cxFnCswUjISV8oAXaqaJDY3chg==}
@@ -4854,11 +4854,11 @@ snapshots:
 
   '@hapi/bourne@2.0.0': {}
 
-  '@hapi/hoek@9.2.1': {}
+  '@hapi/hoek@9.3.0': {}
 
   '@hapi/topo@5.1.0':
     dependencies:
-      '@hapi/hoek': 9.2.1
+      '@hapi/hoek': 9.3.0
 
   '@humanwhocodes/config-array@0.6.0':
     dependencies:
@@ -4945,11 +4945,11 @@ snapshots:
 
   '@polka/url@1.0.0-next.21': {}
 
-  '@sideway/address@4.1.3':
+  '@sideway/address@4.1.5':
     dependencies:
-      '@hapi/hoek': 9.2.1
+      '@hapi/hoek': 9.3.0
 
-  '@sideway/formula@3.0.0': {}
+  '@sideway/formula@3.0.1': {}
 
   '@sideway/pinpoint@2.0.0': {}
 
@@ -6656,12 +6656,12 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  joi@17.5.0:
+  joi@17.13.9:
     dependencies:
-      '@hapi/hoek': 9.2.1
+      '@hapi/hoek': 9.3.0
       '@hapi/topo': 5.1.0
-      '@sideway/address': 4.1.3
-      '@sideway/formula': 3.0.0
+      '@sideway/address': 4.1.5
+      '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
 
   js-string-escape@1.0.1: {}
