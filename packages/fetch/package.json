@@ -26,7 +26,7 @@
 	},
 	"dependencies": {
 		"@ardenthq/sdk": "workspace:*",
-		"cross-fetch": "^3.1.4",
+		"cross-fetch": "^3.2.0",
 		"query-string": "^7.1.3"
 	},
 	"devDependencies": {
