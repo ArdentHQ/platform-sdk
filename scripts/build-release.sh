@@ -7,8 +7,8 @@ function bundle() {
 pnpm run clean:browser
 
 # 1. Prerequisites
-bundle test
 bundle helpers
+bundle test
 bundle intl
 bundle cryptography
 bundle sdk
