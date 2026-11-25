@@ -3,7 +3,7 @@ import { format } from "concordance";
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
 import * as uvu from "uvu/assert";
-import { z, ZodRawShape } from "zod";
+import { z, ZodRawShape } from "zod/v3";
 
 export const assert = {
 	...uvu,

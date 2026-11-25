@@ -1,6 +1,6 @@
 import { SinonSpyStatic, spy } from "sinon";
 import { Callback, Context, suite, Test } from "uvu";
-import { z as schema } from "zod";
+import { z as schema } from "zod/v3";
 
 import { assert } from "./assert.js";
 import { each, formatName } from "./each.js";
