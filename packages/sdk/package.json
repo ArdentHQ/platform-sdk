@@ -34,7 +34,7 @@
 		"dayjs": "^1.10.7",
 		"joi": "^17.13.9",
 		"node-emoji": "^1.11.0",
-		"query-string": "^7.1.3",
+		"query-string": "^9.5.1",
 		"type-fest": "^2.9.0",
 		"url-format-lax": "^2.0.0",
 		"url-parse-lax": "^5.0.0",
