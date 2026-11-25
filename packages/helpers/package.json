@@ -35,7 +35,7 @@
 		"fast-deep-equal": "^3.1.3",
 		"joi": "^17.13.9",
 		"qrcode": "^1.5.0",
-		"query-string": "^7.1.3"
+		"query-string": "^9.5.1"
 	},
 	"devDependencies": {
 		"@ardenthq/sdk-test": "workspace:*",
