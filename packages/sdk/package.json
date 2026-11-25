@@ -29,16 +29,16 @@
 		"@ardenthq/sdk-intl": "workspace:*",
 		"bad-words": "^3.0.4",
 		"bent": "^7.3",
-		"bip39": "^3.0.4",
-		"censorify-it": "^3.0.2",
+		"bip39": "^3.1.2",
+		"censorify-it": "^4.0.0",
 		"dayjs": "^1.10.7",
-		"joi": "^17.5.0",
+		"joi": "^17.13.9",
 		"node-emoji": "^1.11.0",
-		"query-string": "^7.1.0",
+		"query-string": "^9.5.1",
 		"type-fest": "^2.9.0",
 		"url-format-lax": "^2.0.0",
 		"url-parse-lax": "^5.0.0",
-		"uuid": "^8.3.2"
+		"uuid": "^11.1.1"
 	},
 	"devDependencies": {
 		"@ardenthq/sdk-test": "workspace:*",

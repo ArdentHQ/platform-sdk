@@ -31,16 +31,14 @@
 		"@ardenthq/sdk-helpers": "workspace:*",
 		"@ardenthq/sdk-intl": "workspace:*",
 		"@arkecosystem/ledger-transport": "^2.0.0",
-		"ajv": "8.12.0",
+		"ajv": "8.20.0",
 		"ajv-formats": "^2.1.1",
 		"ajv-keywords": "5.1.0",
-		"bip39": "3.0.4",
+		"bip39": "3.1.2",
 		"dayjs": "1.10.7",
 		"deepmerge": "4.2.2",
 		"get-random-values": "^1.2.2",
 		"is-url-superb": "^6.1.0",
-		"lodash.get": "^4.4.2",
-		"lodash.set": "^4.3.2",
 		"node-dotify": "^1.1.0"
 	},
 	"devDependencies": {

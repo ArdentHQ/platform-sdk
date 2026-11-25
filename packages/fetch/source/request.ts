@@ -2,7 +2,7 @@
 
 import { Http } from "@ardenthq/sdk";
 import fetch from "cross-fetch";
-import { stringify } from "query-string";
+import queryString from "query-string";
 
 /**
  * Implements HTTP communication through lquixada/cross-fetch.
@@ -21,7 +21,7 @@ export class Request extends Http.AbstractRequest {
 		data?: { query?: object; data?: any },
 	): Promise<Http.HttpResponse> {
 		if (data?.query && Object.keys(data?.query).length > 0) {
-			url = `${url}?${stringify(data.query)}`;
+			url = `${url}?${queryString.stringify(data.query)}`;
 		}
 
 		let response;
