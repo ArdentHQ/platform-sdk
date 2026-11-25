@@ -1,7 +1,7 @@
 import { UUID } from "@ardenthq/sdk-cryptography";
 import { describe } from "@ardenthq/sdk-test";
 import localForage from "localforage";
-import memoryDriver from "localforage-driver-memory";
+import * as memoryDriver from "localforage-driver-memory";
 
 import { LocalStorage } from "./local.storage";
 
